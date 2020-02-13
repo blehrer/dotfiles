@@ -1,0 +1,1 @@
+. $DOTFILES_HOME/aliases
