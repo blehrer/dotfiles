@@ -1,0 +1,3 @@
+## Environment Variables
+export WORKPLACE=~/workplace
+export DOTFILES_HOME=$WORKPLACE/dotfiles

@@ -1,0 +1,44 @@
+## Places
+alias @cdw='cd $WORKPLACE'
+alias cdw='@cdw'
+alias @w='cd $WORKPLACE'
+alias w='@w'
+alias @dfd='cd $DOTFILES_HOME'
+alias dfd='@dfd'
+
+## Credential providers
+#...
+
+## Tools
+alias egrep='egrep -i --color=auto'
+alias epoch='date +%s'
+alias gamf='git commit -am f'
+alias gb='git branch'
+alias gbackup='git push backup --force "refs/heads/*:refs/heads/*"'
+alias gbls='git branch -vv'
+alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"' #print this branch's upstream branch
+alias gc='git checkout'
+alias glg='git log --graph --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})' #show the git DAG as a graph
+alias glga='git log --graph --decorate --oneline --all' #show the git DAG as a graph
+alias gpom='git push origin HEAD:mainline'
+alias grep='grep -i --color=auto'
+alias gri='git rebase -i'
+alias grim='git rebase -i origin/mainline'
+alias gst='git status'
+alias ivm='vim'
+alias ll='ls -alh'
+alias prepl='perl -d -e 1'
+alias vd='vim ./.'
+alias vmi='vim'
+
+## Edit config files
+alias v='vim $DOTFILES_HOME/vimrc'
+alias z='vim $DOTFILES_HOME/zshrc'
+alias b='vim $DOTFILES_HOME/bashrc'
+alias a='vim $DOTFILES_HOME/aliases'
+alias e='vim $DOTFILES_HOME/environment_variables'
+
+## Re-source files
+alias sb='source ~/.bashrc'
+alias sa='source $DOTFILES_HOME/aliases'
+alias se='source $DOTFILES_HOME/environment_variables'
