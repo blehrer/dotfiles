@@ -10,6 +10,33 @@ alias dfd='@dfd'
 #...
 
 ## Tools
+function pushd() {
+  if [ $# -eq 0 ]; then
+    DIR="${HOME}"
+  else
+    DIR="$1"
+  fi
+
+  builtin pushd "${DIR}" > /dev/null
+  echo -n "DIRSTACK: "
+  dirs
+}
+
+function pushd_builtin() {
+  builtin pushd > /dev/null
+  echo -n "DIRSTACK: "
+  dirs
+}
+
+function popd() {
+  builtin popd > /dev/null
+  echo -n "DIRSTACK: "
+  dirs
+}
+
+alias cd='pushd'
+alias back='popd'
+alias flip='pushd_builtin'
 alias egrep='egrep -i --color=auto'
 alias epoch='date +%s'
 alias gamf='git commit -am f'
