@@ -39,6 +39,11 @@ alias a='vim $DOTFILES_HOME/aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
 
 ## Re-source files
-alias sb='source ~/.bashrc'
-alias sa='source $DOTFILES_HOME/aliases'
-alias se='source $DOTFILES_HOME/environment_variables'
+function src() {
+    echo "Sourcing $1";
+    source "$1";
+}
+
+alias sb='src ~/.bashrc'
+alias sa='src $DOTFILES_HOME/aliases'
+alias se='src $DOTFILES_HOME/environment_variables'
