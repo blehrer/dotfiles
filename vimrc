@@ -2,7 +2,36 @@
 " Sources and runtimepath stuff
 " =============================================================================
 
-execute pathogen#infect()
+" Vim 8 has native package management so we don't need Pathogen anymore
+"" execute pathogen#infect()
+"
+" ### How to add new plugins (taken from https://shapeshed.com/vim-packages/)
+"
+" ```
+" @dfd
+" git submodule init
+" git submodule add https://github.com/preservim/nerdtree.git homedir/.vim/pack/vendor/start/nerdtree
+" git add .gitmodules  homedir/.vim/pack/vendor/start/nerdtree
+" git commit
+" ```
+"
+" #### Commit message format
+"
+" ```
+" [vim plugin] nerdtree
+"
+" Source: https://github.com/preservim/nerdtree
+"
+" Process:
+" ```
+" git submodule init
+" git submodule add https://github.com/preservim/nerdtree.git homedir/.vim/pack/vendor/start/nerdtree
+" git add .gitmodules  homedir/.vim/pack/vendor/start/nerdtree
+" git commit
+" ```
+"
+" See https://shapeshed.com/vim-packages/
+" ```
 
 " =============================================================================
 " Simple vanilla settings that I don't get from envImprovment out of the box
