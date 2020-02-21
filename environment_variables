@@ -3,3 +3,4 @@ export WORKPLACE=~/workplace
 export DOTFILES_HOME=$WORKPLACE/dotfiles
 export PYENV_ROOT="$HOME/.pyenv"
 export NVM_DIR="$HOME/.nvm"
+export DISPLAY=:0

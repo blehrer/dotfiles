@@ -34,6 +34,7 @@ function popd() {
   dirs
 }
 
+alias android-studio='~/tools/android-studio/bin/studio.sh'
 alias c='clear'
 alias cd='pushd'
 alias back='popd'
