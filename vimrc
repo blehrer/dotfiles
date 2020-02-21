@@ -34,7 +34,7 @@
 " ```
 
 " =============================================================================
-" Simple vanilla settings that I don't get from envImprovment out of the box
+" Simple vanilla settings
 " =============================================================================
 set number
 set relativenumber
