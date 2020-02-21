@@ -1,3 +1,6 @@
 [submodule "vim-plugin.syntastic"]
 	path = homedir/.vim/pack/vendor/start/syntastic
 	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "vim-plugin.nerdtree"]
+	path = homedir/.vim/pack/vendor/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
