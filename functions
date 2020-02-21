@@ -1,0 +1,77 @@
+###################### Functions ####################################
+
+function forward_odin() {
+    ssh -f -N -L 2009:127.0.0.1:2009 "$1"
+}
+
+# This gets the files that have changed on your local branch since you pushed to
+# the upstream branch
+function fupdiff() {
+    echo "Getting the diff between this branch and its upstream branch. ($(git rev-parse --abbrev-ref=strict @{u})) \n\n\n...\n\n\n";
+    git fetch
+    git diff --name-only @{u}
+    echo "\n"
+}
+
+# This gets the diff between the current branch and its upstream branch
+function updiff() {
+    echo "Getting the diff between this branch and its upstream branch. ($(git rev-parse --abbrev-ref --symbolic-full-name @{u})) \n\n\n...\n\n\n"; 
+    git fetch
+    git diff --ignore-all-space $(git rev-parse --abbrev-ref --symbolic-full-name @{u});
+    echo "\n"
+}
+
+function wsupdiff () {
+  dir=$(pwd)
+  cd $dir
+  for d in `find . -type d -maxdepth 1`
+  do
+    echo "\n#########################\n"
+    cd $dir/$d
+    pwd
+    git fetch
+    git status
+    updiff
+    cd ..
+  done;
+
+}
+
+function wsgst() {
+  dir=$(pwd)
+  cd $dir
+  for d in `find . -type d -maxdepth 1`
+  do
+    echo "\n#########################\n"
+    cd $dir/$d
+    pwd
+    git fetch
+    git status
+    cd ..
+  done;
+}
+
+# This allows you to query the dictionary for words that match a given regex
+function wordbowl() {
+    cat /usr/share/dict/words | grep "$1"
+}
+
+# kill processes by loose name
+function appkill() {
+    kill -9 $(ps -ef | grep $1 | grep -v grep | awk '{print $2}')
+}
+
+touch! () {
+  touch $1
+  if test $? -gt 0; then
+    mkdir -p $(echo $1 | rev | cut -d '/' -f2- | rev)
+    touch $1
+  fi
+}
+
+gv2svg() {
+     cat $1 | dot | gvpack | neato -n2 -Tpng > ./gv.svg
+     echo "./gv.svg created"
+}
+
+
