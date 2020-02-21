@@ -4,3 +4,6 @@
 [submodule "vim-plugin.nerdtree"]
 	path = homedir/.vim/pack/vendor/start/nerdtree
 	url = https://github.com/preservim/nerdtree.git
+[submodule "vim-plugin.rainbow"]
+	path = homedir/.vim/pack/vendor/start/rainbow
+	url = https://github.com/luochen1990/rainbow.git
