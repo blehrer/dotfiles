@@ -5,32 +5,10 @@
 " Vim 8 has native package management so we don't need Pathogen anymore
 "" execute pathogen#infect()
 "
-" ### How to add new plugins (taken from https://shapeshed.com/vim-packages/)
+" ### How to add new plugins
 "
 " ```
-" @dfd
-" git submodule init
-" git submodule add https://github.com/preservim/nerdtree.git homedir/.vim/pack/vendor/start/nerdtree
-" git add .gitmodules  homedir/.vim/pack/vendor/start/nerdtree
-" git commit
-" ```
-"
-" #### Commit message format
-"
-" ```
-" [vim plugin] nerdtree
-"
-" Source: https://github.com/preservim/nerdtree
-"
-" Process:
-" ```
-" git submodule init
-" git submodule add https://github.com/preservim/nerdtree.git homedir/.vim/pack/vendor/start/nerdtree
-" git add .gitmodules  homedir/.vim/pack/vendor/start/nerdtree
-" git commit
-" ```
-"
-" See https://shapeshed.com/vim-packages/
+" newVimPlugin https://github.com/namespace/repo.git
 " ```
 
 " =============================================================================

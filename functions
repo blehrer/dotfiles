@@ -74,4 +74,16 @@ gv2svg() {
      echo "./gv.svg created"
 }
 
+# add vim plugin as submodule of dotfiles
+newVimPlugin() {
+    if [[ $1 =~ ^.+/.+/.+\.git$ ]]; then
+	cd $DOTFILES_HOME
+	longname=$(echo $1 | rev | cut -d '/' -f 1,2 | cut --complement -c 1-4 | rev)
+	shortname=$(echo $longname | cut -d '/' -f 2 )
+	git submodule add --force --name "vim-plugin.$shortname" $1 ./homedir/.vim/pack/vendor/start/$shortname
+	commitMsg="[vim-plugin] $longname"
+	git commit -m "$commitMsg"
+    else echo "Git repo format is incorrect (should end in namespace/repo.git)"
+    fi
+}
 

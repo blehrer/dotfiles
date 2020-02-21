@@ -1,6 +1,0 @@
-[submodule "homedir/.vim/pack/vendor/start/rainbow-parentheses"]
-	path = homedir/.vim/pack/vendor/start/rainbow-parentheses
-	url = https://github.com/luochen1990/rainbow.git
-[submodule "homedir/.vim/pack/vendor/start/nerdtree"]
-	path = homedir/.vim/pack/vendor/start/nerdtree
-	url = https://github.com/preservim/nerdtree.git
