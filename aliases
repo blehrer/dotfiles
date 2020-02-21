@@ -67,6 +67,7 @@ alias z='vim $DOTFILES_HOME/zshrc'
 alias b='vim $DOTFILES_HOME/bashrc'
 alias a='vim $DOTFILES_HOME/aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
+alias oz='vim $DOTFILES_HOME/oh-my-zsh.cfg'
 
 ## Re-source files
 function src() {
@@ -75,5 +76,7 @@ function src() {
 }
 
 alias sb='src ~/.bashrc'
+alias sz='src ~/.zshrc'
+alias soz='src $DOTFILES_HOME/oh-my-zsh.cfg'
 alias sa='src $DOTFILES_HOME/aliases'
 alias se='src $DOTFILES_HOME/environment_variables'
