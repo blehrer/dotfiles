@@ -7,3 +7,6 @@
 [submodule "vim-plugin.rainbow"]
 	path = homedir/.vim/pack/vendor/start/rainbow
 	url = https://github.com/luochen1990/rainbow.git
+[submodule "ls_colors"]
+	path = gitclones/trapd00r.LS_COLORS
+	url = https://github.com/trapd00r/LS_COLORS.git
