@@ -1,1 +1,5 @@
+# Prepend to path
 export PATH="$PYENV_ROOT/bin:$PATH"
+
+# Append to path
+export PATH="$PATH:~/tools"
