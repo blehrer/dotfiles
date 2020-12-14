@@ -56,3 +56,4 @@ if [[ $platform == 'Darwin' ]]; then
   zstyle ':completion:*' use-compctl true
   autoload -U compinit
 fi
+

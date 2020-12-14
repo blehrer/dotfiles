@@ -1,0 +1,6 @@
+[include]
+    path = $DOTFILES_HOME/git-personal.conf
+[includeIf "gitdir:~/workplace/"]
+    path = ~/.config/dotfiles/git-work.conf
+[core]
+    autocrlf = true

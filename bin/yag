@@ -1,0 +1,80 @@
+#!/bin/sh
+env -i
+
+_usage () {
+	echo "
+NAME:
+yag - a directory-recursing YAML parser
+
+SYNOPSIS:
+yag [OPTIONS=...] yamlQuery 
+
+yamlQuery: see https://mikefarah.gitbook.io/yq/commands/read
+
+DEPENDENCIES:
+[ag - A code searching tool similar to ack, with a focus on speed](https://github.com/ggreer/the_silver_searcher)
+[yq - a lightweight and portable command-line YAML processor](https://github.com/mikefarah/yq)
+
+OPTIONS:
+-h,  --help                         Show this message
+-d=, --service-config-dir=...       Path to another place to search
+                                     like your local copy of 
+                                     cp-config-repo or a project
+                                     with relevant yaml/xml/json
+
+
+EXAMPLES:
+Query under the current directory
+▶ yag 'kcl' 
+
+Query under the current directory, and the corresponding config-repo directory
+▶ yag -d=~/workplace/cp-config-repo/cp-transfer-router-sqe 'aws.secretsmanager' 
+
+Query with prefix-path wildcards
+▶ yag '**.region'
+
+Query with property name wildcards
+▶ yag '**.app*.enc*'
+
+ISSUES:
+@ is a reserved indicator in YAML, but is used widely in our configs. This causes yq to quit early.
+https://yaml.org/spec/1.2/spec.html#id2774228
+There is a hack in place that converts '@' to '(at)' for yq, and then back again when printing.
+	" 
+}
+
+_yag_dir () {
+	local _yqQuery=$1 _rootDir=$2 _topCorner="\n⎡‾‾‾" _bottomCorner="⎣___\n"
+
+	echo "\n🔎 Scanning $_rootDir ...\n"
+	ag --ignore-dir=target -g yml $_rootDir | while read filepath
+	do
+		queryResult=$(sed -e 's/@/(at)/g' $filepath | yq r -d '*' -p pv - $1 | sed -e 's/(at)/@/g') 
+		[[ ! -z $queryResult ]] && echo \
+		"$_topCorner\n✅ $filepath - \"$_yqQuery\"\n\n$queryResult\n$_bottomCorner"
+	done
+}
+
+_do_yags () {
+	echo "\n==== Results for \`yq\` query '$1' =====\n"
+	_yag_dir $1 $PWD
+	[[ -n $2 ]] && _yag_dir $1 $2
+}
+
+_main () {
+	local _configDir
+	for i in "$@"
+	do
+		case $i in
+			(-h | --help) _usage
+				exit 0 ;;
+			(-d=* | --service-config-repo=*) _configDir="${i#*=}" 
+				shift ;;
+			(*)  ;;
+		esac
+	done
+	_do_yags $1 $_configDir 
+	exit 0
+}
+
+_main $@

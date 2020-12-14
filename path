@@ -3,3 +3,10 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 
 # Append to path
 export PATH="$PATH:~/tools"
+export PATH="$PATH:$DOTFILES_HOME/bin"
+export PATH="$PATH:/usr/local/homebrew/bin"
+export PATH="$PATH:/usr/local/bin"
+
+# prepend to path
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

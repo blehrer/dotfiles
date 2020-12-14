@@ -1,9 +1,22 @@
 ## Environment Variables
+### Places
 export WORKPLACE=~/workplace
-export DOTFILES_HOME=$WORKPLACE/dotfiles
+export CONFIG_DIR=~/.config
+export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export PYENV_ROOT="$HOME/.pyenv"
 export NVM_DIR="$HOME/.nvm"
-export SDKMAN_DIR="$HOME/.sdkman"
+export SDKMAN_DIR="/usr/local/sdkman"
 export DISPLAY=:0
 export ECLIPSE_HOME="$HOME/eclipse/java-2019-12/eclipse"
 export WIN_HOME="/mnt/c/Users/Brian"
+export EDITOR="/usr/bin/vim"
+
+### Parameters
+export HISTSIZE=1000000
+
+## Integration with cyberpeacock_login
+#export AWS_PROFILE=saml
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+#export SDKMAN_DIR="/Users/BrianLehrer/.sdkman"
+[[ -s "/usr/local/sdkman/bin/sdkman-init.sh" ]] && source "/usr/local/sdkman/bin/sdkman-init.sh"
