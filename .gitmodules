@@ -13,3 +13,6 @@
 [submodule "gitclones/nord-terminal-app"]
 	path = gitclones/nord-terminal-app
 	url = https://github.com/arcticicestudio/nord-terminal-app
+[submodule "oh-my-zsh"]
+	path = zsh
+	url = https://github.com/oh-my-zsh/oh-my-zsh
