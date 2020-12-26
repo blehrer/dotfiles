@@ -10,6 +10,11 @@
 " ```
 " newVimPlugin https://github.com/namespace/repo.git
 " ```
+"
+" =============================================================================
+" Color scheme
+" =============================================================================
+colorscheme nordisk
 
 " =============================================================================
 " Simple vanilla settings
@@ -35,6 +40,9 @@ set ff=unix
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
 
 " =============================================================================
 " Plugin settings
@@ -45,6 +53,7 @@ let NERDTreeShowHidden=1
 "au Syntax * RainbowParenthesesLoadRound
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
+
 
 " =============================================================================
 " Functions

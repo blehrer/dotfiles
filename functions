@@ -76,10 +76,15 @@ gv2svg() {
 
 # add vim plugin as submodule of dotfiles
 newVimPlugin() {
+    cut_=$(which cut)
+
+    # Depends on "brew install coreutils"
+    [[ `uname` == "Darwin" ]] && cut_=/usr/local/homebrew/bin/gcut
+
     if [[ $1 =~ ^.+/.+/.+\.git$ ]]; then
 	cd $DOTFILES_HOME
-	longname=$(echo $1 | rev | cut -d '/' -f 1,2 | cut --complement -c 1-4 | rev)
-	shortname=$(echo $longname | cut -d '/' -f 2 )
+	longname=$(echo $1 | rev | $cut_ -d '/' -f 1,2 | $cut_ --complement -c 1-4 | rev)
+	shortname=$(echo $longname | $cut_ -d '/' -f 2 )
 	git submodule add --force --name "vim-plugin.$shortname" $1 ./homedir/.vim/pack/vendor/start/$shortname
 	commitMsg="[vim-plugin] $longname"
 	git commit -m "$commitMsg"
