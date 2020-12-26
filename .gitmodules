@@ -14,7 +14,7 @@
 	path = gitclones/nord-terminal-app
 	url = https://github.com/arcticicestudio/nord-terminal-app
 [submodule "oh-my-zsh"]
-	path = zsh
+	path = gitclones/oh-my-zsh
 	url = https://github.com/oh-my-zsh/oh-my-zsh
 [submodule "gitclones/quicklook-plugin--SourceCodeSyntaxHightlight"]
 	path = gitclones/quicklook-plugin--SourceCodeSyntaxHightlight
