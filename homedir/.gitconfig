@@ -1,7 +1,7 @@
 [include]
-    path = ~/.config/dotfiles/git-personal.conf
+    path = ~/.config/dotfiles/git/git-personal.conf
 [includeIf "gitdir:~/workplace/"]
-    path = ~/.config/dotfiles/git-work.conf
+    path = ~/.config/dotfiles/git/git-work.conf
 [core]
     autocrlf = input
-    excludesfile = ~/.config/dotfiles/gitignore_global
+    excludesfile = ~/.config/dotfiles/git/gitignore_global
