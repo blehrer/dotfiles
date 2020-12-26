@@ -10,9 +10,6 @@
 [submodule "ls_colors"]
 	path = gitclones/trapd00r.LS_COLORS
 	url = https://github.com/trapd00r/LS_COLORS.git
-[submodule "oh-my-zsh"]
-	path = gitclones/oh-my-zsh
-	url = https://github.com/oh-my-zsh/oh-my-zsh
 [submodule "gitclones/nord-terminal-app"]
 	path = gitclones/nord-terminal-app
 	url = https://github.com/arcticicestudio/nord-terminal-app
