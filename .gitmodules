@@ -19,3 +19,6 @@
 [submodule "gitclones/oh-my-zsh"]
 	path = gitclones/oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh
+[submodule "vim-plugin.nord-vim"]
+	path = homedir/.vim/pack/vendor/start/nord-vim
+	url = https://github.com/arcticicestudio/nord-vim.git
