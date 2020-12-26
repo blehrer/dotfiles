@@ -31,6 +31,7 @@ set ruler
 set lazyredraw
 set undofile
 set fileformat=unix
+set ff=unix
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.

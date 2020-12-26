@@ -11,6 +11,7 @@ export ECLIPSE_HOME="$HOME/eclipse/java-2019-12/eclipse"
 export WIN_HOME="/mnt/c/Users/Brian"
 export EDITOR="/usr/bin/vim"
 export CP_CONFIG_REPO=$WORKPLACE/cp-config-repo
+export PAGER="/usr/bin/less -i"
 
 ### Parameters
 export HISTSIZE=1000000

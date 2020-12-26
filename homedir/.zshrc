@@ -1,5 +1,6 @@
 set -o magicequalsubst
-export DOTFILES_HOME='/Users/BrianLehrer/.config/dotfiles'
+export CONFIG_DIR='$HOME/.config'
+export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export ZSH=$DOTFILES_HOME/zsh
 source $CONFIG_DIR/zsh/pre-compinit-scripts
 source $CONFIG_DIR/zsh/oh-my-zsh.cfg

@@ -87,3 +87,6 @@ newVimPlugin() {
     fi
 }
 
+zipdirs() {
+    zip -r -X $1 $2 -x "*DS_Store" \*.un~
+}

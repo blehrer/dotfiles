@@ -12,6 +12,7 @@ alias @noe='@obsidian'
 alias @joplin='@notes; cd modules/joplin'
 alias @scratch='cd ~/scratch'
 alias scratch='vim ~/scratch/scratch-$(date "+%F-%T")'
+alias @dl='cd ~/Downloads'
 
 ## Credential providers
 #...
