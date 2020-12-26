@@ -72,6 +72,8 @@ alias magick='~/tools/magick'
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
+alias yagd='yag -d=$CP_CONFIG_REPO/$(basename $(pwd))'
+alias yagdq='yag -d=$CP_CONFIG_REPO/$(basename $(pwd))-sqe'
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
