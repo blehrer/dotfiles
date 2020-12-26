@@ -25,3 +25,6 @@
 [submodule "vim-plugin.nordisk"]
 	path = homedir/.vim/pack/vendor/start/nordisk
 	url = https://github.com/kamwitsta/nordisk.git
+[submodule "vim-plugin.jellybeans.vim"]
+	path = homedir/.vim/pack/vendor/start/jellybeans.vim
+	url = https://github.com/nanotech/jellybeans.vim.git
