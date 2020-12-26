@@ -35,9 +35,6 @@ bindkey "^A" beginning-of-line
 #runs command stack is popped
 bindkey "^T" push-line-or-edit
 
-#allow tab completion in the middle of a word
-setopt COMPLETE_IN_WORD
-
 ######################### completion #################################
 
 if [[ $platform == 'Darwin' ]]; then

@@ -4,3 +4,4 @@
     path = ~/.config/dotfiles/git-work.conf
 [core]
     autocrlf = input
+    excludesfile = $DOTFILES_HOME/gitignore_global
