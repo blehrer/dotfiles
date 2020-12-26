@@ -16,3 +16,6 @@
 [submodule "gitclones/quicklook-plugin--SourceCodeSyntaxHightlight"]
 	path = gitclones/quicklook-plugin--SourceCodeSyntaxHightlight
 	url = https://github.com/sbarex/SourceCodeSyntaxHighlight
+[submodule "gitclones/oh-my-zsh"]
+	path = gitclones/oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh

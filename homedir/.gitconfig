@@ -3,4 +3,4 @@
 [includeIf "gitdir:~/workplace/"]
     path = ~/.config/dotfiles/git-work.conf
 [core]
-    autocrlf = true
+    autocrlf = input
