@@ -31,3 +31,6 @@
 [submodule "vim-plugin.lightline.vim"]
 	path = homedir/.vim/pack/vendor/start/lightline.vim
 	url = https://github.com/itchyny/lightline.vim.git
+[submodule "vim-plugin.fzf.vim"]
+	path = homedir/.vim/pack/vendor/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
