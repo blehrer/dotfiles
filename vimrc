@@ -14,7 +14,7 @@
 " =============================================================================
 " Color scheme
 " =============================================================================
-colorscheme nordisk
+colorscheme nord
 
 " =============================================================================
 " Simple vanilla settings
@@ -54,6 +54,10 @@ let NERDTreeShowHidden=1
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
 
+set laststatus=2
+let g:lightline = {
+    \ 'colorscheme': 'nord'
+\}
 
 " =============================================================================
 " Functions
