@@ -12,15 +12,17 @@ export WIN_HOME="/mnt/c/Users/Brian"
 export EDITOR="/usr/bin/vim"
 export CP_CONFIG_REPO=$WORKPLACE/cp-config-repo
 export PAGER="/usr/bin/less -i"
+export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
 
 ### Parameters
 export HISTSIZE=1000000
 
 ## Integration with cyberpeacock_login
-#export AWS_PROFILE=saml
+export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
+
 
 ## AWS
-export AWS_DEFAULT_PROFILE=preprod
+#export AWS_DEFAULT_PROFILE=preprod
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 #export SDKMAN_DIR="/Users/BrianLehrer/.sdkman"

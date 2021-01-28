@@ -47,13 +47,10 @@ set undodir=.undo/,~/.undo/,/tmp//
 " =============================================================================
 " Plugin settings
 " =============================================================================
+" NerdTree
 let NERDTreeShowHidden=1
 
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-
+" Lightline
 set laststatus=2
 let g:lightline = {
     \ 'colorscheme': 'nord'
@@ -113,14 +110,14 @@ map <silent> <C-h> <C-w><
 map <silent> <C-j> <C-W>-
 map <silent> <C-k> <C-W>+
 map <silent> <C-l> <C-w>>
-
 "Leader Commands
 let mapleader = ","
 
-nmap <Leader>f :CtrlP<CR>
+nmap <Leader>f :GFiles<CR>
 nmap <Leader>m :NERDTreeToggle<CR>
 nmap <Leader>n :TlistToggle<CR>
 map <Leader><F2> :call RenameFile()<cr>
+nmap <Leader><Leader> :Files<cr>
 
 "Typo maps
 command! Q q " Bind :Q to :q

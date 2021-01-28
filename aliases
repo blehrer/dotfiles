@@ -13,6 +13,9 @@ alias @joplin='@notes; cd modules/joplin'
 alias @scratch='cd ~/scratch'
 alias scratch='vim ~/scratch/scratch-$(date "+%F-%T")'
 alias @dl='cd ~/Downloads'
+alias @aws='cd ~/.aws'
+alias @tools='cd $WORKPLACE/cp-tools'
+alias @http='cd $HTTP_ROOT'
 
 function @task() {
     source $DOTFILES_HOME/bin/.task $@
@@ -77,8 +80,8 @@ alias magick='~/tools/magick'
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
-alias yagd='yag -d=$CP_CONFIG_REPO/$(basename $(pwd))'
-alias yagdq='yag -d=$CP_CONFIG_REPO/$(basename $(pwd))-sqe'
+alias yagd='yag -d=`cfg_repo`/`basename $(pwd)`'
+alias yagdq='yag -d=`cfg_repo`/`basename $(pwd)`-sqe'
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
@@ -92,6 +95,14 @@ alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 function src() {
     echo "Sourcing $1";
     source "$1";
+}
+
+## Pick the right config repo
+function cfg_repo() {
+    local dir=`basename $(pwd)`
+    local suffix=config-repo
+    [[ $dir == digsrv* ]] && echo $WORKPLACE/digsrv-$suffix
+    [[ $dir == cp* ]] && echo $WORKPLACE/cp-$suffix
 }
 
 alias sb='src ~/.bashrc'
