@@ -1,0 +1,48 @@
+
+#!/bin/bash
+env -i
+
+usage() {
+    echo "
+NAME:
+@task - make/go-to task notes dir (~/Documents/jira-prefix/jira-id
+
+SYNOPSIS:
+@task [-p|--project=<jira-prefix>] jira-id
+
+OPTIONS:
+-h                     show this message 
+-p=, --project=        jira project id. Defaults to svcs6
+"
+}
+
+mkdir_and_cd() {
+    if [[ $altProject ]] then;
+	local dir=~/Documents/$altProject/$id
+    else
+	local dir=~/Documents/$defaultProject/$id
+    fi
+    mkdir -p $dir
+    cd $dir
+}
+
+
+main () {
+	local defaultProject=svcs6
+	for i in "$@"
+	do
+		case $i in
+			(-h | --help) usage
+				return 0 ;;
+			(-p=* | --project=*) local altProject=`echo "${i#*=}" | tr '[:upper:]' '[:lower:]'`
+				shift ;;
+			(*)  ;;
+		esac
+	done
+	local id=$1
+	mkdir_and_cd
+	return 0
+}
+
+
+main $@

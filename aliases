@@ -14,6 +14,10 @@ alias @scratch='cd ~/scratch'
 alias scratch='vim ~/scratch/scratch-$(date "+%F-%T")'
 alias @dl='cd ~/Downloads'
 
+function @task() {
+    source $DOTFILES_HOME/bin/.task $@
+}
+
 ## Credential providers
 #...
 
