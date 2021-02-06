@@ -118,7 +118,7 @@ nmap <Leader>m :NERDTreeToggle<CR>
 nmap <Leader>n :TlistToggle<CR>
 map <Leader><F2> :call RenameFile()<cr>
 nmap <Leader><Leader> :Files<cr>
-
+nmap <Leader>c gg/[samlj5yy/[defaultp5jdGZZ
 "Typo maps
 command! Q q " Bind :Q to :q
 map Q <Nop> " Disable Ex mode
