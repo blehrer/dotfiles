@@ -1,6 +1,7 @@
 *~
 **/*.un~
 .*.swp
+*ajcore.*.txt
 .DS_Store
 $KUBECONFIG
 **/prop_local

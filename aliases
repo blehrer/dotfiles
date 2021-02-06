@@ -49,6 +49,7 @@ function popd() {
   dirs
 }
 
+alias ag='ag --hidden'
 alias android-studio='~/tools/android-studio/bin/studio.sh'
 alias c='clear'
 alias cd='pushd'
@@ -91,6 +92,7 @@ alias a='vim $DOTFILES_HOME/aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
 alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias iam='vim ~/.aws/credentials'
+alias agig='vim $DOTFILES_HOME/ag/.agignore'
 
 ## Re-source files
 function src() {
