@@ -5,3 +5,5 @@
 [core]
     autocrlf = input
     excludesfile = ~/.config/dotfiles/git/gitignore_global
+[log]
+    follow = true
