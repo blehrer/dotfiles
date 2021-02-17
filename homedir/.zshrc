@@ -10,3 +10,4 @@ source $DOTFILES_HOME/zshrc
 source $DOTFILES_HOME/functions
 source $DOTFILES_HOME/aliases
 source $DOTFILES_HOME/init_scripts
+
