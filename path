@@ -1,6 +1,10 @@
 # Prepend to path
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/yag:$PATH"
+export PATH="$WORKPLACE/cp-tools/bin/cp-tools/kinesis-utils:$PATH"
+export PATH="$WORKPLACE/cp-tools/bin/cp-tools/s3-utils:$PATH"
+export PATH="$WORKPLACE/cp-tools/bin/cp-tools/sqs-utils:$PATH"
+export PATH="$WORKPLACE/cp-tools/bin/cp-tools/transfer-request-generator:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 
 # Append to path
