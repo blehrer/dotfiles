@@ -5,7 +5,7 @@ env -i
 usage() {
     echo "
 NAME:
-@task - make/go-to task notes dir (~/Documents/jira-prefix/jira-id
+@task - make/go-to task notes dir (~/Documents/jira-prefix/jira-id)
 
 SYNOPSIS:
 @task [-p|--project=<jira-prefix>] jira-id
@@ -16,14 +16,15 @@ OPTIONS:
 "
 }
 
-mkdir_and_cd() {
+mkdir_and_cd_and_git_init() {
     if [[ $altProject ]] then;
 	local dir=~/Documents/$altProject/$id
     else
 	local dir=~/Documents/$defaultProject/$id
     fi
-    mkdir -p $dir
+    [[ -d $dir ]] || mkdir -p $dir
     cd $dir
+    [[ -d .git ]] || git init
 }
 
 
@@ -40,7 +41,7 @@ main () {
 		esac
 	done
 	local id=$1
-	mkdir_and_cd
+	mkdir_and_cd_and_git_init
 	return 0
 }
 

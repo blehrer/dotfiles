@@ -121,13 +121,16 @@ OPTIONS:
 		shift ;;
 	    (-a=* | --attribute=*) local attr=`echo "${i#*=}"`
 		shift ;;
-	    (-p=* | --profile=*) local profile=`echo "${i#*=}"`
-		shift ;;
+#    (-p=* | --profile=*) local profile=`echo "${i#*=}"`
+#	shift ;;
 	    (*)  ;;
 	esac
     done
     local query=".SecretString|fromjson.$attr"
-    local profileArg=''
-    [[ ! -z "$profile" ]] && $profileArg="--profile $profile"
-    aws secretsmanager get-secret-value $profileArg --secret-id $secretname| jq $query
+#   [[ ! -z "$profile" ]] && local profileArg=--profile\ $profile
+#   cmd="aws secretsmanager get-secret-value --secret-id $secretname $profileArg | jq $query"
+    cmd="aws secretsmanager get-secret-value --secret-id $secretname | jq $query"
+    echo "$cmd"
+    aws secretsmanager get-secret-value --secret-id $secretname $profileArg | jq $query
+    
 }
