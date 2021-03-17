@@ -30,6 +30,8 @@ mkdir_and_cd_and_git_init() {
 
 
 main () {
+    local defaultProject=svcs6
+    [[ -z $1 ]] && cd ~/Documents/$defaultProject ; return 0;
     if [[ $1 =~ '[A-z0-9]+-[0-9]+-.+' ]] then;
         local branchName=$1
         echo $branchName
@@ -37,7 +39,6 @@ main () {
         local id=`echo "$branchName" | cut -d '-' -f 2`
         echo "branchName: $branchName, altProject: $altProject, id: $id"
     else
-        local defaultProject=svcs6
         for i in "$@"
         do
             case $i in
