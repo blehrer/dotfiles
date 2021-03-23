@@ -18,6 +18,7 @@ alias @tools='cd $WORKPLACE/cp-tools'
 alias @http='cd $HTTP_ROOT'
 alias @='@task'
 alias jj='@task'
+alias oj='@task $1; sublime'
 
 function @task() {
     source $DOTFILES_HOME/bin/.task $@
