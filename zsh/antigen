@@ -1,0 +1,5 @@
+source /usr/local/homebrew/share/antigen/antigen.zsh
+
+antigen bundle srijanshetty/zsh-pandoc-completion
+
+antigen apply

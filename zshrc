@@ -54,3 +54,4 @@ if [[ $platform == 'Darwin' ]]; then
   autoload -U compinit
 fi
 
+source ~/.config/dotfiles/zsh/antigen
