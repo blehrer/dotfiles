@@ -1,3 +1,5 @@
+## Overrides
+alias git=$(brew --prefix)/bin/git
 ## Places
 alias @cdw='cd $WORKPLACE'
 alias cdw='@cdw'
