@@ -19,12 +19,14 @@ OPTIONS:
 mkdir_and_cd_and_git_init() {
     if [[ $altProject ]] then;
         local dir=~/Documents/jira/$altProject/$id
+        local description=$altProject-$id
     else
         local dir=~/Documents/jira/$defaultProject/$id
+        local description=$defaultProject-$id
     fi
     [[ -d $dir ]] || mkdir -p $dir
     cd $dir
-    [[ -d .git ]] || git init
+    [[ -d .git ]] || git init && echo $description > .git/description
     [[ -n $branchName ]] && git checkout -b $branchName
 }
 
