@@ -1,5 +1,7 @@
 ## Overrides
 alias git=$(brew --prefix)/bin/git
+alias yq=$(brew --prefix)/opt/yq@3/bin/yq
+export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"
 ## Places
 alias @cdw='cd $WORKPLACE'
 alias cdw='@cdw'
@@ -21,6 +23,7 @@ alias @http='cd $HTTP_ROOT'
 alias @='@task'
 alias jj='@task'
 alias oj='@task $1; sublime'
+alias @cpc='cd $WORKPLACE/cp-config-repo'
 
 function @task() {
     source $DOTFILES_HOME/bin/.task $@
