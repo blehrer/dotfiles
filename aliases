@@ -83,31 +83,8 @@ alias ll='ls -alh'
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
-alias yagd='yagdWithErrorHandling -q'
-alias yagdq='yagdWithErrorHandling -s -sqe -q'
-
-function yagdWithErrorHandling() {
-    declare -A exceptions
-    exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
-    exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
-    local suffix
-
-    while getopts 's:q:' 'OPTKEY'; do
-    case ${OPTKEY} in
-        's')
-        local suffix=$OPTARG
-        ;;
-        'q')
-        local query=$OPTARG
-        ;;
-    esac
-    done
-
-    local repo=$(basename $(pwd))$suffix
-
-    [[ -n $exceptions[$repo] ]] && yag -d=`cfg_repo`/$exceptions[$repo] $query && return
-    yag -d=`cfg_repo`/`basename $(pwd)`$suffix $query
-}
+alias yagd="source $DOTFILES_HOME/bin/.yagd -q"
+alias yagdq="source $DOTFILES_HOME/bin/.yagd -s -sqe -q"
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
@@ -125,13 +102,6 @@ function src() {
     source "$1";
 }
 
-## Pick the right config repo
-function cfg_repo() {
-    local dir=`basename $(pwd)`
-    local suffix=config-repo
-    [[ $dir == digsrv* ]] && echo $WORKPLACE/digsrv-$suffix
-    [[ $dir == cp* ]] && echo $WORKPLACE/cp-$suffix
-}
 
 alias sb='src ~/.bashrc'
 alias sz='src ~/.zshrc'

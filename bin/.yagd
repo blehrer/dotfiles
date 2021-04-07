@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+function cfg_repo() {
+    local dir=`basename $(pwd)`
+    local suffix=config-repo
+    [[ $dir == digsrv* ]] && echo $WORKPLACE/digsrv-$suffix
+    [[ $dir == cp* ]] && echo $WORKPLACE/cp-$suffix
+    return
+}
+
+function yagdWithErrorHandling() {
+    declare -A exceptions
+    exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
+    exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
+    local suffix
+
+    while getopts 'hs:q:' 'OPTKEY'; do
+    case ${OPTKEY} in
+        'h')
+        yag -h
+        ;;
+        's')
+        local suffix=$OPTARG
+        ;;
+        'q')
+        local query=$OPTARG
+        ;;
+    esac
+    done
+
+    local repo=$(basename $(pwd))$suffix
+
+    [[ -n $exceptions[$repo] ]] && yag -d=`cfg_repo`/$exceptions[$repo] $query && return
+    yag -d=`cfg_repo`/`basename $(pwd)`$suffix $query
+    return
+}
+
+
+yagdWithErrorHandling "$@"
