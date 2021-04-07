@@ -1,7 +1,5 @@
 ## Overrides
 alias git=$(brew --prefix)/bin/git
-alias yq=$(brew --prefix)/opt/yq@3/bin/yq
-export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"
 ## Places
 alias @cdw='cd $WORKPLACE'
 alias cdw='@cdw'
@@ -84,8 +82,31 @@ alias ll='ls -alh'
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
-alias yagd='yag -d=`cfg_repo`/`basename $(pwd)`'
-alias yagdq='yag -d=`cfg_repo`/`basename $(pwd)`-sqe'
+alias yagd='yagdWithErrorHandling -q'
+alias yagdq='yagdWithErrorHandling -s -sqe -q'
+
+function yagdWithErrorHandling() {
+    declare -A exceptions
+    exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
+    exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
+    local suffix
+
+    while getopts 's:q:' 'OPTKEY'; do
+	case ${OPTKEY} in
+	    's')
+		local suffix=$OPTARG
+		;;
+	    'q')
+		local query=$OPTARG
+		;;
+	esac
+    done
+
+    local repo=$(basename $(pwd))$suffix
+
+    [[ -n $exceptions[$repo] ]] && yag -d=`cfg_repo`/$exceptions[$repo] $query && return
+    yag -d=`cfg_repo`/`basename $(pwd)`$suffix $query
+}
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
