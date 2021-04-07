@@ -93,14 +93,14 @@ function yagdWithErrorHandling() {
     local suffix
 
     while getopts 's:q:' 'OPTKEY'; do
-	case ${OPTKEY} in
-	    's')
-		local suffix=$OPTARG
-		;;
-	    'q')
-		local query=$OPTARG
-		;;
-	esac
+    case ${OPTKEY} in
+        's')
+        local suffix=$OPTARG
+        ;;
+        'q')
+        local query=$OPTARG
+        ;;
+    esac
     done
 
     local repo=$(basename $(pwd))$suffix

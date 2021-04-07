@@ -24,8 +24,10 @@ set relativenumber
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
 syntax enable
-set tabstop=8
+set tabstop=4
 set shiftwidth=4
+set softtabstop=4
+set expandtab
 set encoding=utf-8
 set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
 set ignorecase
