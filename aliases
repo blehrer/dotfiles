@@ -57,6 +57,7 @@ function popd() {
 }
 
 alias ag='ag --hidden'
+alias bash-5.1='/usr/local/homebrew/bin/bash'
 alias c='clear'
 alias cd='pushd'
 alias back='popd'
