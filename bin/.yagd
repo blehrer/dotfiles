@@ -9,29 +9,34 @@ function cfg_repo() {
 }
 
 function yagdWithErrorHandling() {
-    declare -A exceptions
-    exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
-    exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
-    local suffix
+    [[ -z $(which yag) ]] && {
+        echo "yag is not on PATH"
+        return 1
+    } || {
+        declare -A exceptions
+        exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
+        exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
+        local suffix
 
-    while getopts 'hs:q:' 'OPTKEY'; do
-    case ${OPTKEY} in
-        'h')
-        yag -h
-        ;;
-        's')
-        local suffix=$OPTARG
-        ;;
-        'q')
-        local query=$OPTARG
-        ;;
-    esac
-    done
+        while getopts 'hs:q:' 'OPTKEY'; do
+        case ${OPTKEY} in
+            'h')
+            yag -h
+            ;;
+            's')
+            local suffix=$OPTARG
+            ;;
+            'q')
+            local query=$OPTARG
+            ;;
+        esac
+        done
 
-    local repo=$(basename $(pwd))$suffix
+        local repo=$(basename $(pwd))$suffix
 
-    [[ -n $exceptions[$repo] ]] && yag -d=`cfg_repo`/$exceptions[$repo] $query && return
-    yag -d=`cfg_repo`/`basename $(pwd)`$suffix $query
+        [[ -n $exceptions[$repo] ]] && yag -d=`cfg_repo`/$exceptions[$repo] $query && return
+        yag -d=`cfg_repo`/`basename $(pwd)`$suffix $query
+    }
     return
 }
 
