@@ -8,4 +8,4 @@ $KUBECONFIG
 **/output
 **/testng-results
 **/allure-results
-all.log
+*.log

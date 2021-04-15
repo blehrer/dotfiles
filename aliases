@@ -97,6 +97,7 @@ alias e='vim $DOTFILES_HOME/environment_variables'
 alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias iam='vim ~/.aws/credentials'
 alias agig='vim $DOTFILES_HOME/ag/.agignore'
+alias gig='vim $DOTFILES_HOME/git/gitignore_global'
 
 ## Re-source files
 function src() {
