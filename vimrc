@@ -14,7 +14,7 @@
 " =============================================================================
 " Color scheme
 " =============================================================================
-colorscheme nord
+colorscheme nordisk
 
 " =============================================================================
 " Simple vanilla settings
@@ -22,7 +22,8 @@ colorscheme nord
 set number
 set relativenumber
 set cursorline
-hi CursorLine term=bold cterm=bold guibg=Grey40
+hi CursorLine term=bold cterm=bold guibg=Grey40 ctermbg=242
+hi LineNr ctermfg=darkgrey
 syntax enable
 set tabstop=4
 set shiftwidth=4
