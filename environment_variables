@@ -13,6 +13,7 @@ export EDITOR="/usr/bin/vim"
 export CP_CONFIG_REPO=$WORKPLACE/cp-config-repo
 export PAGER="/usr/bin/less -i"
 export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
+export INTELLIJ_HOME="/Applications/IntelliJ\ IDEA\ CE\ 2019.3.5.app/Contents"
 
 ### Parameters
 export HISTSIZE=1000000

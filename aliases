@@ -81,6 +81,7 @@ alias gst='git status'
 alias gsub='git submodule update --remote --merge'
 alias ivm='vim'
 alias ll='ls -alh'
+alias idea=$INTELLIJ_HOME/MacOS/idea
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
