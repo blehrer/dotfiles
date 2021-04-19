@@ -14,8 +14,10 @@
 " =============================================================================
 " Color scheme
 " =============================================================================
-"colorscheme jellybeans
-colorscheme espresso
+set termguicolors
+colorscheme gruvbox
+set background=dark
+
 
 " =============================================================================
 " Simple vanilla settings
@@ -57,7 +59,7 @@ let NERDTreeShowHidden=1
 " Lightline
 set laststatus=2
 let g:lightline = {
-    \ 'colorscheme': 'espresso'
+    \ 'colorscheme': 'gruvbox'
 \}
 
 " =============================================================================
