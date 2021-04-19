@@ -18,7 +18,6 @@ set termguicolors
 colorscheme gruvbox
 set background=dark
 
-
 " =============================================================================
 " Simple vanilla settings
 " =============================================================================
@@ -43,6 +42,7 @@ set lazyredraw
 set undofile
 set fileformat=unix
 set ff=unix
+set path+=./**
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.
@@ -117,14 +117,13 @@ map <silent> <C-j> <C-W>-
 map <silent> <C-k> <C-W>+
 map <silent> <C-l> <C-w>>
 "Leader Commands
-let mapleader = ","
+let mapleader = " "
 
 nmap <Leader>f :GFiles<CR>
 nmap <Leader>m :NERDTreeToggle<CR>
 nmap <Leader>n :TlistToggle<CR>
 map <Leader><F2> :call RenameFile()<cr>
 nmap <Leader><Leader> :Files<cr>
-nmap <Leader>c gg/[samlj5yy/[defaultp5jdGZZ
 "Typo maps
 command! Q q " Bind :Q to :q
 map Q <Nop> " Disable Ex mode
