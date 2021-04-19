@@ -14,7 +14,8 @@
 " =============================================================================
 " Color scheme
 " =============================================================================
-colorscheme jellybeans
+"colorscheme jellybeans
+colorscheme espresso
 
 " =============================================================================
 " Simple vanilla settings
@@ -56,7 +57,7 @@ let NERDTreeShowHidden=1
 " Lightline
 set laststatus=2
 let g:lightline = {
-    \ 'colorscheme': 'jellybeans'
+    \ 'colorscheme': 'espresso'
 \}
 
 " =============================================================================
