@@ -36,13 +36,23 @@ set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
 set ignorecase
 set smartcase
 set smarttab
+set wildmode=longest,list,full
 set wildmenu
+" Ignore files
+set wildignore+=*.pyc
+set wildignore+=*.class
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
 set ruler
 set lazyredraw
 set undofile
 set fileformat=unix
 set ff=unix
-set path+=./**
+set path+=.**
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.
@@ -79,6 +89,7 @@ let g:lightline = {
 "  let windowfound = 0
 "
 "  for bline in split(buffersoutput, "\n")
+nmap <Leader>m :NERDTreeToggle<CR>
 "    let m = matchlist(bline, pattern)
 "
 "    if (len(m) > 0)
@@ -119,11 +130,10 @@ map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
-nmap <Leader>f :GFiles<CR>
 nmap <Leader>m :NERDTreeToggle<CR>
-nmap <Leader>n :TlistToggle<CR>
+nmap <Leader>n :NERDTreeToggle<CR>
 map <Leader><F2> :call RenameFile()<cr>
-nmap <Leader><Leader> :Files<cr>
+nmap <Leader><Leader> :GFiles<cr>
 "Typo maps
 command! Q q " Bind :Q to :q
 map Q <Nop> " Disable Ex mode
