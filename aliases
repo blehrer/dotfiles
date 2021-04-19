@@ -73,6 +73,7 @@ alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-fu
 alias gc='git checkout'
 alias gd='git diff'
 alias gds='git diff --staged'
+alias gh='se && gh'
 alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})' #show the git DAG as a graph
 alias glga='git log --graph --decorate --oneline --all' #show the git DAG as a graph
 alias gpom='git push origin HEAD:master'
