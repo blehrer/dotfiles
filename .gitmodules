@@ -40,3 +40,6 @@
 [submodule "vim-plugin.vim-espresso"]
 	path = homedir/.vim/pack/vendor/start/vim-espresso
 	url = https://github.com/gmoe/vim-espresso.git
+[submodule "vim-plugin.gruvbox"]
+	path = homedir/.vim/pack/vendor/start/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
