@@ -22,6 +22,7 @@ alias @='@task'
 alias jj='@task'
 alias oj='@task $1; sublime'
 alias @cpc='cd $WORKPLACE/cp-config-repo'
+alias cpc='cd $WORKPLACE/cp-config-repo'
 alias @dg='cd $WORKPLACE/digsrv-config-repo'
 
 function @task() {
