@@ -14,7 +14,7 @@
 " =============================================================================
 " Color scheme
 " =============================================================================
-colorscheme nordisk
+colorscheme jellybeans
 
 " =============================================================================
 " Simple vanilla settings
@@ -22,8 +22,8 @@ colorscheme nordisk
 set number
 set relativenumber
 set cursorline
-hi CursorLine term=bold cterm=bold guibg=Grey40 ctermbg=242
-hi LineNr ctermfg=darkgrey
+"hi CursorLine term=bold cterm=bold guibg=Grey40 ctermbg=242
+"hi LineNr ctermfg=darkgrey
 syntax enable
 set tabstop=4
 set shiftwidth=4
@@ -56,7 +56,7 @@ let NERDTreeShowHidden=1
 " Lightline
 set laststatus=2
 let g:lightline = {
-    \ 'colorscheme': 'nord'
+    \ 'colorscheme': 'jellybeans'
 \}
 
 " =============================================================================
