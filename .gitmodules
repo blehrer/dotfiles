@@ -37,3 +37,6 @@
 [submodule "vim-plugin.fzf"]
 	path = homedir/.vim/pack/vendor/start/fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "vim-plugin.vim-espresso"]
+	path = homedir/.vim/pack/vendor/start/vim-espresso
+	url = https://github.com/gmoe/vim-espresso.git
