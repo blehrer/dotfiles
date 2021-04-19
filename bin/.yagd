@@ -34,8 +34,13 @@ function yagdWithErrorHandling() {
 
         local repo=$(basename $(git rev-parse --show-toplevel))$suffix
 
-        [[ -n $exceptions[$repo] ]] && yag -d `cfg_repo`/$exceptions[$repo] $query && return
-        yag -d `cfg_repo`/$repo $query
+        echo repo: $repo
+        echo exception: $exceptions[$repo]
+        [[ -n $exceptions[$repo] ]] && {
+            yag -d `cfg_repo`/$exceptions[$repo] $query
+        } || {
+            yag -d `cfg_repo`/$repo $query
+        }
     }
     return
 }
