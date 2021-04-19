@@ -32,10 +32,10 @@ function yagdWithErrorHandling() {
         esac
         done
 
-        local repo=$(basename $(pwd))$suffix
+        local repo=$(basename $(git rev-parse --show-toplevel))$suffix
 
-        [[ -n $exceptions[$repo] ]] && yag -d=`cfg_repo`/$exceptions[$repo] $query && return
-        yag -d=`cfg_repo`/`basename $(pwd)`$suffix $query
+        [[ -n $exceptions[$repo] ]] && yag -d `cfg_repo`/$exceptions[$repo] $query && return
+        yag -d `cfg_repo`/$repo $query
     }
     return
 }
