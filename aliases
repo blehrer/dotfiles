@@ -22,6 +22,8 @@ alias @='@task'
 alias jj='@task'
 alias oj='@task $1; sublime'
 
+source $DOTFILES_HOME/nbcu_aliases
+
 function @task() {
     source $DOTFILES_HOME/bin/.task $@
 }
