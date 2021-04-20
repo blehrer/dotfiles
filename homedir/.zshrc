@@ -2,8 +2,8 @@ set -o magicequalsubst
 export CONFIG_DIR=$HOME/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export ZSH=$DOTFILES_HOME/gitclones/oh-my-zsh
-source $HOME/.vim/pack/vendor/start/gruvbox/gruvbox_256palette.sh
 source $DOTFILES_HOME/environment_variables
+source $VIM_PLUGINS/gruvbox/gruvbox_256palette.sh
 source $DOTFILES_HOME/path
 source $DOTFILES_HOME/zsh/pre-compinit-scripts
 source $DOTFILES_HOME/zsh/oh-my-zsh.cfg
