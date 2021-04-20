@@ -89,7 +89,6 @@ let g:lightline = {
 "  let windowfound = 0
 "
 "  for bline in split(buffersoutput, "\n")
-nmap <Leader>m :NERDTreeToggle<CR>
 "    let m = matchlist(bline, pattern)
 "
 "    if (len(m) > 0)
@@ -134,6 +133,15 @@ nmap <Leader>m :NERDTreeToggle<CR>
 nmap <Leader>n :NERDTreeToggle<CR>
 map <Leader><F2> :call RenameFile()<cr>
 nmap <Leader><Leader> :GFiles<cr>
+
+" replace selected text with whatever you paste in
+vnoremap <leader>p "_dP
+
+" yank to clipboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y gg"+yG
+
 "Typo maps
 command! Q q " Bind :Q to :q
 map Q <Nop> " Disable Ex mode
