@@ -31,6 +31,7 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set autoindent
 set encoding=utf-8
 set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
 set ignorecase
@@ -53,6 +54,7 @@ set undofile
 set fileformat=unix
 set ff=unix
 set path+=.**
+set path+=~/.config/**
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.
@@ -129,8 +131,10 @@ map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
-nmap <Leader>m :NERDTreeToggle<CR>
-nmap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>m :NERDTreeToggle<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>] :bnext<CR>
+nnoremap <Leader>[ :bprev<CR>
 map <Leader><F2> :call RenameFile()<cr>
 nmap <Leader><Leader> :GFiles<cr>
 
