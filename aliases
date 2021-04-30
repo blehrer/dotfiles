@@ -85,6 +85,7 @@ alias idea=$INTELLIJ_HOME/MacOS/idea
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
+alias secretstring='jq ".SecretString|fromjson"'
 alias yagd="source $DOTFILES_HOME/bin/.yagd -q"
 alias yagdq="source $DOTFILES_HOME/bin/.yagd -s -sqe -q"
 
