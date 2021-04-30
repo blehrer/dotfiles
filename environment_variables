@@ -14,16 +14,16 @@ export CP_CONFIG_REPO=$WORKPLACE/cp-config-repo
 export PAGER="/usr/bin/less -i"
 export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
 export INTELLIJ_HOME="/Applications/IntelliJ\ IDEA\ CE\ 2019.3.5.app/Contents"
-export HIGHLIGHT_STYLE=nord
+export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 export GH_HOST=https://github.com
-export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)`
+export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/dev/null
 export VIM_PLUGINS=$HOME/.vim/pack/vendor/start/
 
 ### Parameters
 export HISTSIZE=1000000
 
 ## Integration with cyberpeacock_login
-export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
+#export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
 
 
 ## AWS

@@ -12,6 +12,7 @@ export PATH="$PATH:~/tools"
 export PATH="$PATH:$DOTFILES_HOME/bin"
 export PATH="$PATH:/usr/local/homebrew/bin"
 export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:$HOME/.local/bin/"
 
 # Prepend to path, using stuff already on the path
 export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"

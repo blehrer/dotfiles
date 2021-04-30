@@ -2,7 +2,7 @@
 alias @cpc='cd $WORKPLACE/cp-config-repo'
 alias cpc='cd $WORKPLACE/cp-config-repo'
 alias @dg='cd $WORKPLACE/digsrv-config-repo'
-alias @toon='cd $WORKPLACE/cp-transfer-upload-s3toonprem'
+alias @toon='cd $WORKPLACE/cp-transfer-s3toonprem'
 alias @ds='cd $WORKPLACE/cp-transfer-upload-s3'
 alias @s3s3='cd $WORKPLACE/cp-transfer-upload-s3'
 alias @s3='cd $WORKPLACE/cp-transfer-upload-s3'

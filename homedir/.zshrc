@@ -3,8 +3,9 @@ export CONFIG_DIR=$HOME/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export ZSH=$DOTFILES_HOME/gitclones/oh-my-zsh
 source $DOTFILES_HOME/environment_variables
-source $VIM_PLUGINS/gruvbox/gruvbox_256palette.sh
 source $DOTFILES_HOME/path
+wal --theme gruvbox
+source $VIM_PLUGINS/gruvbox/gruvbox_256palette.sh
 source $DOTFILES_HOME/zsh/pre-compinit-scripts
 source $DOTFILES_HOME/zsh/oh-my-zsh.cfg
 source $DOTFILES_HOME/zshrc
