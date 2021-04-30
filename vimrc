@@ -149,6 +149,8 @@ nnoremap <leader>Y gg"+yG
 "Typo maps
 command! Q q " Bind :Q to :q
 map Q <Nop> " Disable Ex mode
+command! W w " Instead of opening a Window manager, just write
+map W <Nop>
 
 "Use :w!! to save a file with sudo
 cabbrev w!! w !sudo tee % >/dev/null
