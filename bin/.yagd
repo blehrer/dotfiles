@@ -16,6 +16,7 @@ function yagdWithErrorHandling() {
         declare -A exceptions
         exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
         exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
+        exceptions[cp-manatees-performance-tests]="cp-transfer-performance-tests"
         local suffix
 
         while getopts 'hs:q:' 'OPTKEY'; do
