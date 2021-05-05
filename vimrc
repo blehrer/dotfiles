@@ -24,8 +24,8 @@ set background=dark
 set number
 set relativenumber
 set cursorline
-"hi CursorLine term=bold cterm=bold guibg=Grey40 ctermbg=242
-"hi LineNr ctermfg=darkgrey
+set noerrorbells
+set smartindent
 syntax enable
 set tabstop=4
 set shiftwidth=4
@@ -39,6 +39,11 @@ set smartcase
 set smarttab
 set wildmode=longest,list,full
 set wildmenu
+set incsearch
+set colorcolumn=100
+set scrolloff=8
+set signcolumn=yes
+highlight ColorColumn guibg=lightgrey
 " Ignore files
 set wildignore+=*.pyc
 set wildignore+=*.class
@@ -55,6 +60,16 @@ set fileformat=unix
 set ff=unix
 set path+=.**
 set path+=~/.config/**
+set cmdheight=1
+set updatetime=50
+
+" netrw
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 2
+let g:netrw_winsize = 30
+let g:netrw_wiw=1
+let g:netrw_usetab = 1
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.
@@ -66,7 +81,7 @@ set undodir=.undo/,~/.undo/,/tmp//
 " Plugin settings
 " =============================================================================
 " NerdTree
-let NERDTreeShowHidden=1
+"let NERDTreeShowHidden=1
 
 " Lightline
 set laststatus=2
@@ -124,20 +139,19 @@ endfunction
 " =============================================================================
 
 "Resize splits
-map <silent> <C-h> <C-w><
-map <silent> <C-j> <C-W>-
-map <silent> <C-k> <C-W>+
-map <silent> <C-l> <C-w>>
+"map <silent> <C-h> <C-w><
+"map <silent> <C-j> <C-W>-
+"map <silent> <C-k> <C-W>+
+"map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
-nnoremap <Leader>m :NERDTreeToggle<CR>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 map <Leader><F2> :call RenameFile()<cr>
-nmap <Leader><Leader> :GFiles<cr>
-
+"nmap <Leader><Leader> :NERDTreeToggle<cr>
+nmap <Leader><Leader> <Plug>NetrwShrink
 " replace selected text with whatever you paste in
 vnoremap <leader>p "_dP
 
@@ -154,3 +168,6 @@ map W <Nop>
 
 "Use :w!! to save a file with sudo
 cabbrev w!! w !sudo tee % >/dev/null
+cnoremap vs vsplit
+cnoremap rc :vsplit ~/.config/dotfiles/vimrc<cr>
+cnoremap vj :vsplit ~/Documents/notes/Vim.md<cr>
