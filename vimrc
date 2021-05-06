@@ -146,12 +146,12 @@ endfunction
 "Leader Commands
 let mapleader = " "
 
-nnoremap <Leader>n :NERDTreeToggle<CR>
+noremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
-map <Leader><F2> :call RenameFile()<cr>
-"nmap <Leader><Leader> :NERDTreeToggle<cr>
-nmap <Leader><Leader> <Plug>NetrwShrink
+nnoremap <Leader><F2> :call RenameFile()<cr>
+nnoremap <Leader><Leader> :GFiles<CR>
+"nmap <Leader><Leader> <Plug>NetrwShrink
 " replace selected text with whatever you paste in
 vnoremap <leader>p "_dP
 
@@ -159,6 +159,10 @@ vnoremap <leader>p "_dP
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
+
+" move lines while formatting
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 "Typo maps
 command! Q q " Bind :Q to :q
