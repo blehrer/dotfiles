@@ -2,6 +2,7 @@
 
 function cfg_repo() {
     local dir=`basename $(pwd)`
+    [ -f .yagconf ] && local dir=$(cat .yagconf | tail -1)
     local suffix=config-repo
     [[ $dir == digsrv* ]] && echo $WORKPLACE/digsrv-$suffix
     [[ $dir == cp* ]] && echo $WORKPLACE/cp-$suffix
@@ -34,6 +35,7 @@ function yagdWithErrorHandling() {
         done
 
         local repo=$(basename $(git rev-parse --show-toplevel))$suffix
+        [ -f .yagconf ] && local repo=$(cat .yagconf | tail -1)
 
         echo repo: $repo
         echo exception: $exceptions[$repo]

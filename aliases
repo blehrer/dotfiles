@@ -19,7 +19,7 @@ alias @aws='cd ~/.aws'
 alias @tools='cd $WORKPLACE/cp-tools'
 alias @http='cd $HTTP_ROOT'
 alias @='@task'
-alias @@='@ $(git branch --show-current) 2>/dev/null'
+alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
 alias jj='@task'
 alias oj='@task $1; sublime'
 
@@ -27,6 +27,10 @@ source $DOTFILES_HOME/nbcu_aliases
 
 function @task() {
     source $DOTFILES_HOME/bin/.task $@
+}
+
+function yagdconf() {
+    echo $(basename ${$(dirs)[2]}) >> .yagconf | uniq | sed -e "s/.*config-repo//g" | tee .yagconf
 }
 
 ## Tools
