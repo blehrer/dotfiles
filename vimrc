@@ -64,12 +64,11 @@ set cmdheight=1
 set updatetime=50
 
 " netrw
-let g:netrw_liststyle = 3
+
+let g:netrw_browse_split = 0
 let g:netrw_banner = 0
-let g:netrw_browse_split = 2
-let g:netrw_winsize = 30
-let g:netrw_wiw=1
-let g:netrw_usetab = 1
+let g:netrw_winsize = 25
+let g:netrw_localrmdir='rm -r'
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.vimswap//,/var/tmp//,/tmp//,.
@@ -151,7 +150,8 @@ nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
 nnoremap <Leader><Leader> :GFiles<CR>
-"nmap <Leader><Leader> <Plug>NetrwShrink
+nnoremap <Leader><CR> :source ~/.config/dotfiles/vimrc<CR>
+nmap <Leader><Leader> <Plug>NetrwShrink
 " replace selected text with whatever you paste in
 vnoremap <leader>p "_dP
 
@@ -172,6 +172,7 @@ map W <Nop>
 
 "Use :w!! to save a file with sudo
 cabbrev w!! w !sudo tee % >/dev/null
-cnoremap vs vsplit
-cnoremap rc :vsplit ~/.config/dotfiles/vimrc<cr>
-cnoremap vj :vsplit ~/Documents/notes/Vim.md<cr>
+
+" vimrc and journal
+nnoremap <Leader>vv :vsplit ~/.config/dotfiles/vimrc<CR>
+nnoremap <Leader>vj :vsplit ~/Documents/notes/Vim.md<CR>
