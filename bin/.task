@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-env -i
+  env -i
 
-usage() {
-    echo "
+function usage() {
+	echo "
 NAME:
 @task - make/go-to task notes dir (~/Documents/jira/jira-prefix/jira-id)
 
@@ -16,45 +16,49 @@ OPTIONS:
 }
 
 mkdir_and_cd_and_git_init() {
-    if [[ $altProject ]] then;
-        local dir=~/Documents/jira/$altProject/$id
-        local description=$altProject-$id
-    else
-        local dir=~/Documents/jira/$defaultProject/$id
-        local description=$defaultProject-$id
-    fi
-    [[ -d $dir ]] || mkdir -p $dir
-    cd $dir
-    [[ -d .git ]] || git init && echo $description > .git/description
-    [[ -n $branchName ]] && git checkout -b $branchName
+	[ $altProject ] && {
+		local dir=~/Documents/jira/$altProject/$id
+		local description=$altProject-$id
+	} || {
+		local dir=~/Documents/jira/$defaultProject/$id
+		local description=$defaultProject-$id
+	}
+	[ -d $dir ] || mkdir -p $dir
+	cd $dir
+	[ -d .git ] || {
+		git init
+		echo $description >.git/description
+	}
+	[ -n $branchName ] && git checkout -b $branchName
 }
 
-
-main () {
-    local defaultProject=svcs6
-    [[ -z $1 ]] && cd ~/Documents/jira/$defaultProject && return 0;
-    if [[ $1 =~ '[a-zA-Z0-9]+-[0-9]+-.+' ]] then;
-        local branchName=$1
-        echo $branchName
-        local altProject=`echo "$branchName" | cut -d '-' -f 1 | tr '[:upper:]' '[:lower:]'`
-        local id=`echo "$branchName" | cut -d '-' -f 2`
-        echo "branchName: $branchName, altProject: $altProject, id: $id"
-    else
-        for i in "$@"
-        do
-            case $i in
-                (-h | --help) usage
-                    return 0 ;;
-                (-p=* | --project=*) local altProject=`echo "${i#*=}" | tr '[:upper:]' '[:lower:]'`
-                    shift ;;
-                (*)  ;;
-            esac
-        done
-    fi
-    [[ ! -z $id ]] || local id=$1
-    mkdir_and_cd_and_git_init
-    return 0
+function main() {
+	local defaultProject=svcs6
+	[ -z $1 ] && cd ~/Documents/jira/$defaultProject && return 0
+	[ $1 =~ '[a-zA-Z0-9]+-[0-9]+-.+' ] && {
+		local branchName=$1
+		echo $branchName
+		local altProject=$(echo "$branchName" | cut -d '-' -f 1 | tr '[:upper:]' '[:lower:]')
+		local id=$(echo "$branchName" | cut -d '-' -f 2)
+		echo "branchName: $branchName, altProject: $altProject, id: $id"
+	} || {
+		for i in "$@"; do
+			case $i in
+			-h | --help)
+				usage
+				return 0
+				;;
+			-p=* | --project=*)
+				local altProject=$(echo "${i#*=}" | tr '[:upper:]' '[:lower:]')
+				shift
+				;;
+			*) ;;
+			esac
+		done
+	}
+	[ ! -z $id ] || local id=$1
+	mkdir_and_cd_and_git_init
+	return
 }
-
 
 main $@
