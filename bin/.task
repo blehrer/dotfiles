@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-  env -i
 
 function usage() {
 	echo "
 NAME:
-@task - make/go-to task notes dir (~/Documents/jira/jira-prefix/jira-id)
+@task - make/go-to task notes dir ($HOME/Documents/jira/jira-prefix/jira-id)
 
 SYNOPSIS:
 @task [-p|--project=<jira-prefix>] jira-id
@@ -17,10 +16,10 @@ OPTIONS:
 
 mkdir_and_cd_and_git_init() {
 	[ $altProject ] && {
-		local dir=~/Documents/jira/$altProject/$id
+		local dir=$HOME/Documents/jira/$altProject/$id
 		local description=$altProject-$id
 	} || {
-		local dir=~/Documents/jira/$defaultProject/$id
+		local dir=$HOME/Documents/jira/$defaultProject/$id
 		local description=$defaultProject-$id
 	}
 	[ -d $dir ] || mkdir -p $dir
@@ -34,8 +33,8 @@ mkdir_and_cd_and_git_init() {
 
 function main() {
 	local defaultProject=svcs6
-	[ -z $1 ] && cd ~/Documents/jira/$defaultProject && return 0
-	[ $1 =~ '[a-zA-Z0-9]+-[0-9]+-.+' ] && {
+	[ -z $1 ] && cd $HOME/Documents/jira/$defaultProject && return 0
+	[[ $1 =~ [a-zA-Z0-9]+-[0-9]+-.+ ]] && {
 		local branchName=$1
 		echo $branchName
 		local altProject=$(echo "$branchName" | cut -d '-' -f 1 | tr '[:upper:]' '[:lower:]')
