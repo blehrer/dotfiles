@@ -46,3 +46,6 @@
 [submodule "vim-plugin.vim-jsonpath"]
 	path = homedir/.vim/pack/vendor/start/vim-jsonpath
 	url = https://github.com/mogelbrod/vim-jsonpath.git
+[submodule "vim-plugin.vim-shfmt"]
+	path = homedir/.vim/pack/vendor/start/vim-shfmt
+	url = https://github.com/z0mbix/vim-shfmt.git
