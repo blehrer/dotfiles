@@ -21,6 +21,7 @@ set background=dark
 " =============================================================================
 " Simple vanilla settings
 " =============================================================================
+set nowrap
 set number
 set relativenumber
 set cursorline
@@ -138,10 +139,10 @@ endfunction
 " =============================================================================
 
 "Resize splits
-"map <silent> <C-h> <C-w><
-"map <silent> <C-j> <C-W>-
-"map <silent> <C-k> <C-W>+
-"map <silent> <C-l> <C-w>>
+map <silent> <C-h> <C-w><
+map <silent> <C-j> <C-W>-
+map <silent> <C-k> <C-W>+
+map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
