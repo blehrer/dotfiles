@@ -19,7 +19,7 @@ alias @aws='cd ~/.aws'
 alias @tools='cd $WORKPLACE/cp-tools'
 alias @http='cd $HTTP_ROOT'
 alias @='@task'
-alias @@='@ $(git branch --show-current); yagdconf'
+alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
 alias jj='@task'
 alias oj='@task $1; sublime'
 
