@@ -42,7 +42,7 @@
 	url = https://github.com/gmoe/vim-espresso.git
 [submodule "vim-plugin.gruvbox"]
 	path = homedir/.vim/pack/vendor/start/gruvbox
-	url = https://github.com/morhetz/gruvbox.git
+	url = https://github.com/gruvbox-community/gruvbox.git
 [submodule "vim-plugin.vim-jsonpath"]
 	path = homedir/.vim/pack/vendor/start/vim-jsonpath
 	url = https://github.com/mogelbrod/vim-jsonpath.git
