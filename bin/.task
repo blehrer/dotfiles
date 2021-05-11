@@ -28,7 +28,9 @@ mkdir_and_cd_and_git_init() {
 		git init
 		echo $description >.git/description
 	}
-	[ -n $branchName ] && git checkout -b $branchName
+    [ -f .yagconf ] || {
+        [ -n $branchName ] && git checkout -b $branchName
+    }
 }
 
 function main() {
