@@ -152,6 +152,10 @@ nnoremap <Leader><F2> :call RenameFile()<cr>
 nnoremap <Leader><Leader> :GFiles<CR>
 nnoremap <Leader><CR> :source ~/.config/dotfiles/vimrc<CR>
 nmap <Leader><Leader> <Plug>NetrwShrink
+
+" Buffer pane with file tree sidebar
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+
 " replace selected text with whatever you paste in
 vnoremap <leader>p "_dP
 
