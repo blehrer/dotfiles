@@ -21,6 +21,7 @@ set background=dark
 " =============================================================================
 " Simple vanilla settings
 " =============================================================================
+set nocompatible
 set nowrap
 set number
 set relativenumber
@@ -63,7 +64,7 @@ set path+=.**
 set path+=~/.config/**
 set cmdheight=1
 set updatetime=50
-
+set mouse=a
 " netrw
 
 let g:netrw_browse_split = 0
