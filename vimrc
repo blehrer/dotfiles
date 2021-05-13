@@ -166,6 +166,10 @@ nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
+" json formatting
+nnoremap <leader>jq :%!jq<cr>
+vnoremap <leader>jq :'<,'>*!jq<cr>
+
 " move lines while formatting
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
