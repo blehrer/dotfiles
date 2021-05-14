@@ -45,19 +45,14 @@ function pushd() {
   fi
 
   builtin pushd "${DIR}" > /dev/null
-  echo -n "DIRSTACK: "
-  dirs
 }
 
 function pushd_builtin() {
   builtin pushd > /dev/null
-  echo -n "DIRSTACK: "
-  dirs
 }
 
 function popd() {
   builtin popd > /dev/null
-  echo -n "DIRSTACK: "
   dirs
 }
 
