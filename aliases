@@ -18,6 +18,7 @@ alias @http='cd $HTTP_ROOT'
 alias @='@task'
 alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
 alias @@@='@ $(cat ~/.task-mru)'
+alias @@@@='cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
 alias jj='@task'
 alias oj='@task $1; sublime'
 
