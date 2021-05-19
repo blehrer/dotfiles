@@ -25,8 +25,9 @@ alias oj='@task $1; sublime'
 source $DOTFILES_HOME/nbcu_aliases
 
 function @task() {
+    [[ $(pwd) =~ $WORKPLACE/* ]] && updateMru=1
     source $DOTFILES_HOME/bin/.task $@
-    basename $(pwd) > ~/.task-mru
+    [ $updateMru ] && basename $(pwd) > ~/.task-mru
 }
 
 function yagdconf() {
@@ -34,6 +35,8 @@ function yagdconf() {
         uniq |
         sed -e "s/.*config-repo//g" |
         tee .yagconf
+    git add .yagconf
+    git commit -m ".yagconf"
 }
 
 ## Tools

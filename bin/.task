@@ -15,13 +15,8 @@ OPTIONS:
 }
 
 mkdir_and_cd_and_git_init() {
-	[ $altProject ] && {
-		local dir=$HOME/Documents/jira/$altProject/$id
-		local description=$altProject-$id
-	} || {
-		local dir=$HOME/Documents/jira/$defaultProject/$id
-		local description=$defaultProject-$id
-	}
+    local dir=$HOME/Documents/jira/${altProject:-${defaultProject}}/$id
+    local description=https://jira.inbcu.com/browse/${altProject:-${defaultProject}}-$id
 	[ -d $dir ] || mkdir -p $dir
 	cd $dir
 	[ -d .git ] || {
@@ -31,6 +26,17 @@ mkdir_and_cd_and_git_init() {
     [ -f .yagconf ] || {
         [ -n $branchName ] && git checkout -b $branchName
     }
+    [ -f README.md ] || {
+        echo "# $branchName\n\n$description" > README.md
+        git add .
+        git commit -am "README.md"
+    }
+#    [ -d .github ] || {
+#        gh repo create \
+#            https://github.inbcu.com/206672215/$(basename $(dirname $(pwd)))-$(basename $(pwd)) \
+#            --internal \
+#            --description $description && mkdir .github
+#    }
 }
 
 function main() {
