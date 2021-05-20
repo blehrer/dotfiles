@@ -148,6 +148,7 @@ map <silent> <C-l> <C-w>>
 let mapleader = " "
 
 noremap <Leader>n :NERDTreeToggle<CR>
+noremap <Leader>nn :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
