@@ -21,7 +21,7 @@ export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/d
 export VIM_PLUGINS=$HOME/.vim/pack/vendor/start/
 
 ### Parameters
-export HISTSIZE=1000000
+export HISTSIZE=1000000000
 
 ## Integration with cyberpeacock_login
 #export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
