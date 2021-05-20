@@ -35,7 +35,7 @@ function yagdWithErrorHandling() {
         done
 
         local repo=$(basename $(git rev-parse --show-toplevel))$suffix
-        [ -f .yagconf ] && local repo=$(cat .yagconf | tail -1)
+        [ -f .yagconf ] && local repo=$(cat .yagconf | tail -1)$suffix
 
         echo repo: $repo
         echo exception: $exceptions[$repo]
