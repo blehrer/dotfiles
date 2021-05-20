@@ -24,7 +24,10 @@ mkdir_and_cd_and_git_init() {
 		echo $description >.git/description
 	}
     [ -f .yagconf ] || {
-        [ -n $branchName ] && git checkout -b $branchName
+        [ -n $branchName ] && {
+            git checkout -b $branchName
+            echo "./$id    $branchName" >> ../index.txt
+        }
     }
     [ -f README.md ] || {
         echo "# $branchName\n\n$description" > README.md
