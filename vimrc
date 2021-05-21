@@ -167,9 +167,12 @@ nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
+" unescape \t and \n on current line (unwraps stacktraces)
+nnoremap <leader>ue :.s/\\t/    /g<cr>  :.s/\\n/\r/g<cr>
+
 " json formatting
-nnoremap <leader>jq :%!jq<cr>
-vnoremap <leader>jq :'<,'>*!jq<cr>
+nnoremap <leader>jq :.!jq<cr>v%:s/\\t/    /ge<cr>gv:s/\\n/\r/ge<cr>gvOv
+vnoremap <leader>jq :'<,'>*!jq<cr>gv:s/\\t/    /ge<cr>gv:s/\\n/\r/ge<cr>gvOv
 
 " move lines while formatting
 vnoremap J :m '>+1<CR>gv=gv
