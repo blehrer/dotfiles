@@ -96,3 +96,11 @@ zipdirs() {
     zip -r -X $1 $2 -x "*DS_Store" \*.un~
 }
 
+timezsh () {
+	shell=${1-$SHELL}
+	for i in $(seq 1 10)
+	do
+		/usr/bin/time $shell -i -c exit
+	done
+}
+
