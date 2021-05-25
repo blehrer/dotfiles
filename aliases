@@ -25,9 +25,16 @@ alias oj='@task $1; sublime'
 source $DOTFILES_HOME/nbcu_aliases
 
 function @task() {
-    [[ $(pwd) =~ $WORKPLACE/* ]] && updateMru=1
+    [[ $(pwd) =~ $WORKPLACE/* ]] && [[ $1 ]] && updateMru=1
     source $DOTFILES_HOME/bin/.task $@
-    [ $updateMru ] && basename $(pwd) > ~/.task-mru
+    [ $updateMru ] && {
+        echo here
+        basename $(pwd) > ~/.task-mru
+        pushd $DOTFILES_HOME
+        git add homedir/.task-mru
+        git commit -m "task-mru: update to $(cat ~/.task-mru)"
+        popd
+    }
 }
 
 function yagdconf() {
