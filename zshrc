@@ -12,13 +12,13 @@ setopt SHARE_HISTORY
 setopt COMPLETE_IN_WORD
 # never ever beep ever
 setopt NO_BEEP
-
 ## automatically decide when to page a list of completions
 #LISTMAX=0
 
 ## disable mail checking
-#MAILCHECK=0
+MAILCHECK=0
 autoload -U colors && colors
+autoload sticky-note
 
 autoload -Uz compinit && compinit -i
 
@@ -54,4 +54,4 @@ if [[ $platform == 'Darwin' ]]; then
   autoload -U compinit
 fi
 
-source ~/.config/dotfiles/zsh/antigen
+#source ~/.config/dotfiles/zsh/antigen
