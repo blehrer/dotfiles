@@ -114,7 +114,7 @@ function src() {
 
 
 alias sb='src ~/.bashrc'
-alias sz='src ~/.zshrc'
+alias sz='exec zsh'
 alias soz='src $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias sa='src $DOTFILES_HOME/aliases'
 alias se='src $DOTFILES_HOME/environment_variables'
