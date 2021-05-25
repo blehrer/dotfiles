@@ -147,14 +147,13 @@ map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
-noremap <Leader>n :NERDTreeToggle<CR>
-noremap <Leader>nn :NERDTreeCWD<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+noremap <Leader>. :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
 nnoremap <Leader><Leader> :GFiles<CR>
 nnoremap <Leader><CR> :source ~/.config/dotfiles/vimrc<CR>
-nmap <Leader><Leader> <Plug>NetrwShrink
 
 " Buffer pane with file tree sidebar
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
@@ -168,7 +167,7 @@ vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
 " unescape \t and \n on current line (unwraps stacktraces)
-nnoremap <leader>ue :.s/\\t/    /g<cr>  :.s/\\n/\r/g<cr>
+nnoremap <leader>ue :.s/\\t/    /ge<cr>  :.s/\\n/\r/ge<cr>
 
 " json formatting
 nnoremap <leader>jq :.!jq<cr>v%:s/\\t/    /ge<cr>gv:s/\\n/\r/ge<cr>gvOv
