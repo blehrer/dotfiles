@@ -49,3 +49,6 @@
 [submodule "vim-plugin.vim-shfmt"]
 	path = homedir/.vim/pack/vendor/start/vim-shfmt
 	url = https://github.com/z0mbix/vim-shfmt.git
+[submodule "vim-plugin.vim-surround"]
+	path = homedir/.vim/pack/vendor/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
