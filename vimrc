@@ -22,7 +22,7 @@ set background=dark
 " Simple vanilla settings
 " =============================================================================
 set nocompatible
-set nowrap
+set wrap
 set number
 set relativenumber
 set cursorline
