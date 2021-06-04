@@ -19,7 +19,7 @@ alias @='@task'
 alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
 alias @@@='@ $(cat ~/.task-mru)'
 alias @@@@='cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
-alias jj='@task'
+alias jj='cat ~/.task-mru | pbcopy'
 alias oj='@task $1; sublime'
 
 source $DOTFILES_HOME/nbcu_aliases
@@ -28,7 +28,6 @@ function @task() {
     [[ $(pwd) =~ $WORKPLACE/* ]] && [[ $1 ]] && updateMru=1
     source $DOTFILES_HOME/bin/.task $@
     [ $updateMru ] && {
-        echo here
         basename $(pwd) > ~/.task-mru
         pushd $DOTFILES_HOME
         git add homedir/.task-mru
