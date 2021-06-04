@@ -19,10 +19,24 @@ alias @='@task'
 alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
 alias @@@='@ $(cat ~/.task-mru)'
 alias @@@@='cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
+alias @d='@config'
+alias @dq='@config sqe'
 alias jj='cat ~/.task-mru | pbcopy'
 alias oj='@task $1; sublime'
 
 source $DOTFILES_HOME/nbcu_aliases
+
+function @config {
+    [ $1 ] && {
+        [[ $1 = -* ]] && local suffix=$1 || local suffix="-$1"
+    }
+    [[ $(pwd) =~ $WORKPLACE/* ]] && {
+        cd $WORKPLACE/*-config-repo/$(basename $(git rev-parse --show-toplevel))$suffix
+    }
+    [[ $(pwd) =~ $TASK_HOME/* ]] && {
+        cd $WORKPLACE/*-config-repo/$(cat $(git rev-parse --show-toplevel)/.yagconf)$suffix
+    }
+}
 
 function @task() {
     [[ $(pwd) =~ $WORKPLACE/* ]] && [[ $1 ]] && updateMru=1

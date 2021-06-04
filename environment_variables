@@ -4,6 +4,7 @@ export WORKPLACE=~/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export df=$DOTFILES_HOME
+export TASK_HOME=~/Documents/jira
 export PYENV_ROOT="$HOME/.pyenv"
 export NVM_DIR="$HOME/.nvm"
 export SDKMAN_DIR="/usr/local/sdkman"
