@@ -9,3 +9,24 @@ alias @s3='cd $WORKPLACE/cp-transfer-upload-s3'
 alias @ots='cd $WORKPLACE/cp-transfer-upload'
 alias @mcp='cd $WORKPLACE/digsrv-mcp-extractor'
 alias @diva='cd $WORKPLACE/cp-transfer-diva-restore'
+alias @tools='cd $WORKPLACE/cp-tools'
+
+function @config {
+    [ $1 ] && {
+        [[ $1 = -* ]] && local suffix=$1 || local suffix="-$1"
+    }
+    [[ $(pwd) = $WORKPLACE/output/* ]] && {
+        cd $WORKPLACE/*-config-repo/$(basename $(pwd))$suffix
+        return
+    }
+    [[ $(pwd) = $WORKPLACE/* ]] && {
+        cd $WORKPLACE/*-config-repo/$(basename $(git rev-parse --show-toplevel))$suffix
+        return
+    }
+    [[ $(pwd) = $TASK_HOME/* ]] && {
+        cd $WORKPLACE/*-config-repo/$(cat $(git rev-parse --show-toplevel)/.yagconf)$suffix
+        return
+    }
+    echo "Not sure where the config is?"
+    return 1
+}

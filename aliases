@@ -13,7 +13,6 @@ alias @scratch='cd ~/scratch'
 alias scratch='vim ~/scratch/scratch-$(date "+%F-%T")'
 alias @dl='cd ~/Downloads'
 alias @aws='cd ~/.aws'
-alias @tools='cd $WORKPLACE/cp-tools'
 alias @http='cd $HTTP_ROOT'
 alias @='@task'
 alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
@@ -26,16 +25,34 @@ alias oj='@task $1; sublime'
 
 source $DOTFILES_HOME/nbcu_aliases
 
-function @config {
-    [ $1 ] && {
-        [[ $1 = -* ]] && local suffix=$1 || local suffix="-$1"
-    }
+function @logs() {
     [[ $(pwd) =~ $WORKPLACE/* ]] && {
-        cd $WORKPLACE/*-config-repo/$(basename $(git rev-parse --show-toplevel))$suffix
+        cd $WORKPLACE/output/$(basename $(git rev-parse --show-toplevel))
+        return
     }
     [[ $(pwd) =~ $TASK_HOME/* ]] && {
-        cd $WORKPLACE/*-config-repo/$(cat $(git rev-parse --show-toplevel)/.yagconf)$suffix
+        cd $WORKPLACE/output/$(cat $(git rev-parse --show-toplevel)/.yagconf)
+        return
     }
+    echo "Not sure where the logs are?"
+    return 1
+}
+
+function @repo() {
+    [[ $(pwd) = $WORKPLACE/output/* ]] && {
+        cd $WORKPLACE/$(basename $(pwd))
+        return
+    }
+    [[ $(pwd) = $TASK_HOME/* ]] && {
+        cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)
+        return
+    }
+    [[ $(pwd) = $WORPLACE/*-config-repo/* ]] && {
+        cd $WORKPLACE/$(basename $(pwd) | sed -e 's/-sqe$//g')
+        return
+    }
+    echo "Not sure where the repo is?"
+    return 1
 }
 
 function @task() {
@@ -119,7 +136,7 @@ alias yagdq="source $DOTFILES_HOME/bin/.yagd -s -sqe -q"
 alias v='vim $DOTFILES_HOME/vimrc'
 alias z='vim $DOTFILES_HOME/zshrc'
 alias b='vim $DOTFILES_HOME/bashrc'
-alias a='vim $DOTFILES_HOME/aliases'
+alias a='vim -O $DOTFILES_HOME/*aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
 alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias iam='vim ~/.aws/credentials'
