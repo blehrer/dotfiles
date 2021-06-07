@@ -10,3 +10,4 @@ $KUBECONFIG
 **/allure-results
 *.log
 **/.vim/.netrwhist
+.java-version
