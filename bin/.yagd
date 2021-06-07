@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 function cfg_repo() {
-    local dir=`basename $(pwd)`
+    local dir=`basename $(git rev-parse --show-toplevel)`
     [ -f .yagconf ] && local dir=$(cat .yagconf | tail -1)
     local suffix=config-repo
     [[ $dir == digsrv* ]] && echo $WORKPLACE/digsrv-$suffix

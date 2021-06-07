@@ -15,8 +15,9 @@ OPTIONS:
 }
 
 mkdir_and_cd_and_git_init() {
-    local dir=$HOME/Documents/jira/${altProject:-${defaultProject}}/$id
-    local description=https://jira.inbcu.com/browse/${altProject:-${defaultProject}}-$id
+    local projectId=${altProject:-${defaultProject}}
+    local dir=$HOME/Documents/jira/$projectId/$id
+    local description=https://jira.inbcu.com/browse/$projectId-$id
 	[ -d $dir ] || mkdir -p $dir
 	cd $dir
 	[ -d .git ] || {
@@ -36,8 +37,8 @@ mkdir_and_cd_and_git_init() {
     }
 #    [ -d .github ] || {
 #        gh repo create \
-#            https://github.inbcu.com/206672215/$(basename $(dirname $(pwd)))-$(basename $(pwd)) \
-#            --internal \
+#            https://github.inbcu.com/206672215/$projectId-$id \
+#            --public \
 #            --description $description && mkdir .github
 #    }
 }
