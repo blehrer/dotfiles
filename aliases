@@ -134,7 +134,7 @@ alias yagdq="source $DOTFILES_HOME/bin/.yagd -s -sqe -q"
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
-alias z='vim $DOTFILES_HOME/zshrc'
+alias z='vim -O ~/.zshrc $DOTFILES_HOME/zshrc'
 alias b='vim $DOTFILES_HOME/bashrc'
 alias a='vim -O $DOTFILES_HOME/*aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
