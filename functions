@@ -96,6 +96,12 @@ zipdirs() {
     zip -r -X $1 $2 -x "*DS_Store" \*.un~
 }
 
+backup_workplace() {
+    local outputPath=~/workplace.bk.$(date +%s).zip
+    zip -r -X $outputPath $WORKPLACE \
+        -x "*DS_Store" "*.un" "*/target/*" "*/allure-results/*" "*/output/*"
+}
+
 timezsh () {
 	shell=${1-$SHELL}
 	for i in $(seq 1 10)
