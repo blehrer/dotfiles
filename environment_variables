@@ -23,6 +23,11 @@ export GH_HOST=https://github.com
 export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/dev/null
 export VIM_PLUGINS=~/.vim/pack/vendor/start
 
+# Docker environment variables
+export HOST_HOME=$HOME
+export HOST_WORKTREES_HOME=$WORKTREES_HOME
+export HOST_LOGS_HOME=$LOGS_HOME
+
 ### Parameters
 export HISTSIZE=1000000000
 
