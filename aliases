@@ -1,5 +1,4 @@
 ## Overrides
-alias git=$(brew --prefix)/bin/git
 ## Places
 alias @cdw='cd $WORKPLACE'
 alias cdw='@cdw'
@@ -102,7 +101,6 @@ function cht() {
 }
 
 alias ag='ag --hidden'
-alias bash-5.1='/usr/local/homebrew/bin/bash'
 alias c='clear'
 alias cd='pushd'
 alias back='popd'
@@ -161,3 +159,10 @@ alias sz='exec zsh'
 alias soz='src $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias sa='src $DOTFILES_HOME/*aliases'
 alias se='src $DOTFILES_HOME/environment_variables'
+
+# Mac specific
+
+[[ $OSTYPE = darwin* ]] && {
+	alias git=$(brew --prefix)/bin/git
+	alias bash-5.1='/usr/local/homebrew/bin/bash'
+}

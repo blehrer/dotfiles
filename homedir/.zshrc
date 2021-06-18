@@ -1,12 +1,10 @@
 set -o magicequalsubst
 export CONFIG_DIR=$HOME/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
-export ZSH=$DOTFILES_HOME/gitclones/oh-my-zsh
 
 for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zsh/pre-compinit-scripts \
-         $DOTFILES_HOME/zsh/oh-my-zsh.cfg \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/functions \
          $DOTFILES_HOME/aliases \
