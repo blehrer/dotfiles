@@ -111,6 +111,7 @@ alias egrep='egrep -i --color=auto'
 alias epoch='date +%s'
 alias gamf='git commit -am f'
 alias gb='git branch'
+alias bcp='git branch-name | pbcopy'
 alias gbackup='git push backup --force "refs/heads/*:refs/heads/*"'
 alias gbls='git branch -vv'
 alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"' #print this branch's upstream branch

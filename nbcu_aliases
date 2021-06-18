@@ -30,3 +30,13 @@ function @config {
     echo "Not sure where the config is?"
     return 1
 }
+
+function jbcp() {
+    @@
+    local link="https://jira.inbcu.com/browse/$(basename $(dirname $(pwd)))-$(basename $(pwd))"
+    echo $link | pbcopy
+    echo "JIRA link copied to clipboard ($link)"
+
+    popd
+}
+
