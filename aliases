@@ -96,6 +96,11 @@ function popd() {
   dirs
 }
 
+# Cheatsheet!
+function cht() {
+  curl cht.sh/$1/$(echo ${@:2} | sed -e "s/\ /+/g")
+}
+
 alias ag='ag --hidden'
 alias bash-5.1='/usr/local/homebrew/bin/bash'
 alias c='clear'
