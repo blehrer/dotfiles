@@ -173,6 +173,14 @@ nnoremap <leader>ue :.s/\\t/    /ge<cr>  :.s/\\n/\r/ge<cr>
 nnoremap <leader>jq :.!jq<cr>v%:s/\\t/    /ge<cr>gv:s/\\n/\r/ge<cr>gvOv
 vnoremap <leader>jq :'<,'>*!jq<cr>gv:s/\\t/    /ge<cr>gv:s/\\n/\r/ge<cr>gvOv
 
+" remove trailing whitespace
+nnoremap <leader>f :%s/\ *$//g<cr>
+vnoremap <leader>f :'<,'>s/\ *$//g<cr>
+
+" URL encode/decode selection
+vnoremap <leader>en :!python3 -c 'import sys; from urllib import parse; print(parse.quote_plus(sys.stdin.read().strip()))'<cr>
+vnoremap <leader>de :!python3 -c 'import sys; from urllib import parse; print(parse.unquote_plus(sys.stdin.read().strip()))'<cr>
+
 " move lines while formatting
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
