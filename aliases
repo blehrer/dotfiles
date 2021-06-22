@@ -1,5 +1,7 @@
 ## Overrides
 ## Places
+alias @wh='cd $WHOME'
+alias wh='@wh'
 alias @cdw='cd $WORKPLACE'
 alias cdw='@cdw'
 alias @w='cd $WORKPLACE'
@@ -56,7 +58,7 @@ function @repo() {
 
 function @task() {
     [[ $(pwd) =~ $WORKPLACE/* ]] && [[ $1 ]] && updateMru=1
-    source $DOTFILES_HOME/bin/.task $@
+    source $DOTFILES_HOME/bin/.task ${@}
     [ $updateMru ] && {
         basename $(pwd) > ~/.task-mru
         pushd $DOTFILES_HOME
@@ -143,7 +145,7 @@ alias b='vim $DOTFILES_HOME/bashrc'
 alias a='vim -O $DOTFILES_HOME/*aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
 alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
-alias iam='vim ~/.aws/credentials'
+alias iam='vim $AWS_SHARED_CREDENTIALS_FILE'
 alias agig='vim $DOTFILES_HOME/ag/.agignore'
 alias gig='vim $DOTFILES_HOME/git/gitignore_global'
 

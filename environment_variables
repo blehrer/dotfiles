@@ -1,32 +1,37 @@
 ## Environment Variables
 ### Places
-export WORKPLACE=~/workplace
+export WHOME="/mnt/c/Users/206672215"
+export WORKPLACE=$WHOME/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export df=$DOTFILES_HOME
-export TASK_HOME=~/Documents/jira
+export TASK_HOME=$WHOME/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$WORKPLACE
-export PYENV_ROOT="$HOME/.pyenv"
-export NVM_DIR="$HOME/.nvm"
-export SDKMAN_DIR="/usr/local/sdkman"
-export DISPLAY=:0
-export ECLIPSE_HOME="$HOME/eclipse/java-2019-12/eclipse"
-export WIN_HOME="/mnt/c/Users/Brian"
+export VIM_PLUGINS=~/.vim/pack/vendor/start
+
+### Files and default values
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 export EDITOR="/usr/bin/vim"
-export CP_CONFIG_REPO=$WORKPLACE/cp-config-repo
 export PAGER="/usr/bin/less -i"
-export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
-export INTELLIJ_HOME="/Applications/IntelliJ\ IDEA\ CE\ 2019.3.5.app/Contents"
-export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 export GH_HOST=https://github.com
 export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/dev/null
-export VIM_PLUGINS=~/.vim/pack/vendor/start
+export INPUTRC=$HOME/.inputrc
+export GCM_CREDENTIAL_STORE=gpg
+export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 
 # Docker environment variables
 export HOST_HOME=$HOME
 export HOST_WORKTREES_HOME=$WORKTREES_HOME
 export HOST_LOGS_HOME=$LOGS_HOME
+
+# App-specific only
+export M2_HOME=/usr/share/maven
+#export NVM_DIR="$HOME/.nvm"
+#export SDKMAN_DIR="/usr/local/sdkman"
+#export ECLIPSE_HOME="$HOME/eclipse/java-2019-12/eclipse"
+#export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
+#export INTELLIJ_HOME="/Applications/IntelliJ\ IDEA\ CE\ 2019.3.5.app/Contents"
 
 ### Parameters
 export HISTSIZE=1000000000
@@ -36,8 +41,11 @@ export HISTSIZE=1000000000
 
 
 ## AWS
-#export AWS_DEFAULT_PROFILE=preprod
+export AWS_DEFAULT_PROFILE=preprod
+export AWS_CONFIG_FILE=$WHOME/.aws/config
+export AWS_DEFAULT_REGION=us-east-1
+export AWS_SHARED_CREDENTIALS_FILE=$WHOME/.aws/credentials
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-#export SDKMAN_DIR="/Users/BrianLehrer/.sdkman"
-[[ -s "/usr/local/sdkman/bin/sdkman-init.sh" ]] && source "/usr/local/sdkman/bin/sdkman-init.sh"
+#export SDKMAN_DIR="$HOME/.sdkman"
+#[[ -s "/usr/local/sdkman/bin/sdkman-init.sh" ]] && source "/usr/local/sdkman/bin/sdkman-init.sh"
