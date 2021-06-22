@@ -1,8 +1,8 @@
 [include]
     path = ~/.config/dotfiles/git/git-personal.conf
-[includeIf "gitdir:~/workplace/"]
+[includeIf "gitdir:$WORKPLACE/"]
     path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/Documents/jira/"]
+[includeIf "gitdir:$TASK_HOME/"]
     path = ~/.config/dotfiles/git/git-work.conf
 [core]
     autocrlf = input
@@ -15,3 +15,7 @@
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]'"
 [init]
 	defaultBranch = main
+[credential]
+	helper = /usr/bin/git-credential-manager-core
+[credential "https://dev.azure.com"]
+	useHttpPath = true
