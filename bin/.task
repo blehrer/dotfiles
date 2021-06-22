@@ -16,7 +16,7 @@ OPTIONS:
 
 mkdir_and_cd_and_git_init() {
     local projectId=${altProject:-${defaultProject}}
-    local dir=$HOME/Documents/jira/$projectId/$id
+    local dir=$TASK_HOME/$projectId/$id
     local description=https://jira.inbcu.com/browse/$projectId-$id
 	[ -d $dir ] || mkdir -p $dir
 	cd $dir
