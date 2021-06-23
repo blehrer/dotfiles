@@ -44,7 +44,6 @@ source $zcfg/avit.zsh-theme
 
 for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/path \
-         $DOTFILES_HOME/zsh/pre-compinit-scripts \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/functions \
          $DOTFILES_HOME/aliases \
