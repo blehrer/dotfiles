@@ -5,6 +5,7 @@ export PATH="$WORKPLACE/cp-tools/bin/cp-tools/kinesis-utils:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/s3-utils:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/sqs-utils:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/transfer-request-generator:$PATH"
+export PATH="/c/Users/206672215/AppData/Local/Programs/Python/Python39/share/applications:$PATH"
 export PATH="/usr/local/bin:$PATH"
 #export PATH="$HOME/.jenv/bin:$PATH"
 

@@ -1,6 +1,13 @@
+function set_home() {
+    ctx=$(uname -a)
+    [[ ctx = CYGWIN* ]] && echo /cygdrive/c/Users/$(whoami) && return
+    [[ ctx = MINGW* ]] && echo $HOME && return
+    [[ ctx = Linux*microsoft*WSL* ]] && echo /mnt/c/Users/$(whoami) && return
+    return 1
+}
 ## Environment Variables
 ### Places
-export _HOME=/cygdrive/c/Users/206672215
+export _HOME=$(set_home)
 export WORKPLACE=$_HOME/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
@@ -21,7 +28,7 @@ export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
 export INTELLIJ_HOME="/Applications/IntelliJ\ IDEA\ CE\ 2019.3.5.app/Contents"
 export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 export GH_HOST=https://github.com
-export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/dev/null
+export GH_REPO=$GH_HOST/NBCUOTS/$(basename $(git rev-parse --show-toplevel)) 2>/dev/null
 export VIM_PLUGINS=~/.vim/pack/vendor/start
 
 # Docker environment variables
