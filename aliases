@@ -1,5 +1,6 @@
 ## Overrides
-alias git=$(brew --prefix)/bin/git
+#alias git=$(brew --prefix)/bin/git
+alias pbcopy=clip.exe
 ## Places
 alias @cdw='cd $WORKPLACE'
 alias cdw='@cdw'
@@ -9,18 +10,18 @@ alias @dfd='cd $DOTFILES_HOME'
 alias dfd='@dfd'
 alias @notes='cd $HOME/Documents/notes'
 alias notes='@notes'
-alias @scratch='cd ~/scratch'
-alias scratch='vim ~/scratch/scratch-$(date "+%F-%T")'
-alias @dl='cd ~/Downloads'
-alias @aws='cd ~/.aws'
+alias @scratch='cd $_HOME/scratch'
+alias scratch='vim $_HOME/scratch/scratch-$(date "+%F-%T")'
+alias @dl='cd $_HOME/Downloads'
+alias @aws='cd $_HOME/.aws'
 alias @http='cd $HTTP_ROOT'
 alias @='@task'
 alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
-alias @@@='@ $(cat ~/.task-mru)'
+alias @@@='@ $(cat $TASK_HOME/.task-mru)'
 alias @@@@='cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
 alias @d='@config'
 alias @dq='@config sqe'
-alias jj='cat ~/.task-mru | pbcopy'
+alias jj='cat $TASK_HOME/.task-mru | pbcopy'
 alias oj='@task $1; sublime'
 
 source $DOTFILES_HOME/nbcu_aliases
@@ -47,7 +48,7 @@ function @repo() {
         cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)
         return
     }
-    [[ $(pwd) = $WORPLACE/*-config-repo/* ]] && {
+    [[ $(pwd) = $WORKPLACE/*-config-repo/* ]] && {
         cd $WORKPLACE/$(basename $(pwd) | sed -e 's/-sqe$//g')
         return
     }
@@ -59,10 +60,10 @@ function @task() {
     [[ $(pwd) =~ $WORKPLACE/* ]] && [[ $1 ]] && updateMru=1
     source $DOTFILES_HOME/bin/.task $@
     [ $updateMru ] && {
-        basename $(pwd) > ~/.task-mru
+        basename $(pwd) > $TASK_HOME/.task-mru
         pushd $DOTFILES_HOME
         git add homedir/.task-mru
-        git commit -m "task-mru: update to $(cat ~/.task-mru)"
+        git commit -m "task-mru: update to $(cat $TASK_HOME/.task-mru)"
         popd
     }
 }
@@ -102,7 +103,7 @@ function cht() {
 }
 
 alias ag='ag --hidden'
-alias bash-5.1='/usr/local/homebrew/bin/bash'
+#alias bash-5.1='/usr/local/homebrew/bin/bash'
 alias c='clear'
 alias cd='pushd'
 alias back='popd'
@@ -140,12 +141,12 @@ alias yagdq="source $DOTFILES_HOME/bin/.yagd -s -sqe -q"
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
-alias z='vim -O ~/.zshrc $DOTFILES_HOME/zshrc'
+alias z='vim -O $HOME/.zshrc $DOTFILES_HOME/zshrc'
 alias b='vim $DOTFILES_HOME/bashrc'
 alias a='vim -O $DOTFILES_HOME/*aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
 alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
-alias iam='vim ~/.aws/credentials'
+alias iam='vim $_HOME/.aws/credentials'
 alias agig='vim $DOTFILES_HOME/ag/.agignore'
 alias gig='vim $DOTFILES_HOME/git/gitignore_global'
 

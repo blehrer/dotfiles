@@ -5,7 +5,8 @@
 [includeIf "gitdir:~/Documents/jira/"]
     path = ~/.config/dotfiles/git/git-work.conf
 [core]
-    autocrlf = input
+    autocrlf = true
+    #autocrlf = input
     excludesfile = ~/.config/dotfiles/git/gitignore_global
 [log]
     follow = true

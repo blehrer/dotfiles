@@ -1,10 +1,11 @@
 ## Environment Variables
 ### Places
-export WORKPLACE=~/workplace
+export _HOME=/cygdrive/c/Users/206672215
+export WORKPLACE=$_HOME/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export df=$DOTFILES_HOME
-export TASK_HOME=~/Documents/jira
+export TASK_HOME=$_HOME/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$WORKPLACE
 export PYENV_ROOT="$HOME/.pyenv"
@@ -34,6 +35,8 @@ export HISTSIZE=1000000000
 ## Integration with cyberpeacock_login
 #export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
 
+## Cygwin
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
 ## AWS
 #export AWS_DEFAULT_PROFILE=preprod

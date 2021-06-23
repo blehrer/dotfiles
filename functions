@@ -90,6 +90,7 @@ newVimPlugin() {
 	git commit -m "$commitMsg"
     else echo "Git repo format is incorrect (should end in namespace/repo.git)"
     fi
+    vim -u NONE -c "helptags ~/.vim/pack/vendor/start/shortname/doc" -c q
 }
 
 zipdirs() {
