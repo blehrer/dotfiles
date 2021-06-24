@@ -16,3 +16,7 @@
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]'"
 [init]
 	defaultBranch = main
+[credential]
+    helper = manager-core
+[credential "github.com"]
+	useHttpPath = true
