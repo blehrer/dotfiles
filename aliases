@@ -24,6 +24,11 @@ alias @dq='@config sqe'
 alias jj='cat $TASK_HOME/.task-mru | pbcopy'
 alias oj='@task $1; sublime'
 
+
+[[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
+    source $DOTFILES_HOME/windows_aliases
+}
+
 source $DOTFILES_HOME/nbcu_aliases
 
 function @logs() {
