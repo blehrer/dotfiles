@@ -46,3 +46,6 @@
 [submodule "vim-plugin.vim-surround"]
 	path = homedir/.vim/pack/vendor/start/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule "yq@v3"]
+	path = gitclones/yq_v3
+	url = https://github.com/mikefarah/yq
