@@ -31,6 +31,7 @@ export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 export GH_HOST=https://github.com
 #export GH_REPO=$GH_HOST/NBCUOTS/$(basename $(git rev-parse --show-toplevel)) 2>/dev/null
 export VIM_PLUGINS=~/.vim/pack/vendor/start
+export JDKS=~/.jdks
 
 # Docker environment variables
 export HOST_HOME=$HOME
