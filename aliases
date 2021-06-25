@@ -142,7 +142,7 @@ alias vmi='vim'
 alias vj='vim $HOME/Documents/notes/Vim.md'
 alias secretstring='jq ".SecretString|fromjson"'
 alias yagd="source $DOTFILES_HOME/bin/.yagd -q"
-alias yagdq="source $DOTFILES_HOME/bin/.yagd -s -sqe -q"
+alias yagdq="source $DOTFILES_HOME/bin/.yagd -s sqe -q"
 
 ## Edit config files
 alias v='vim $DOTFILES_HOME/vimrc'
