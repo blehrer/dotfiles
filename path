@@ -1,13 +1,12 @@
 # Prepend to path
-export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/yag:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/kinesis-utils:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/s3-utils:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/sqs-utils:$PATH"
 export PATH="$WORKPLACE/cp-tools/bin/cp-tools/transfer-request-generator:$PATH"
-export PATH="/c/Users/206672215/AppData/Local/Programs/Python/Python39/share/applications:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/Go/bin:$PATH"
+export PATH="$HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
 #export PATH="$HOME/.jenv/bin:$PATH"
 
 # Append to path
@@ -20,3 +19,6 @@ export PATH="$PATH:$HOME/.local/bin/"
 #export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"
 
 #eval "$(jenv init -)"
+
+#finally escape spaces and parens
+export PATH=$(echo $PATH | sed -e 's/ /\\ /g ; s/(/\\(/g ; s/)/\\)/g')
