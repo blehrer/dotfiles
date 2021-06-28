@@ -1,15 +1,21 @@
 ## Places
-alias @cpc='cd $WORKPLACE/cp-config-repo'
-alias cpc='cd $WORKPLACE/cp-config-repo'
-alias @dg='cd $WORKPLACE/digsrv-config-repo'
-alias @toon='cd $WORKPLACE/cp-transfer-s3toonprem'
-alias @ds='cd $WORKPLACE/cp-transfer-upload-s3'
-alias @s3s3='cd $WORKPLACE/cp-transfer-upload-s3'
-alias @s3='cd $WORKPLACE/cp-transfer-upload-s3'
-alias @ots='cd $WORKPLACE/cp-transfer-upload'
-alias @mcp='cd $WORKPLACE/digsrv-mcp-extractor'
-alias @diva='cd $WORKPLACE/cp-transfer-diva-restore'
-alias @tools='cd $WORKPLACE/cp-tools'
+alias @cpc='code_sync_cd $WORKPLACE/cp-config-repo'
+alias cpc='code_sync_cd $WORKPLACE/cp-config-repo'
+alias @dg='code_sync_cd $WORKPLACE/digsrv-config-repo'
+alias @toon='code_sync_cd $WORKPLACE/cp-transfer-s3toonprem'
+alias @ds='code_sync_cd $WORKPLACE/cp-transfer-upload-s3'
+alias @s3s3='code_sync_cd $WORKPLACE/cp-transfer-upload-s3'
+alias @s3='code_sync_cd $WORKPLACE/cp-transfer-upload-s3'
+alias @ots='code_sync_cd $WORKPLACE/cp-transfer-upload'
+alias @mcp='code_sync_cd $WORKPLACE/digsrv-mcp-extractor'
+alias @diva='code_sync_cd $WORKPLACE/cp-transfer-diva-restore'
+alias @tools='code_sync_cd $WORKPLACE/cp-tools'
+
+function code_sync_cd {
+    local repo=$(echo $1 | sed 's@'"$WORKPLACE/"'@@g') 
+    rsync -avz $WHOME/workplace/$repo $WORKPLACE/$repo
+    cd $1
+}
 
 function @config {
     [ $1 ] && {

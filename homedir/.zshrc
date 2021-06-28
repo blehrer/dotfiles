@@ -5,6 +5,7 @@ export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zsh/pre-compinit-scripts \
+         $DOTFILES_HOME/zsh/oh-my-zsh.cfg \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/functions \
          $DOTFILES_HOME/aliases \
@@ -16,4 +17,3 @@ for i in $DOTFILES_HOME/environment_variables \
 #    echo $elapsed":" $i
 done
 source $VIM_PLUGINS/gruvbox/gruvbox_256palette.sh
-

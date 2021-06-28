@@ -1,9 +1,5 @@
 ###################### Functions ####################################
 
-function forward_odin() {
-    ssh -f -N -L 2009:127.0.0.1:2009 "$1"
-}
-
 # This gets the files that have changed on your local branch since you pushed to
 # the upstream branch
 function fupdiff() {

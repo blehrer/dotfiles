@@ -26,6 +26,7 @@ set wrap
 set number
 set relativenumber
 set cursorline
+set novisualbell
 set noerrorbells
 set smartindent
 syntax enable

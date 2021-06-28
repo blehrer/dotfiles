@@ -1,13 +1,14 @@
 ## Environment Variables
 ### Places
 export WHOME="/mnt/c/Users/206672215"
-export WORKPLACE=$WHOME/workplace
+export WORKPLACE=~/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export df=$DOTFILES_HOME
-export TASK_HOME=$WHOME/Documents/jira
+export TASK_HOME=~/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$WORKPLACE
+export INTELLIJ_HOME=/opt/idea-IC-*
 export VIM_PLUGINS=~/.vim/pack/vendor/start
 
 ### Files and default values
@@ -42,9 +43,9 @@ export HISTSIZE=1000000000
 
 ## AWS
 export AWS_DEFAULT_PROFILE=preprod
-export AWS_CONFIG_FILE=$WHOME/.aws/config
+export AWS_CONFIG_FILE=~/.aws/config
 export AWS_DEFAULT_REGION=us-east-1
-export AWS_SHARED_CREDENTIALS_FILE=$WHOME/.aws/credentials
+export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 #export SDKMAN_DIR="$HOME/.sdkman"
