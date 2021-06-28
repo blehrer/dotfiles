@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 function cfg_repo() {
     local dir=`basename $(git rev-parse --show-toplevel)`
@@ -34,13 +34,15 @@ function yagdWithErrorHandling() {
         esac
         done
 
+        [ $suffix ] && suffix="-$suffix"
+
         local repo=$(basename $(git rev-parse --show-toplevel))$suffix
         [ -f .yagconf ] && local repo=$(cat .yagconf | tail -1)$suffix
 
         echo repo: $repo
-        echo exception: $exceptions[$repo]
-        [[ -n $exceptions[$repo] ]] && {
-            yag -d `cfg_repo`/$exceptions[$repo] $query
+        echo exception: ${exceptions[$repo]}
+        [[ -n ${exceptions[$repo]} ]] && {
+            yag -d `cfg_repo`/${exceptions[$repo]} $query
         } || {
             yag -d `cfg_repo`/$repo $query
         }

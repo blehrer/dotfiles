@@ -14,8 +14,9 @@
     backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]'"
 [init]
-	defaultBranch = main
+defaultBranch = main
 [credential]
-	helper = /usr/bin/git-credential-manager-core
-[credential "https://dev.azure.com"]
-	useHttpPath = true
+    helper = /usr/bin/git-credential-manager-core
+    helper = manager-core
+[credential "github.com"]
+    useHttpPath = true

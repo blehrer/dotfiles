@@ -13,9 +13,6 @@
 [submodule "gitclones/quicklook-plugin--SourceCodeSyntaxHightlight"]
 	path = gitclones/quicklook-plugin--SourceCodeSyntaxHightlight
 	url = https://github.com/sbarex/SourceCodeSyntaxHighlight
-[submodule "gitclones/oh-my-zsh"]
-	path = gitclones/oh-my-zsh
-	url = https://github.com/ohmyzsh/ohmyzsh
 [submodule "vim-plugin.nord-vim"]
 	path = homedir/.vim/pack/vendor/start/nord-vim
 	url = https://github.com/arcticicestudio/nord-vim.git
@@ -52,3 +49,7 @@
 [submodule "vim-plugin.emmet-vim"]
 	path = homedir/.vim/pack/vendor/start/emmet-vim
 	url = https://github.com/mattn/emmet-vim.git
+[submodule "yq@v3"]
+	path = gitclones/yq_v3
+	url = https://github.com/mikefarah/yq
+

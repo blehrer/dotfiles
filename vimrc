@@ -15,8 +15,9 @@
 " Color scheme
 " =============================================================================
 set termguicolors
-colorscheme gruvbox
-set background=dark
+colorscheme desert
+"colorscheme gruvbox
+"set background=dark
 
 " =============================================================================
 " Simple vanilla settings
@@ -66,8 +67,8 @@ set path+=~/.config/**
 set cmdheight=1
 set updatetime=50
 set mouse=a
-" netrw
 
+" netrw
 let g:netrw_browse_split = 0
 let g:netrw_banner = 0
 let g:netrw_winsize = 25
@@ -79,49 +80,49 @@ set backupdir=.backup/,~/.backup/,/tmp//
 set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
 
-" =============================================================================
-" Plugin settings
-" =============================================================================
-" NerdTree
-"let NERDTreeShowHidden=1
-
-" Lightline
-set laststatus=2
-let g:lightline = {
-    \ 'colorscheme': 'gruvbox'
-\}
-
-" =============================================================================
-" Functions
-" =============================================================================
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Quit if you've closed everything except NERDTree
-" @see http://tiny/6c84f5av/jleroux
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"function! NERDTreeQuit()
-"  redir => buffersoutput
-"  silent buffers
-"  redir END
-""                     1BufNo  2Mods.     3File           4LineNo
-"  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
-"  let windowfound = 0
+"" =============================================================================
+"" Plugin settings
+"" =============================================================================
+"" NerdTree
+""let NERDTreeShowHidden=1
 "
-"  for bline in split(buffersoutput, "\n")
-"    let m = matchlist(bline, pattern)
+"" Lightline
+"set laststatus=2
+"let g:lightline = {
+"    \ 'colorscheme': 'gruvbox'
+"\}
 "
-"    if (len(m) > 0)
-"      if (m[2] =~ '..a..')
-"        let windowfound = 1
-"      endif
-"    endif
-"  endfor
+"" =============================================================================
+"" Functions
+"" =============================================================================
 "
-"  if (!windowfound)
-"    quitall
-"  endif
-"endfunction
-"autocmd WinEnter * call NERDTreeQuit()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Quit if you've closed everything except NERDTree
+"" @see http://tiny/6c84f5av/jleroux
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""function! NERDTreeQuit()
+""  redir => buffersoutput
+""  silent buffers
+""  redir END
+"""                     1BufNo  2Mods.     3File           4LineNo
+""  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
+""  let windowfound = 0
+""
+""  for bline in split(buffersoutput, "\n")
+""    let m = matchlist(bline, pattern)
+""
+""    if (len(m) > 0)
+""      if (m[2] =~ '..a..')
+""        let windowfound = 1
+""      endif
+""    endif
+""  endfor
+""
+""  if (!windowfound)
+""    quitall
+""  endif
+""endfunction
+""autocmd WinEnter * call NERDTreeQuit()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE (thanks Gary Bernhardt)
@@ -148,13 +149,13 @@ map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
-nnoremap <Leader>n :NERDTreeToggle<CR>
-noremap <Leader>. :NERDTreeCWD<CR>
+"nnoremap <Leader>n :NERDTreeToggle<CR>
+"noremap <Leader>. :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
-nnoremap <Leader><Leader> :GFiles<CR>
-nnoremap <Leader><CR> :source ~/.config/dotfiles/vimrc<CR>
+"nnoremap <Leader><Leader> :GFiles<CR>
+nnoremap <Leader><CR> :source $DOTFILES_HOME/vimrc<CR>
 
 " Buffer pane with file tree sidebar
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
@@ -197,5 +198,5 @@ command! Wq wq
 cabbrev w!! w !sudo tee % >/dev/null
 
 " vimrc and journal
-nnoremap <Leader>vv :vsplit ~/.config/dotfiles/vimrc<CR>
-nnoremap <Leader>vj :vsplit ~/Documents/notes/Vim.md<CR>
+nnoremap <Leader>vv :vsplit $DOTFILES_HOME/vimrc<CR>
+nnoremap <Leader>vj :vsplit $_HOME/Documents/notes/Vim.md<CR>

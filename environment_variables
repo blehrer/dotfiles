@@ -1,11 +1,19 @@
+[[ $(uname -a) = CYGWIN* ]] && {
+    export _HOME=/cygdrive/c/Users/$(whoami)
+}
+[[ $(uname -a) = MINGW* ]] && {
+    export _HOME=$HOME
+}
+[[ $(uname -a) = Linux*microsoft*WSL* ]] && {
+    export _HOME=/mnt/c/Users/$(whoami)
+}
 ## Environment Variables
 ### Places
-export WHOME="/mnt/c/Users/206672215"
-export WORKPLACE=~/workplace
+export WORKPLACE=$_HOME/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export df=$DOTFILES_HOME
-export TASK_HOME=~/Documents/jira
+export TASK_HOME=$_HOME/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$WORKPLACE
 export INTELLIJ_HOME=/opt/idea-IC-*
@@ -17,9 +25,15 @@ export EDITOR="/usr/bin/vim"
 export PAGER="/usr/bin/less -i"
 export GH_HOST=https://github.com
 export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/dev/null
-export INPUTRC=$HOME/.inputrc
+export INPUTRC=$_HOME/.inputrc
 export GCM_CREDENTIAL_STORE=gpg
 export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
+export VIM_PLUGINS=~/.vim/pack/vendor/start
+
+# Windows specific
+[[ $(uname -a) = CYGWIN* ]] || [[ $(uname -a) = MINGW* ]] && {
+    export JDKS=$_HOME/.jdks
+}
 
 # Docker environment variables
 export HOST_HOME=$HOME
@@ -28,11 +42,6 @@ export HOST_LOGS_HOME=$LOGS_HOME
 
 # App-specific only
 export M2_HOME=/usr/share/maven
-#export NVM_DIR="$HOME/.nvm"
-#export SDKMAN_DIR="/usr/local/sdkman"
-#export ECLIPSE_HOME="$HOME/eclipse/java-2019-12/eclipse"
-#export HTTP_ROOT="/usr/local/homebrew/etc/nginx/servers"
-#export INTELLIJ_HOME="/Applications/IntelliJ\ IDEA\ CE\ 2019.3.5.app/Contents"
 
 ### Parameters
 export HISTSIZE=1000000000
@@ -40,13 +49,12 @@ export HISTSIZE=1000000000
 ## Integration with cyberpeacock_login
 #export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
 
+## Cygwin
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
 ## AWS
 export AWS_DEFAULT_PROFILE=preprod
-export AWS_CONFIG_FILE=~/.aws/config
+export AWS_CONFIG_FILE=$_HOME/.aws/config
 export AWS_DEFAULT_REGION=us-east-1
-export AWS_SHARED_CREDENTIALS_FILE=~/.aws/credentials
+export AWS_SHARED_CREDENTIALS_FILE=$_HOME/.aws/credentials
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-#export SDKMAN_DIR="$HOME/.sdkman"
-#[[ -s "/usr/local/sdkman/bin/sdkman-init.sh" ]] && source "/usr/local/sdkman/bin/sdkman-init.sh"
