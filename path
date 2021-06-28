@@ -8,8 +8,14 @@ export PATH="$_HOME/.local/bin:$PATH"
 export PATH="$_HOME/.jenv/bin:$PATH"
 export PATH="$(which aws_completer):$PATH"
 export PATH="/usr/local/bin:$PATH"
-export PATH="$_HOME/Go/bin:$PATH"
-export PATH="$_HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
+
+[[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
+    export PATH="$_HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
+    export PATH="$_HOME/Go/bin:$PATH"
+} || {
+    # needed for yq@v3 - see https://github.com/mikefarah/yq/blob/v3/README.md#go-get
+    export PATH="$_HOME/go/bin:$PATH"
+}
 
 # Append to path
 export PATH="$PATH:$DOTFILES_HOME/bin"
@@ -20,14 +26,7 @@ export PATH="$PATH:$DOTFILES_HOME/bin"
 }
 
 # Prepend to path, using stuff already on the path
-[[ $(uname) = Darwin ]] && {
-	export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"
-}
-
-# Prepend to path, using stuff already on the path
 #export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"
-
-[ $(echo $PATH | grep jenv) ] && eval "$(jenv init -)"
 
 #finally escape spaces and parens
 export PATH=$(echo $PATH | sed -e 's/ /\\ /g ; s/(/\\(/g ; s/)/\\)/g')

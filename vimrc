@@ -15,9 +15,9 @@
 " Color scheme
 " =============================================================================
 set termguicolors
-colorscheme desert
-"colorscheme gruvbox
-"set background=dark
+"colorscheme desert
+colorscheme gruvbox
+set background=dark
 
 " =============================================================================
 " Simple vanilla settings

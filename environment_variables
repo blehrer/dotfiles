@@ -5,8 +5,9 @@
     export _HOME=$HOME
 }
 [[ $(uname -a) = Linux*microsoft*WSL* ]] && {
-    export _HOME=/mnt/c/Users/$(whoami)
+    export _HOME=$HOME
 }
+
 ## Environment Variables
 ### Places
 export WORKPLACE=$_HOME/workplace
@@ -23,8 +24,6 @@ export VIM_PLUGINS=~/.vim/pack/vendor/start
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 export EDITOR="/usr/bin/vim"
 export PAGER="/usr/bin/less -i"
-export GH_HOST=https://github.com
-export GH_REPO=$GH_HOST/NBCUOTS/`basename $(git rev-parse --show-toplevel)` 2>/dev/null
 export INPUTRC=$_HOME/.inputrc
 export GCM_CREDENTIAL_STORE=gpg
 export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
