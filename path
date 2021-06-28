@@ -13,7 +13,6 @@ export PATH="$_HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
 
 # Append to path
 export PATH="$PATH:$DOTFILES_HOME/bin"
-<<<<<<< HEAD
 [[ $(uname) = Darwin ]] && {
 	export PATH="$PATH:/usr/local/homebrew/bin"
 	export PATH="$PATH:/usr/local/bin"
