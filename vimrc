@@ -7,10 +7,12 @@
 "
 " ### How to add new plugins
 "
-" ```
+" ``` shell
 " newVimPlugin https://github.com/namespace/repo.git
 " ```
-"
+" ```vim
+" :helptags ~/.vim/pack/vendor/start/
+" ```
 " =============================================================================
 " Color scheme
 " =============================================================================
