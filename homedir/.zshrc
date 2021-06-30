@@ -46,7 +46,7 @@ source $zcfg/avit.zsh-theme
 for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zshrc \
-         $DOTFILES_HOME/functions \
+         $DOTFILES_HOME/bin/scriptbucket \
          $DOTFILES_HOME/aliases \
          $DOTFILES_HOME/init_scripts; do
 #    timer=$(($(/usr/local/homebrew/bin/gdate +%s%N)/1000000))
