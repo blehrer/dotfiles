@@ -1,8 +1,8 @@
 [include]
     path = ~/.config/dotfiles/git/git-personal.conf
-[includeIf "gitdir:$WORKPLACE/"]
+[includeIf "gitdir:~/workplace/"]
     path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:$TASK_HOME/"]
+[includeIf "gitdir:~/Documents/jira/"]
     path = ~/.config/dotfiles/git/git-work.conf
 [core]
     autocrlf = input
