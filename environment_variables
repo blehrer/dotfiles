@@ -29,6 +29,7 @@ export INPUTRC=$_HOME/.inputrc
 export GCM_CREDENTIAL_STORE=gpg
 export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 export VIM_PLUGINS=~/.vim/pack/vendor/start
+export HISTFILE=~/.cache/zsh/zsh-history
 
 # Windows specific
 [[ $(uname -a) = CYGWIN* ]] || [[ $(uname -a) = MINGW* ]] && {
@@ -44,6 +45,7 @@ export HOST_LOGS_HOME=$LOGS_HOME
 export M2_HOME=/usr/share/maven
 
 ### Parameters
+export SAVEHIST=10000000
 export HISTSIZE=1000000000
 
 ## Integration with cyberpeacock_login
