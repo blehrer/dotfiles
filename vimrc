@@ -89,10 +89,10 @@ set undodir=.undo/,~/.undo/,/tmp//
 ""let NERDTreeShowHidden=1
 "
 "" Lightline
-"set laststatus=2
-"let g:lightline = {
-"    \ 'colorscheme': 'gruvbox'
-"\}
+set laststatus=2
+let g:lightline = {
+    \ 'colorscheme': 'gruvbox'
+\}
 "
 "" =============================================================================
 "" Functions
