@@ -37,7 +37,7 @@ bindkey "^T" push-line-or-edit
 
 ######################### completion #################################
 
-if [[ $platform == 'Darwin' ]]; then
+#if [[ $platform == 'Darwin' ]]; then
   # these are some (mostly) sane defaults, if you want your own settings, I
   # recommend using compinstall to choose them.  See 'man zshcompsys' for more
   # info about this stuff.
@@ -52,6 +52,6 @@ if [[ $platform == 'Darwin' ]]; then
   zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
   zstyle ':completion:*' use-compctl true
   autoload -U compinit
-fi
+#fi
 
 #source ~/.config/dotfiles/zsh/antigen
