@@ -11,3 +11,7 @@ $KUBECONFIG
 *.log
 **/.vim/.netrwhist
 .java-version
+**/target
+target/*
+target/
+tags
