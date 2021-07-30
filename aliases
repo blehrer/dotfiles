@@ -46,16 +46,17 @@ function @logs() {
 }
 
 function @repo() {
+    [ $1 ] && local suffix=$1
     [[ $(pwd) = $WORKPLACE/output/* ]] && {
-        cd $WORKPLACE/$(basename $(pwd))
+        cd $WORKPLACE/$(basename $(pwd))/$suffix
         return
     }
     [[ $(pwd) = $TASK_HOME/* ]] && {
-        cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)
+        cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)/$suffix
         return
     }
     [[ $(pwd) = $WORKPLACE/*-config-repo/* ]] && {
-        cd $WORKPLACE/$(basename $(pwd) | sed -e 's/-sqe$//g')
+        cd $WORKPLACE/$(basename $(pwd) | sed -e 's/-sqe$//g')/$suffix
         return
     }
     echo "Not sure where the repo is?"

@@ -10,8 +10,14 @@ alias @ots='cd $WORKPLACE/cp-transfer-upload'
 alias @mcp='cd $WORKPLACE/digsrv-mcp-extractor'
 alias @diva='cd $WORKPLACE/cp-transfer-diva-restore'
 alias @tools='cd $WORKPLACE/cp-tools'
+alias @mpx='cd $WORKPLACE/cp-mpx-ingest'
+alias @delivery='cd $WORKPLACE/cp-delivery'
 
 function @config {
+    declare -A exceptions
+    exceptions[digsrv-cds-ingest-mpx]="cds-ingest-mpx"
+    exceptions[digsrv-cds-ingest-mpx-sqe]="cds-ingest-qa"
+    exceptions[cp-manatees-performance-tests]="cp-transfer-performance-tests"
     [ $1 ] && {
         [[ $1 = -* ]] && local suffix=$1 || local suffix="-$1"
     }
@@ -19,16 +25,24 @@ function @config {
         cd $WORKPLACE/*-config-repo/$(basename $(pwd))$suffix
         return
     }
+    [[ $(pwd) = $WORKPLACE/*-config-repo/*-sqe ]] && {
+        cd ../$(basename $(pwd) | sed -e 's/-sqe//g')$suffix
+        return
+    }
     [[ $(pwd) = $WORKPLACE/*-config-repo/* ]] && {
         cd ../$(basename $(pwd))$suffix
         return
     }
     [[ $(pwd) = $WORKPLACE/* ]] && {
-        cd $WORKPLACE/*-config-repo/$(basename $(git rev-parse --show-toplevel))$suffix
+        local repoName=$(basename $(git rev-parse --show-toplevel))
+        local configProjectName=${${exceptions[$repoName]}:-$repoName}
+        cd $WORKPLACE/*-config-repo/$configProjectName$suffix
         return
     }
     [[ $(pwd) = $TASK_HOME/* ]] && {
-        cd $WORKPLACE/*-config-repo/$(cat $(git rev-parse --show-toplevel)/.yagconf)$suffix
+        local repoName=$(cat $(git rev-parse --show-toplevel)/.yagconf)
+        local configProjectName=${${exceptions[$repoName]}:-$repoName}
+        cd $WORKPLACE/*-config-repo/$configProjectName$suffix
         return
     }
     echo "Not sure where the config is?"
