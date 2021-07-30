@@ -10,6 +10,7 @@
 
 ## Environment Variables
 ### Places
+export WHOME=/mnt/c/Users/$(whoami)
 export WORKPLACE=$_HOME/workplace
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
@@ -17,7 +18,7 @@ export df=$DOTFILES_HOME
 export TASK_HOME=$_HOME/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$WORKPLACE
-export INTELLIJ_HOME=/opt/idea-IC-*
+export INTELLIJ_HOME="~/.local/share/JetBrains/Toolbox/apps/IDEA-C/*/**/bin"
 export VIM_PLUGINS=~/.vim/pack/vendor/start
 
 ### Files and default values

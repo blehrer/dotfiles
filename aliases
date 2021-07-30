@@ -24,11 +24,12 @@ alias @@@@='cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
 alias @d='@config'
 alias @dq='@config sqe'
 alias jj='cat $TASK_HOME/.task-mru | pbcopy'
-alias oj='@task $1; sublime'
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     source $DOTFILES_HOME/windows_aliases
 }
+
+[ bat.exe ] && alias bat=bat.exe
 
 source $DOTFILES_HOME/nbcu_aliases
 
@@ -112,6 +113,7 @@ function cht() {
 alias ag='ag --hidden'
 alias c='clear'
 alias cd='pushd'
+alias code="$WHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 alias back='popd'
 alias flip='pushd_builtin'
 alias egrep='egrep -i --color=auto'
@@ -136,7 +138,7 @@ alias gst='git status'
 alias gsub='git submodule update --remote --merge'
 alias ivm='vim'
 alias ll='ls -alh'
-alias idea="$INTELLIJ_HOME/bin/idea.sh &"
+alias idea="$INTELLIJ_HOME/idea.sh &> ~/.cache/JetBrains/IdeaIC2021.2/log/runtime/idea.$(date +%Y-%m-%d-%H%M%z.%s).log &"
 alias intellij=idea
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
