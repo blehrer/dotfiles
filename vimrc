@@ -166,9 +166,11 @@ nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 vnoremap <leader>p "_dP
 
 " yank to clipboard
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>Y gg"+yG
+nnoremap <leader>y "*y
+vnoremap <leader>y "*y
+nnoremap <leader>Y gg"*yG
+
+autocmd TextYankPost * call system('echo '.shellescape(join(v:event.regcontents, "\<CR>")).' |  clip.exe')
 
 " unescape \t and \n on current line (unwraps stacktraces)
 nnoremap <leader>ue :.s/\\t/    /ge<cr>  :.s/\\n/\r/ge<cr>
