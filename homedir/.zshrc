@@ -42,6 +42,7 @@ source $zcfg/completion.zsh
 source $zcfg/git-prompt.sh
 source $zcfg/aws.plugin.zsh
 source $zcfg/avit.zsh-theme
+source $zcfg/mvn.plugin.zsh
 
 for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/path \
@@ -62,3 +63,5 @@ autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 compinit
 complete -C '/usr/local/bin/aws_completer' aws
+
+[ -f $CONFIG_DIR/fzf/.fzf.zsh ] && source $CONFIG_DIR/fzf/.fzf.zsh

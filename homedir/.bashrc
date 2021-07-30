@@ -8,3 +8,5 @@ source $DOTFILES_HOME/bin/scriptbucket
 bind -f $HOME/.inputrc
 shopt -s autocd
 complete  -C aws_completer aws
+
+[ -f $CONFIG_DIR/fzf/.fzf.bash ] && source $CONFIG_DIR/fzf/.fzf.bash

@@ -156,7 +156,7 @@ noremap <Leader>. :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
-"nnoremap <Leader><Leader> :GFiles<CR>
+nnoremap <Leader><Leader> :GFiles<CR>
 nnoremap <Leader><CR> :source $DOTFILES_HOME/vimrc<CR>
 
 " Buffer pane with file tree sidebar
