@@ -107,3 +107,25 @@ timezsh () {
 	done
 }
 
+http-to-ssh() {
+    read -p '
+    This script will attempt to change the url of _origin_
+    for each git repository in the current directory.
+        Press \'y\' to continue.
+        Press Ctrl-c to interrupt.
+        ' doit
+    [[ $doit = y ]] && {
+        for i in $(ls); do;
+            cd $i ;
+            pwd ;
+            [ -d .git ] && local remoteUri=`git remote get-url origin` ;
+            [[ $remoteUri = https://github.com* ]] && {
+                local newUri=`echo $remoteUri | sed -e 's/https...github.com./git@github.com:/g'`
+                git remote set-url origin $newUri
+                git remote get-url origin
+            } || echo no change;
+            cd .. ;
+        done
+    }
+    unset doit
+}
