@@ -1,17 +1,19 @@
 ## Places
-alias @cpc='cd $WORKPLACE/cp-config-repo'
-alias cpc='cd $WORKPLACE/cp-config-repo'
-alias @dg='cd $WORKPLACE/digsrv-config-repo'
-alias @toon='cd $WORKPLACE/cp-transfer-s3toonprem'
-alias @ds='cd $WORKPLACE/cp-transfer-upload-s3'
-alias @s3s3='cd $WORKPLACE/cp-transfer-upload-s3'
-alias @s3='cd $WORKPLACE/cp-transfer-upload-s3'
-alias @ots='cd $WORKPLACE/cp-transfer-upload'
-alias @mcp='cd $WORKPLACE/digsrv-mcp-extractor'
-alias @diva='cd $WORKPLACE/cp-transfer-diva-restore'
-alias @tools='cd $WORKPLACE/cp-tools'
-alias @mpx='cd $WORKPLACE/cp-mpx-ingest'
-alias @delivery='cd $WORKPLACE/cp-delivery'
+alias @cpc='cd $NBCUOTS/cp-config-repo'
+alias cpc='cd $NBCUOTS/cp-config-repo'
+alias @dg='cd $NBCUOTS/digsrv-config-repo'
+alias @ots='cd $NBCUOTS/cp-transfer-upload'
+alias @sto='cd $NBCUOTS/cp-transfer-s3toonprem'
+alias @toon='cd $NBCUOTS/cp-transfer-s3toonprem'
+alias @ds='cd $NBCUOTS/cp-transfer-upload-s3'
+alias @s3s3='cd $NBCUOTS/cp-transfer-upload-s3'
+alias @s3='cd $NBCUOTS/cp-transfer-upload-s3'
+alias @mcp='cd $NBCUOTS/digsrv-mcp-extractor'
+alias @diva='cd $NBCUOTS/cp-transfer-diva-restore'
+alias @tools='cd $NBCUOTS/cp-tools'
+alias @mpx='cd $NBCUOTS/cp-mpx-ingest'
+alias @delivery='cd $NBCUOTS/cp-delivery'
+alias @perf='cd $NBCUOTS/cp-manatees-performance-tests'
 
 function @config {
     declare -A exceptions
@@ -22,27 +24,27 @@ function @config {
         [[ $1 = -* ]] && local suffix=$1 || local suffix="-$1"
     }
     [[ $(pwd) = $WORKPLACE/output/* ]] && {
-        cd $WORKPLACE/*-config-repo/$(basename $(pwd))$suffix
+        cd $NBCUOTS/*-config-repo/$(basename $(pwd))$suffix
         return
     }
-    [[ $(pwd) = $WORKPLACE/*-config-repo/*-sqe ]] && {
+    [[ $(pwd) = $NBCUOTS/*-config-repo/*-sqe ]] && {
         cd ../$(basename $(pwd) | sed -e 's/-sqe//g')$suffix
         return
     }
-    [[ $(pwd) = $WORKPLACE/*-config-repo/* ]] && {
+    [[ $(pwd) = $NBCUOTS/*-config-repo/* ]] && {
         cd ../$(basename $(pwd))$suffix
         return
     }
-    [[ $(pwd) = $WORKPLACE/* ]] && {
+    [[ $(pwd) = $NBCUOTS/* ]] && {
         local repoName=$(basename $(git rev-parse --show-toplevel))
         local configProjectName=${${exceptions[$repoName]}:-$repoName}
-        cd $WORKPLACE/*-config-repo/$configProjectName$suffix
+        cd $NBCUOTS/*-config-repo/$configProjectName$suffix
         return
     }
     [[ $(pwd) = $TASK_HOME/* ]] && {
         local repoName=$(cat $(git rev-parse --show-toplevel)/.yagconf)
         local configProjectName=${${exceptions[$repoName]}:-$repoName}
-        cd $WORKPLACE/*-config-repo/$configProjectName$suffix
+        cd $NBCUOTS/*-config-repo/$configProjectName$suffix
         return
     }
     echo "Not sure where the config is?"

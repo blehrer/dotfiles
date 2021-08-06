@@ -107,14 +107,15 @@ timezsh () {
 	done
 }
 
-http-to-ssh() {
-    read -p '
+github-https-to-ssh() {
+    echo '
     This script will attempt to change the url of _origin_
     for each git repository in the current directory.
-        Press \'y\' to continue.
+        To continue, press _Y_
         Press Ctrl-c to interrupt.
-        ' doit
-    [[ $doit = y ]] && {
+        '
+    read doit
+    [[ $doit = Y ]] && {
         for i in $(ls); do;
             cd $i ;
             pwd ;

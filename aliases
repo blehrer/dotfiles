@@ -20,7 +20,7 @@ alias @http='cd $HTTP_ROOT'
 alias @='@task'
 alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
 alias @@@='@ $(cat $TASK_HOME/.task-mru)'
-alias @@@@='cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
+alias @@@@='cd $NBCUOTS/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
 alias @d='@config'
 alias @dq='@config sqe'
 alias jj='cat $TASK_HOME/.task-mru | pbcopy'
@@ -34,7 +34,11 @@ alias jj='cat $TASK_HOME/.task-mru | pbcopy'
 source $DOTFILES_HOME/nbcu_aliases
 
 function @logs() {
-    [[ $(pwd) =~ $WORKPLACE/* ]] && {
+    declare -A exceptions
+    exceptions[cds-ingest-mpx]="digsrv-cds-ingest-mpx"
+    exceptions[cds-ingest-qa]="digsrv-cds-ingest-mpx-sqe"
+    exceptions[cp-transfer-performance-tests]="cp-manatees-performance-tests"
+    [[ $(pwd) =~ $NBCUOTS/* ]] && {
         cd $WORKPLACE/output/$(basename $(git rev-parse --show-toplevel))
         return
     }
@@ -47,17 +51,21 @@ function @logs() {
 }
 
 function @repo() {
+    declare -A exceptions
+    exceptions[cds-ingest-mpx]="digsrv-cds-ingest-mpx"
+    exceptions[cds-ingest-qa]="digsrv-cds-ingest-mpx-sqe"
+    exceptions[cp-transfer-performance-tests]="cp-manatees-performance-tests"
     [ $1 ] && local suffix=$1
     [[ $(pwd) = $WORKPLACE/output/* ]] && {
-        cd $WORKPLACE/$(basename $(pwd))/$suffix
+        cd $NBCUOTS/$(basename $(pwd))/$suffix
         return
     }
     [[ $(pwd) = $TASK_HOME/* ]] && {
-        cd $WORKPLACE/$(cat $(git rev-parse --show-toplevel)/.yagconf)/$suffix
+        cd $NBCUOTS/$(cat $(git rev-parse --show-toplevel)/.yagconf)/$suffix
         return
     }
-    [[ $(pwd) = $WORKPLACE/*-config-repo/* ]] && {
-        cd $WORKPLACE/$(basename $(pwd) | sed -e 's/-sqe$//g')/$suffix
+    [[ $(pwd) = $NBCUOTS/*-config-repo/* ]] && {
+        cd $NBCUOTS/$(basename $(pwd) | sed -e 's/-sqe$//g')/$suffix
         return
     }
     echo "Not sure where the repo is?"
@@ -65,7 +73,7 @@ function @repo() {
 }
 
 function @task() {
-    [[ $(pwd) =~ $WORKPLACE/* ]] && [[ $1 ]] && updateMru=1
+    [[ $(pwd) =~ $NBCUOTS/* ]] && [[ $1 ]] && updateMru=1
     source $DOTFILES_HOME/bin/.task ${@}
     [ $updateMru ] && {
         basename $(pwd) > $TASK_HOME/.task-mru
@@ -110,6 +118,7 @@ function cht() {
   curl cht.sh/$1/$(echo ${@:2} | sed -e "s/\ /+/g")
 }
 
+alias brave='brave-browser $1 &> /dev/null &'
 alias ag='ag --hidden'
 alias c='clear'
 alias cd='pushd'
