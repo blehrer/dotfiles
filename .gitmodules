@@ -52,3 +52,6 @@
 [submodule "yq@v3"]
 	path = gitclones/yq_v3
 	url = https://github.com/mikefarah/yq
+[submodule "vim-plugin.YouCompleteMe"]
+	path = homedir/.vim/pack/vendor/start/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
