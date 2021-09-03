@@ -19,5 +19,3 @@ defaultBranch = main
 [credential]
     helper = /usr/bin/git-credential-manager-core
     helper = manager-core
-[credential "github.com"]
-    useHttpPath = true
