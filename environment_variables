@@ -20,6 +20,7 @@ export TASK_HOME=$_HOME/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$NBCUOTS
 export INTELLIJ_HOME="~/.local/share/JetBrains/Toolbox/apps/IDEA-C/*/**/bin"
+export ALLURE_HOME="~/.local/share/allure*/bin"
 export VIM_PLUGINS=~/.vim/pack/vendor/start
 
 ### Files and default values
