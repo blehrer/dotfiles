@@ -4,7 +4,7 @@ alias pbcopy=clip.exe
 ## Places
 alias @wh='cd $WHOME'
 alias wh='@wh'
-alias @cdw='cd $WORKPLACE'
+alias @cdw='cd $NBCUOTS'
 alias cdw='@cdw'
 alias @w='cd $WORKPLACE'
 alias w='@w'
