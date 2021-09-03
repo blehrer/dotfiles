@@ -1,4 +1,4 @@
-" =============================================================================
+"-to-on-prem =============================================================================
 " Sources and runtimepath stuff
 " =============================================================================
 
@@ -46,10 +46,11 @@ set smarttab
 set wildmode=longest,list,full
 set wildmenu
 set incsearch
-set colorcolumn=100
+"set colorcolumn=100
 set scrolloff=8
 set signcolumn=yes
 highlight ColorColumn guibg=lightgrey
+highlight Cursor guibg=darkgrey
 " Ignore files
 set wildignore+=*.pyc
 set wildignore+=*.class
@@ -62,6 +63,7 @@ set wildignore+=**/.git/*
 set ruler
 set lazyredraw
 set undofile
+set modifiable
 set fileformat=unix
 set ff=unix
 set path+=.**
@@ -157,6 +159,7 @@ nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
 nnoremap <Leader><Leader> :GFiles<CR>
+nnoremap <Leader>/ :Ag 
 nnoremap <Leader><CR> :source $DOTFILES_HOME/vimrc<CR>
 
 " Buffer pane with file tree sidebar
@@ -168,7 +171,7 @@ vnoremap <leader>p "_dP
 " yank to clipboard
 nnoremap <leader>y "*y
 vnoremap <leader>y "*y
-nnoremap <leader>Y gg"*yG
+nnoremap <leader>Y gg"*vGy
 
 autocmd TextYankPost * call system('echo '.shellescape(join(v:event.regcontents, "\<CR>")).' |  clip.exe')
 

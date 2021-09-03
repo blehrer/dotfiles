@@ -65,3 +65,6 @@ compinit
 complete -C '/usr/local/bin/aws_completer' aws
 
 [ -f $CONFIG_DIR/fzf/.fzf.zsh ] && source $CONFIG_DIR/fzf/.fzf.zsh
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_blehrer
+ssh-add ~/.ssh/id_ed25519
