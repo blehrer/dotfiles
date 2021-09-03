@@ -1,6 +1,6 @@
 [include]
     path = ~/.config/dotfiles/git/git-personal.conf
-[includeIf "gitdir:~/workplace/NBCUOTS"]
+[includeIf "gitdir:~/workplace/NBCUOTS/"]
     path = ~/.config/dotfiles/git/git-work.conf
 [includeIf "gitdir:~/Documents/jira/"]
     path = ~/.config/dotfiles/git/git-work.conf
