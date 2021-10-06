@@ -24,6 +24,7 @@ alias @@@@='cd $NBCUOTS/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
 alias @d='@config'
 alias @dq='@config sqe'
 alias jj='cat $TASK_HOME/.task-mru | pbcopy'
+alias jjlink="echo https://jira.inbcu.com/browse/SVCS6-`cat $TASK_HOME/.task-mru` | clip.exe"
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     source $DOTFILES_HOME/windows_aliases
