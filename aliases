@@ -195,3 +195,5 @@ alias se='src $DOTFILES_HOME/environment_variables'
 	alias git=$(brew --prefix)/bin/git
 	alias bash-5.1='/usr/local/homebrew/bin/bash'
 }
+alias nvim="/home/206672215/.local/share/applications/nvim-linux64/bin/nvim"
+alias k8s="kubernetes"

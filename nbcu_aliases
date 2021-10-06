@@ -15,6 +15,7 @@ alias @tools='cd $NBCUOTS/cp-tools'
 alias @mpx='cd $NBCUOTS/cp-mpx-ingest'
 alias @delivery='cd $NBCUOTS/cp-delivery'
 alias @perf='cd $NBCUOTS/cp-manatees-performance-tests'
+alias @cs3='cd $NBCUOTS/cp-transfer-cloudian'
 
 function @config {
     declare -A exceptions

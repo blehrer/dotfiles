@@ -25,6 +25,7 @@ export PATH="$PATH:$DOTFILES_HOME/bin"
 	export PATH="$PATH:$HOME/.local/bin/"
 }
 
+export PATH="$HOME/.local/share/applications/nvim-linux64/bin:$PATH"
 # Prepend to path, using stuff already on the path
 #export PATH="$(brew --prefix)/opt/yq@3/bin:$PATH"
 
