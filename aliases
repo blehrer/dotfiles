@@ -149,7 +149,6 @@ alias gst='git status'
 alias gsub='git submodule update --remote --merge'
 alias ivm='vim'
 alias ll='ls -alh'
-alias idea="$INTELLIJ_HOME/idea.sh &> ~/.cache/JetBrains/IdeaIC2021.2/log/runtime/idea.$(date +%Y-%m-%d-%H%M%z.%s).log &"
 alias intellij=idea
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
@@ -169,6 +168,13 @@ alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias iam='vim $AWS_SHARED_CREDENTIALS_FILE'
 alias agig='vim $DOTFILES_HOME/ag/.agignore'
 alias gig='vim $DOTFILES_HOME/git/gitignore_global'
+
+function idea() {
+  local version=`find ~/.cache/JetBrains/ -maxdepth 1 -mindepth 1 -type d | tail -n 1`
+  local timestamp=`date +%Y-%m-%d-%H%M%z.%s`
+  local logfile="$version/log/runtime/idea.$timestamp.log"
+  dex $APPS/jetbrains-idea-ce.desktop &> $logfile &
+}
 
 ## Re-source files
 function src() {

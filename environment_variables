@@ -19,7 +19,7 @@ export df=$DOTFILES_HOME
 export TASK_HOME=$_HOME/Documents/jira
 export LOGS_HOME=$WORKPLACE/output
 export WORKTREES_HOME=$NBCUOTS
-export INTELLIJ_HOME="~/.local/share/JetBrains/Toolbox/apps/IDEA-C/*/**/bin"
+export APPS=~/.local/share/applications
 export ALLURE_HOME="~/.local/share/allure*/bin"
 export VIM_PLUGINS=~/.vim/pack/vendor/start
 
