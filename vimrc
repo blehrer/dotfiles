@@ -33,9 +33,9 @@ set novisualbell
 set noerrorbells
 set smartindent
 syntax enable
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 set autoindent
 set encoding=utf-8
@@ -51,6 +51,8 @@ set scrolloff=8
 set signcolumn=yes
 highlight ColorColumn guibg=lightgrey
 highlight Cursor guibg=darkgrey
+set hlsearch
+
 " Ignore files
 set wildignore+=*.pyc
 set wildignore+=*.class
@@ -158,8 +160,9 @@ noremap <Leader>. :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
-nnoremap <Leader><Leader> :GFiles<CR>
-nnoremap <Leader>/ :Ag 
+nnoremap <Leader><Leader> :Files<CR>
+nnoremap <Leader><Leader>g :GFiles<CR>
+nnoremap <Leader>/ :Ag<CR>
 nnoremap <Leader><CR> :source $DOTFILES_HOME/vimrc<CR>
 
 " Buffer pane with file tree sidebar
