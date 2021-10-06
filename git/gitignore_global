@@ -16,3 +16,4 @@ target/*
 target/
 tags
 .factorypath
+*Zone.Identifier
