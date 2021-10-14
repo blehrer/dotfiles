@@ -4,7 +4,7 @@
 *ajcore.*.txt
 .DS_Store
 $KUBECONFIG
-**/prop_local
+**/prop_local*
 **/output
 **/testng-results
 **/allure-results
