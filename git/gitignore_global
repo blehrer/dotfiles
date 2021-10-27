@@ -17,3 +17,4 @@ target/
 tags
 .factorypath
 *Zone.Identifier
+*dump*txt
