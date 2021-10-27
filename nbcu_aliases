@@ -62,3 +62,15 @@ function jbcp() {
     popd
 }
 
+function utilspod() {
+  kubectl attach bl-utils -c bl-utils -i -t ||
+  kubectl run --rm bl-utils -it --image blehrer/utils bash ||
+  cyberpeacock_login \
+    --profile saml \
+    --user `whoami` \
+    --arn $IAM_EKS_NONPROD &&
+  aws eks update-kubeconfig --name cloudpipeline-eks-nonprod-1 --profile saml &&
+  kubectl attach bl-utils -c bl-utils -i -t ||
+  [ $? = 1 ] &&
+  kubectl run --rm bl-utils -it --image blehrer/utils bash
+}
