@@ -5,6 +5,7 @@
 .DS_Store
 $KUBECONFIG
 **/prop_local*
+**/bl/*
 **/output
 **/testng-results
 **/allure-results
