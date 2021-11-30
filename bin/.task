@@ -44,7 +44,7 @@ mkdir_and_cd_and_git_init() {
 }
 
 function main() {
-	local defaultProject=svcs6
+	local defaultProject=fsct
 	[ -z $1 ] && cd $_HOME/Documents/jira/$defaultProject && return 0
 	[[ $1 =~ [a-zA-Z0-9]+-[0-9]+-.+ ]] && {
 		local branchName=$1
