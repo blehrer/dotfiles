@@ -42,6 +42,7 @@ bindkey "^T" push-line-or-edit
   # recommend using compinstall to choose them.  See 'man zshcompsys' for more
   # info about this stuff.
   
+  fpath=(~/.zsh/completion $fpath)
   # The following lines were added by compinstall
   
   zstyle ':completion:*' completer _expand _complete _approximate
