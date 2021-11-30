@@ -45,6 +45,7 @@ source $zcfg/avit.zsh-theme
 source $zcfg/mvn.plugin.zsh
 
 for i in $DOTFILES_HOME/environment_variables \
+        $HOME/.secret_variables_nbcu \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/bin/scriptbucket \

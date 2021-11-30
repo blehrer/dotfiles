@@ -58,7 +58,7 @@ export HISTSIZE=1000000000
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
 ## AWS
-export AWS_DEFAULT_PROFILE=preprod
+export AWS_REGION=us-east-1
 export AWS_CONFIG_FILE=$_HOME/.aws/config
 export AWS_DEFAULT_REGION=us-east-1
 export AWS_SHARED_CREDENTIALS_FILE=$_HOME/.aws/credentials

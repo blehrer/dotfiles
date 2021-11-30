@@ -1,3 +1,4 @@
+#!/bin/env bash
 ## Places
 alias @cpc='cd $NBCUOTS/cp-config-repo'
 alias cpc='cd $NBCUOTS/cp-config-repo'
@@ -61,6 +62,19 @@ function jbcp() {
 
     popd
 }
+
+function duplicateSamlProfile() {
+  local profile=${1:-default}
+  local details=`tail -n 7 ~/.aws/credentials`
+  cat >> ~/.aws/credentials << EOF
+
+[$profile]
+$details
+EOF
+}
+
+alias iamEksNonprod="cyberpeacock_login --user $SSO --profile eksNonprod --arn $IAM_EKS_NONPROD"
+alias iamDevNonprod="cyberpeacock_login --user $SSO --profile preprod --arn $IAM_DEVTEAM_NONPROD --duration $(expr 60 \* 60 \* 4) && duplicateSamlProfile"
 
 function utilspod() {
   kubectl attach bl-utils -c bl-utils -i -t ||
