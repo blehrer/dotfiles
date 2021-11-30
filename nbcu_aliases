@@ -73,7 +73,7 @@ $details
 EOF
 }
 
-alias iamEksNonprod="cyberpeacock_login --user $SSO --profile eksNonprod --arn $IAM_EKS_NONPROD"
+alias iamEksNonprod="cyberpeacock_login --user $SSO --profile eksNonprod --arn $IAM_EKS_NONPROD --duration $(expr 60 \* 60 \* 1)"
 alias iamDevNonprod="cyberpeacock_login --user $SSO --profile preprod --arn $IAM_DEVTEAM_NONPROD --duration $(expr 60 \* 60 \* 4) && duplicateSamlProfile"
 
 function utilspod() {
