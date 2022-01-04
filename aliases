@@ -142,6 +142,7 @@ alias gh='se && gh'
 alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})' #show the git DAG as a graph
 alias glga='git log --graph --decorate --oneline --all' #show the git DAG as a graph
 alias gpom='git push origin HEAD:master'
+alias gw='`upfind gradlew`'
 alias grep='grep -i --color=auto'
 alias gri='git rebase -i'
 alias gria='git rebase -i --autosquash'
