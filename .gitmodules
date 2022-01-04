@@ -58,3 +58,6 @@
 [submodule "vim-plugin.vim-fugitive"]
 	path = homedir/.vim/pack/vendor/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim-plugin.vim-gradle"]
+	path = homedir/.vim/pack/vendor/start/vim-gradle
+	url = https://github.com/davewongillies/vim-gradle.git
