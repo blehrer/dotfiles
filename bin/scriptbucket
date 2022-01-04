@@ -130,3 +130,41 @@ github-https-to-ssh() {
     }
     unset doit
 }
+
+function upfind() {
+
+    local startingDirectory=$(pwd) searchDir=$(pwd) filename=($1) highestDirectory=($2) lastIteration=0 usage="
+
+    upfind filename [highestDirectory]
+
+    filename            The name of the file you are searching upwards for
+    highestDirectory    The directory to stop at, when searching upwards for a file.
+                            Optional. Defaults to the parent of the closest .git folder
+
+    "
+
+    [ -z $filename ] && {
+        echo $usage
+        return 1
+    }
+    [ $lastIteration = 0 ] && {
+        while [[ $lastIteration == 0 ]]; do
+            (([ -z $highestDirectory ] && [ -d $searchDir/.git ]) ||
+                [[ `readlink -f $searchDir` = `readlink -f $highestDirectory` ]]) &&
+                lastIteration=1
+            result=`find $searchDir -maxdepth 1 -type f -name $filename`
+            if [ -z $result ]; then
+                [[ $lastIteration = 1 ]] && break
+                searchDir+="/.."
+            else
+                readlink -f $result
+                return $?
+            fi
+        done
+
+        alt=`readlink -f $searchDir`
+        tld=${highestDirectory:-$alt}
+        echo "$filename was not found in the subtree from $startingDirectory to $tld"
+        return 1
+    }
+}
