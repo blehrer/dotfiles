@@ -50,6 +50,7 @@ for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/bin/scriptbucket \
          $DOTFILES_HOME/aliases \
+         $DOTFILES_HOME/bin/xit \
          $DOTFILES_HOME/init_scripts; do
 #    timer=$(($(/usr/local/homebrew/bin/gdate +%s%N)/1000000))
     source $i
@@ -64,5 +65,6 @@ autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 compinit
 complete -C '/usr/local/bin/aws_completer' aws
+source $DOTFILES_HOME/lib/completions/xit-completion.bash
 
 [ -f $CONFIG_DIR/fzf/.fzf.zsh ] && source $CONFIG_DIR/fzf/.fzf.zsh

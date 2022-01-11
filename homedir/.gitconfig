@@ -2,6 +2,10 @@
     path = ~/.config/dotfiles/git/git-personal.conf
 [includeIf "gitdir:~/workplace/NBCUOTS/"]
     path = ~/.config/dotfiles/git/git-work.conf
+[includeIf "gitdir:~/workplace/OnAirSystems/"]
+    path = ~/.config/dotfiles/git/git-enterprise.conf
+[includeIf "gitdir:~/workplace/brianlehrer-nbcuni/"]
+    path = ~/.config/dotfiles/git/git-work.conf
 [includeIf "gitdir:~/Documents/jira/"]
     path = ~/.config/dotfiles/git/git-work.conf
 [core]

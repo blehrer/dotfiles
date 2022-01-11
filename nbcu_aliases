@@ -1,5 +1,11 @@
 #!/bin/env bash
 ## Places
+alias @cdw='cd $ONAIR'
+alias cdw='@cdw'
+alias @oas='cd $ONAIR'
+alias @xit='cd $ONAIR/xit'
+alias @x='cd $ONAIR/xit'
+alias @ots='cd $NBCUOTS'
 alias @cpc='cd $NBCUOTS/cp-config-repo'
 alias cpc='cd $NBCUOTS/cp-config-repo'
 alias @dg='cd $NBCUOTS/digsrv-config-repo'

@@ -13,6 +13,8 @@
 export WHOME=/mnt/c/Users/$(whoami)
 export WORKPLACE=$_HOME/workplace
 export NBCUOTS=$WORKPLACE/NBCUOTS
+export ONAIR=$WORKPLACE/OnAirSystems
+export XIT_HOMES=$ONAIR/xit_homes
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
 export df=$DOTFILES_HOME

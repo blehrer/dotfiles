@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+function xit-up() {
+    @xit
+    echo $@
+    
+    local cfg=${2:-$XIT_HOMES/TLL/configuration.properties}
+    local logfile=$(dirname $cfg)/logs/xit-stdout.`date +%Y-%m-%d-%H`.log
+    local gitdir=$(git rev-parse --git-dir)
+    [ -d $gitdir/../dist ] && cd $gitdir/../dist &&
+    [ -f xit.jar ] && {
+        echo cfg: $cfg
+        echo Logfile: $logfile
+        java -jar xit.jar $XIT_CONFIG_ENCRYPTION_KEY $cfg &>> $logfile &
+        return 0
+    } || echo "xit.jar is absent. Aborting" ; return 1
+}
+xit-up
