@@ -168,3 +168,39 @@ function upfind() {
         return 1
     }
 }
+
+function filetypes() {
+    usage="
+    Get the filetypes and dotfile names, recursively
+
+    filetypes <options>
+
+    -h  print this
+    -d  directory to search in (required)
+    -e  print as regular expression
+    "
+
+    while getopts 'hd:e' 'OPTKEY'; do
+        case ${OPTKEY} in
+        'h')
+            echo $usage
+            return
+            ;;
+        'd')
+            local dir=$OPTARG
+            ;;
+        'e')
+            local asRegex=1
+            ;;
+        esac
+    done
+
+    [ $dir ] || {
+        echo $usage
+        return 1
+    }
+    local rv=$(ag --ignore node_modules --files-with-matches . $dir | sed -e 's/.*\.//g' | sort -u)
+    [[ $asRegex = 1 ]] &&  rv=$(echo $rv | tr '\n' '|' |  rev | cut -c 2- | rev)
+    echo $rv
+    return
+}
