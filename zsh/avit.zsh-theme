@@ -6,12 +6,14 @@ typeset +H _return_status="%{$fg_bold[red]%}%(?..⍉)%{$reset_color%}"
 typeset +H _hist_no="%{$fg[grey]%}%h%{$reset_color%}"
 
 PROMPT='
-$(_user_host)${_current_dir} $(git_prompt_info)
+%{$fg[cyan]%}%D{%Y-%m-%dT%H:%M:%S%z}%{$reset_color%}
+⯐
+$(_user_host)${_current_dir} $(git_prompt_info) 
 %{%(!.${fg[red]}.${fg[white]})%}▶%{$reset_color%}%  '
 
 PROMPT2='%{%(!.${fg[red]}.${fg[white]})%}◀%{$reset_color%}  '
 
-RPROMPT='%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
+#RPROMPT='%{$(echotc UP 1)%}$(_git_time_since_commit) $(git_prompt_status) ${_return_status}%{$(echotc DO 1)%}'
 
 function _user_host() {
   local me
@@ -54,6 +56,7 @@ function _git_time_since_commit() {
     echo "${ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL}${commit_age}%{$reset_color%}"
   fi
 }
+
 
 MODE_INDICATOR="%{$fg_bold[yellow]%}❮%{$reset_color%}%{$fg[yellow]%}❮❮%{$reset_color%}"
 
