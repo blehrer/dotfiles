@@ -24,6 +24,8 @@ export WORKTREES_HOME=$NBCUOTS
 export APPS=~/.local/share/applications
 export ALLURE_HOME="~/.local/share/allure*/bin"
 export VIM_PLUGINS=~/.vim/pack/vendor/start
+export FZF_DEFAULT_OPTS="--layout=reverse --height 25%"
+export NOTES=~/Documents/notes/OnAirSystems
 
 ### Files and default values
 export DISPLAY_NUMBER="0"
@@ -55,6 +57,7 @@ export HISTSIZE=1000000000
 
 ## Integration with cyberpeacock_login
 #export KUBECONFIG='$KUBECONFIG:~/.kube/config-cloudpipeline-eks-nonprod-e2e:~/.kube/cloudpipeline-eks-nonprod-1'
+export KUBECONFIG=~/.kube/config-fwd-eks-us-east-1
 
 ## Cygwin
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1

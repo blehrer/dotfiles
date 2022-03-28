@@ -68,3 +68,7 @@ complete -C '/usr/local/bin/aws_completer' aws
 source $DOTFILES_HOME/lib/completions/xit-completion.bash
 
 [ -f $CONFIG_DIR/fzf/.fzf.zsh ] && source $CONFIG_DIR/fzf/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

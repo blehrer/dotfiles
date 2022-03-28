@@ -1,6 +1,6 @@
-function ranger() {
-    [ $@ ] && vifm $@ || ranger .
-}
+#function ranger() {
+#    [ $@ ] && vifm $@ || ranger .
+#}
 
 function jenv() {
     [ $1 ] && {
@@ -27,4 +27,8 @@ function jenv() {
         return 1
     }
     return
+}
+
+function Get-Clipboard () {
+    powershell.exe Get-Clipboard | sed -e 's/\r//g'
 }

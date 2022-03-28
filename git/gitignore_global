@@ -19,3 +19,8 @@ tags
 .factorypath
 *Zone.Identifier
 *dump*txt
+.run/
+_Deparsed_XSubs.pm
+.classpath
+.project
+.settings/

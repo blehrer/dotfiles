@@ -5,10 +5,14 @@ alias cdw='@cdw'
 alias @oas='cd $ONAIR'
 alias @xit='cd $ONAIR/xit'
 alias @x='cd $ONAIR/xit'
+alias @tll='cd $ONAIR/translator-linear'
+alias @fwd='cd $ONAIR/translator-linear/fwd'
+alias @ui='cd $ONAIR/fwd-ui'
 alias @ots='cd $NBCUOTS'
 alias @cpc='cd $NBCUOTS/cp-config-repo'
 alias cpc='cd $NBCUOTS/cp-config-repo'
 alias @dg='cd $NBCUOTS/digsrv-config-repo'
+alias @e2e='cd $NBCUOTS/cp-fulfillment-e2e'
 alias @ots='cd $NBCUOTS/cp-transfer-upload'
 alias @sto='cd $NBCUOTS/cp-transfer-s3toonprem'
 alias @toon='cd $NBCUOTS/cp-transfer-s3toonprem'
@@ -23,6 +27,7 @@ alias @mpx='cd $NBCUOTS/cp-mpx-ingest'
 alias @delivery='cd $NBCUOTS/cp-delivery'
 alias @perf='cd $NBCUOTS/cp-manatees-performance-tests'
 alias @cs3='cd $NBCUOTS/cp-transfer-cloudian'
+alias @cloudian='cd $NBCUOTS/cp-transfer-cloudian'
 
 function @config {
     declare -A exceptions
@@ -69,18 +74,18 @@ function jbcp() {
     popd
 }
 
-function duplicateSamlProfile() {
-  local profile=${1:-default}
-  local details=`tail -n 7 ~/.aws/credentials`
-  cat >> ~/.aws/credentials << EOF
-
-[$profile]
-$details
-EOF
+function cpProfile() {
+  local from=${1:-default}
+  local to=${2:-default}
+  local attrs=(output region aws_access_key_id aws_session_token aws_security_token aws_secret_access_key)
+  for attr in $attrs; do [ $? = 0 ] && aws configure --profile $to set $attr `aws configure --profile $from get $attr` || echo Could not set $attr; done;
 }
 
-alias iamEksNonprod="cyberpeacock_login --user $SSO --profile eksNonprod --arn $IAM_EKS_NONPROD --duration $(expr 60 \* 60 \* 1)"
-alias iamDevNonprod="cyberpeacock_login --user $SSO --profile preprod --arn $IAM_DEVTEAM_NONPROD --duration $(expr 60 \* 60 \* 4) && duplicateSamlProfile"
+alias iamEksNonprod="cyberpeacock_login --user $SSO --profile eksNonprod --arn $IAM_EKS_NONPROD --duration $(expr 60 \* 60 \* 1 - 1) && cpProfile eksNonprod saml && aws eks update-kubeconfig --name cloudpipeline-eks-nonprod-1 --profile eksNonprod"
+alias iamDevNonprod="cyberpeacock_login --user $SSO --profile preprod --arn $IAM_DEVTEAM_NONPROD --duration $(expr 60 \* 60 \* 8 - 1) && cpProfile preprod default"
+alias iamFwdNonprod="cyberpeacock_login --user $SSO --profile fwd --arn arn:aws:iam::615757282153:role/FWDTeam --duration 3600 && cpProfile fwd saml && aws eks update-kubeconfig --name fwd-eks-us-east-1 --profile fwd"
+alias iamFwdProd="cyberpeacock_login --user $SSO --profile fwd-prod --arn arn:aws:iam::451289765098:role/FWDTeam --duration 3600 && cpProfile fwd-prod saml && aws eks update-kubeconfig --name fwd-eks-us-east-1 --profile fwd-prod"
+
 
 function utilspod() {
   kubectl attach bl-utils -c bl-utils -i -t ||
@@ -94,3 +99,4 @@ function utilspod() {
   [ $? = 1 ] &&
   kubectl run --rm bl-utils -it --image blehrer/utils bash
 }
+

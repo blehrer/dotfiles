@@ -1,2 +1,4 @@
 [ $(command -v pyenv) ] && eval "$(pyenv init -)"
 [ $(command -v jenv) ] && eval "$(jenv init -)"
+eval "$(plenv init -)"
+

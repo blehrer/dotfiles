@@ -1,17 +1,29 @@
 #!/usr/bin/env bash
-function xit-up() {
+local cfg=${1:-$XIT_HOMES/TLL/configuration.properties}
+local logfile=$(dirname $cfg)/logs/xit-stdout.`date +%Y-%m-%d-%H`.log
+local port=$(cat $cfg | grep XIT_HTTP_PORT | tr -d "XIT_HTTP_PORT=")
+local gitdir=$(git rev-parse --git-dir)
+function runIt() {
+    local url=http://localhost:$port
+    echo "
+    cfg: $cfg
+    url: $url
+    "
+
+    java -jar xit.jar $XIT_CONFIG_ENCRYPTION_KEY $cfg 
+    return 
+}
+function up() {
     @xit
-    echo $@
-    
-    local cfg=${2:-$XIT_HOMES/TLL/configuration.properties}
-    local logfile=$(dirname $cfg)/logs/xit-stdout.`date +%Y-%m-%d-%H`.log
-    local gitdir=$(git rev-parse --git-dir)
     [ -d $gitdir/../dist ] && cd $gitdir/../dist &&
     [ -f xit.jar ] && {
-        echo cfg: $cfg
-        echo Logfile: $logfile
-        java -jar xit.jar $XIT_CONFIG_ENCRYPTION_KEY $cfg &>> $logfile &
-        return 0
+        [ $(lsof -i :$port) ] && {
+            echo A process is already running on port $port. 
+            read -e -p "Do you want to kill it, and start a new instance?  (y/n):     " doKill
+            [[ $doKill = 'y' ]] && kill $(lsof -i :8081 -R | awk '{print $2}' | tr -d "PID\n") && runIt
+            [[ $doKill != 'y' ]] && return 1
+        } || runIt
+        
     } || echo "xit.jar is absent. Aborting" ; return 1
 }
-xit-up
+$(up)

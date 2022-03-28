@@ -11,7 +11,7 @@ function fupdiff() {
 
 # This gets the diff between the current branch and its upstream branch
 function updiff() {
-    echo "Getting the diff between this branch and its upstream branch. ($(git rev-parse --abbrev-ref --symbolic-full-name @{u})) \n\n\n...\n\n\n"; 
+    echo "Getting the diff between this branch and its upstream branch. ($(git rev-parse --abbrev-ref --symbolic-full-name @{u})) \n\n\n...\n\n\n";
     git fetch
     git diff --ignore-all-space $(git rev-parse --abbrev-ref --symbolic-full-name @{u});
     echo "\n"
@@ -131,6 +131,17 @@ github-https-to-ssh() {
     unset doit
 }
 
+function @ghb() {
+    local remoteUrl=`git remote get-url origin`
+    [ $1 ] && local branch=$1 || local branch=`git branch --show-current`
+    echo $remoteUrl/branch/$branch| sed 's/git@/https:\/\// ; s/com:/com\//; s/\s// ; s/\.git//'
+}
+function @ghc() {
+    local remoteUrl=`git remote get-url origin`
+    [ $1 ] && local commit=$1 || local commit=HEAD
+    echo $remoteUrl/commit/$commit| sed 's/git@/https:\/\// ; s/com:/com\//; s/\s// ; s/\.git//'
+}
+
 function upfind() {
 
     local startingDirectory=$(pwd) searchDir=$(pwd) filename=($1) highestDirectory=($2) lastIteration=0 usage="
@@ -194,7 +205,7 @@ function filetypes() {
             ;;
         esac
     done
-
+            
     [ $dir ] || {
         echo $usage
         return 1

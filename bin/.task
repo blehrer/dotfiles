@@ -3,10 +3,10 @@
 function usage() {
 	echo "
 NAME:
-@task - make/go-to task notes dir ($_HOME/Documents/jira/jira-prefix/jira-id)
+@_task - make/go-to task notes dir ($_HOME/Documents/jira/jira-prefix/jira-id)
 
 SYNOPSIS:
-@task [-p|--project=<jira-prefix>] jira-id
+@_task [-p|--project=<jira-prefix>] jira-id
 
 OPTIONS:
 -h                     show this message 
@@ -15,7 +15,6 @@ OPTIONS:
 }
 
 mkdir_and_cd_and_git_init() {
-    local projectId=${altProject:-${defaultProject}}
     local dir=$TASK_HOME/$projectId/$id
     local description=https://jira.inbcu.com/browse/$projectId-$id
 	[ -d $dir ] || mkdir -p $dir
@@ -44,14 +43,13 @@ mkdir_and_cd_and_git_init() {
 }
 
 function main() {
-	local defaultProject=fsct
-	[ -z $1 ] && cd $_HOME/Documents/jira/$defaultProject && return 0
-	[[ $1 =~ [a-zA-Z0-9]+-[0-9]+-.+ ]] && {
-		local branchName=$1
-		echo $branchName
-		local altProject=$(echo "$branchName" | cut -d '-' -f 1 | tr '[:upper:]' '[:lower:]')
+    echo here
+	local branchName=$(git branch --show-current)
+	echo $branchName
+	[[ $branchName =~ [a-zA-Z0-9]+-[0-9]+-.+ ]] && {
+		local projectId=$(echo "$branchName" | cut -d '-' -f 1 | tr '[:upper:]' '[:lower:]')
 		local id=$(echo "$branchName" | cut -d '-' -f 2)
-		echo "branchName: $branchName, altProject: $altProject, id: $id"
+		echo "branchName: $branchName, projectId: $projectId, id: $id"
 	} || {
 		for i in "$@"; do
 			case $i in
@@ -60,14 +58,15 @@ function main() {
 				return 0
 				;;
 			-p=* | --project=*)
-				local altProject=$(echo "${i#*=}" | tr '[:upper:]' '[:lower:]')
+				local projectId=$(echo "${i#*=}" | tr '[:upper:]' '[:lower:]')
 				shift
 				;;
 			*) ;;
 			esac
 		done
 	}
-	[ ! -z $id ] || local id=$1
+    [ ! -z $projectId ] || { echo ProjectId not set ; return 1 }
+    [ ! -z $id ] || { echo JIRA Id not set ; return 1 }
 	mkdir_and_cd_and_git_init
 	return
 }

@@ -33,11 +33,10 @@ set novisualbell
 set noerrorbells
 set smartindent
 syntax enable
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab
-set autoindent
 set encoding=utf-8
 set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
 set ignorecase
@@ -46,11 +45,12 @@ set smarttab
 set wildmode=longest,list,full
 set wildmenu
 set incsearch
-"set colorcolumn=100
+set textwidth=120
+set colorcolumn=120 
 set scrolloff=8
 set signcolumn=yes
-highlight ColorColumn guibg=lightgrey
-highlight Cursor guibg=darkgrey
+highlight ColorColumn ctermbg=darkgrey ctermfg=black
+highlight Cursor ctermbg=darkgrey ctermfg=black
 set hlsearch
 
 " Ignore files
@@ -86,6 +86,12 @@ set backupdir=.backup/,~/.backup/,/tmp//
 set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
 
+" au groups by filetype
+
+filetype plugin indent on
+autocmd FileType yaml,yml,json setlocal shiftwidth=2 tabstop=2 
+autocmd FileType yaml,yml,json autocmd BufWritePre <buffer> %s/\s\+$//e
+
 "" =============================================================================
 "" Plugin settings
 "" =============================================================================
@@ -93,10 +99,29 @@ set undodir=.undo/,~/.undo/,/tmp//
 ""let NERDTreeShowHidden=1
 "
 "" Lightline
+
 set laststatus=2
+"let g:lightline = {
+"    \ 'colorscheme': 'gruvbox',
+"      \ 'active': {
+"      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+"      \ }
+"\}
 let g:lightline = {
-    \ 'colorscheme': 'gruvbox'
-\}
+      \ 'colorscheme': 'gruvbox',
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ }
+      \ }
+
+function! LightlineFilename()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
 
 "" Syntastic
 
@@ -165,8 +190,10 @@ map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
+nnoremap <Leader>j :cnext<cr>
+nnoremap <Leader>k :cprev<cr>
 nnoremap <Leader>n :NERDTreeToggle<CR>
-noremap <Leader>. :NERDTreeCWD<CR>
+nnoremap <Leader>. :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
 nnoremap <Leader>[ :bprev<CR>
 nnoremap <Leader><F2> :call RenameFile()<cr>
@@ -213,6 +240,7 @@ map Q <Nop> " Disable Ex mode
 command! W w " Instead of opening a Window manager, just write
 map W <Nop>
 command! Wq wq
+map <F1> <Nop>
 
 "Use :w!! to save a file with sudo
 cabbrev w!! w !sudo tee % >/dev/null
@@ -220,3 +248,10 @@ cabbrev w!! w !sudo tee % >/dev/null
 " vimrc and journal
 nnoremap <Leader>vv :vsplit $DOTFILES_HOME/vimrc<CR>
 nnoremap <Leader>vj :vsplit $_HOME/Documents/notes/Vim.md<CR>
+
+" the opposite of J
+nnoremap <C-J> a<CR><Esc>k$
+
+" unindent
+nnoremap <S-Tab> <<
+inoremap <S-Tab> <C-d>

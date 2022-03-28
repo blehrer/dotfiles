@@ -1,13 +1,17 @@
-[include]
+[includeIf "gitdir:~/.config/"]
     path = ~/.config/dotfiles/git/git-personal.conf
 [includeIf "gitdir:~/workplace/NBCUOTS/"]
+    ;path = ~/.config/dotfiles/git/github.com/NBCUOTS/.gitconfig
     path = ~/.config/dotfiles/git/git-work.conf
 [includeIf "gitdir:~/workplace/OnAirSystems/"]
-    path = ~/.config/dotfiles/git/git-enterprise.conf
+    path = ~/.config/dotfiles/git/github.com/OnAirSystems/.gitconfig
+    ;path = ~/.config/dotfiles/git/git-enterprise.conf
 [includeIf "gitdir:~/workplace/brianlehrer-nbcuni/"]
     path = ~/.config/dotfiles/git/git-work.conf
 [includeIf "gitdir:~/Documents/jira/"]
     path = ~/.config/dotfiles/git/git-work.conf
+[includeIf "gitdir:~/workplace/206672215_nbcuni/"]
+    path = ~/.config/dotfiles/git/github.com/206672215_nbcuni/.gitconfig
 [core]
     autocrlf = input
     excludesfile = ~/.config/dotfiles/git/gitignore_global
@@ -19,7 +23,7 @@
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
     clone-gh = "!git clone git@github.com:$1"
 [init]
-defaultBranch = main
+    defaultBranch = main
 [credential]
     helper = /usr/bin/git-credential-manager-core
     helper = manager-core

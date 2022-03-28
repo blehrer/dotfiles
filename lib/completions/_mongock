@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+function _mongock_completions() {
+    local cur prev
+
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    local supportedRepos=("fwd" "tll-data-services-datamigration")
+    local mongockActions=("migrate all" "undo" "state")
+    local undoActions=("up-to-change")
+    local stateActions=("db" "code-base" "compare")
+
+    case ${COMP_CWORD} in
+        1)
+            COMPREPLY=($(compgen -W $supportedRepos -- ${cur}))
+            ;;
+        2)
+            case [[ ${prev} =~ ${supportedRepos[*]}
+                $supportedRepos)
+                    COMPREPLY=($(compgen -W "" -- ${cur}))
+                    ;;
+                show)
+                    COMPREPLY=($(compgen -W "some other args" -- ${cur}))
+                    ;;
+            esac
+            ;;
+        *)
+            COMPREPLY=()
+            ;;
+    esac
+    COMPREPLY=($(compgen -W "" "${COMP_WORDS[1]}"))
+}
+
+complete -F _mongock_completions mongock

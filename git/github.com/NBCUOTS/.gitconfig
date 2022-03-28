@@ -1,0 +1,10 @@
+[user]
+    name = Brian Lehrer
+    email = 75274896+brianlehrer-nbcuni@users.noreply.github.com
+    signingkey = 5F4E34F610594249
+[commit]
+    template = ~/.config/dotfiles/git/nbcu-commit-template
+[credential]
+    credentialStore = gpg
+[url "git@github.com-NBCUOTS:NBCUOTS"]
+    insteadOf = "git@github.com:NBCUOTS"

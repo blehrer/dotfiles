@@ -8,6 +8,8 @@ export PATH="$_HOME/.local/bin:$PATH"
 export PATH="$_HOME/.jenv/bin:$PATH"
 export PATH="$(which aws_completer):$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="$APPS/xidel/bin:$PATH"
+export PATH="$HOME/.plenv/bin:$PATH"
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     export PATH="$_HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
@@ -18,7 +20,7 @@ export PATH="/usr/local/bin:$PATH"
 }
 
 # Append to path
-export PATH="$PATH:$DOTFILES_HOME/bin"
+export PATH="$PATH:$DOTFILES_HOME/bin/"
 [[ $(uname) = Darwin ]] && {
 	export PATH="$PATH:/usr/local/homebrew/bin"
 	export PATH="$PATH:/usr/local/bin"

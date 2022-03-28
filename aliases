@@ -1,16 +1,16 @@
+#
 ## Overrides
 alias pbcopy=clip.exe
+alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 ## Places
 alias @wh='cd $WHOME'
 alias wh='@wh'
-alias @cdw='cd $NBCUOTS'
-alias cdw='@cdw'
 alias @w='cd $WORKPLACE'
 alias w='@w'
 alias @dfd='cd $DOTFILES_HOME'
 alias dfd='@dfd'
-alias @notes="cd $WHOME/OneDrive\ -\ NBCUniversal/My\ Documents/Operations\ and\ Technology"
+alias @notes='cd "$NOTES"'
 alias notes='@notes'
 alias nn='@notes ; vim untitled.md'
 alias @scratch='cd $_HOME/scratch'
@@ -18,14 +18,21 @@ alias scratch='vim $_HOME/scratch/scratch-$(date "+%F-%T")'
 alias @dl='cd $_HOME/Downloads'
 alias @aws='cd $_HOME/.aws'
 alias @http='cd $HTTP_ROOT'
-alias @='@task'
-alias @@='@ $(git branch --show-current) 2>/dev/null; yagdconf'
+alias @='@_task'
+alias @@='@task $(git branch --show-current) 2>/dev/null; yagdconf'
+alias @task='@@'
 alias @@@='@ $(cat $TASK_HOME/.task-mru)'
 alias @@@@='cd $NBCUOTS/$(cat $(git rev-parse --show-toplevel)/.yagconf)'
 alias @d='@config'
 alias @dq='@config sqe'
 alias jj='cat $TASK_HOME/.task-mru | pbcopy'
-alias jjlink="echo https://jira.inbcu.com/browse/SVCS6-`cat $TASK_HOME/.task-mru` | clip.exe"
+alias jjlink="echo https://jira.inbcu.com/browse/FSCT-`cat $TASK_HOME/.task-mru` | clip.exe"
+alias gh='github'
+
+function github() {
+    _github | xclip 
+    echo Copied \'$(xclip -o)\' to clipboard
+}
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     source $DOTFILES_HOME/windows_aliases
@@ -34,6 +41,16 @@ alias jjlink="echo https://jira.inbcu.com/browse/SVCS6-`cat $TASK_HOME/.task-mru
 [ bat.exe ] && alias bat=bat.exe
 
 source $DOTFILES_HOME/nbcu_aliases
+
+function _github() {
+    local branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
+    [[ $branch ]] && {
+        git remote get-url origin | 
+        sed -e 's/git@//g; s/\.git//g; s/:/\//g' |
+        xargs -I _url_ echo https://_url_/tree/$branch/$(fzf)
+    } || return 1
+    return
+}
 
 function @logs() {
     declare -A exceptions
@@ -59,11 +76,11 @@ function @repo() {
     exceptions[cp-transfer-performance-tests]="cp-manatees-performance-tests"
     [ $1 ] && local suffix=$1
     [[ $(pwd) = $WORKPLACE/output/* ]] && {
-        cd $NBCUOTS/$(basename $(pwd))/$suffix
+        cd $ONAIR/$(basename $(pwd))/$suffix
         return
     }
     [[ $(pwd) = $TASK_HOME/* ]] && {
-        cd $NBCUOTS/$(cat $(git rev-parse --show-toplevel)/.yagconf)/$suffix
+        cd $ONAIR/$(cat $(git rev-parse --show-toplevel)/.yagconf)/$suffix
         return
     }
     [[ $(pwd) = $NBCUOTS/*-config-repo/* ]] && {
@@ -74,8 +91,8 @@ function @repo() {
     return 1
 }
 
-function @task() {
-    [[ $(pwd) =~ $NBCUOTS/* ]] && [[ $1 ]] && updateMru=1
+function @_task() {
+    ([[ $(pwd) =~ $NBCUOTS/* ]] || [[ $(pwd) =~ $ONAIR/* ]] ) && [[ $1 ]] && updateMru=1
     source $DOTFILES_HOME/bin/.task ${@}
     [ $updateMru ] && {
         basename $(pwd) > $TASK_HOME/.task-mru
@@ -138,7 +155,6 @@ alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-fu
 alias gc='git checkout'
 alias gd='git diff'
 alias gds='git diff --staged'
-alias gh='se && gh'
 alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})' #show the git DAG as a graph
 alias glga='git log --graph --decorate --oneline --all' #show the git DAG as a graph
 alias gpom='git push origin HEAD:master'
@@ -146,10 +162,13 @@ alias gw='`upfind gradlew`'
 alias grep='grep -i --color=auto'
 alias gri='git rebase -i'
 alias gria='git rebase -i --autosquash'
+alias garia='gamf; gria'
 alias grim='git rebase -i origin/master'
 alias gst='git status'
 alias gsub='git submodule update --remote --merge'
 alias ivm='vim'
+alias gw='./gradlew'
+alias k='kubectl'
 alias ll='ls -alh'
 alias intellij=idea
 alias prepl='perl -d -e 1'
@@ -175,13 +194,16 @@ function idea() {
   local version=`find ~/.cache/JetBrains/ -maxdepth 1 -mindepth 1 -type d | tail -n 1`
   local timestamp=`date +%Y-%m-%d-%H%M%z.%s`
   local logfile="$version/log/runtime/idea.$timestamp.log"
-  dex $APPS/jetbrains-idea-ce.desktop &> $logfile &
+  echo logfile: $logfile
+  dex $APPS/jetbrains-idea.desktop &> $logfile &
 }
 
 ## Re-source files
 function src() {
-    echo "Sourcing $1";
-    source "$1";
+    for s in $@; do 
+        echo "Sourcing $s"
+        source "$s"
+    done
 }
 
 
