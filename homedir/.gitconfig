@@ -1,17 +1,21 @@
 [includeIf "gitdir:~/.config/"]
-    path = ~/.config/dotfiles/git/git-personal.conf
-[includeIf "gitdir:~/workplace/NBCUOTS/"]
-    ;path = ~/.config/dotfiles/git/github.com/NBCUOTS/.gitconfig
+    path = ~/.config/dotfiles/git/github.com/blehrer/gitconfig
+[includeIf "gitdir:~/github.com/"]
+    path = ~/.config/dotfiles/git/github.com/blehrer/gitconfig
+[includeIf "gitdir:~/workplace/github.com/NBCUOTS/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUOTS/gitconfig
+[includeIf "gitdir:~/workplace/github.com/OnAirSystems/"]
+    path = ~/.config/dotfiles/git/github.com/OnAirSystems/gitconfig
+[includeIf "gitdir:~/workplace/github.inbcu.com/OnAirSystems/"]
+    path = ~/.config/dotfiles/git/github.inbcu.com/OnAirSystems/gitconfig
+[includeIf "gitdir:~/Documents/jira/svcs6/"]
     path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/workplace/OnAirSystems/"]
-    path = ~/.config/dotfiles/git/github.com/OnAirSystems/.gitconfig
-    ;path = ~/.config/dotfiles/git/git-enterprise.conf
-[includeIf "gitdir:~/workplace/brianlehrer-nbcuni/"]
+[includeIf "gitdir:~/Documents/jira/oput1/"]
     path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/Documents/jira/"]
+[includeIf "gitdir:~/Documents/jira/tll/"]
     path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/workplace/206672215_nbcuni/"]
-    path = ~/.config/dotfiles/git/github.com/206672215_nbcuni/.gitconfig
+[includeIf "gitdir:~/Documents/jira/xit/"]
+    path = ~/.config/dotfiles/git/git-work.conf
 [core]
     autocrlf = input
     excludesfile = ~/.config/dotfiles/git/gitignore_global
@@ -24,6 +28,3 @@
     clone-gh = "!git clone git@github.com:$1"
 [init]
     defaultBranch = main
-[credential]
-    helper = /usr/bin/git-credential-manager-core
-    helper = manager-core

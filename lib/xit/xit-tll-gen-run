@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+cd $XH
+mkdir -p $XH/{logs,home/packages}
+date >> $XH/logs/gen_run_tll_packages.sh.log 
+$XH/latest/scripts/TLL/gen_run_tll_packages.sh >> logs/gen_run_tll_packages.sh.log

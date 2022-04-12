@@ -1,7 +1,0 @@
-[user]
-    name = Brian Lehrer
-    email = Brian.Lehrer@nbcuni.com
-[commit]
-    template = ~/.config/dotfiles/git/nbcu-commit-template
-[url "git@github.com-OnAirSystems:OnAirSystems"]
-    insteadOf = "git@github.com:OnAirSystems"

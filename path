@@ -19,13 +19,13 @@ export PATH="$HOME/.plenv/bin:$PATH"
     export PATH="$_HOME/go/bin:$PATH"
 }
 
-# Append to path
-export PATH="$PATH:$DOTFILES_HOME/bin/"
-[[ $(uname) = Darwin ]] && {
-	export PATH="$PATH:/usr/local/homebrew/bin"
-	export PATH="$PATH:/usr/local/bin"
-	export PATH="$PATH:$HOME/.local/bin/"
-}
+## Append to path
+#export PATH="$PATH:$DOTFILES_HOME/bin/"
+#[[ $(uname) = Darwin ]] && {
+#	export PATH="$PATH:/usr/local/homebrew/bin"
+#	export PATH="$PATH:/usr/local/bin"
+#	export PATH="$PATH:$HOME/.local/bin/"
+#}
 
 export PATH="$HOME/.local/share/applications/nvim-linux64/bin:$PATH"
 # Prepend to path, using stuff already on the path

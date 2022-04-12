@@ -1,8 +1,15 @@
+# bootstrap variables
+export CONFIG_DIR=$HOME/.config
+export DOTFILES_HOME=$HOME/github.com/blehrer/dotfiles.git
+source $DOTFILES_HOME/shellenv/brew.shellenv
+source $DOTFILES_HOME/shellenv/jenv.shellenv
+source $HOMEBREW_REPOSITORY/share/antigen/antigen.zsh
+antigen init ~/.antigenrc
 autoload -U colors && colors
 autoload sticky-note
 
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/206672215/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -31,32 +38,35 @@ bindkey "^T" push-line-or-edit
 
 # bootstrap variables
 export CONFIG_DIR=$HOME/.config
-export DOTFILES_HOME=$CONFIG_DIR/dotfiles
+export DOTFILES_HOME=$HOME/github.com/blehrer/dotfiles.git
 
 # external resources
-zcfg=~/.config/zsh
-source $zcfg/git.zsh
-source $zcfg/theme-and-appearance.zsh
-source $zcfg/lib/spectrum.zsh
-source $zcfg/completion.zsh
-source $zcfg/git-prompt.sh
-source $zcfg/aws.plugin.zsh
-source $zcfg/avit.zsh-theme
-source $zcfg/mvn.plugin.zsh
+#zcfg=~/.config/zsh
+#source $zcfg/git.zsh
+#source $zcfg/theme-and-appearance.zsh
+#source $zcfg/lib/spectrum.zsh
+#source $zcfg/completion.zsh
+#source $zcfg/git-prompt.sh
+#source $zcfg/aws.plugin.zsh
+#source $zcfg/avit.zsh-theme
+#source $zcfg/mvn.plugin.zsh
 
+         #$DOTFILES_HOME/bin/xit \
 for i in $DOTFILES_HOME/environment_variables \
-        $HOME/.secret_variables_nbcu \
+         $HOME/.secret_variables_nbcu \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/bin/scriptbucket \
          $DOTFILES_HOME/aliases \
-         $DOTFILES_HOME/bin/xit \
+         $DOTFILES_HOME/lib/completions/gradle-tab-completion.bash \
          $DOTFILES_HOME/init_scripts; do
-#    timer=$(($(/usr/local/homebrew/bin/gdate +%s%N)/1000000))
+    #echo "=========== sourcing $i ==============="
+    #timer=$(($($HOMEBREW_REPOSITORY/bin/gdate +%s%N)/1000000))
     source $i
-#    now=$(($(/usr/local/homebrew/bin/gdate +%s%N)/1000000))
-#    elapsed=$(($now-$timer))
-#    echo $elapsed":" $i
+    #now=$(($($HOMEBREW_REPOSITORY/bin/gdate +%s%N)/1000000))
+    #elapsed=$(($now-$timer))
+    #echo $elapsed":" $i
+    #echo "========== done sourcing $i =============="
 done
 source $VIM_PLUGINS/gruvbox/gruvbox_256palette.sh
 
@@ -64,11 +74,12 @@ source $VIM_PLUGINS/gruvbox/gruvbox_256palette.sh
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 compinit
-complete -C '/usr/local/bin/aws_completer' aws
-source $DOTFILES_HOME/lib/completions/xit-completion.bash
-
-[ -f $CONFIG_DIR/fzf/.fzf.zsh ] && source $CONFIG_DIR/fzf/.fzf.zsh
+complete -C $(which aws_completer) aws
+#source $DOTFILES_HOME/lib/completions/xit-completion.bash
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$HOMEBREW_REPOSITORY/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_REPOSITORY/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$HOMEBREW_REPOSITORY/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_REPOSITORY/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

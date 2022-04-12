@@ -3,10 +3,11 @@
 alias @cdw='cd $ONAIR'
 alias cdw='@cdw'
 alias @oas='cd $ONAIR'
-alias @xit='cd $ONAIR/xit'
-alias @x='cd $ONAIR/xit'
-alias @tll='cd $ONAIR/translator-linear'
-alias @fwd='cd $ONAIR/translator-linear/fwd'
+alias @xit='cd $ONAIR/xit.git'
+alias @x='cd $ONAIR/xit.git'
+alias @xh='cd $XH'
+alias @tll='cd $ONAIR/translator-linear.git'
+alias @fwd='cd $ONAIR/translator-linear.git/fwd'
 alias @ui='cd $ONAIR/fwd-ui'
 alias @ots='cd $NBCUOTS'
 alias @cpc='cd $NBCUOTS/cp-config-repo'
@@ -28,6 +29,7 @@ alias @delivery='cd $NBCUOTS/cp-delivery'
 alias @perf='cd $NBCUOTS/cp-manatees-performance-tests'
 alias @cs3='cd $NBCUOTS/cp-transfer-cloudian'
 alias @cloudian='cd $NBCUOTS/cp-transfer-cloudian'
+alias @data='cd $ONAIR/data'
 
 function @config {
     declare -A exceptions

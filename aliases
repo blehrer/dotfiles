@@ -1,6 +1,5 @@
 #
 ## Overrides
-alias pbcopy=clip.exe
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 ## Places
@@ -13,10 +12,10 @@ alias dfd='@dfd'
 alias @notes='cd "$NOTES"'
 alias notes='@notes'
 alias nn='@notes ; vim untitled.md'
-alias @scratch='cd $_HOME/scratch'
-alias scratch='vim $_HOME/scratch/scratch-$(date "+%F-%T")'
-alias @dl='cd $_HOME/Downloads'
-alias @aws='cd $_HOME/.aws'
+alias @scratch='cd $HOME/scratch'
+alias scratch='vim $HOME/scratch/scratch-$(date "+%F-%T")'
+alias @dl='cd $HOME/Downloads'
+alias @aws='cd $HOME/.aws'
 alias @http='cd $HTTP_ROOT'
 alias @='@_task'
 alias @@='@task $(git branch --show-current) 2>/dev/null; yagdconf'
@@ -37,8 +36,6 @@ function github() {
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     source $DOTFILES_HOME/windows_aliases
 }
-
-[ bat.exe ] && alias bat=bat.exe
 
 source $DOTFILES_HOME/nbcu_aliases
 

@@ -21,6 +21,10 @@ xit() {
         [[ $cmd = 'js-clean' ]] && source $DOTFILES_HOME/lib/xit/xit-js-clean && return $?
         [[ $cmd = 'java-clean' ]] && source $DOTFILES_HOME/lib/xit/xit-java-clean && return $?
         [[ $cmd = 'build' ]] && source $DOTFILES_HOME/lib/xit/xit-dist && return $?
+        #[[ $cmd = 'install' ]] && source $DOTFILES_HOME/lib/xit/xit-install && return $?
+        [[ $cmd = 'install' ]] && source $ONAIR/xit.git/src/main/scripts/local/bin/install.sh && return $?
+        
+        [[ $cmd = 'tll-gen-run' ]] && source $DOTFILES_HOME/lib/xit/xit-tll-gen-run && return $?
     } || {
         echo $1 not supported 
         return 1
