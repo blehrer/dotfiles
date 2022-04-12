@@ -41,8 +41,7 @@ bindkey "^T" push-line-or-edit
   # these are some (mostly) sane defaults, if you want your own settings, I
   # recommend using compinstall to choose them.  See 'man zshcompsys' for more
   # info about this stuff.
-
-  fpath=(~/.zsh/completion $fpath)
+  fpath=(~/.zsh/completion $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
   # The following lines were added by compinstall
 
