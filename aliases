@@ -38,6 +38,7 @@ function github() {
 }
 
 source $DOTFILES_HOME/nbcu_aliases
+source $DOTFILES_HOME/mac_aliases
 
 function _github() {
     local branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
@@ -210,11 +211,4 @@ alias soz='src $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias sa='src $DOTFILES_HOME/*aliases'
 alias se='src $DOTFILES_HOME/environment_variables'
 
-# Mac specific
-
-[[ $OSTYPE = darwin* ]] && {
-	alias git=$(brew --prefix)/bin/git
-	alias bash-5.1='/usr/local/homebrew/bin/bash'
-}
-alias nvim="/home/206672215/.local/share/applications/nvim-linux64/bin/nvim"
 alias k8s="kubernetes"

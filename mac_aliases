@@ -1,0 +1,6 @@
+[[ $OSTYPE = darwin* ]] && {
+    bin=$(brew --prefix)
+	alias bash=$brewbin/bash
+	alias git=$brewbin/git
+	alias vim=$brewbin/vim
+}
