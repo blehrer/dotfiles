@@ -37,6 +37,7 @@ set novisualbell
 set path+=.**
 set path+=~/.config/**
 set relativenumber
+set number
 set ruler
 set scrolloff=8
 set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
@@ -275,6 +276,8 @@ nnoremap <Leader><Leader> :Files<CR>
 nnoremap <Leader><Leader>g :GFiles<CR>
 nnoremap <Leader>/ :Ag<CR>
 nnoremap <Leader><CR> :source $DOTFILES_HOME/vimrc<CR>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>w :w<cr>
 
 " Buffer pane with file tree sidebar
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
@@ -312,7 +315,6 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap <c-j> a<cr><esc>k$
 
 "Leader Commands
-let mapleader = " "
 nnoremap <leader><leader> :FZF<cr>
 nnoremap <leader>v :vs ~/.vimrc<cr>
 nnoremap <leader><F2> :call RenameFile()<cr>
@@ -344,7 +346,7 @@ inoremap <S-Tab> <C-d>
 " FileTypes
 " =============================================================================
 
-autocmd FileType yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
+autocmd FileType bash,sh,yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
 autocmd FileType * autocmd BufWritePre <buffer> %s/\s\+$//e
 " Treat .json files as .js
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
