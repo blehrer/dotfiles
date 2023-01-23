@@ -1,10 +1,9 @@
+#!/usr/bin/env bash
 #
 ## Overrides
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 ## Places
-alias @wh='cd $WHOME'
-alias wh='@wh'
 alias @w='cd $WORKPLACE'
 alias w='@w'
 alias @dfd='cd $DOTFILES_HOME'
@@ -15,7 +14,6 @@ alias nn='@notes ; vim untitled.md'
 alias @scratch='cd $HOME/scratch'
 alias scratch='vim $HOME/scratch/scratch-$(date "+%F-%T")'
 alias @dl='cd $HOME/Downloads'
-alias @aws='cd $HOME/.aws'
 alias @http='cd $HTTP_ROOT'
 alias @='@_task'
 alias @@='@task $(git branch --show-current) 2>/dev/null; yagdconf'
@@ -38,7 +36,6 @@ function github() {
 }
 
 source $DOTFILES_HOME/nbcu_aliases
-source $DOTFILES_HOME/mac_aliases
 
 function _github() {
     local branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
@@ -135,25 +132,6 @@ function cht() {
   curl cht.sh/$1/$(echo ${@:2} | sed -e "s/\ /+/g")
 }
 
-# vim sessions
-
-function vimsesh {
-  reporoot=`git rev-parse --show-toplevel`
-  if [ $? ]; then
-    if [ -e ~/.vim/sessions$reporoot/session.vim ]; then
-      vim -S ~/.vim/sessions$reporoot/session.vim -c "cd $reporoot" ${@}
-    else
-      vim ${@}
-    fi
-  fi
-  return
-}
-
-# vim, vertical split
-alias vs='vim -O'
-# vim, tabs
-alias vt='vim -p'
-alias vsh='vimsesh'
 alias brave='brave-browser $1 &> /dev/null &'
 alias ag='ag --hidden'
 alias c='clear'
@@ -163,20 +141,14 @@ alias back='popd'
 alias flip='pushd_builtin'
 alias egrep='egrep -i --color=auto'
 alias epoch='date +%s'
-alias epochMillis='gdate +%s%N | cut -b1-13'
-alias epochMicros='gdate +%s%N | cut -b1-16'
-alias epochNanos='gdate +%s%N'
 alias gamf='git commit -a --fixup @'
 alias gb='git branch'
 alias bcp='git branch-name | pbcopy'
 alias gbackup='git push backup --force "refs/heads/*:refs/heads/*"'
 alias gbls='git branch -vv'
-alias gbo='gbls | grep -o DONE'
 alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"' #print this branch's upstream branch
 alias gc='git checkout'
-alias gcu='git checkout @{u}'
 alias gd='git diff'
-alias gdu='git diff @{u}'
 alias gds='git diff --staged'
 alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})' #show the git DAG as a graph
 alias glga='git log --graph --decorate --oneline --all' #show the git DAG as a graph
@@ -193,7 +165,6 @@ alias ivm='vim'
 alias gw='./gradlew'
 alias k='kubectl'
 alias ll='ls -alh'
-alias intellij=idea
 alias prepl='perl -d -e 1'
 alias vd='vim ./.'
 alias vmi='vim'
@@ -209,17 +180,9 @@ alias b='vim $DOTFILES_HOME/bashrc'
 alias a='vim -O $DOTFILES_HOME/*aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'
 alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
-alias iam='vim $AWS_SHARED_CREDENTIALS_FILE'
 alias agig='vim $DOTFILES_HOME/ag/.agignore'
 alias gig='vim $DOTFILES_HOME/git/gitignore_global'
 
-function idea() {
-  local version=`find ~/.cache/JetBrains/ -maxdepth 1 -mindepth 1 -type d | tail -n 1`
-  local timestamp=`date +%Y-%m-%d-%H%M%z.%s`
-  local logfile="$version/log/runtime/idea.$timestamp.log"
-  echo logfile: $logfile
-  dex $APPS/jetbrains-idea.desktop &> $logfile &
-}
 
 ## Re-source files
 function src() {
@@ -236,22 +199,11 @@ alias soz='src $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias sa='src $DOTFILES_HOME/*aliases'
 alias se='src $DOTFILES_HOME/environment_variables'
 
+# Mac specific
+
+[[ $OSTYPE = darwin* ]] && {
+	alias git=$(brew --prefix)/bin/git
+	alias bash-5.1='$HOMEBREW_PREFIX/bin/bash'
+}
+alias nvim="$HOME/.local/share/applications/nvim-linux64/bin/nvim"
 alias k8s="kubernetes"
-
-            fuck () {
-                TF_PYTHONIOENCODING=$PYTHONIOENCODING;
-                export TF_SHELL=zsh;
-                export TF_ALIAS=fuck;
-                TF_SHELL_ALIASES=$(alias);
-                export TF_SHELL_ALIASES;
-                TF_HISTORY="$(fc -ln -10)";
-                export TF_HISTORY;
-                export PYTHONIOENCODING=utf-8;
-                TF_CMD=$(
-                    thefuck THEFUCK_ARGUMENT_PLACEHOLDER $@
-                ) && eval $TF_CMD;
-                unset TF_HISTORY;
-                export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
-                test -n "$TF_CMD" && print -s $TF_CMD
-            }
-

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+alias @aws='cd $HOME/.aws'
+alias iam='vim $AWS_SHARED_CREDENTIALS_FILE'

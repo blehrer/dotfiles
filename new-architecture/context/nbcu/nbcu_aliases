@@ -1,0 +1,35 @@
+#!/bin/env bash
+## Places
+
+alias cdw='@cdw'
+
+function jbcp() {
+    @@
+    local link="https://jira.inbcu.com/browse/$(basename $(dirname $(pwd)))-$(basename $(pwd))"
+    echo $link | pbcopy
+    echo "JIRA link copied to clipboard ($link)"
+
+    popd
+}
+
+function cpProfile() {
+  local from=${1:-default}
+  local to=${2:-default}
+  local attrs=(output region aws_access_key_id aws_session_token aws_security_token aws_secret_access_key)
+  for attr in $attrs; do [ $? = 0 ] && aws configure --profile $to set $attr `aws configure --profile $from get $attr` || echo Could not set $attr; done;
+}
+
+
+function utilspod() {
+  kubectl attach bl-utils -c bl-utils -i -t ||
+  kubectl run --rm bl-utils -it --image blehrer/utils bash ||
+  cyberpeacock_login \
+    --profile saml \
+    --user `whoami` \
+    --arn $IAM_EKS_NONPROD &&
+  aws eks update-kubeconfig --name cloudpipeline-eks-nonprod-1 --profile saml &&
+  kubectl attach bl-utils -c bl-utils -i -t ||
+  [ $? = 1 ] &&
+  kubectl run --rm bl-utils -it --image blehrer/utils bash
+}
+

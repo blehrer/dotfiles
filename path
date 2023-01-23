@@ -10,6 +10,7 @@ export PATH="$(which aws_completer):$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$APPS/xidel/bin:$PATH"
 export PATH="$HOME/.plenv/bin:$PATH"
+export PATH="$PATH:$HOME/Library/Application Support/multipass/bin"
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     export PATH="$_HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
@@ -33,3 +34,4 @@ export PATH="$HOME/.local/share/applications/nvim-linux64/bin:$PATH"
 
 #finally escape spaces and parens
 export PATH=$(echo $PATH | sed -e 's/ /\\ /g ; s/(/\\(/g ; s/)/\\)/g')
+

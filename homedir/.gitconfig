@@ -1,12 +1,21 @@
-[includeIf "gitdir:~/.config/"]
-    path = ~/.config/dotfiles/git/github.com/blehrer/gitconfig
+[includeIf "gitdir:~/.config/"] path = ~/.config/dotfiles/git/github.com/blehrer/gitconfig
 [includeIf "gitdir:~/github.com/"]
     path = ~/.config/dotfiles/git/github.com/blehrer/gitconfig
+[includeIf "gitdir:~/workplace/github.com/brianlehrer-nbcuni/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUOTS/gitconfig
 [includeIf "gitdir:~/workplace/github.com/NBCUOTS/"]
     path = ~/.config/dotfiles/git/github.com/NBCUOTS/gitconfig
-[includeIf "gitdir:~/workplace/github.com/OnAirSystems/"]
-    path = ~/.config/dotfiles/git/github.com/OnAirSystems/gitconfig
+[includeIf "gitdir:~/workplace/github.com/206672215_nbcuni/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+[includeIf "gitdir:~/workplace/github.com/NBCUniversalOTS/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+[includeIf "gitdir:~/workplace/github.com/NBCUniversalOTS/fwd-ui/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/fwd-ui/automation/gitconfig
+[includeif "gitdir:~/workplace/nbcuni.sharepoint.com/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
 [includeIf "gitdir:~/workplace/github.inbcu.com/OnAirSystems/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUOTS/gitconfig
+[includeIf "gitdir:~/workplace/borkbox.jetbrains.space/"]
     path = ~/.config/dotfiles/git/github.inbcu.com/OnAirSystems/gitconfig
 [includeIf "gitdir:~/Documents/jira/svcs6/"]
     path = ~/.config/dotfiles/git/git-work.conf
@@ -26,5 +35,27 @@
     backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
     clone-gh = "!git clone git@github.com:$1"
+    changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
+        echo Changelist, relative to upstream branch $upstream && \
+        git log --oneline --graph $upstream..@"
+    updiff = "!git diff @{u}"
+    done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
 [init]
     defaultBranch = main
+[diff]
+    #colorMoved = dimmed-zebra
+    #colorMoved = blocks
+    #colorMoved = no
+    #color-moved-ws = allow-indentation-change
+    tool = vimdiff
+    noprefix = true
+[merge]
+    tool = vimdiff
+[prune]
+    prune = true
+[rebase]
+    autosquash = true
+[status]
+    submoduleSummary = false
+[pull]
+    rebase = false

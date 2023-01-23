@@ -1,0 +1,7 @@
+[user]
+    name = Brian Lehrer
+    email = brian.lehrer@nbcuni.com
+[commit]
+    template = ~/.config/dotfiles/git/tll-aqa-commit-template
+[url "git@github.com.NBCUniversalOTS:NBCUniversalOTS"]
+    insteadOf = "git@github.com:NBCUniversalOTS"

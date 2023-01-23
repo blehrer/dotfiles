@@ -1,3 +1,4 @@
+*.bk
 *~
 **/*.un~
 .*.swp
@@ -24,3 +25,8 @@ _Deparsed_XSubs.pm
 .classpath
 .project
 .settings/
+.tool-versions
+*.class
+**/dist
+**/runtime
+**/build

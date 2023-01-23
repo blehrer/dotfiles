@@ -13,12 +13,10 @@
 
 ## Environment Variables
 ### Places
-export XML_CATALOG_FILES=/opt/homebrew/etc/xml/catalog
 export WORKPLACE=$HOME/workplace
 export NBCUOTS=$WORKPLACE/github.com/NBCUOTS
 export ONAIR=$WORKPLACE/github.inbcu.com/OnAirSystems
-export OTS=$WORKPLACE/github.com/NBCUniversalOTS
-export XIT_HOMES=$OTS/data/xit
+export XIT_HOMES=$ONAIR/data/xit
 export XH=$XIT_HOMES
 export CONFIG_DIR=~/.config
 export DOTFILES_HOME=$CONFIG_DIR/dotfiles
@@ -29,17 +27,13 @@ export WORKTREES_HOME=$NBCUOTS
 export APPS=~/.local/share/applications
 export ALLURE_HOME="~/.local/share/allure*/bin"
 export VIM_PLUGINS=~/.vim/plugged
-#export FZF_DEFAULT_COMMAND="ag -G" fzf
-#export FZF_DEFAULT_OPTS="--layout=reverse --height 25%"
-export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --glob "!.git/*"'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export NOTES=~/Documents/notes
+export FZF_DEFAULT_OPTS="--layout=reverse --height 25%"
+export NOTES=~/Documents/notes/OnAirSystems
 
 ### Files and default values
 export DISPLAY_NUMBER="0"
 export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):$DISPLAY_NUMBER
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR="/usr/bin/vim"
 export PAGER="/usr/bin/less -i"
 export INPUTRC=$_HOME/.inputrc
 export GCM_CREDENTIAL_STORE=gpg

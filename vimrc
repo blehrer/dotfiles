@@ -8,6 +8,7 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'fzf#install()' }
 Plug 'junegunn/fzf.vim'
 Plug 'gruvbox-community/gruvbox'
+Plug 'itsjunetime/rose-pine-vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
@@ -203,13 +204,17 @@ let g:mkdp_theme = 'dark'
 " =============================================================================
 set background=dark
 colorscheme gruvbox
+"colorscheme rose-pine-light
 
 "" Lightline
 
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'apprentice',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
       \ }
+    \ }
 "function! LightlineFilename()
 "  let root = fnamemodify(get(b:, 'git_dir'), ':h')
 "  let path = expand('%:p')
@@ -370,7 +375,8 @@ au VimLeave * :call MakeSession()
 " FileTypes
 " =============================================================================
 
-autocmd FileType bash,sh,yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
+autocmd FileType xml,bash,sh,yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
+autocmd FileType java setlocal shiftwidth=4 tabstop=4
 autocmd FileType * autocmd BufWritePre <buffer> %s/\s\+$//e
 " Treat .json files as .js
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript

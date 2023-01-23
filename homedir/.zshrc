@@ -1,10 +1,11 @@
 # bootstrap variables
+
 export CONFIG_DIR=$HOME/.config
+export XDG_CONFIG_HOME=$HOME/.config
 export DOTFILES_HOME=$HOME/github.com/blehrer/dotfiles.git
-source $DOTFILES_HOME/shellenv/brew.shellenv
-source $DOTFILES_HOME/shellenv/jenv.shellenv
-source $HOMEBREW_REPOSITORY/share/antigen/antigen.zsh
-antigen init ~/.antigenrc
+for i in $DOTFILES_HOME/shellenv/*; do source $i ; done
+#source $HOMEBREW_PREFIX/share/antigen/antigen.zsh
+#antigen init ~/.antigenrc
 autoload -U colors && colors
 autoload sticky-note
 
@@ -58,7 +59,6 @@ for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/bin/scriptbucket \
          $DOTFILES_HOME/aliases \
-         $DOTFILES_HOME/lib/completions/gradle-tab-completion.bash \
          $DOTFILES_HOME/init_scripts; do
     #echo "=========== sourcing $i ==============="
     #timer=$(($($HOMEBREW_REPOSITORY/bin/gdate +%s%N)/1000000))
@@ -83,3 +83,14 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+PATH="/Users/a206672215/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/a206672215/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/a206672215/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/a206672215/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/a206672215/perl5"; export PERL_MM_OPT;
+
+
+neofetch
+eval "$(starship init zsh)"
+source $OTS/xit.git/.env

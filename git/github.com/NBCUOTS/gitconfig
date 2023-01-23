@@ -3,5 +3,5 @@
     email = brian.lehrer@nbcuni.com
 [commit]
     template = ~/.config/dotfiles/git/nbcu-commit-template
-[url "git@github.com.NBCUOTS:NBCUOTS"]
-    insteadOf = "git@github.com:NBCUOTS
+[url "git@github.com.brianlehrer-nbcuni:brianlehrer-nbcuni"]
+    insteadOf = "git@github.com:brianlehrer-nbcuni"
