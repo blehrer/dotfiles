@@ -94,7 +94,7 @@ function cpProfile() {
 
 function setDefaultIam(){
   local profile=${1:-default}
-  cyberpeacock_login --user ${SSO:?} --profile ${profile} --arn ${2:?} ${3:+ --duration $3} &&
+  cyberpeacock_login --user ${SSO:?} --profile ${profile} --arn ${2:?} --duration ${3}
 }
 
 alias iamFwd="setDefaultIam default arn:aws:iam::615757282153:role/FWDTeam 3600"
