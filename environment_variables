@@ -52,6 +52,7 @@ export HISTFILE=~/.cache/zsh/zsh-history
 }
 
 # Docker environment variables
+export DOCKER_HOST=tcp://docker-vm.local:2375
 export HOST_HOME=$HOME
 export HOST_WORKTREES_HOME=$WORKTREES_HOME
 export HOST_LOGS_HOME=$LOGS_HOME
