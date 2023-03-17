@@ -51,6 +51,8 @@
     noprefix = true
 [merge]
     tool = vimdiff
+[fetch]
+    prune = true
 [prune]
     prune = true
 [rebase]
@@ -59,3 +61,4 @@
     submoduleSummary = false
 [pull]
     rebase = false
+    prune = true
