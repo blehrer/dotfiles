@@ -117,3 +117,8 @@ function utilspod() {
   kubectl run --rm bl-utils -it --image blehrer/utils bash
 }
 
+function wd() {
+  pgrep -f selenium | xargs kill
+  $(brew --prefix)/opt/selenium-server/bin/selenium-server hub 2>&1 >> $OTS/tll-ui-integration-tests/runtime/logs/selenium-hub.log &
+  $(brew --prefix)/opt/selenium-server/bin/selenium-server node 2>&1 >> $OTS/tll-ui-integration-tests/runtime/logs/selenium-node.log &
+}
