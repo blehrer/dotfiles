@@ -70,6 +70,8 @@ let g:netrw_browse_split = 0
 let g:netrw_banner = 0
 let g:netrw_winsize = 25
 let g:netrw_localrmdir='rm -r'
+let g:netrw_wiw=1
+let g:netrw_usetab=40
 
 " Store swap files in fixed location, not current directory.
 set dir=~/.cache/vim/swap//
