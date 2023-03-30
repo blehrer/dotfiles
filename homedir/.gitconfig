@@ -30,6 +30,8 @@
     excludesfile = ~/.config/dotfiles/git/gitignore_global
 [log]
     follow = true
+[advice]
+    skippedCherryPicks=false
 [alias]
     branch-name = "!git rev-parse --abbrev-ref HEAD"
     backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
