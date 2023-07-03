@@ -34,6 +34,11 @@ export VIM_PLUGINS=~/.vim/plugged
 export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export NOTES=~/Documents/notes
+export CORRETTO_8_HOME=~/Library/Java/JavaVirtualMachines/corretto-1.8.0_372/Contents/Home
+export CORRETTO_11_HOME=~/Library/Java/JavaVirtualMachines/corretto-11.0.19/Contents/Home
+export OPENJDK_8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_361.jdk/Contents/Home
+export OPENJDK_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
+export JMETER_HOME=/opt/homebrew/Cellar/jmeter/5.5/libexec
 
 ### Files and default values
 export DISPLAY_NUMBER="0"
@@ -45,6 +50,7 @@ export INPUTRC=$_HOME/.inputrc
 export GCM_CREDENTIAL_STORE=gpg
 export HIGHLIGHT_STYLE=base16/gruvbox-dark-hard
 export HISTFILE=~/.cache/zsh/zsh-history
+#export HISTTIMEFORMAT="%d/%m/%y %T "
 
 # Windows specific
 [[ $(uname -a) = CYGWIN* ]] || [[ $(uname -a) = MINGW* ]] && {

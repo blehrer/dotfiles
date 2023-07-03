@@ -20,6 +20,7 @@ compinit
 setopt auto_cd
 setopt prompt_subst
 setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt COMPLETE_IN_WORD
@@ -58,6 +59,7 @@ for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/bin/scriptbucket \
+         $DOTFILES_HOME/bin/explain \
          $DOTFILES_HOME/aliases \
          $DOTFILES_HOME/init_scripts; do
     #echo "=========== sourcing $i ==============="
@@ -91,6 +93,10 @@ PERL_MB_OPT="--install_base \"/Users/a206672215/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/a206672215/perl5"; export PERL_MM_OPT;
 
 
+echo
 neofetch
 eval "$(starship init zsh)"
 source $OTS/xit.git/.env
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

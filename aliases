@@ -1,6 +1,7 @@
 #
 ## Overrides
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
+alias ls="ls -LH"
 
 ## Places
 alias @wh='cd $WHOME'
@@ -166,7 +167,7 @@ alias epoch='date +%s'
 alias epochMillis='gdate +%s%N | cut -b1-13'
 alias epochMicros='gdate +%s%N | cut -b1-16'
 alias epochNanos='gdate +%s%N'
-alias gamf='git commit -a --fixup @'
+function gamf { git commit -a --fixup "${@:-@}" }
 alias gb='git branch'
 alias bcp='git branch-name | pbcopy'
 alias gbackup='git push backup --force "refs/heads/*:refs/heads/*"'
@@ -181,7 +182,6 @@ alias gds='git diff --staged'
 alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})' #show the git DAG as a graph
 alias glga='git log --graph --decorate --oneline --all' #show the git DAG as a graph
 alias gpom='git push origin HEAD:master'
-alias gw='`upfind gradlew`'
 alias grep='grep -i --color=auto'
 alias gri='git rebase -i'
 alias gria='git rebase -i --autosquash'
@@ -190,7 +190,6 @@ alias grim='git rebase -i origin/master'
 alias gst='git status'
 alias gsub='git submodule update --remote --merge'
 alias ivm='vim'
-alias gw='./gradlew'
 alias k='kubectl'
 alias ll='ls -alh'
 alias intellij=idea
@@ -212,6 +211,7 @@ alias oz='vim $CONFIG_DIR/zsh/oh-my-zsh.cfg'
 alias iam='vim $AWS_SHARED_CREDENTIALS_FILE'
 alias agig='vim $DOTFILES_HOME/ag/.agignore'
 alias gig='vim $DOTFILES_HOME/git/gitignore_global'
+alias sc='vim $HOME/.ssh/config'
 
 function idea() {
   local version=`find ~/.cache/JetBrains/ -maxdepth 1 -mindepth 1 -type d | tail -n 1`
@@ -238,20 +238,35 @@ alias se='src $DOTFILES_HOME/environment_variables'
 
 alias k8s="kubernetes"
 
-            fuck () {
-                TF_PYTHONIOENCODING=$PYTHONIOENCODING;
-                export TF_SHELL=zsh;
-                export TF_ALIAS=fuck;
-                TF_SHELL_ALIASES=$(alias);
-                export TF_SHELL_ALIASES;
-                TF_HISTORY="$(fc -ln -10)";
-                export TF_HISTORY;
-                export PYTHONIOENCODING=utf-8;
-                TF_CMD=$(
-                    thefuck THEFUCK_ARGUMENT_PLACEHOLDER $@
-                ) && eval $TF_CMD;
-                unset TF_HISTORY;
-                export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
-                test -n "$TF_CMD" && print -s $TF_CMD
-            }
+fuck () {
+    TF_PYTHONIOENCODING=$PYTHONIOENCODING;
+    export TF_SHELL=zsh;
+    export TF_ALIAS=fuck;
+    TF_SHELL_ALIASES=$(alias);
+    export TF_SHELL_ALIASES;
+    TF_HISTORY="$(fc -ln -10)";
+    export TF_HISTORY;
+    export PYTHONIOENCODING=utf-8;
+    TF_CMD=$(
+        thefuck THEFUCK_ARGUMENT_PLACEHOLDER $@
+    ) && eval $TF_CMD;
+    unset TF_HISTORY;
+    export PYTHONIOENCODING=$TF_PYTHONIOENCODING;
+    test -n "$TF_CMD" && print -s $TF_CMD
+}
 
+gw () {
+    local tld=$(git rev-parse --show-toplevel)
+    eq=$(test $(pwd) = "${tld}")
+    "${eq}" || pushd "${tld}"
+    ./gradlew $@
+    "${eq}" || popd
+}
+
+hgrep() {
+    fc -Dlim "*$@*" 1
+}
+
+mkpwd() {
+    mkdir $1 && cd $1
+}

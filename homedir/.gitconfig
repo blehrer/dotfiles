@@ -17,14 +17,16 @@
     path = ~/.config/dotfiles/git/github.com/NBCUOTS/gitconfig
 [includeIf "gitdir:~/workplace/borkbox.jetbrains.space/"]
     path = ~/.config/dotfiles/git/github.inbcu.com/OnAirSystems/gitconfig
-[includeIf "gitdir:~/Documents/jira/svcs6/"]
-    path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/Documents/jira/oput1/"]
-    path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/Documents/jira/tll/"]
-    path = ~/.config/dotfiles/git/git-work.conf
-[includeIf "gitdir:~/Documents/jira/xit/"]
-    path = ~/.config/dotfiles/git/git-work.conf
+#[includeIf "gitdir:~/Documents/jira/svcs6/"]
+#    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+#[includeIf "gitdir:~/Documents/jira/oput1/"]
+#    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+#[includeIf "gitdir:~/Documents/jira/tll/"]
+#    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+#[includeIf "gitdir:~/Documents/jira/xit/"]
+#    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+[includeIf "gitdir:~/Documents/jira/**/"]
+    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
 [core]
     autocrlf = input
     excludesfile = ~/.config/dotfiles/git/gitignore_global
@@ -51,6 +53,7 @@
     #color-moved-ws = allow-indentation-change
     tool = vimdiff
     noprefix = true
+    renameLimit = 50000
 [merge]
     tool = vimdiff
 [fetch]

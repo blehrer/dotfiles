@@ -9,10 +9,12 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'fzf#install()' }
 Plug 'junegunn/fzf.vim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'itsjunetime/rose-pine-vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 Plug 'vim-syntastic/syntastic'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 " =============================================================================
@@ -76,6 +78,7 @@ let g:netrw_usetab=40
 " Store swap files in fixed location, not current directory.
 set dir=~/.cache/vim/swap//
 set undodir=~/.cache/vim/undo//
+set undofile
 
 " au groups by filetype
 
@@ -205,14 +208,14 @@ let g:mkdp_theme = 'dark'
 " Colorscheme
 " =============================================================================
 set background=dark
-colorscheme gruvbox
-"colorscheme rose-pine-light
+colorscheme catppuccin_mocha
+"colorscheme gruvbox
 
 "" Lightline
 
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'apprentice',
+      \ 'colorscheme': 'rosepine',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
       \ }
@@ -272,8 +275,9 @@ map <silent> <C-l> <C-w>>
 "Leader Commands
 let mapleader = " "
 
-nnoremap <Leader>j :cnext<cr>
-nnoremap <Leader>k :cprev<cr>
+nnoremap <Leader>x :clist<cr>
+nnoremap <Leader>j :cnext<C-m>
+nnoremap <Leader>k :cprev<C-m>
 nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>. :NERDTreeCWD<CR>
 nnoremap <Leader>] :bnext<CR>
