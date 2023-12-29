@@ -95,7 +95,7 @@ newVimPlugin() {
 }
 
 zipdirs() {
-    zip -r -X $1 $2 -x "*DS_Store" \*.un~
+    zip -r -X $1 $2 -x "*DS_Store" \*.un~ "**/local.properties" "**/override.substiutions.properties"
 }
 
 backup_workplace() {
