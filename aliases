@@ -1,7 +1,9 @@
 #
 ## Overrides
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
-alias ls="ls -LH"
+#alias ls="ls -LH"
+alias ls='exa'
+alias tree='exa --tree'
 
 ## Places
 alias @wh='cd $WHOME'
