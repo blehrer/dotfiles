@@ -3,6 +3,7 @@
 " =============================================================================
 
 call plug#begin()
+Plug 'dhruvasagar/vim-table-mode'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'fzf#install()' }
@@ -10,11 +11,15 @@ Plug 'junegunn/fzf.vim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'itsjunetime/rose-pine-vim'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-Plug 'vim-syntastic/syntastic'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'mattn/emmet-vim'
+
+Plug 'dbeniamine/cheat.sh-vim'
+Plug 'cespare/vim-toml'
+Plug 'will133/vim-dirdiff'
+Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 " =============================================================================
@@ -208,7 +213,10 @@ let g:mkdp_theme = 'dark'
 " Colorscheme
 " =============================================================================
 set background=dark
-colorscheme catppuccin_mocha
+colorscheme habamax
+"colorscheme wildcharm
+"colorscheme zaibatsu
+"colorscheme catppuccin_mocha
 "colorscheme gruvbox
 
 "" Lightline
@@ -231,14 +239,14 @@ let g:lightline = {
 
 "" Syntastic
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 "" =============================================================================
 "" Functions
 "" =============================================================================
@@ -318,6 +326,12 @@ vnoremap <leader>f :'<,'>s/\ *$//g<cr>
 vnoremap <leader>en :!python3 -c 'import sys; from urllib import parse; print(parse.quote_plus(sys.stdin.read().strip()))'<cr>
 vnoremap <leader>de :!python3 -c 'import sys; from urllib import parse; print(parse.unquote_plus(sys.stdin.read().strip()))'<cr>
 
+" dhruvasagar/vim-table-mode
+nnoremap <leader>tm :TableModeToggle<cr>
+let g:table_mode_corner='|'
+
+
+
 "Move lines while formatting
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -381,11 +395,26 @@ au VimLeave * :call MakeSession()
 " FileTypes
 " =============================================================================
 
-autocmd FileType xml,bash,sh,yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
-autocmd FileType java setlocal shiftwidth=4 tabstop=4
+autocmd FileType vim,sshconfig,bash,sh,yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
+autocmd FileType java,xml setlocal shiftwidth=4 tabstop=4
 autocmd FileType * autocmd BufWritePre <buffer> %s/\s\+$//e
 " Treat .json files as .js
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 " Treat .md files as Markdown
 autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 autocmd FileType gitrebase setlocal noswapfile
+autocmd FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
+
+" =============================================================================
+" Plugin: DirDiff
+" =============================================================================
+let g:DirDiffExcludes = "draft.configuration.properties,local.properties,override.*"
+
+
+" Plugin: EasyAlign
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
