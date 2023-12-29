@@ -213,6 +213,17 @@ alias agig='vim $DOTFILES_HOME/ag/.agignore'
 alias gig='vim $DOTFILES_HOME/git/gitignore_global'
 alias sc='vim $HOME/.ssh/config'
 
+function iampb(){
+    cat ~/.aws/credentials | sed -e "s/ //g; s/=\(.*\)/='\1'/g" > ~/.aws/credentials.new
+    for line in $(pbpaste | sed -e 's/\[.*\]//g'); do
+        if [[ $line ]]; then
+            dasel put -f ~/.aws/credentials.new -o ~/.aws/credentials.new -r toml -t string -w toml \
+                -s default.$(echo $line | sed -e "s/=\(.*\)/ -v '\1'/")
+        fi
+    done
+    cat ~/.aws/credentials.new | sed -e "s/'//g ; s/\"//g" > ~/.aws/credentials
+}
+
 function idea() {
   local version=`find ~/.cache/JetBrains/ -maxdepth 1 -mindepth 1 -type d | tail -n 1`
   local timestamp=`date +%Y-%m-%d-%H%M%z.%s`
