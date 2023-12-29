@@ -7,9 +7,7 @@
 $KUBECONFIG
 **/prop_local*
 **/bl/*
-**/output
 **/testng-results
-**/allure-results
 *.log
 **/.vim/.netrwhist
 .java-version
@@ -30,3 +28,4 @@ _Deparsed_XSubs.pm
 **/dist
 **/runtime
 **/build
+scratch
