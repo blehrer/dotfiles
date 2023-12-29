@@ -15,6 +15,8 @@ brew "bash"
 brew "bash-completion"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
+# TOML tool
+brew "dasel"
 # Tool for exploring each layer in a docker image
 brew "dive"
 # Play, record, convert, and stream audio and video
@@ -33,8 +35,6 @@ brew "highlight"
 brew "htop"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
-# Manage your Java environment
-brew "jenv"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Small memory footprint, flexible web-server
