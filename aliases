@@ -4,6 +4,8 @@ alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 #alias ls="ls -LH"
 alias ls='exa'
 alias tree='exa --tree'
+alias cd-='cd -'
+alias nv='nvim'
 
 ## Places
 alias @wh='cd $WHOME'
@@ -18,6 +20,7 @@ alias nn='@notes ; vim untitled.md'
 alias @scratch='cd $HOME/scratch'
 alias scratch='vim $HOME/scratch/scratch-$(date "+%F-%T")'
 alias @dl='cd $HOME/Downloads'
+alias dl='cd $HOME/Downloads'
 alias @aws='cd $HOME/.aws'
 alias @http='cd $HTTP_ROOT'
 alias @='@_task'
@@ -168,7 +171,7 @@ function gamf { git commit -a --fixup "${@:-@}" }
 alias gb='git branch'
 alias bcp='git branch-name | pbcopy'
 alias gbackup='git push backup --force "refs/heads/*:refs/heads/*"'
-alias gbls='git branch -vv'
+alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
 alias gbo='gbls | grep -o DONE'
 alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"' #print this branch's upstream branch
 alias gc='git checkout'
@@ -199,8 +202,8 @@ alias yagd="source $DOTFILES_HOME/bin/.yagd -q"
 alias yagdq="source $DOTFILES_HOME/bin/.yagd -s sqe -q"
 
 ## Edit config files
-alias v='vim $DOTFILES_HOME/vimrc'
-alias z='vim -O $HOME/.zshrc $DOTFILES_HOME/zshrc'
+alias vv='vim $DOTFILES_HOME/vimrc'
+alias vz='vim -O $HOME/.zshrc $DOTFILES_HOME/zshrc'
 alias b='vim $DOTFILES_HOME/bashrc'
 alias a='vim -O $DOTFILES_HOME/*aliases'
 alias e='vim $DOTFILES_HOME/environment_variables'

@@ -4,21 +4,26 @@ alias @cdw='cd "${OTS}"'
 alias cdw='@cdw'
 alias vdw='@cdw'
 alias @oas='cd "${ONAIR}"'
-alias @xit='cd "${OTS}"/xit.git; setJavaHome "${CORRETTO_8_HOME}"'
+alias @xit='cd "${OTS}"/xit.git; setJavaHome "${OPENJDK_8_HOME}"'
 alias xit='@xit'
 alias x='@xit'
 alias @x='@xit'
 alias @X='@xit'
-alias xx='cd "${OTS}"/xit.git/.secrets; setJavaHome "${CORRETTO_8_HOME}"'
-alias xf='cd "${OTS}"/xit.git/src/main/frontend; setJavaHome "${CORRETTO_8_HOME}"'
-alias @xf='cd "${OTS}"/xit.git/src/main/frontend; setJavaHome "${CORRETTO_8_HOME}"'
-alias @xh='cd "${XH}"; setJavaHome "${CORRETTO_8_HOME}"'
+alias xxx='cd "${OTS}"/xit.git/runtime; setJavaHome "${OPENJDK_8_HOME}" ; ranger'
+alias xx='cd "${OTS}"/xit.git/.secrets; setJavaHome "${OPENJDK_8_HOME}"'
+alias xf='cd "${OTS}"/xit.git/src/main/frontend; setJavaHome "${OPENJDK_8_HOME}"'
+alias @xf='cd "${OTS}"/xit.git/src/main/frontend; setJavaHome "${OPENJDK_8_HOME}"'
+alias @xh='cd "${XH}"; setJavaHome "${OPENJDK_8_HOME}"'
 alias @ntsi='cd "${OTS}"/NTSI; setJavaHome "${OPENJDK_8_HOME}"'
+alias pipeline='cd "${FORKS}"/pipeline-library; setJavaHome "${OPENJDK_8_HOME}"'
+alias pipline=pipeline
+alias gdsl='cd "${FORKS}"/jenkins-job-dsl; setJavaHome "${OPENJDK_8_HOME}"'
 #alias @tll='cd "${OTS}"/translator-linear.git'
 #alias @fwd='cd "${OTS}"/translator-linear.git/fwd'
 alias @ui='cd "${OTS}"/tll-ui-integration-tests; setJavaHome "${CORRETTO_11_HOME}"'
 alias ui='@ui'
 alias gql='cd "${OTS}"/tll-aqa-graphql-common; setJavaHome "${CORRETTO_11_HOME}"'
+alias recon='cd "${OTS}"/tll-recon-api/tests; setJavaHome "${CORRETTO_11_HOME}"; nvm use 16'
 alias @ots='cd "${NBCUOTS}"'
 alias @cpc='cd "${NBCUOTS}"/cp-config-repo'
 alias cpc='cd "${NBCUOTS}"/cp-config-repo'
@@ -46,7 +51,7 @@ alias @jira='cd "${TASK_HOME}"'
 function @tll {
   if [ $1 ]; then
     mkdir $TASK_HOME/tll/$1 2>/dev/null
-    cd $_
+    cd $TASK_HOME/tll/$1
   else
     cd $TASK_HOME/tll
   fi
@@ -54,7 +59,7 @@ function @tll {
 function @oput1 {
   if [ $1 ]; then
     mkdir $TASK_HOME/oput1/$1 2>/dev/null
-    cd $_
+    cd $TASK_HOME/oput1/$1
   else
     cd $TASK_HOME/oput1
   fi

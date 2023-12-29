@@ -18,6 +18,7 @@ export WORKPLACE=$HOME/workplace
 export NBCUOTS=$WORKPLACE/github.com/NBCUOTS
 export ONAIR=$WORKPLACE/github.inbcu.com/OnAirSystems
 export OTS=$WORKPLACE/github.com/NBCUniversalOTS
+export FORKS=$WORKPLACE/github.com/206672215_nbcuni
 export XIT_HOMES=$OTS/data/xit
 export XH=$XIT_HOMES
 export CONFIG_DIR=~/.config
