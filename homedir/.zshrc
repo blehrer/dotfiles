@@ -61,6 +61,7 @@ for i in $DOTFILES_HOME/environment_variables \
          $DOTFILES_HOME/bin/scriptbucket \
          $DOTFILES_HOME/bin/explain \
          $DOTFILES_HOME/aliases \
+         $DOTFILES_HOME/zsh/zoxide.zsh \
          $DOTFILES_HOME/init_scripts; do
     #echo "=========== sourcing $i ==============="
     #timer=$(($($HOMEBREW_REPOSITORY/bin/gdate +%s%N)/1000000))
@@ -84,6 +85,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$HOMEBREW_REPOSITORY/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_REPOSITORY/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(zoxide init zsh)"
 
 
 PATH="/Users/a206672215/perl5/bin${PATH:+:${PATH}}"; export PATH;
@@ -100,3 +102,4 @@ source $OTS/xit.git/.env
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+fpath=(~/.zsh.d/ $fpath)
