@@ -133,11 +133,6 @@ function popd() {
   dirs
 }
 
-# Cheatsheet!
-function cht() {
-  curl cht.sh/$1/$(echo ${@:2} | sed -e "s/\ /+/g")
-}
-
 # vim sessions
 
 function vimsesh {

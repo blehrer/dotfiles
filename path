@@ -12,6 +12,7 @@ export PATH="$APPS/xidel/bin:$PATH"
 export PATH="$HOME/.plenv/bin:$PATH"
 export PATH="$HOME/.docker/bin:$PATH"
 #export PATH="$HOME/.rd/bin:$PATH"
+export PATH="$DOTFILES_HOME/bin:$PATH"
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     export PATH="$_HOME/AppData/Local/Programs/Amazon/AWSCLIV2/:$PATH"
