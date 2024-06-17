@@ -29,7 +29,7 @@
     path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
 [core]
     autocrlf = input
-    excludesfile = ~/.config/dotfiles/git/gitignore_global
+	excludesfile = /Users/a206672215/.config/dotfiles/git/gitignore_global
 [log]
     follow = true
 [advice]
@@ -44,6 +44,7 @@
         git log --oneline --graph $upstream..@"
     updiff = "!git diff @{u}"
     done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
+    blaame = "!git blame -w -C -C -C"
 [init]
     defaultBranch = main
 [diff]
@@ -67,3 +68,21 @@
 [pull]
     rebase = false
     prune = true
+[maintenance]
+	repo = /Users/a206672215/workplace/github.com/NBCUniversalOTS/tll-recon-api
+[rerere]
+	enabled = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Users/a206672215/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[user]
+	name = Lehrer, Brian (Contractor-NBCUniversal)
+	email = Brian.Lehrer@nbcuni.com

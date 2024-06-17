@@ -1,3 +1,4 @@
+if [[ -z "$INTELLIJ_ENVIRONMENT_READER" ]]; then
 # bootstrap variables
 
 export CONFIG_DIR=$HOME/.config
@@ -96,7 +97,7 @@ PERL_MM_OPT="INSTALL_BASE=/Users/a206672215/perl5"; export PERL_MM_OPT;
 
 
 echo
-neofetch
+#neofetch
 eval "$(starship init zsh)"
 source $OTS/xit.git/.env
 
@@ -107,3 +108,6 @@ fpath=(~/.zsh.d/ $fpath)
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+## close [[ -z $INTELLIJ_ENVIRONMENT_READER ]] condition
+fi

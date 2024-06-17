@@ -2,33 +2,33 @@
 #    [ $@ ] && vifm $@ || ranger .
 #}
 
-function jenv() {
-    [ $1 ] && {
-        if [ $2 ] && [[ $1 = change ]] || [[ $1 = use ]]; then
-            export JAVA_HOME=$JDKS/$2
-            echo JAVA_HOME is now $JAVA_HOME
-            return
-        elif [[ $1 = ls ]] || [[ $1 = list ]]; then
-            ls $JDKS
-            return
-        fi
-    } || {
-        echo "
-        jenv - manage $JAVA_HOME in the current shell
-
-        assumes that all jdks are stored in a directory referred to as JDKS
-
-        options:
-        jenv list (ls)
-            - list the names of the jdks you can use
-        jenv change (use)
-            - update the value of JAVA_HOME to the specified version
-        "
-        return 1
-    }
-    return
-}
-
-function Get-Clipboard () {
-    powershell.exe Get-Clipboard | sed -e 's/\r//g'
-}
+#function jenv() {
+#    [ $1 ] && {
+#        if [ $2 ] && [[ $1 = change ]] || [[ $1 = use ]]; then
+#            export JAVA_HOME=$JDKS/$2
+#            echo JAVA_HOME is now $JAVA_HOME
+#            return
+#        elif [[ $1 = ls ]] || [[ $1 = list ]]; then
+#            ls $JDKS
+#            return
+#        fi
+#    } || {
+#        echo "
+#        jenv - manage $JAVA_HOME in the current shell
+#
+#        assumes that all jdks are stored in a directory referred to as JDKS
+#
+#        options:
+#        jenv list (ls)
+#            - list the names of the jdks you can use
+#        jenv change (use)
+#            - update the value of JAVA_HOME to the specified version
+#        "
+#        return 1
+#    }
+#    return
+#}
+#
+#function Get-Clipboard () {
+#    powershell.exe Get-Clipboard | sed -e 's/\r//g'
+#}

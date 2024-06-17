@@ -22,8 +22,8 @@ alias gdsl='cd "${FORKS}"/jenkins-job-dsl; setJavaHome "${OPENJDK_8_HOME}"'
 #alias @fwd='cd "${OTS}"/translator-linear.git/fwd'
 alias @ui='cd "${OTS}"/tll-ui-integration-tests; setJavaHome "${CORRETTO_11_HOME}"'
 alias ui='@ui'
-alias gql='cd "${OTS}"/tll-aqa-graphql-common; setJavaHome "${CORRETTO_11_HOME}"'
-alias recon='cd "${OTS}"/tll-recon-api/tests; setJavaHome "${CORRETTO_11_HOME}"; nvm use 16'
+alias gql='cd "${OTS}"/tll-aqa-graphql-common; setJavaHome "${CORRETTO_17_HOME}"'
+alias recon='cd "${OTS}"/tll-recon-api/tests; nvm use 18' #; setJavaHome "${CORRETTO_11_HOME}"
 alias @ots='cd "${NBCUOTS}"'
 alias @cpc='cd "${NBCUOTS}"/cp-config-repo'
 alias cpc='cd "${NBCUOTS}"/cp-config-repo'
@@ -133,7 +133,7 @@ function setDefaultIam(){
   cyberpeacock_login --user ${SSO:?} --profile ${profile} --arn ${2:?} --duration ${3}
 }
 
-alias iamFwd="setDefaultIam default arn:aws:iam::615757282153:role/FWDTeam 3600"
+alias iamFwd="setDefaultIam fwd arn:aws:iam::615757282153:role/FWDTeam 3600"
 alias iamEksNonprod="cyberpeacock_login --user $SSO --profile eksNonprod --arn $IAM_EKS_NONPROD --duration $(expr 60 \* 60 \* 1 - 1) && cpProfile eksNonprod saml && aws eks update-kubeconfig --name cloudpipeline-eks-nonprod-1 --profile eksNonprod"
 alias iamDevNonprod="cyberpeacock_login --user $SSO --profile preprod --arn $IAM_DEVTEAM_NONPROD --duration $(expr 60 \* 60 \* 8 - 1) && cpProfile preprod default"
 alias iamFwdNonprod="cyberpeacock_login --user $SSO --profile fwd --arn arn:aws:iam::615757282153:role/FWDTeam --duration 3600 && cpProfile fwd saml && aws eks update-kubeconfig --name fwd-eks-us-east-1 --profile fwd"

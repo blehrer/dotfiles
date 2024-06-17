@@ -6,6 +6,7 @@ alias ls='exa'
 alias tree='exa --tree'
 alias cd-='cd -'
 alias nv='nvim'
+alias awslocal='aws --endpoint-url http://localhost:4566'
 
 ## Places
 alias @wh='cd $WHOME'
@@ -32,12 +33,6 @@ alias @d='@config'
 alias @dq='@config sqe'
 alias jj='cat $TASK_HOME/.task-mru | pbcopy'
 alias jjlink="echo https://jira.inbcu.com/browse/FSCT-`cat $TASK_HOME/.task-mru` | clip.exe"
-alias gh='github'
-
-function github() {
-    _github | xclip
-    echo Copied \'$(xclip -o)\' to clipboard
-}
 
 [[ $(uname -a) = MINGW* ]] || [[ $(uname -a) = CYGWIN* ]] && {
     source $DOTFILES_HOME/windows_aliases
@@ -45,16 +40,6 @@ function github() {
 
 source $DOTFILES_HOME/nbcu_aliases
 source $DOTFILES_HOME/mac_aliases
-
-function _github() {
-    local branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
-    [[ $branch ]] && {
-        git remote get-url origin |
-        sed -e 's/git@//g; s/\.git//g; s/:/\//g' |
-        xargs -I _url_ echo https://_url_/tree/$branch/$(fzf)
-    } || return 1
-    return
-}
 
 function @logs() {
     declare -A exceptions
@@ -71,6 +56,10 @@ function @logs() {
     }
     echo "Not sure where the logs are?"
     return 1
+}
+
+function listSum() {
+    awk '{Total=Total+$1} END{print Total}'
 }
 
 function @repo() {
@@ -215,7 +204,7 @@ alias gig='vim $DOTFILES_HOME/git/gitignore_global'
 alias sc='vim $HOME/.ssh/config'
 
 function iampb(){
-    cat ~/.aws/credentials | sed -e "s/ //g; s/=\(.*\)/='\1'/g" > ~/.aws/credentials.new
+    cat ~/.aws/credentials | sed -e "s/ //g; s/.$//g ; s/=\(.*\)/='\1'/g" > ~/.aws/credentials.new
     for line in $(pbpaste | sed -e 's/\[.*\]//g'); do
         if [[ $line ]]; then
             dasel put -f ~/.aws/credentials.new -o ~/.aws/credentials.new -r toml -t string -w toml \
