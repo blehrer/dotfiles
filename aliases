@@ -271,3 +271,10 @@ hgrep() {
 mkpwd() {
     mkdir $1 && cd $1
 }
+ideatail(){
+    local base=~/Library/Logs/JetBrains
+    local latest=`ls $base | grep IntelliJIdea | grep -v backup | sort | tail -n1`
+    rg --files --hidden --smart-case --glob $base/$latest/* | fzf | xargs tail -f
+}
+
+alias idealog=ideatail
