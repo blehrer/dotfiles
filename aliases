@@ -151,7 +151,7 @@ alias cd='pushd'
 alias code="$WHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 alias back='popd'
 alias flip='pushd_builtin'
-alias egrep='egrep -i --color=auto'
+alias egrep='egrep --color=auto'
 alias epoch='date +%s'
 alias epochMillis='gdate +%s%N | cut -b1-13'
 alias epochMicros='gdate +%s%N | cut -b1-16'
