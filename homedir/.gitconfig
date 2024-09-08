@@ -55,6 +55,9 @@
     tool = vimdiff
     noprefix = true
     renameLimit = 50000
+[diff "zip"]
+    textconv = unzip -v
+    binary = true
 [merge]
     tool = vimdiff
 [fetch]
