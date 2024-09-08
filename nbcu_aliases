@@ -23,7 +23,7 @@ alias gdsl='cd "${FORKS}"/jenkins-job-dsl; setJavaHome "${OPENJDK_8_HOME}"'
 alias @ui='cd "${OTS}"/tll-ui-integration-tests; setJavaHome "${CORRETTO_11_HOME}"'
 alias ui='@ui'
 alias gql='cd "${OTS}"/tll-aqa-graphql-common; setJavaHome "${CORRETTO_17_HOME}"'
-alias recon='cd "${OTS}"/tll-recon-api/tests; nvm use 18' #; setJavaHome "${CORRETTO_11_HOME}"
+alias recon='cd "${OTS}"/tll-recon-api/tests; nvm use 18; sdk use java 17.0.12-amzn' #; setJavaHome "${CORRETTO_11_HOME}"
 alias @ots='cd "${NBCUOTS}"'
 alias @cpc='cd "${NBCUOTS}"/cp-config-repo'
 alias cpc='cd "${NBCUOTS}"/cp-config-repo'
@@ -167,4 +167,9 @@ function setJavaHome {
   unset JAVA_HOME
   export JAVA_HOME=$1
   env | grep JAVA_HOME
+}
+
+function reconbl {
+  recon ; ../project ; gw clean assemble && sls deploy --param 'environment=bl' --stage bl --aws-profile fwd
+  [ $? ] || iamFwd
 }
