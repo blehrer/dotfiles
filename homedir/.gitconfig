@@ -35,21 +35,23 @@
 [advice]
     skippedCherryPicks=false
 [alias]
-    branch-name = "!git rev-parse --abbrev-ref HEAD"
+    amend = commit -a --amend --no-edit
+    branch-name = rev-parse --abbrev-ref HEAD
     backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
-    delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
+    blaame = blame -w -C -C -C
     clone-gh = "!git clone git@github.com:$1"
     changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
         echo Changelist, relative to upstream branch $upstream && \
         git log --oneline --graph $upstream..@"
-    updiff = "!git diff @{u}"
+    delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
     done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
-    blaame = "!git blame -w -C -C -C"
+    fixup = commit -a --fixup
+    updiff = diff "@{u}"
 [init]
     defaultBranch = main
 [diff]
     #colorMoved = dimmed-zebra
-    #colorMoved = blocks
+    colorMoved = blocks
     #colorMoved = no
     #color-moved-ws = allow-indentation-change
     tool = vimdiff
