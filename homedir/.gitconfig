@@ -47,6 +47,7 @@
     done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
     fixup = commit -a --fixup
     updiff = diff "@{u}"
+    shwo = show
 [init]
     defaultBranch = main
 [diff]
@@ -79,7 +80,7 @@
 	enabled = true
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Users/a206672215/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

@@ -2,8 +2,6 @@
 ## Overrides
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 #alias ls="ls -LH"
-alias ls='exa'
-alias tree='exa --tree'
 alias cd-='cd -'
 alias nv='nvim'
 alias awslocal='aws --endpoint-url http://localhost:4566'
