@@ -1,0 +1,3 @@
+source /usr/share/bash-completion/completions/git
+__git_complete cf __git_main
+__git_complete co __git_main

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=ulauncher
+Comment=A launcher, similar to Spotlight
+Exec=/usr/bin/ulauncher --hide-window
+Terminal=false
+X-GNOME-Autostart-enabled=true
