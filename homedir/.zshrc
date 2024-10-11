@@ -2,11 +2,23 @@ if [[ -z "$INTELLIJ_ENVIRONMENT_READER" ]]; then
 # bootstrap variables
 
 export CONFIG_DIR=$HOME/.config
+
 export XDG_CONFIG_HOME=$HOME/.config
 export DOTFILES_HOME=$HOME/github.com/blehrer/dotfiles.git
+export ADOTDIR=$CONFIG_DIR/zsh/antigen
+
+# setup antigen zsh modules
+source $ADOTDIR/antigen.zsh
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-completions
+antigen theme avit
+antigen apply
+
+
+
 for i in $DOTFILES_HOME/shellenv/*; do source $i ; done
-#source $HOMEBREW_PREFIX/share/antigen/antigen.zsh
-#antigen init ~/.antigenrc
 autoload -U colors && colors
 autoload sticky-note
 
@@ -41,7 +53,6 @@ bindkey "^T" push-line-or-edit
 
 # bootstrap variables
 export CONFIG_DIR=$HOME/.config
-export DOTFILES_HOME=$HOME/github.com/blehrer/dotfiles.git
 
 # external resources
 #zcfg=~/.config/zsh
@@ -56,13 +67,12 @@ export DOTFILES_HOME=$HOME/github.com/blehrer/dotfiles.git
 
          #$DOTFILES_HOME/bin/xit \
 for i in $DOTFILES_HOME/environment_variables \
-         $HOME/.secret_variables_nbcu \
          $DOTFILES_HOME/path \
          $DOTFILES_HOME/zshrc \
          $DOTFILES_HOME/bin/scriptbucket \
          $DOTFILES_HOME/bin/explain \
          $DOTFILES_HOME/aliases \
-         $DOTFILES_HOME/zsh/zoxide.zsh \
+         ${HOME}/.cargo/env \
          $DOTFILES_HOME/init_scripts; do
     #echo "=========== sourcing $i ==============="
     #timer=$(($($HOMEBREW_REPOSITORY/bin/gdate +%s%N)/1000000))
@@ -81,29 +91,19 @@ compinit
 complete -C $(which aws_completer) aws
 #source $DOTFILES_HOME/lib/completions/xit-completion.bash
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$HOMEBREW_REPOSITORY/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_REPOSITORY/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "$HOMEBREW_REPOSITORY/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_REPOSITORY/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+compdef cf=git
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(zoxide init zsh)"
 
-
-PATH="/Users/a206672215/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/Users/a206672215/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/a206672215/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/a206672215/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/a206672215/perl5"; export PERL_MM_OPT;
-
-
-echo
-#neofetch
 eval "$(starship init zsh)"
-source $OTS/xit.git/.env
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 fpath=(~/.zsh.d/ $fpath)
+
+# if you dont do this, the quote/double-quote key does int'l stuff
+setxkbmap us
+# sets the relative position of the external monitor (HDMI-1) to the laptop monitor (eDP-1)
+xrandr --output HDMI-1 --above eDP-1
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -111,3 +111,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 ## close [[ -z $INTELLIJ_ENVIRONMENT_READER ]] condition
 fi
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

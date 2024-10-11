@@ -1,6 +1,7 @@
 #
 ## Overrides
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
+alias fd=fdfind
 #alias ls="ls -LH"
 alias cd-='cd -'
 alias nv='nvim'
@@ -122,6 +123,9 @@ function popd() {
   builtin popd > /dev/null
   dirs
 }
+
+alias cf='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+ 
 
 # vim sessions
 

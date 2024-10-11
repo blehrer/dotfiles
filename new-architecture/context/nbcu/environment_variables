@@ -1,0 +1,5 @@
+PATH="/Users/a206672215/perl5/bin${PATH:+:${PATH}}"; export PATH;
+source $OTS/xit.git/.env
+
+
+

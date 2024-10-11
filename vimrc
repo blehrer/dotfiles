@@ -15,7 +15,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'mattn/emmet-vim'
-
+Plug 'vim/colorschemes'
+Plug 'habamax/vim-habamax'
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'cespare/vim-toml'
 Plug 'will133/vim-dirdiff'
@@ -213,7 +214,10 @@ let g:mkdp_theme = 'dark'
 " Colorscheme
 " =============================================================================
 set background=dark
-colorscheme habamax
+if !has('nvim')
+  colorscheme sorbet
+endif
+"colorscheme habamax
 "colorscheme wildcharm
 "colorscheme zaibatsu
 "colorscheme catppuccin_mocha
