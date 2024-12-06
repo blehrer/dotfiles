@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-function xit-clean() {
-source $DOTFILES_HOME/lib/xit/xit-js-clean
-source $DOTFILES_HOME/lib/xit/xit-java-clean
-}
-xit-clean

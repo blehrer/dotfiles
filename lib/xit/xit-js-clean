@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-@xit
-cd src/main/frontend
-rm -rdf node_modules package-lock.json
-@xit

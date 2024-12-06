@@ -1,4 +1,0 @@
-set bell-style none
-"\C-a.":beginning-of-line
-"\C-e.":end-of-line
-"\C-l":clear-screen

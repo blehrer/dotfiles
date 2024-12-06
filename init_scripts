@@ -1,2 +1,0 @@
-[ $(command -v plenv) ] && eval "$(plenv init -)"
-

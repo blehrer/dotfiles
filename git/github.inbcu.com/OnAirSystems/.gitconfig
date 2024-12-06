@@ -1,5 +1,0 @@
-[user]
-    name = Brian Lehrer
-    email = 75274896+brianlehrer-nbcuni@users.noreply.github.com
-[commit]
-    template = ~/.config/dotfiles/git/nbcu-commit-template
