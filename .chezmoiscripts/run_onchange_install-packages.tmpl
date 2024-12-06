@@ -1,0 +1,79 @@
+#!/usr/bin/env zsh
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+# Utils
+brew install mise bash git zsh ranger tree fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat
+
+# Deskflow
+brew tap deskflow/homebrew-tap
+
+# Aerospace Window Manager
+brew tap nikitabobko/tap
+
+{{- end }}
+
+
+{{ if eq .chezmoi.os "linux" -}}
+
+# Utils
+sudo apt install ranger tree zsh bash fd-find wget bat
+
+# Mise
+sudo apt update -y && sudo apt install -y gpg sudo wget curl
+sudo install -dm 755 /etc/apt/keyrings
+wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
+sudo apt update
+sudo apt install -y mise
+
+# Flatpak & Deskflow
+sudo apt install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install org.deskflow.deskflow
+
+# JetBrainsMono NerdFont
+wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip \
+&& cd ~/.local/share/fonts \
+&& unzip JetBrainsMono.zip \
+&& rm JetBrainsMono.zip \
+&& fc-cache -fv
+
+# TheFuck
+sudo apt update
+sudo apt install python3-dev python3-pip python3-setuptools
+pip3 install thefuck --user
+
+# Warpd
+git clone https://github.com/rvaiya/warpd.git
+cd warpd
+sudo apt install \
+	libxi-dev \
+	libxinerama-dev \
+	libxft-dev \
+	libxfixes-dev \
+	libxtst-dev \
+	libx11-dev \
+	libcairo2-dev \
+	libxkbcommon-dev \
+	libwayland-dev &&
+make && sudo make install
+cd ../ && rm -rf warpd
+
+{{- end }}
+
+# Mise sdk manager (platform agnostic)
+eval "$(mise activate zsh)"
+mise use -g deno lazygit ripgrep node usage neovim jq starship fzf
+
+
+{{ if eq .chezmoi.os "linux" -}}
+
+if [ ! $(update-alternatives --list editor | grep -q nvim) ]; then
+	sudo update-alternatives --install $(which editor) editor ${HOME}/.local/share/mise/shims/nvim 100
+fi
+if [ ! $(readlink -f /usr/bin/editor | xargs basename)  = 'nvim' ]; then
+	sudo update-alternatives --config editor ${HOME}/.local/share/mise/shims/nvim
+fi
+{{- end }}
+

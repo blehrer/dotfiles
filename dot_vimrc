@@ -1,0 +1,202 @@
+" =============================================================================
+" Simple vanilla settings
+" =============================================================================
+
+set cmdheight=1
+set colorcolumn=120
+set cursorline
+set encoding=utf-8
+set expandtab
+set ff=unix
+set fileformat=unix
+set ignorecase
+set incsearch
+set lazyredraw
+set modifiable
+set mouse=a
+set nocompatible
+set noerrorbells
+set nohlsearch
+set novisualbell
+set path+=.**
+set path+=~/.config/**
+set relativenumber
+set number
+set ruler
+set scrolloff=8
+set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
+set shiftwidth=4
+set signcolumn=yes
+set smartindent
+set smarttab
+set softtabstop=4
+set tabstop=4
+set textwidth=120
+set updatetime=50
+set wildmenu
+set wildmode=longest,list,full
+set wrap
+syntax enable
+
+" Ignore files
+set wildignore+=*.pyc
+set wildignore+=*.class
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
+
+" netrw
+let g:netrw_browse_split = 0
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+let g:netrw_localrmdir='rm -r'
+let g:netrw_wiw=1
+let g:netrw_usetab=40
+
+" Store swap files in fixed location, not current directory.
+set undodir=~/.cache/vim/undo//
+set undofile
+
+
+" =============================================================================
+" Plugin settings
+" =============================================================================
+
+" [netrw]
+let g:netrw_browse_split = 0
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+let g:netrw_localrmdir = 'rm -r'
+augroup AutoDeleteNetrwHiddenBuffers
+	au!
+	au FileType netrw setlocal bufhidden=wipe
+augroup end
+
+" [filetype]
+filetype plugin indent on
+
+" =============================================================================
+" Colorscheme
+" =============================================================================
+set background=dark
+colorscheme habamax
+
+"" =============================================================================
+"" Functions
+"" =============================================================================
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE (thanks Gary Bernhardt)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" sudo save
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cabbrev w!! w !sudo tee % > /dev/null
+
+" =============================================================================
+" My custom Keybindings
+" =============================================================================
+"Leader Commands
+let mapleader = " "
+
+nnoremap <Leader>x :clist<cr>
+nnoremap <Leader>j :cnext<C-m>
+nnoremap <Leader>k :cprev<C-m>
+nnoremap <Leader>] :bnext<CR>
+nnoremap <Leader>[ :bprev<CR>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>w :w<cr>
+
+" Buffer pane with file tree sidebar
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+
+" replace selected text with whatever you paste in
+vnoremap <leader>p "_dP
+
+" yank to clipboard
+nnoremap <leader>y "*y
+vnoremap <leader>y "*y
+nnoremap <leader>Y gg"*vGy
+
+autocmd TextYankPost * call system('echo '.shellescape(join(v:event.regcontents, "\<CR>")).' | pbcopy')
+
+" unescape \t and \n on current line (unwraps stacktraces)
+nnoremap <leader>ue :.s/\\t/    /ge<cr>  :.s/\\n/\r/ge<cr>
+
+" remove trailing whitespace
+nnoremap <leader>f :%s/\ *$//g<cr>
+vnoremap <leader>f :'<,'>s/\ *$//g<cr>
+
+
+"Leader Commands
+nnoremap <leader><F2> :call RenameFile()<cr>
+nnoremap <leader>1 :Lexplore<cr>
+
+"Typo maps
+command! Q q " Bind :Q to :q
+map Q <Nop> " Disable Ex mode
+command! W w " Instead of opening a Window manager, just write
+map W <Nop>
+command! Wq wq
+map <F1> <Nop>
+
+" the opposite of J
+nnoremap <C-J> a<CR><Esc>k$
+
+" session management
+au FocusLost * silent! wa
+function! MakeSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+  if (filewritable(b:sessiondir) != 2)
+    exe 'silent !mkdir -p ' b:sessiondir
+    redraw!
+  endif
+  let b:filename = b:sessiondir . '/session.vim'
+  exe "mksession! " . b:filename
+endfunction
+
+function! LoadSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+  let b:sessionfile = b:sessiondir . "/session.vim"
+  if (filereadable(b:sessionfile))
+    exe 'source ' b:sessionfile
+  else
+    echo "No session loaded."
+  endif
+endfunction
+
+" Adding automatons for when entering or leaving Vim
+if(argc() == 0)
+    au VimEnter * nested :call LoadSession()
+endif
+au VimLeave * :call MakeSession()
+
+" =============================================================================
+" FileTypes
+" =============================================================================
+
+autocmd FileType vim,sshconfig,bash,sh,yaml,yml,json,*.md setlocal shiftwidth=2 tabstop=2
+autocmd FileType java,xml setlocal shiftwidth=4 tabstop=4
+" Treat .json files as .js
+autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+" Treat .md files as Markdown
+autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
+autocmd FileType gitrebase setlocal noswapfile
+autocmd FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
+
+" open file under cursor or highlighted file in a split
+nnoremap <silent><C-w><C-f> <C-W>vgf

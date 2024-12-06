@@ -1,0 +1,104 @@
+setopt append_history
+setopt inc_append_history
+setopt share_history
+setopt complete_in_word
+setopt no_beep
+setopt autocd
+setopt autopushd
+setopt pushdsilent
+setopt pushdignoredups
+setopt nomailwarning
+
+bindkey -v
+bindkey "^R" history-incremental-search-backward
+bindkey "^E" end-of-line
+bindkey "^A" beginning-of-line
+bindkey "^N" push-line-or-edit
+
+autoload -U colors && colors
+autoload sticky-note
+
+
+######################### completion #################################
+zstyle ':completion:*' completer _expand _complete _approximate
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*' use-compctl true
+# autoload -Uz compinit
+autoload -Uz compinit && compinit -i
+
+######################### plugins #####################################
+for plugin in ~/.config/zsh/custom/plugins/*/*.zsh; do source $plugin; done
+
+
+
+## Tools
+eval "$(mise activate zsh)"
+export EDITOR=nvim
+eval "$(starship init zsh)"
+eval "$(thefuck --alias)"
+
+## Overrides
+alias vim=nvim
+alias ivm=nvim
+alias vimdiff='nvim -d'
+alias cz=chezmoi
+alias ls='ls --color'
+alias ll='ls -haltr'
+alias mkdir='mkdir -p'
+alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
+[ $(command -v fdfind) ] && alias fd=fdfind
+alias lg=lazygit
+
+## Locations
+alias dfd="chezmoi cd"
+alias vd='nvim -c "Neotree"'
+
+## Git
+function gamf (){ git commit -a --fixup "${@:-@}" }
+alias gb='git branch'
+alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
+alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"'
+alias gc='git checkout'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})'
+alias glga='git log --graph --decorate --oneline --all'
+alias gri='git rebase -i'
+alias gria='git rebase -i --autosquash'
+alias garia='gamf; gria'
+alias grim='git rebase -i origin/master'
+alias gst='git status'
+
+## Java
+gw () {
+    local tld=$(git rev-parse --show-toplevel)
+    eq=$(test $(pwd) = "${tld}")
+    "${eq}" || pushd "${tld}"
+    ./gradlew $@
+    "${eq}" || popd
+}
+
+## Command History
+hgrep() {
+    fc -Dlim "*$@*" 1
+}
+
+## Text Search
+function fif() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --files-with-matches --no-messages "$1" |
+  fzf --preview "highlight -O ansi -l {} 2> /dev/null | \
+  rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || \
+  rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+## PATH
+export PATH="~/.local/bin:${PATH}"
+
+{{ if eq .chezmoi.hostname "mebbe-tux-local" -}}
+xrandr --output HDMI-1 --rotate portrait
+{{- end }}

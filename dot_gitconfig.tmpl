@@ -1,0 +1,76 @@
+# Example how how to do conditional evaluations in .gitconfig
+# [includeIf "gitdir:~/Documents/jira/**/"]
+#    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
+[core]
+autocrlf = input
+excludesfile = ~/.config/git/gitignore_global
+
+[log]
+follow = true
+
+[advice]
+skippedCherryPicks=false
+
+[init]
+defaultBranch = main
+
+[diff]
+#colorMoved = dimmed-zebra
+colorMoved = blocks
+#colorMoved = no
+#color-moved-ws = allow-indentation-change
+tool = nvim -d
+noprefix = true
+renameLimit = 50000
+
+[diff "zip"]
+textconv = unzip -v
+binary = true
+
+[merge]
+tool = nvim -d
+
+[fetch]
+prune = true
+
+[prune]
+prune = true
+
+[rebase]
+autosquash = true
+
+[status]
+submoduleSummary = false
+
+[pull]
+rebase = false
+prune = true
+
+[rerere]
+enabled = true
+
+[filter "lfs"]
+process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+
+[user]
+name = Lehrer, Brian
+email = 661570+blehrer@users.noreply.github.com
+
+[alias]
+fixup = commit -a --fixup
+updiff = diff "@{u}"
+shwo = show
+amend = commit -a --amend --no-edit
+branch-name = rev-parse --abbrev-ref HEAD
+backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
+blaame = blame -w -C -C -C
+clone-gh = "!git clone git@github.com:$1"
+delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
+done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
+changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
+	      echo Changelist, relative to upstream branch $upstream && \
+	      git log --oneline --graph $upstream..@"
+
