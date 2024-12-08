@@ -1,2 +1,5 @@
+git:
+  autoCommit: true
+  autoPush: true
 edit:
   watch: true
