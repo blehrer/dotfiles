@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Utils
-brew install mise bash git zsh ranger tree fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat
+brew install mise bash git zsh ranger fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat
 
 # Deskflow
 brew tap deskflow/homebrew-tap
@@ -17,7 +17,7 @@ brew tap nikitabobko/tap
 {{ if eq .chezmoi.os "linux" -}}
 
 # Utils
-sudo apt install ranger tree zsh bash fd-find wget bat
+sudo apt install ranger zsh bash fd-find wget bat
 
 # Mise
 sudo apt update -y && sudo apt install -y gpg sudo wget curl
@@ -64,7 +64,7 @@ cd ../ && rm -rf warpd
 
 # Mise sdk manager (platform agnostic)
 eval "$(mise activate zsh)"
-mise use -g deno lazygit ripgrep node usage neovim jq starship fzf
+mise use --global deno lazygit ripgrep node usage neovim jq starship fzf eza
 
 
 {{ if eq .chezmoi.os "linux" -}}
