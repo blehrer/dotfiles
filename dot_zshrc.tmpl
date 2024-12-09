@@ -103,7 +103,7 @@ function fif() {
 export PATH="~/.local/bin:${PATH}"
 
 {{ if eq .chezmoi.hostname "mebbe-tux-local" -}}
-xrandr --output HDMI-1 --rotate portrait
+xrandr --output HDMI-1 --rotate right
 {{- end }}
 
 ## Project aliases
