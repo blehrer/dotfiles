@@ -12,9 +12,14 @@
     stripComponents = 1
     refreshPeriod = "672h"
 
+[".config/zsh/custom/plugins/1-fzf-tab"]
+    type = "git-repo"
+    url = "https://github.com/Aloxaf/fzf-tab"
+    refreshPeriod = "672h"
+
 [".config/nvim"]
     type = "git-repo"
     url = "https://github.com/blehrer/kickstart.nvim"
-    refreshPeriod = "168h"
+    refreshPeriod = "24h"
     [".config/nvim".pull]
         args = ["--ff-only"]

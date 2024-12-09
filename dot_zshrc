@@ -96,7 +96,8 @@ zstyle ':completion:alias-expension:*' completer _expand_alias
 # Use cache for commands which use it
 
 # Allow you to select in a menu
-zstyle ':completion:*' menu select
+# zstyle ':completion:*' menu select
+zstyle ':completion:*' menu no
 
 # Autocomplete options for cd instead of directory stack
 zstyle ':completion:*' complete-options true
@@ -104,10 +105,21 @@ zstyle ':completion:*' complete-options true
 zstyle ':completion:*' file-sort modification
 
 
-zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D %d --%f'
-zstyle ':completion:*:*:*:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches found --%f'
+# zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+# zstyle ':completion:*:*:*:*:descriptions' format '%F{blue}-- %D %d --%f'
+# zstyle ':completion:*:*:*:*:messages' format ' %F{purple} -- %d --%f'
+# zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches found --%f'
+
+zstyle ':completion:*:*:*:*:corrections' format '!- %d (errors: %e) -!'
+zstyle ':completion:*:*:*:*:descriptions' format '-- %D %d --'
+zstyle ':completion:*:*:*:*:messages' format ' -- %d --'
+zstyle ':completion:*:*:*:*:warnings' format ' -- no matches found --'
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
 # zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 # Colors for files and directory
 zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
@@ -131,7 +143,7 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 # }}}
 
 # {{{ plugins
-for plugin in ~/.config/zsh/custom/plugins/*/*.plugin.zsh; do source $plugin; done
+for plugin in $(echo ~/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
 # }}}
 
 #{{{ Tools
