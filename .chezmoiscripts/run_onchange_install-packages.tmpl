@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Utils
-brew install mise bash git zsh ranger fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat
+brew install mise bash git zsh ranger fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat eza
 
 # Deskflow
 brew tap deskflow/homebrew-tap
@@ -60,11 +60,18 @@ sudo apt install \
 make && sudo make install
 cd ../ && rm -rf warpd
 
+# Eza (ls)
+wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+sudo apt update
+sudo apt install -y eza
+
 {{- end }}
 
 # Mise sdk manager (platform agnostic)
 eval "$(mise activate zsh)"
-mise use --global deno lazygit ripgrep node usage neovim jq starship fzf eza
+mise use --global deno lazygit ripgrep node usage neovim jq starship fzf
 
 
 {{ if eq .chezmoi.os "linux" -}}
