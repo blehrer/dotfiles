@@ -103,3 +103,6 @@ export PATH="~/.local/bin:${PATH}"
 {{ if eq .chezmoi.hostname "mebbe-tux-local" -}}
 xrandr --output HDMI-1 --rotate portrait
 {{- end }}
+
+## Project aliases
+{{ template "soundandsensory-aliases" }}
