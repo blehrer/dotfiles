@@ -1,2 +1,7 @@
-alias res='cd ~/code/github.com/blehrer/resonance/$1'
+function res {
+	local input=$1 
+	local dest=~/code/github.com/blehrer/resonance
+	[ $input ] && cd $dest/$input || cd $dest
+	return
+}
 
