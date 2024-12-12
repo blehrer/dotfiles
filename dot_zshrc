@@ -222,6 +222,7 @@ export PATH="~/.local/bin:${PATH}"
 # }}} 
 
 # {{{ Project aliases
+alias nvd='cd ~/.config/nvim; vd'
 function res {
 	local input=$1 
 	local dest=~/code/github.com/blehrer/resonance
