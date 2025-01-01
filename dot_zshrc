@@ -154,6 +154,11 @@ eval "$(thefuck --alias)"
 source <(fzf --zsh)
 #}}}
 
+# {{{ PATH
+export PATH="~/.local/bin:${PATH}"
+# }}} 
+
+#{{{ Aliases and functions
 #{{{ Overrides
 alias vim=nvim
 alias ivm=nvim
@@ -171,6 +176,8 @@ alias lg=lazygit
 #{{{ Locations
 alias dfd="chezmoi cd"
 alias vd='nvim -c "Neotree"'
+alias nvd='cd ~/.config/nvim; vd'
+alias nvconf=nvd
 # }}}
 
 #{{{ Git conveniences
@@ -217,17 +224,12 @@ function fif() {
 }
 # }}} 
 
-# {{{ PATH
-export PATH="~/.local/bin:${PATH}"
-# }}} 
-
 # {{{ Project aliases
-alias nvd='cd ~/.config/nvim; vd'
 function res {
 	local input=$1 
 	local dest=~/code/github.com/blehrer/resonance
 	[ $input ] && cd $dest/$input || cd $dest
 }
 # }}} 
-
+#}}}
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker
