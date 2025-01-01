@@ -171,6 +171,7 @@ alias mkdir='mkdir -p'
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 [ $(command -v fdfind) ] && alias fd=fdfind
 alias lg=lazygit
+alias icat='kitten icat'
 #}}}
 
 #{{{ Locations
