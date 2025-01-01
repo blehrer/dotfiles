@@ -159,27 +159,39 @@ export PATH="~/.local/bin:${PATH}"
 # }}} 
 
 #{{{ Aliases and functions
-#{{{ Overrides
+
+# CLI conveniences
 alias vim=nvim
 alias ivm=nvim
 alias vimdiff='nvim -d'
-alias cz=chezmoi
-alias l=eza
-alias ll='l --long --all'
-alias tree='l --tree --ignore-glob ".git/*|node_modules/*"'
-alias mkdir='mkdir -p'
-alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
-[ $(command -v fdfind) ] && alias fd=fdfind
-alias lg=lazygit
-alias icat='kitten icat'
-#}}}
-
-#{{{ Locations
-alias dfd="chezmoi cd"
 alias vd='nvim -c "Neotree"'
 alias nvd='cd ~/.config/nvim; vd'
 alias nvconf=nvd
-# }}}
+
+alias cz=chezmoi
+
+alias l=eza
+alias ll='l --long --all'
+alias tree='l --tree --ignore-glob ".git/*|node_modules/*"'
+
+alias mkdir='mkdir -p'
+
+alias lg=lazygit
+
+alias icat='kitten icat'
+
+alias @scratch='cd ~/Documents/scratch'
+alias scratch="vim ~/Documents/scratch/$(date +%F)"
+
+alias @dfd="chezmoi cd"
+alias dfd="@dfd; vd"
+
+alias z='cz edit ~/.zshrc'
+alias sz='source ~/.zshrc'
+
+alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
+
+[ $(command -v fdfind) ] && alias fd=fdfind
 
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
