@@ -19,7 +19,7 @@ brew install aerospace kitty deskflow
 {{ if eq .chezmoi.os "linux" -}}
 
 # Utils
-sudo apt install ranger zsh bash fd-find wget bat fzf htop btop
+sudo apt install ranger zsh bash fd-find wget bat fzf htop btop thefuck
 
 # Mise
 sudo apt update -y && sudo apt install -y gpg sudo wget curl
@@ -35,16 +35,14 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install org.deskflow.deskflow
 
 # JetBrainsMono NerdFont
-wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip \
-&& cd ~/.local/share/fonts \
-&& unzip JetBrainsMono.zip \
-&& rm JetBrainsMono.zip \
-&& fc-cache -fv
-
-# TheFuck
-sudo apt update
-sudo apt install python3-dev python3-pip python3-setuptools
-pip3 install thefuck --user
+function downloadJetbrainsMonoNF {
+	wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip \
+	&& cd ~/.local/share/fonts \
+	&& unzip JetBrainsMono.zip \
+	&& rm JetBrainsMono.zip \
+	&& fc-cache -fv
+}
+ls ~/.local/share/fonts/JetBrainsMonoNerdFont* > /dev/null 2>&1 || downloadJetbrainsMonoNF
 
 # Warpd
 git clone https://github.com/rvaiya/warpd.git
