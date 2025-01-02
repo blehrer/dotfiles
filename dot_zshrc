@@ -184,7 +184,7 @@ alias kc='cz edit ~/.config/kitty/kitty.conf'
 alias @scratch='cd ~/Documents/scratch'
 alias scratch="vim ~/Documents/scratch/$(date +%F)"
 
-export DOTFILES_HOME=$(cz dump-config | jq '.workingTree')
+export DOTFILES_HOME="$(cz dump-config | jq -r '.workingTree')"
 alias @dfd="cz cd"
 alias dfd="@dfd; vd"
 
