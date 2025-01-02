@@ -61,11 +61,14 @@ make && sudo make install
 cd ../ && rm -rf warpd
 
 # Eza (ls)
-wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-sudo apt update
-sudo apt install -y eza
+function installEza{
+	wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+	echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+	sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+	sudo apt update
+	sudo apt install -y eza
+}
+command -v eza && installEza
 
 {{- end }}
 
@@ -77,10 +80,10 @@ mise use --global deno lazygit ripgrep node usage neovim jq starship
 {{ if eq .chezmoi.os "linux" -}}
 
 if [ ! $(update-alternatives --list editor | grep -q nvim) ]; then
-	sudo update-alternatives --install $(which editor) editor ${HOME}/.local/share/mise/shims/nvim 100
+	sudo update-alternatives --install $(which editor) editor ~/.local/share/mise/shims/nvim 100
 fi
 if [ ! $(readlink -f /usr/bin/editor | xargs basename)  = 'nvim' ]; then
-	sudo update-alternatives --config editor ${HOME}/.local/share/mise/shims/nvim
+	sudo update-alternatives --config editor ~/.local/share/mise/shims/nvim
 fi
 {{- end }}
 
