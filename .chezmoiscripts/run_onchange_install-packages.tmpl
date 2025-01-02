@@ -79,7 +79,7 @@ mise use --global deno lazygit ripgrep node usage neovim jq starship
 
 {{ if eq .chezmoi.os "linux" -}}
 
-nvimShim="$(mise where neovim@latest)/nvim*/bin/nvim"
+nvimShim="$(mise where neovim@latest)/nvim-linux64/bin/nvim"
 
 if [ ! $(update-alternatives --list editor | grep -q nvim) ]; then
 	echo installing editor \"$nvimShim\"
