@@ -45,6 +45,7 @@ function downloadJetbrainsMonoNF {
 ls ~/.local/share/fonts/JetBrainsMonoNerdFont* > /dev/null 2>&1 || downloadJetbrainsMonoNF
 
 # Warpd
+function installWarpd {
 git clone https://github.com/rvaiya/warpd.git
 cd warpd
 sudo apt install \
@@ -59,6 +60,8 @@ sudo apt install \
 	libwayland-dev &&
 make && sudo make install
 cd ../ && rm -rf warpd
+}
+[ command -v warpd ] || installWarpd
 
 # Eza (ls)
 function installEza {
