@@ -79,7 +79,8 @@ mise use --global deno lazygit ripgrep node usage neovim jq starship
 
 {{ if eq .chezmoi.os "linux" -}}
 
-nvimShim=~/.local/share/mise/shims/nvim
+nvimShim="${HOME}/.local/share/mise/shims/nvim"
+
 if [ ! $(update-alternatives --list editor | grep -q nvim) ]; then
 	sudo update-alternatives --install $(which editor) editor $nvimShim 100
 fi
