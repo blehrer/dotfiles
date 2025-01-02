@@ -46,22 +46,22 @@ ls ~/.local/share/fonts/JetBrainsMonoNerdFont* > /dev/null 2>&1 || downloadJetbr
 
 # Warpd
 function installWarpd {
-git clone https://github.com/rvaiya/warpd.git
-cd warpd
-sudo apt install \
-	libxi-dev \
-	libxinerama-dev \
-	libxft-dev \
-	libxfixes-dev \
-	libxtst-dev \
-	libx11-dev \
-	libcairo2-dev \
-	libxkbcommon-dev \
-	libwayland-dev &&
-make && sudo make install
-cd ../ && rm -rf warpd
+	git clone https://github.com/rvaiya/warpd.git
+	cd warpd
+	sudo apt install \
+		libxi-dev \
+		libxinerama-dev \
+		libxft-dev \
+		libxfixes-dev \
+		libxtst-dev \
+		libx11-dev \
+		libcairo2-dev \
+		libxkbcommon-dev \
+		libwayland-dev &&
+	make && sudo make install
+	cd ../ && rm -rf warpd
 }
-[ command -v warpd ] || installWarpd
+command -v warpd || installWarpd
 
 # Eza (ls)
 function installEza {
