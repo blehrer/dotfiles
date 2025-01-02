@@ -31,8 +31,8 @@ sudo apt install -y mise
 
 # Flatpak & Deskflow
 sudo apt install flatpak
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user --assumeyes org.deskflow.deskflow
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+$(flatpak list --user | grep org.deskflow.deskflow) || flatpak install --user --assumeyes org.deskflow.deskflow
 
 # JetBrainsMono NerdFont
 function downloadJetbrainsMonoNF {
