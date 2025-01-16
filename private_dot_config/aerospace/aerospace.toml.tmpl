@@ -1,3 +1,5 @@
+{{ if eq .chezmoi.os "darwin" -}}
+
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
@@ -206,3 +208,5 @@ alt-shift-l = ['join-with right', 'mode main']
 down = 'volume down'
 up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
+
+{{- end }}
