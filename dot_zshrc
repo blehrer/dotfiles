@@ -37,9 +37,7 @@ autoload sticky-note
 # +---------+
 
 # source ./gambit.zsh
-TRAPEXIT() {
-   zle reset-prompt
-}
+#
 # Load more completions
 fpath=(~/.local/share/zsh/site-functions $fpath)
 
