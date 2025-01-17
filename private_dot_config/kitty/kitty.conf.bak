@@ -1,7 +1,7 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
 # BEGIN_KITTY_FONTS
-font_family      family="JetBrainsMono Nerd Font Mono"
+font_family      family="JetBrainsMono Nerd Font"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -27,7 +27,7 @@ bold_italic_font auto
 #: <https://sw.kovidgoyal.net/kitty/kittens/choose-fonts/#font-spec-
 #: syntax>.
 
-# font_size 11.0
+font_size 14.0
 
 #: Font size (in pts).
 
@@ -354,7 +354,7 @@ bold_italic_font auto
 
 #: Scrollback {{{
 
-# scrollback_lines 2000
+scrollback_lines 2000
 
 #: Number of lines of history to keep in memory for scrolling back.
 #: Memory is allocated on demand. Negative numbers are (effectively)
@@ -385,7 +385,7 @@ bold_italic_font auto
 #: set to 0 if there is no cursor, for example, when showing the last
 #: command output.
 
-# scrollback_pager_history_size 0
+scrollback_pager_history_size 10
 
 #: Separate scrollback history size (in MB), used only for browsing
 #: the scrollback buffer with pager. This separate buffer is not
@@ -779,7 +779,7 @@ bold_italic_font auto
 
 #: Terminal bell {{{
 
-# enable_audio_bell yes
+enable_audio_bell no
 
 #: The audio bell. Useful to disable it in environments that require
 #: silence.
@@ -958,7 +958,7 @@ bold_italic_font auto
 #: Fade the text in inactive windows by the specified amount (a number
 #: between zero and one, with zero being fully faded).
 
-# hide_window_decorations no
+hide_window_decorations yes
 
 #: Hide the window decorations (title-bar and window borders) with
 #: yes. On macOS, titlebar-only and titlebar-and-corners can be used
@@ -1479,7 +1479,7 @@ bold_italic_font auto
 #: See rc_custom_auth <https://sw.kovidgoyal.net/kitty/remote-
 #: control/#rc-custom-auth> for details.
 
-# allow_remote_control no
+allow_remote_control socket-only
 
 #: Allow other programs to control kitty. If you turn this on, other
 #: programs can control all aspects of kitty, including sending text
@@ -1508,7 +1508,7 @@ bold_italic_font auto
 #: yes
 #:     Remote control requests are always accepted.
 
-# listen_on none
+listen_on unix:/tmp/kitty
 
 #: Listen to the specified socket for remote control connections. Note
 #: that this will apply to all kitty instances. It can be overridden
@@ -1652,7 +1652,7 @@ bold_italic_font auto
 #: special value of ask means that kitty will ask before opening the
 #: link when clicked.
 
-# shell_integration enabled
+shell_integration enabled
 
 #: Enable shell integration on supported shells. This enables features
 #: such as jumping to previous prompts, browsing the output of the
@@ -1864,7 +1864,7 @@ bold_italic_font auto
 #: Use the macOS traditional full-screen transition, that is faster,
 #: but less pretty.
 
-# macos_show_window_title_in all
+macos_show_window_title_in none
 
 #: Control where the window title is displayed on macOS. A value of
 #: window will show the title of the currently active window at the
@@ -1889,7 +1889,7 @@ bold_italic_font auto
 #: mouse cursor invisible on dual GPU machines. Changing this option
 #: by reloading the config is not supported.
 
-# macos_colorspace srgb
+macos_colorspace srgb
 
 #: The colorspace in which to interpret terminal colors. The default
 #: of srgb will cause colors to match those seen in web browsers. The
@@ -1945,7 +1945,7 @@ bold_italic_font auto
 #: The full list of actions that can be mapped to key presses is
 #: available here <https://sw.kovidgoyal.net/kitty/actions/>.
 
-# kitty_mod ctrl+shift
+kitty_mod ctrl+shift+alt+super
 
 #: Special modifier key alias for default shortcuts. You can change
 #: the value of this option to alter all default shortcuts that use
@@ -1959,13 +1959,14 @@ bold_italic_font auto
 # action_alias
 
 #: E.g. action_alias launch_tab launch --type=tab --cwd=current
-
+action_alias launch_tab launch --type=tab --cwd=current
 #: Define action aliases to avoid repeating the same options in
 #: multiple mappings. Aliases can be defined for any action and will
 #: be expanded recursively. For example, the above alias allows you to
 #: create mappings to launch a new tab in the current working
 #: directory without duplication::
 
+map kitty_mod+1 launch_tab
 #:     map f1 launch_tab vim
 #:     map f2 launch_tab emacs
 
@@ -2116,6 +2117,15 @@ bold_italic_font auto
 #::  Requires shell integration
 #::  <https://sw.kovidgoyal.net/kitty/shell-integration/> to work.
 
+# kitty-scrollback.nvim Kitten alias
+action_alias kitty_scrollback_nvim kitten ~/.local/share/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
+
+# Browse scrollback buffer in nvim
+map kitty_mod+g kitty_scrollback_nvim
+# Browse output of the last shell command in nvim
+map kitty_mod+h kitty_scrollback_nvim --config ksb_builtin_last_cmd_output
+# Show clicked command output in nvim
+mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --config ksb_builtin_last_visited_cmd_output
 #: }}}
 
 #: Window management {{{
@@ -2187,6 +2197,7 @@ bold_italic_font auto
 
 #: Start resizing window
 
+map kitty_mod+r
 # map kitty_mod+r start_resizing_window
 # map cmd+r       start_resizing_window
 
@@ -2273,6 +2284,7 @@ bold_italic_font auto
 
 #: New tab
 
+map kitty_mod+r    new_tab
 # map kitty_mod+t new_tab
 # map cmd+t       new_tab
 
@@ -2472,6 +2484,7 @@ bold_italic_font auto
 
 #: Edit config file
 
+map ctrl+,       edit_config_file
 # map kitty_mod+f2 edit_config_file
 # map cmd+,        edit_config_file
 
@@ -2565,6 +2578,7 @@ bold_italic_font auto
 
 #: Reload kitty.conf
 
+map ctrl+shift+, load_config_file
 # map kitty_mod+f5 load_config_file
 # map ctrl+cmd+,   load_config_file
 
@@ -2645,3 +2659,4 @@ bold_italic_font auto
 #: }}}
 
 #: }}}
+
