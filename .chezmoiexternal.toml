@@ -23,3 +23,9 @@
     refreshPeriod = "24h"
     [".config/nvim".pull]
         args = ["--ff-only"]
+
+[".config/kitty/kitty-themes"]
+    type = "git-repo"
+    url = "https://github.com/dexpota/kitty-themes"
+    [".config/kitty/kitty-themes".pull]
+        args = ["--depth 1"]

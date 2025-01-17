@@ -154,7 +154,7 @@ eval "$(thefuck --alias)"
 
 function fzfCompletion(){
   local version=$(fzf --version)
-  if [[ $version >= "0.47" ]]; then
+  if [[ $version > "0.47" ]]; then
     source <(fzf --zsh)
   else
     local localCompletion="~/.local/share/zsh/site-functions/_fzf"
