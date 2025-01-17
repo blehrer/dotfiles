@@ -24,8 +24,6 @@
     [".config/nvim".pull]
         args = ["--ff-only"]
 
-[".config/kitty/kitty-themes"]
+[".local/share/zsh/custom/fzf-tab-completion"]
     type = "git-repo"
-    url = "https://github.com/dexpota/kitty-themes"
-    [".config/kitty/kitty-themes".pull]
-        args = ["--depth 1"]
+    url = "https://github.com/lincheney/fzf-tab-completion"

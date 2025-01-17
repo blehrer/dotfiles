@@ -157,9 +157,10 @@ function fzfCompletion(){
   if [[ $version > "0.47" ]]; then
     source <(fzf --zsh)
   else
-    local localCompletion="~/.local/share/zsh/site-functions/_fzf"
-    [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
-    source $localCompletion
+    # local localCompletion="~/.local/share/zsh/site-functions/_fzf"
+    # [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
+    # source $localCompletion
+    source ~/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
   fi
 }
 
