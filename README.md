@@ -5,14 +5,8 @@
 
 ## Install
 
-## MacOS installation
+[Install ChezMoi](https://www.chezmoi.io/install/), and then run:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/blehrer/dotfiles/refs/heads/main/setup/macos.sh | sh
-```
-
-## Linux (apt) installation
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/blehrer/dotfiles/refs/heads/main/setup/apt.sh | sh
+chezmoi init --apply blehrer
 ```
