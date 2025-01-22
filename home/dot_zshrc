@@ -166,6 +166,8 @@ function fzfCompletion(){
 
 eval "$(fzfCompletion)"
 
+export RANGER_LOAD_DEFAULT_RC=FALSE
+
 #}}}
 
 # {{{ PATH
@@ -181,6 +183,7 @@ alias vimdiff='nvim -d'
 alias vd='nvim -c "Neotree"'
 alias nvd='cd ~/.config/nvim; vd'
 alias nvconf=nvd
+alias ag='rg'
 
 alias cz=chezmoi
 

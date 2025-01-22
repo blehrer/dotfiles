@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Utils
-brew install mise bash git zsh ranger fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat eza fzf google-chrome htop btop
+brew install mise bash git zsh ranger fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat eza fzf google-chrome htop btop dasel
 
 # Deskflow
 brew tap deskflow/homebrew-tap
@@ -92,5 +92,10 @@ if [ ! $(readlink -f /usr/bin/editor | xargs basename)  = 'nvim' ]; then
 	echo selecting editor \"$nvimShim\"
 	sudo update-alternatives --config editor $nvimShim
 fi
+
+# Mise, but only on linux:
+mise use --global dasel
+
 {{- end }}
+
 
