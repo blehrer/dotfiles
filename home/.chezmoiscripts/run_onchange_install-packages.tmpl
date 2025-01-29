@@ -3,7 +3,11 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Utils
-brew install mise bash git zsh ranger fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat eza fzf google-chrome htop btop dasel
+SHELLS="bash zsh"
+RANGER_FM="ranger pillow dasel"
+
+
+brew install mise "$SHELLS $RANGER_FM git fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat eza fzf google-chrome htop btop"
 
 # Deskflow
 brew tap deskflow/homebrew-tap
