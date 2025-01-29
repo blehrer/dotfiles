@@ -19,6 +19,14 @@ bindkey "^A" beginning-of-line
 bindkey "^N" push-line-or-edit
 # }}}
 
+# {{{ vi cursor fix
+_fix_cursor() {
+   echo -ne '\e[5 q'
+}
+
+precmd_functions+=(_fix_cursor)
+# }}}
+
 # {{{ autoloads
 autoload -U colors && colors
 autoload sticky-note
@@ -306,4 +314,10 @@ function bl {
 }
 # }}} 
 #}}}
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/nobut/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker
+#
