@@ -218,16 +218,20 @@ function brew (){
   local function updateBrewfile(){
     local brewfile=$DOTFILES_HOME/assets/Brewfile
     echo "Dumping changed Brewfile ($brewfile)"
-    brew bundle dump --force --file 
-    if [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
+    brew bundle dump --file=$brewfile --force
+    if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
       pushd $DOTFILES_HOME
-      echo "Adding changes to Brewfile"
-      git add assets/$brewfile
-      echo "Commiting changes to Brewfile"
-      git commit -m "Updating Brewfile"
-      if [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
-        echo "Pushing changes to Brewfile"
-        git push origin
+      if [ $? ] && [ ! $(git diff --quiet) ]; then
+        echo "Adding changes to Brewfile"
+        git add $brewfile
+        echo "Commiting changes to Brewfile"
+        git commit -m "Update assets/Brewfile"
+        if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
+          echo "Pushing changes to Brewfile"
+          git push origin
+        fi
+      else 
+        echo "No change to Brewfile"
       fi
       popd
     fi
