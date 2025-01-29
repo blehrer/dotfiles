@@ -182,6 +182,7 @@ export PATH="$HOME/go/bin:${PATH}"
 alias vim=nvim
 alias ivm=nvim
 alias vimdiff='nvim -d'
+alias vo='nvim -c "Oil"'
 alias vd='nvim -c "Neotree"'
 alias nvd='cd ~/.config/nvim; vd'
 alias nvconf=nvd
