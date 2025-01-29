@@ -1,0 +1,6 @@
+#compdef bl
+
+_res() {
+    _files -W ${WORKSPACE}/blehrer/blehrer;
+}
+compdef _bl bl

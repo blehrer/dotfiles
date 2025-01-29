@@ -1,0 +1,6 @@
+#compdef res
+
+_res() {
+    _files -W ~/${WORKSPACE}/blehrer/resonance;
+}
+compdef _res res

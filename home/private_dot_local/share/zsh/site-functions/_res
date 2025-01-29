@@ -1,6 +1,0 @@
-#compdef res
-
-_res() {
-    _files -W ~/code/github.com/blehrer/resonance;
-}
-compdef _res res
