@@ -36,8 +36,9 @@ autoload sticky-note
 # | General |
 # +---------+
 
-# source ./gambit.zsh
-#
+# export environment variables used in completions
+export WORKSPACE="${HOME}/workspace"
+
 # Load more completions
 fpath=(~/.local/share/zsh/site-functions $fpath)
 
@@ -258,7 +259,6 @@ function fif() {
 # }}} 
 
 # {{{ Project aliases
-export WORKSPACE="${HOME}/workspace"
 function res {
 	local input=$1 
 	local dest="${WORKSPACE}/blehrer/resonance"
