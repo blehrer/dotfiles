@@ -258,9 +258,15 @@ function fif() {
 # }}} 
 
 # {{{ Project aliases
+export WORKSPACE="${HOME}/workspace"
 function res {
 	local input=$1 
-	local dest=~/code/github.com/blehrer/resonance
+	local dest="${WORKSPACE}/blehrer/resonance"
+	[ $input ] && cd $dest/$input || cd $dest
+}
+function bl {
+	local input=$1 
+	local dest="${WORKSPACE}/blehrer/blehrer"
 	[ $input ] && cd $dest/$input || cd $dest
 }
 # }}} 
