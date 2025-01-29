@@ -171,8 +171,8 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 #}}}
 
 # {{{ PATH
-export PATH="~/.local/bin:${PATH}"
-export PATH="~/go/bin:${PATH}"
+export PATH="$HOME/.local/bin:${PATH}"
+export PATH="$HOME/go/bin:${PATH}"
 # }}} 
 
 #{{{ Aliases and functions
