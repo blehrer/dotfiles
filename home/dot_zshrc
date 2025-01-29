@@ -214,6 +214,36 @@ alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 [ $(command -v fdfind) ] && alias fd=fdfind
 
+function brew (){
+  local function updateBrewfile(){
+    local brewfile=$DOTFILES_HOME/assets/Brewfile
+    echo "Dumping changed Brewfile ($brewfile)"
+    brew bundle dump --force --file 
+    if [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
+      pushd $DOTFILES_HOME
+      echo "Adding changes to Brewfile"
+      git add assets/$brewfile
+      echo "Commiting changes to Brewfile"
+      git commit -m "Updating Brewfile"
+      if [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
+        echo "Pushing changes to Brewfile"
+        git push origin
+      fi
+      popd
+    fi
+  }
+  case $1 in
+    install)
+      ;&
+    uninstall)
+      command brew "$@" && updateBrewfile
+      ;;
+    *)
+      command brew "$@"
+      ;;
+  esac
+}
+
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
 alias gb='git branch'
