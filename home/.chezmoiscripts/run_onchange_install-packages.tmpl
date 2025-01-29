@@ -3,19 +3,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Utils
-SHELLS="bash zsh"
-RANGER_FM="ranger pillow dasel"
-
-
-brew install mise "$SHELLS $RANGER_FM git fd thefuck rancher qlmarkdown font-jetbrains-mono-nerd-font shortcat bat eza fzf google-chrome htop btop"
-
-# Deskflow
-brew tap deskflow/homebrew-tap
-
-# Aerospace Window Manager
-brew tap nikitabobko/tap
-
-brew install aerospace kitty deskflow
+brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
 
 {{- end }}
 
