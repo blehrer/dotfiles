@@ -2,6 +2,16 @@
 
 {{ if eq .chezmoi.os "darwin" -}}
 
+# System settings
+defaults write -g NSAutomaticCapitalizationEnabled -bool false
+defaults write -g NSAutomaticDashSubstitutionEnabled -bool false
+defaults write -g NSAutomaticInlinePredictionEnabled -bool false
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write -g KB_DoubleQuoteOption -string "\"abc\""
+defaults write -g KB_SingleQuoteOption -string "'abc'"
+
 # Utils
 brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
 
