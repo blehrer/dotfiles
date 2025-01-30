@@ -29,6 +29,7 @@ cask "google-chrome"
 cask "kitty"
 cask "qlmarkdown"
 cask "rancher"
+cask "scoot"
 cask "shortcat"
 cask "vlc"
 mas "Keymapp", id: 6472865291
