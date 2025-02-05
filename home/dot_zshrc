@@ -309,7 +309,7 @@ function res {
 }
 function bl {
 	local input=$1 
-	local dest="${WORKSPACE}/blehrer/blehrer"
+	local dest="${WORKSPACE}/blehrer"
 	[ $input ] && cd $dest/$input || cd $dest
 }
 # }}} 
