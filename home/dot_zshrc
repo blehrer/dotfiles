@@ -192,6 +192,7 @@ esac
 # Mise currently failing to install ruby on my mac, so here is a workaround
 source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
 source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
+set -x 
 mise link --force ruby@3 $(ls ${HOME}/.rubies/ruby-3.* | tail -n1) && mise reshim
 #}}}
 
