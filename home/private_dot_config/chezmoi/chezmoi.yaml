@@ -5,6 +5,4 @@ edit:
   watch: true
 diff:
   command: delta
-  args:
-    - -s
-  pager: delta
+  pager: diff-so-fancy
