@@ -191,7 +191,6 @@ esac
 
 source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
 source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.4.1
 #}}}
 
 # {{{ PATH
@@ -327,7 +326,7 @@ function bl {
 	local dest="${WORKSPACE}/blehrer"
 	[ $input ] && cd $dest/$input || cd $dest
 }
-alias @blog='bl blehrer.github.io/blog'
+alias blog='bl blehrer.github.io/blog && chruby ruby-3.4.1'
 alias draft="nvim $(bl blehrer.github.io)/blog/_drafts/${1:$(date +%F)}.md"
 
 # }}} 
