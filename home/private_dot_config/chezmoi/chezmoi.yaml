@@ -10,6 +10,6 @@ merge:
   command: nvim
   args:
     - -d
-    - {{ .Destination }}
-    - {{ .Source }}
-    - {{ .Target }}
+    - "{{ .Destination }}"
+    - "{{ .Source }}"
+    - "{{ .Target }}"
