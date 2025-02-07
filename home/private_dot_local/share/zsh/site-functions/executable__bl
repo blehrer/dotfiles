@@ -1,6 +1,6 @@
 #compdef bl
 
 _bl() {
-    _files -W ${WORKSPACE}/blehrer/blehrer;
+    _files -W ${WORKSPACE}/blehrer;
 }
 compdef _bl bl
