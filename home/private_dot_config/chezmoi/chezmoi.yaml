@@ -3,3 +3,6 @@ git:
   autoPush: true
 edit:
   watch: true
+diff:
+  command: delta
+  pager: delta
