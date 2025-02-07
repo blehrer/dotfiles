@@ -177,6 +177,20 @@ eval "$(fzfCompletion)"
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/nobut/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# pnpm
+export PNPM_HOME="/Users/nobut/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
+source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 #}}}
 
 # {{{ PATH
@@ -314,17 +328,5 @@ function bl {
 }
 # }}} 
 #}}}
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/nobut/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-# pnpm
-export PNPM_HOME="/Users/nobut/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker
