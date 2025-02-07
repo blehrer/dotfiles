@@ -226,6 +226,9 @@ alias kc='cz edit ~/.config/kitty/kitty.conf'
 alias @scratch='cd ~/Documents/scratch'
 alias scratch="vim ~/Documents/scratch/$(date +%F)"
 
+alias @blog='bl blehrer.github.io/blog'
+alias draft="nvim $(bl blehrer.github.io)/blog/_drafts/${1:$(date +%F)}.md"
+
 export DOTFILES_HOME="$(cz dump-config | jq -r '.workingTree')"
 alias @dfd="cz cd"
 alias dfd="@dfd; vd"
