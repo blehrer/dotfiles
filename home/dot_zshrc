@@ -173,7 +173,7 @@ function fzfCompletion(){
   fi
 }
 
-eval "$(fzfCompletion)"
+fzfCompletion
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
