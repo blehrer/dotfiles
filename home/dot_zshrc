@@ -48,7 +48,7 @@ autoload sticky-note
 export WORKSPACE="${HOME}/workspace"
 
 # Load more completions
-fpath=(~/.local/share/zsh/site-functions $fpath)
+fpath=(${HOME}/.local/share/zsh/site-functions $fpath)
 
 # Should be called before compinit
 zmodload zsh/complist
@@ -147,12 +147,12 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 
 zstyle ':completion:*' keep-prefix true
 
-zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,${HOME}/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 # }}}
 
 # {{{ plugins
-for plugin in $(echo ~/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
+for plugin in $(echo ${HOME}/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
 # }}}
 
 #{{{ Tools
@@ -166,10 +166,10 @@ function fzfCompletion(){
   if [[ $version > "0.47" ]]; then
     source <(fzf --zsh)
   else
-    # local localCompletion="~/.local/share/zsh/site-functions/_fzf"
+    # local localCompletion="${HOME}/.local/share/zsh/site-functions/_fzf"
     # [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
     # source $localCompletion
-    source ~/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
+    source ${HOME}/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
   fi
 }
 
@@ -209,8 +209,9 @@ alias vim=nvim
 alias ivm=nvim
 alias vimdiff='nvim -d'
 alias vo='nvim -c "Oil"'
+alias nvo='nvim -c "Oil"'
 alias vd='nvim -c "Neotree"'
-alias nvd='cd ~/.config/nvim; vd'
+alias nvd='cd ${HOME}/.config/nvim; vd'
 alias nvconf=nvd
 alias ag='rg'
 
@@ -225,17 +226,17 @@ alias mkdir='mkdir -p'
 alias lg=lazygit
 
 alias icat='kitten icat'
-alias kc='cz edit ~/.config/kitty/kitty.conf'
+alias kc='cz edit ${HOME}/.config/kitty/kitty.conf'
 
-alias @scratch='cd ~/Documents/scratch'
-alias scratch="vim ~/Documents/scratch/$(date +%F)"
+alias @scratch='cd ${HOME}/Documents/scratch'
+alias scratch="vim ${HOME}/Documents/scratch/$(date +%F)"
 
 export DOTFILES_HOME="$(cz dump-config | jq -r '.workingTree')"
 alias @dfd="cz cd"
 alias dfd="@dfd; vd"
 
-alias z='cz edit ~/.zshrc'
-alias sz='source ~/.zshrc'
+alias z='cz edit ${HOME}/.zshrc'
+alias sz='source ${HOME}/.zshrc'
 
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
