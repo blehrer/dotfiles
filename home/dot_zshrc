@@ -211,10 +211,12 @@ alias vim=nvim
 alias ivm=nvim
 alias vimdiff='nvim -d'
 alias vo='nvim -c "Oil"'
-alias nvo='cd ${HOME}/.config/nvim; nvim -c "Oil"'
 alias vd='nvim -c "Neotree"'
-alias nvd='cd ${HOME}/.config/nvim; vd'
-alias nvconf=nvd
+alias @nv=cd ${HOME}/.config/nvim
+alias nv="@nv; n"
+alias nvd="@nv; vd"
+alias nvo="@nv; vo"
+alias nvconf=nvo
 alias ag='rg'
 
 alias cz=chezmoi
