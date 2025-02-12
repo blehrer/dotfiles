@@ -206,6 +206,7 @@ source ${HOME}/.cargo/env
 #{{{ Aliases and functions
 
 # CLI conveniences
+alias n=nvim
 alias vim=nvim
 alias ivm=nvim
 alias vimdiff='nvim -d'
