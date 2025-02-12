@@ -200,6 +200,7 @@ unset RUBY_3
 # {{{ PATH
 export PATH="$HOME/.local/bin:${PATH}"
 export PATH="$HOME/go/bin:${PATH}"
+source ${HOME}/.cargo/env
 # }}} 
 
 #{{{ Aliases and functions
@@ -334,7 +335,7 @@ function bl {
 alias blog='bl blehrer.github.io/blog && chruby ruby-3.4.1'
 alias draft="nvim $(bl blehrer.github.io)/blog/_drafts/${1:$(date +%F)}.md"
 
-# }}} 
+# }}}
 #}}}
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker
