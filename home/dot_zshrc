@@ -225,7 +225,7 @@ alias tree='l --tree --ignore-glob ".git/*|node_modules/*"'
 
 alias mkdir='mkdir -p'
 
-alias lg=lazygit
+alias lg="lazygit -ucd ${HOME}/.config/lazygit"
 
 alias icat='kitten icat'
 alias kc='cz edit ${HOME}/.config/kitty/kitty.conf'
