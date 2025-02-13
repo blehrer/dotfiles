@@ -6,7 +6,7 @@ gui:
     scrollOffMargin: 2
     scrollOffBehavior: margin
     mouseEvents: true
-    skipDiscardChangeWarning: false
+    skipDiscardChangeWarning: true
     skipStashWarning: false
     skipNoStagedFilesWarning: false
     skipRewordInEditorWarning: false
