@@ -1,0 +1,6 @@
+[".config/nvim"]
+type = "git-repo"
+url = "https://github.com/blehrer/lazy-nvim"
+refreshPeriod = "24h"
+[".config/nvim".pull]
+args = ["--ff-only"]

@@ -1,0 +1,4 @@
+[".local/share/microsoft/vscode-js-debug"]
+type = "git-repo"
+url = "https://github.com/microsoft/vscode-js-debug"
+refreshPeriod = "24h"

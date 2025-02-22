@@ -195,6 +195,11 @@ source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 RUBY_3=$(ls ${HOME}/.rubies | egrep 'ruby-3\.*' | tail -n1)
 mise link --force ruby@3 ${HOME}/.rubies/${RUBY_3} && mise reshim
 unset RUBY_3
+
+# Init toolchain with mise
+function mise-toolchain {
+  mise list --missing | awk '{print $1"@"$5}' | xargs mise use
+}
 #}}}
 
 # {{{ PATH

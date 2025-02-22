@@ -1,0 +1,5 @@
+output cd ~/.local/share/microsoft/vscode-js-debug
+output mise list --missing | awk '{print $1@$5}' | xargs mise use
+output npm install --legacy-peer-deps
+output npx gulp vsDebugServerBundle
+output mv dist out
