@@ -44,8 +44,10 @@ cask "github"
 cask "google-chrome"
 cask "kitty"
 cask "qlmarkdown"
+cask "qmk-toolbox"
 cask "rancher"
 cask "scoot"
 cask "shortcat"
 cask "vlc"
 mas "Keymapp", id: 6472865291
+mas "Xcode", id: 497799835
