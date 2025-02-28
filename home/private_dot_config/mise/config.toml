@@ -1,0 +1,13 @@
+[tools]
+jq = "latest"
+starship = "latest"
+neovim = "latest"
+node = "latest"
+usage = "latest"
+ripgrep = "latest"
+lazygit = "latest"
+java = "latest"
+python = "3"
+
+[settings]
+experimental = true
