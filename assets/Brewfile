@@ -55,5 +55,6 @@ cask "rancher"
 cask "scoot"
 cask "shortcat"
 cask "vlc"
+cask "vscodium"
 mas "Keymapp", id: 6472865291
 mas "Xcode", id: 497799835
