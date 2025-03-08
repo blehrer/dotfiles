@@ -217,9 +217,11 @@ alias vim=nvim
 alias ivm=nvim
 alias vimdiff='nvim -d'
 alias vo='nvim -c "Oil"'
+alias vd='nvim'
 alias @nv="cd ${HOME}/.config/nvim"
 alias nv="@nv; n"
 alias nvo="@nv; vo"
+alias nvd="nvd"
 alias nvconf=nvo
 alias ag='rg'
 
