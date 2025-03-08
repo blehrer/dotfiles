@@ -8,6 +8,7 @@ ripgrep = "latest"
 lazygit = "latest"
 java = "latest"
 python = "3"
+go = "latest"
 
 [settings]
 experimental = true
