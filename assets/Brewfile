@@ -58,6 +58,7 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-symbols-only-nerd-font"
 cask "github"
 cask "google-chrome"
+cask "keymapp"
 cask "kitty"
 cask "obsidian"
 cask "qlmarkdown"
@@ -67,5 +68,4 @@ cask "scoot"
 cask "shortcat"
 cask "vlc"
 cask "vscodium"
-mas "Keymapp", id: 6472865291
 mas "Xcode", id: 497799835
