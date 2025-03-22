@@ -222,7 +222,7 @@ alias @nv="cd ${HOME}/.config/nvim"
 alias nv="@nv; n"
 alias nvo="@nv; vo"
 alias nvd="nvd"
-alias nvconf=nvo
+alias nvc=nvo
 alias ag='rg'
 
 alias cz=chezmoi
