@@ -343,6 +343,7 @@ function bl {
 }
 alias blog='bl blehrer.github.io/blog && chruby ruby-3.4.1'
 alias draft="nvim $(bl blehrer.github.io)/blog/_drafts/${1:$(date +%F)}.md"
+alias til="blog; nvim -c 'JekyllDraft'
 
 # }}}
 #}}}
