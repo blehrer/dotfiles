@@ -9,6 +9,7 @@ lazygit = "latest"
 java = "latest"
 python = "3"
 go = "latest"
+deno = "latest"
 
 [settings]
 experimental = true
