@@ -10,6 +10,7 @@ java = "latest"
 python = "3"
 go = "latest"
 deno = "latest"
+pipx = "latest"
 
 [settings]
 experimental = true
