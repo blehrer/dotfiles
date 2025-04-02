@@ -1,0 +1,5 @@
+{
+    "diagnostics.globals": [
+        "starship_precmd_user_func"
+    ]
+}
