@@ -352,7 +352,11 @@ function bl {
 }
 alias blog='bl blehrer.github.io.git/ && chruby ruby-3.4.1'
 
-alias certbot='certbot --config-dir ~/.config/certbot --work-dir ~/.local/share/certbot --logs-dir ~/.local/state/certbot/logs' 
+# https://certbot.eff.org/
+alias certbot="certbot \
+  --config-dir ${HOME}/.config/certbot \
+  --work-dir ${HOME}/.local/share/certbot \
+  --logs-dir ${HOME}/.local/state/certbot/logs"
 
 # }}}
 #}}}
