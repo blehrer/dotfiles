@@ -300,6 +300,11 @@ function brew (){
 }
 
 export ZK_NOTEBOOK_DIR=~/notes
+alias zkn='zk new'
+alias zkl='zk list'
+alias zkg='zk graph'
+alias zke='zk edit'
+alias zkt='zk tag'
 
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
