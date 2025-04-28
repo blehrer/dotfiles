@@ -299,6 +299,8 @@ function brew (){
   esac
 }
 
+export ZK_NOTEBOOK_DIR=~/notes
+
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
 alias gb='git branch'
