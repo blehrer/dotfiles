@@ -88,7 +88,7 @@ setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 # +----------------------------+
 
 export PATH="${HOME}/.local/bin:${PATH}"
-eval "$(register-python-argcomplete pipx)"
+# eval "$(register-python-argcomplete pipx)"
 
 # +-----+
 # + lua |
