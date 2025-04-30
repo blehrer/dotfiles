@@ -13,7 +13,6 @@
 
 # The default title used for new note, if no `--title` flag is provided.
 #default-title = "Untitled"
-default-title = "{{format-date now '%Y-%m-%d'}} - {{id}}"
 
 # Template used to generate a note's filename, without extension.
 #filename = "{{id}}"
