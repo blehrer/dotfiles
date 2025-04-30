@@ -299,7 +299,7 @@ function brew (){
   esac
 }
 
-export ZK_NOTEBOOK_DIR=~/notes
+export ZK_NOTEBOOK_DIR="$HOME/notes"
 alias zkn='zk new'
 alias zkl='zk list'
 alias zkg='zk graph'
