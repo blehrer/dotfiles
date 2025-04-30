@@ -299,12 +299,7 @@ function brew (){
   esac
 }
 
-export ZK_NOTEBOOK_DIR="$HOME/notes"
-alias zkn='zk new'
-alias zkl='zk list'
-alias zkg='zk graph'
-alias zke='zk edit --interactive'
-alias zkt='zk tag'
+export OBSIDIAN_VAULT="$HOME/vaults"
 
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
