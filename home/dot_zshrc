@@ -228,7 +228,6 @@ source ${HOME}/.cargo/env
 # }}} 
 
 #{{{ Aliases and functions
-
 # CLI conveniences
 alias n=nvim
 alias vim=nvim
@@ -272,6 +271,7 @@ alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 [ $(command -v fdfind) ] && alias fd=fdfind
 
+alias nu="XDG_CONFIG_HOME=${HOME}/.config nu"
 function brew (){
   local function updateBrewfile(){
     local brewfile=$DOTFILES_HOME/assets/Brewfile
