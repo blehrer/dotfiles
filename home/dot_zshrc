@@ -90,6 +90,11 @@ setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 export PATH="${HOME}/.local/bin:${PATH}"
 # eval "$(register-python-argcomplete pipx)"
 
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
+zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+
 # +-----+
 # + lua |
 # #-----+
@@ -251,8 +256,10 @@ alias lg="lazygit -ucd ${HOME}/.config/lazygit"
 alias icat='kitten icat'
 alias kc='cz edit ${HOME}/.config/kitty/kitty.conf'
 
-alias @scratch='cd ${HOME}/Documents/scratch'
-alias scratch="vim ${HOME}/Documents/scratch/$(date +%F)"
+export OBSIDIAN_VAULT="$HOME/vaults/noe"
+alias nn="cd ${OBSIDIAN_VAULT}; nvim -c 'lua require(\"obsidian\")' -c 'ObsidianNew'"
+alias @scratch="cd ${OBSIDIAN_VAULT}/notes/dailies"
+alias scratch="nn"
 
 export DOTFILES_HOME="$(cz dump-config | jq -r '.workingTree')"
 alias @dfd="cz cd"
@@ -298,10 +305,6 @@ function brew (){
       ;;
   esac
 }
-
-export OBSIDIAN_VAULT="$HOME/vaults/noe"
-
-alias nn="cd ${OBSIDIAN_VAULT}; nvim" # -c 'ObsidianNew'"
 
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
