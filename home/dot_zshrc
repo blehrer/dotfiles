@@ -308,13 +308,13 @@ function brew (){
 
 #{{{Neovim experimentation
 function nuke-nv(){
-  rm -rf "~/.local/share/nvim" "~/.local/state/nvim" "~/.cache/nvim"
-  [ -d "~/.local/share/nvim" ] && echo 'share not deleted' && exit 1
-  [ -d "~/.local/state/nvim" ] && echo 'state not deleted' && exit 1
-  [ -d "~/.cache/nvim" ] && echo 'cache note deleted' && exit 1
-  mkdir "~/.config/.bk"
-  echo 'about to mv "~/.config/nvim" "~/.config/bk". Please confirm w/ sudo.'
-  sudo mv "~/.config/nvim" "~/.config/bk"
+  rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
+  [ -d "${HOME}/.local/share/nvim" ] && echo 'share not deleted' && exit 1
+  [ -d "${HOME}/.local/state/nvim" ] && echo 'state not deleted' && exit 1
+  [ -d "${HOME}/.cache/nvim" ] && echo 'cache note deleted' && exit 1
+  mkdir "${HOME}/.config/.bk"
+  echo 'about to mv "${HOME}/.config/nvim" "${HOME}/.config/bk". Please confirm w/ sudo.'
+  sudo mv "${HOME}/.config/nvim" "${HOME}/.config/bk"
 }
 #}}}
 
