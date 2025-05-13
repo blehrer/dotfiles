@@ -306,6 +306,15 @@ function brew (){
   esac
 }
 
+#{{{Neovim experimentation
+function nuke-nv(){
+  rm -rf "~/.local/share/nvim" "~/.local/state/nvim" "~/.cache/nvim"
+  mkdir "~/.config/.bk"
+  echo 'about to mv "~/.config/nvim" "~/.config/bk". Please confirm w/ sudo.'
+  sudo mv "~/.config/nvim" "~/.config/bk"
+}
+#}}}
+
 #{{{ Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
 alias gb='git branch'
