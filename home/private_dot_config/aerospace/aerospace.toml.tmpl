@@ -212,4 +212,17 @@ down = 'volume down'
 up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
 
+#[[on-window-detected]]
+#    if.app-id = 'com.google.Chrome'
+#    if.app-name-regex-substring = 'settings'
+#    if.window-title-regex-substring = 'substring'
+#    if.workspace = 'workspace-name'
+#    if.during-aerospace-startup = true
+#    check-further-callbacks = true
+#    run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
+
+[[on-window-detected]]
+    if.app-id = 'com.google.Chrome'
+    run = ['move-node-to-workspace s', 'workspace s']  # The callback itself
+
 {{- end }}
