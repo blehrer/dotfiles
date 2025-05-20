@@ -258,7 +258,7 @@ alias kc='cz edit ${HOME}/.config/kitty/kitty.conf'
 export OBSIDIAN_VAULT="$HOME/vaults/noe"
 alias nn="cd ${OBSIDIAN_VAULT}; nvim -c 'lua require(\"obsidian\")' -c 'ObsidianNew'"
 alias @scratch="cd ${OBSIDIAN_VAULT}/notes/dailies"
-alias @notes=@scratch
+alias @notes="cd ${OBSIDIAN_VAULT}/notes"
 alias scratch="nn"
 
 export DOTFILES_HOME="$(cz dump-config | jq -r '.workingTree')"
