@@ -1,0 +1,23 @@
+#:schema https://yazi-rs.github.io/schemas/schemas/package.schema.json
+[plugin]
+deps = []
+
+[[flavor.deps]]
+use = "dangooddd/kanagawa"
+rev = "31167ed"
+hash = "a04e157148549bacbb2831aab0e6e8cb"
+
+[[flavor.deps]]
+use = "marcosvnmelo/kanagawa-dragon"
+rev = "4905527"
+hash = "5fd7aa0bf4e7d9753ad8a4660a6eb94f"
+
+[[flavor.deps]]
+use = "ficcdaf/ashen:ashen"
+rev = "514ed5a"
+hash = "a48aa4d7140c52cdd14552039b632800"
+
+[[flavor.deps]]
+use = "BennyOe/onedark"
+rev = "668d71d"
+hash = "5e616226586a2af1ecaf116e08e9a8ec"
