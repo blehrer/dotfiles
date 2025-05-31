@@ -95,24 +95,16 @@ outer.right = 1
 # '''
 
 #Handle Scoot
-# ctrl-shift-semicolon = '''exec-and-forget 
-# pgrep -f Scoot | xargs kill
-# /Applications/Scoot.app/Contents/MacOS/Scoot &
-# pgrep -f Scoot
-# osascript -e 'activate "Scoot"'
-# osascript -e 'tell application "System Events" to key code 53 using {control down, shift down}'
-# '''  
-
 ctrl-shift-semicolon = '''exec-and-forget 
 pgrep -f Scoot | xargs kill
 /Applications/Scoot.app/Contents/MacOS/Scoot &
 pgrep -f Scoot
 osascript -e '
 tell application "System Events"
-tell application "Scoot" to activate
-key code 53 using {control down, shift down}
+  tell application "Scoot" to activate
+  key code 53 using {control down, shift down}
 end tell'
-'''  
+'''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
