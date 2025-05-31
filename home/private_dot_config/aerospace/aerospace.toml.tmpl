@@ -94,11 +94,9 @@ outer.right = 1
 # end tell'
 # '''
 
-#Handle Scoot
+# Handle Scoot
 ctrl-shift-semicolon = '''exec-and-forget 
 pgrep -f Scoot | xargs kill
-/Applications/Scoot.app/Contents/MacOS/Scoot &
-pgrep -f Scoot
 osascript -e '
 tell application "System Events"
   tell application "Scoot" to activate
@@ -229,6 +227,5 @@ run = ['move-node-to-workspace --focus-follows-window 2']
 if.app-id = 'com.jetbrains.intellij'
 run = ['move-node-to-workspace --focus-follows-window 3']
 
-{{- end }}
-
 # vim: ts=2 sts=2 sw=2 et ft=toml.template
+{{- end }}
