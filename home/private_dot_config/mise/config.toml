@@ -1,7 +1,6 @@
 [tools]
 jq = "latest"
 starship = "latest"
-neovim = "latest"
 node = "latest"
 usage = "latest"
 ripgrep = "latest"
