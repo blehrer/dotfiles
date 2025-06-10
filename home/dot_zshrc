@@ -351,6 +351,7 @@ alias gst='git status'
 gw () {
   local tld=$(git rev-parse --show-toplevel)
   if [ $? ]; then
+    echo shouldnt have gone this far... exit code of prv was $?
     eq=$(test $(pwd) = "${tld}")
     "${eq}" || pushd "${tld}"
     ./gradlew $@
