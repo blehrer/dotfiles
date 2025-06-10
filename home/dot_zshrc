@@ -349,8 +349,8 @@ alias gst='git status'
 
 #{{{ Java conveniences
 gw () {
-  local tld=$(git rev-parse --show-toplevel)
   [ -n 'gradlew' ] && ./gradlew $@ && break 
+  local tld=$(git rev-parse --show-toplevel)
   if [ $? ]; then
     eq=$(test $(pwd) = "${tld}")
     "${eq}" || pushd "${tld}"
