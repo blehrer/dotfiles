@@ -143,11 +143,11 @@ zstyle ':completion:*:*:*:*:descriptions' format '-- %D %d --'
 zstyle ':completion:*:*:*:*:messages' format ' -- %d --'
 zstyle ':completion:*:*:*:*:warnings' format ' -- no matches found --'
 
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-zstyle ':fzf-tab:complete:ls:*' fzf-preview 'eza -1 --color=always $realpath'
-zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
-zstyle ':fzf-tab:*' switch-group '<' '>'
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# zstyle ':fzf-tab:complete:ls:*' fzf-preview 'eza -1 --color=always $realpath'
+# zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 # Colors for files and directory
