@@ -114,10 +114,10 @@ export PATH="${HOME}/.local/bin:${PATH}"
 export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
 # eval "$(register-python-argcomplete pipx)"
 
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+# disabled until https://github.com/Aloxaf/fzf-tab/issues/503 is fixed
+# export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+# zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 # source <(carapace _carapace)
-zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
 
 # +-----+
 # + lua |
@@ -173,6 +173,7 @@ zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
 # Only display some tags for the command cd
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
 # zstyle ':completion:*:complete:git:argument-1:' tag-order !aliases
+zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
 
 # Required for completion to be in good groups (named after the tags)
 zstyle ':completion:*' group-name ''
