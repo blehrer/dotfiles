@@ -200,3 +200,6 @@ autocmd FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
 
 " open file under cursor or highlighted file in a split
 nnoremap <silent><C-w><C-f> <C-W>vgf
+
+" add fzf to runtime path
+set rtp+=/opt/homebrew/opt/fzf
