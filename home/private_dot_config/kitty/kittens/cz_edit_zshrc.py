@@ -9,7 +9,7 @@ def main(args):
     for path in [cz_brew, cz_lx1, cz_lx2]:
         if os.path.exists(path):
             os.system([path, 'edit', os.path.join(home, '.zshrc')])
-            return
+            break
 
 
 if __name__ == "__main__":
