@@ -1,4 +1,5 @@
 import os
+import itertools
 
 
 def main(args):
@@ -6,12 +7,10 @@ def main(args):
     cz_lx1 = os.path.join(home, '.local', 'bin', 'chezmoi')
     cz_lx2 = os.path.join(home, '.bin', 'chezmoi')
     cz_brew = '/opt/homebrew/bin/chezmoi'
-    for path in [cz_brew, cz_lx1, cz_lx2]:
-        if os.path.exists(path):
-            os.system([path, 'edit', os.path.join(home, '.zshrc')])
-        else:
-            os.system(
-                f'echo {path} doesnt exist >> /Users/nobut/scratch/log.py.log')
+    paths = itertools.dropwhile(lambda p: not os.path.exists(p), [
+                                cz_brew, cz_lx1, cz_lx2])
+    if len(paths) > 0:
+        os.system(f'{paths[0]} edit {os.path.join(home, ".zshrc")}')
 
 
 if __name__ == "__main__":
