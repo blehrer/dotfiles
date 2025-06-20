@@ -10,7 +10,8 @@ def main(args):
         if os.path.exists(path):
             os.system([path, 'edit', os.path.join(home, '.zshrc')])
         else:
-            os.system(f'echo {path} doesnt exist')
+            os.system(
+                f'echo {path} doesnt exist >> /Users/nobut/scratch/log.py.log')
 
 
 if __name__ == "__main__":
