@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def main(args):
-    home = os.environ('HOME')
+    home = os.getenv('HOME')
     cz_lx1 = os.path.join(home, '.local', 'bin', 'chezmoi')
     cz_lx2 = os.path.join(home, '.bin', 'chezmoi')
     cz_brew = Path.absolute('/opt/homebrew/bin/chezmoi')
