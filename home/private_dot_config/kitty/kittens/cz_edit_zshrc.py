@@ -1,7 +1,5 @@
 import os
 
-from pathlib import Path
-
 
 def main(args):
     home = os.getenv('HOME')
