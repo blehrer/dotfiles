@@ -1,7 +1,7 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
 # BEGIN_KITTY_FONTS
-font_family      family="JetBrainsMono Nerd Font"
+font_family      family="Hasklug Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -495,7 +495,7 @@ scrollback_pager_history_size 10
 #: to/from always will only affect text subsequently received by
 #: kitty.
 
-# copy_on_select no
+copy_on_select yes
 
 #: Copy to clipboard or a private buffer on select. With this set to
 #: clipboard, selecting text with the mouse will cause the text to be
@@ -1966,7 +1966,8 @@ action_alias launch_tab launch --type=tab --cwd=current
 #: create mappings to launch a new tab in the current working
 #: directory without duplication::
 
-map kitty_mod+1 launch_tab
+#: map kitty_mod+1 launch_tab
+map kitty_mod+1
 #:     map f1 launch_tab vim
 #:     map f2 launch_tab emacs
 
@@ -1990,6 +1991,7 @@ map kitty_mod+1 launch_tab
 #: Copy to clipboard
 
 # map kitty_mod+c copy_to_clipboard
+map kitty_mod+c
 # map cmd+c       copy_to_clipboard
 
 #::  There is also a copy_or_interrupt action that can be optionally
@@ -2001,16 +2003,19 @@ map kitty_mod+1 launch_tab
 #: Paste from clipboard
 
 # map kitty_mod+v paste_from_clipboard
+map kitty_mod+v
 # map cmd+v       paste_from_clipboard
 
 #: Paste from selection
 
 # map kitty_mod+s  paste_from_selection
+map kitty_mod+s
 # map shift+insert paste_from_selection
 
 #: Pass selection to program
 
 # map kitty_mod+o pass_selection_to_program
+map kitty_mod+o
 
 #::  You can also pass the contents of the current selection to any
 #::  program with pass_selection_to_program. By default, the system's
@@ -2066,6 +2071,8 @@ map kitty_mod+1 launch_tab
 #: Scroll to previous shell prompt
 
 # map kitty_mod+z scroll_to_prompt -1
+# map kitty_mod+z
+map kitty_mod+->- scroll_to_prompt -1
 
 #::  Use a parameter of 0 for scroll_to_prompt to scroll to the last
 #::  jumped to or the last clicked position. Requires shell
@@ -2075,6 +2082,7 @@ map kitty_mod+1 launch_tab
 #: Scroll to next shell prompt
 
 # map kitty_mod+x scroll_to_prompt 1
+map kitty_mod+->_ scroll_to_prompt 1
 
 #: Browse scrollback buffer in pager
 
@@ -2164,6 +2172,7 @@ mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output
 #: New OS window
 
 # map kitty_mod+n new_os_window
+map kitty_mod+n
 # map cmd+n       new_os_window
 
 #::  Works like new_window above, except that it opens a top-level OS
@@ -2173,6 +2182,7 @@ mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output
 #: Close window
 
 # map kitty_mod+w close_window
+map kitty_mod+w
 # map shift+cmd+d close_window
 
 #: Next window
@@ -2186,10 +2196,12 @@ mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output
 #: Move window forward
 
 # map kitty_mod+f move_window_forward
+map kitty_mod+f
 
 #: Move window backward
 
 # map kitty_mod+b move_window_backward
+map kitty_mod+b
 
 #: Move window to top
 
@@ -2197,58 +2209,68 @@ mouse_map ctrl+shift+right press ungrabbed combine : mouse_select_command_output
 
 #: Start resizing window
 
-map kitty_mod+r
 # map kitty_mod+r start_resizing_window
+map kitty_mod+r
 # map cmd+r       start_resizing_window
 
 #: First window
 
 # map kitty_mod+1 first_window
+map kitty_mod+1
 # map cmd+1       first_window
 
 #: Second window
 
 # map kitty_mod+2 second_window
+map kitty_mod+2
 # map cmd+2       second_window
 
 #: Third window
 
 # map kitty_mod+3 third_window
+map kitty_mod+3
 # map cmd+3       third_window
 
 #: Fourth window
 
 # map kitty_mod+4 fourth_window
+map kitty_mod+4
 # map cmd+4       fourth_window
 
 #: Fifth window
 
 # map kitty_mod+5 fifth_window
+map kitty_mod+5
 # map cmd+5       fifth_window
 
 #: Sixth window
 
 # map kitty_mod+6 sixth_window
+map kitty_mod+6
 # map cmd+6       sixth_window
 
 #: Seventh window
 
 # map kitty_mod+7 seventh_window
+map kitty_mod+7
 # map cmd+7       seventh_window
 
 #: Eighth window
 
 # map kitty_mod+8 eighth_window
+map kitty_mod+8
 # map cmd+8       eighth_window
 
 #: Ninth window
 
 # map kitty_mod+9 ninth_window
+map kitty_mod+9
 # map cmd+9       ninth_window
 
 #: Tenth window
 
 # map kitty_mod+0 tenth_window
+map kitty_mod+0
 
 #: Visually select and focus window
 
@@ -2273,24 +2295,29 @@ map kitty_mod+r
 #: Next tab
 
 # map kitty_mod+right next_tab
+map kitty_mod+right
 # map shift+cmd+]     next_tab
 # map ctrl+tab        next_tab
 
 #: Previous tab
 
 # map kitty_mod+left previous_tab
+map kitty_mod+left
 # map shift+cmd+[    previous_tab
 # map ctrl+shift+tab previous_tab
 
 #: New tab
 
-map kitty_mod+r    new_tab
+# map kitty_mod+r    new_tab
+map kitty_mod+r
 # map kitty_mod+t new_tab
+map kitty_mod+t
 # map cmd+t       new_tab
 
 #: Close tab
 
 # map kitty_mod+q close_tab
+map kitty_mod+q
 # map cmd+w       close_tab
 
 #: Close OS window
@@ -2334,6 +2361,9 @@ map kitty_mod+r    new_tab
 #: Next layout
 
 # map kitty_mod+l next_layout
+map kitty_mod+l
+map kitty_mod+~ next_layout
+
 
 
 #: You can also create shortcuts to switch to specific layouts::
@@ -2399,6 +2429,7 @@ map kitty_mod+r    new_tab
 #: Open URL
 
 # map kitty_mod+e open_url_with_hints
+map kitty_mod+e
 
 #::  Open a currently visible URL using the keyboard. The program used
 #::  to open the URL is specified in open_url_with.
@@ -2406,6 +2437,7 @@ map kitty_mod+r    new_tab
 #: Insert selected path
 
 # map kitty_mod+p>f kitten hints --type path --program -
+map kitty_mod+p>f
 
 #::  Select a path/filename and insert it into the terminal. Useful,
 #::  for instance to run git commands on a filename output from a
@@ -2414,12 +2446,14 @@ map kitty_mod+r    new_tab
 #: Open selected path
 
 # map kitty_mod+p>shift+f kitten hints --type path
+map kitty_mod+p>shift+f
 
 #::  Select a path/filename and open it with the default open program.
 
 #: Insert selected line
 
 # map kitty_mod+p>l kitten hints --type line --program -
+map kitty_mod+p>l
 
 #::  Select a line of text and insert it into the terminal. Useful for
 #::  the output of things like: `ls -1`.
@@ -2427,12 +2461,14 @@ map kitty_mod+r    new_tab
 #: Insert selected word
 
 # map kitty_mod+p>w kitten hints --type word --program -
+map kitty_mod+p>w
 
 #::  Select words and insert into terminal.
 
 #: Insert selected hash
 
 # map kitty_mod+p>h kitten hints --type hash --program -
+map kitty_mod+p>h
 
 #::  Select something that looks like a hash and insert it into the
 #::  terminal. Useful with git, which uses SHA1 hashes to identify
@@ -2441,6 +2477,7 @@ map kitty_mod+r    new_tab
 #: Open the selected file at the selected line
 
 # map kitty_mod+p>n kitten hints --type linenum
+map kitty_mod+p>n
 
 #::  Select something that looks like filename:linenum and open it in
 #::  your default editor at the specified line number.
@@ -2448,6 +2485,7 @@ map kitty_mod+r    new_tab
 #: Open the selected hyperlink
 
 # map kitty_mod+p>y kitten hints --type hyperlink
+map kitty_mod+p>y
 
 #::  Select a hyperlink (i.e. a URL that has been marked as such by
 #::  the terminal program, for example, by `ls --hyperlink=auto`).
@@ -2480,6 +2518,7 @@ map kitty_mod+r    new_tab
 #: Unicode input
 
 # map kitty_mod+u    kitten unicode_input
+map kitty_mod+u
 # map ctrl+cmd+space kitten unicode_input
 
 #: Edit config file
@@ -2498,18 +2537,22 @@ map ctrl+,       edit_config_file
 #: Increase background opacity
 
 # map kitty_mod+a>m set_background_opacity +0.1
+map kitty_mod+a>m
 
 #: Decrease background opacity
 
 # map kitty_mod+a>l set_background_opacity -0.1
+map kitty_mod+a>l
 
 #: Make background fully opaque
 
 # map kitty_mod+a>1 set_background_opacity 1
+map kitty_mod+a>1
 
 #: Reset background opacity
 
 # map kitty_mod+a>d set_background_opacity default
+map kitty_mod+a>d
 
 #: Reset the terminal
 
@@ -2660,3 +2703,9 @@ map ctrl+shift+, load_config_file
 
 #: }}}
 
+
+
+# BEGIN_KITTY_THEME
+# Black Metal
+include current-theme.conf
+# END_KITTY_THEME
