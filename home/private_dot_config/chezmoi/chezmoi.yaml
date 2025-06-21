@@ -6,6 +6,7 @@ edit:
   watch: true
 diff:
   command: delta
+  pager: diff-so-fancy
 merge:
   command: nvim
   args:
