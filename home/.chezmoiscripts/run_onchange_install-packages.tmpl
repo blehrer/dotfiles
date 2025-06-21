@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+# {{{ mac
 {{ if eq .chezmoi.os "darwin" -}}
 
 # System settings
@@ -16,20 +17,24 @@ defaults write -g KB_SingleQuoteOption -string "'abc'"
 brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
 
 {{- end }}
+# }}}
 
+# {{{ linux
 
 {{ if eq .chezmoi.os "linux" -}}
 
 # Utils
-sudo apt install ranger zsh bash fd-find wget bat fzf htop btop thefuck
+sudo apt install ranger zsh bash fd-find wget bat fzf htop btop thefuck ripgrep jq lazygit
 
 # Mise
-sudo apt update -y && sudo apt install -y gpg sudo wget curl
-sudo install -dm 755 /etc/apt/keyrings
-wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
-sudo apt update
-sudo apt install -y mise
+[ $(command -v mise) ] || {
+  sudo apt update -y && sudo apt install -y gpg sudo wget curl
+  sudo install -dm 755 /etc/apt/keyrings
+  wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
+  echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
+  sudo apt update
+  sudo apt install -y mise
+}
 
 # Flatpak & Deskflow
 sudo apt install flatpak
@@ -65,38 +70,47 @@ function installWarpd {
 }
 command -v warpd || installWarpd
 
-# Eza (ls)
-function installEza {
-	wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-	echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-	sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-	sudo apt update
-	sudo apt install -y eza
+# Neovim
+[ $(command -v nvim) ] || {
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+  chmod u+x nvim-linux-x86_64.appimage
+  mkdir -p /opt/nvim
+  mv nvim-linux-x86_64.appimage /opt/nvim/nvim
 }
-command -v eza || installEza
-
-{{- end }}
-
-# Mise sdk manager (platform agnostic)
-eval "$(mise activate zsh)"
-mise use --global deno lazygit ripgrep node usage neovim jq starship
-
-
-{{ if eq .chezmoi.os "linux" -}}
-
-nvimShim="$(mise where neovim@latest)/nvim-linux64/bin/nvim"
 
 if [ ! $(update-alternatives --list editor | grep -q nvim) ]; then
 	echo installing editor \"$nvimShim\"
 	sudo update-alternatives --install $(which editor) editor $nvimShim 100
 fi
 if [ ! $(readlink -f /usr/bin/editor | xargs basename)  = 'nvim' ]; then
-	echo selecting editor \"$nvimShim\"
-	sudo update-alternatives --config editor $nvimShim
+	echo selecting editor /opt/nvim/nvim
+	sudo update-alternatives --config editor /opt/nvim/nvim
 fi
 
-# Mise, but only on linux:
-mise use --global dasel
-
+# Dasel
+[ $(command -v dasel) ] || {
+  curl -sSLf "$(curl -sSLf https://api.github.com/repos/tomwright/dasel/releases/latest | grep browser_download_url | grep linux_amd64 | grep -v .gz | cut -d\" -f 4)" -L -o dasel && chmod +x dasel
+  mkdir -p ${HOME}/.local/bin/
+  mv ./dasel ${HOME}/.local/bin/dasel
+}
 {{- end }}
+# }}}
 
+# {{{ all
+
+# Rustup, and restore
+[ $(command -v rustup) ] || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo restore --fix-target
+
+# Starship
+[ $(command -v starship) ] || curl -sS https://starship.rs/install.sh | sh
+
+# Mise sdk manager
+eval "$(mise activate zsh)"
+mise install --cd ${HOME}
+mise cache prune
+mise reshim
+
+# }}}
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotmpl
