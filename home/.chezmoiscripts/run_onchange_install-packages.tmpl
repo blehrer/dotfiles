@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-{{ if eq .chezmoi.os "darwin" -}}
 # ((( mac
+{{ if eq .chezmoi.os "darwin" -}}
 
 # System settings
 defaults write -g NSAutomaticCapitalizationEnabled -bool false
@@ -16,12 +16,12 @@ defaults write -g KB_SingleQuoteOption -string "'abc'"
 # Utils
 brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
 
-# )))
 {{- end }}
+# )))
 
-{# ((( linux
+# ((( linux
 
-{ if eq .chezmoi.os "linux" -}}
+{{ if eq .chezmoi.os "linux" -}}
 
 # Utils
 sudo apt install ranger zsh bash fd-find wget bat fzf htop btop thefuck ripgrep jq lazygit
@@ -93,8 +93,8 @@ fi
   mkdir -p ${HOME}/.local/bin/
   mv ./dasel ${HOME}/.local/bin/dasel
 }
-# )))
 {{- end }}
+# )))
 
 # ((( all
 
