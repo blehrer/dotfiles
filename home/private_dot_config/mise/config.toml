@@ -1,11 +1,15 @@
 [tools]
-deno = "latest"
-go = "latest"
-java = "latest"
+jq = "latest"
+starship = "latest"
 node = "latest"
-pipx = "latest"
-python = "3"
 usage = "latest"
+ripgrep = "latest"
+lazygit = "latest"
+java = "21"
+python = "3"
+go = "latest"
+deno = "latest"
+pipx = "latest"
 
 [settings]
 experimental = true
