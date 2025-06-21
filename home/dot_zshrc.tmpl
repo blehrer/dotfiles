@@ -1,4 +1,4 @@
-# {{{ setopt imperatives
+# ((( setopt imperatives
 setopt append_history
 setopt inc_append_history
 setopt share_history
@@ -9,30 +9,30 @@ setopt autopushd
 setopt pushdsilent
 setopt pushdignoredups
 setopt nomailwarning
-# }}}
+# )))
 
-# {{{ keybindings
+# ((( keybindings
 bindkey -v
 bindkey "^R" history-incremental-search-backward
 bindkey "^E" end-of-line
 bindkey "^A" beginning-of-line
 bindkey "^N" push-line-or-edit
-# }}}
+# )))
 
-# {{{ vi cursor fix
+# ((( vi cursor fix
 _fix_cursor() {
    echo -ne '\e[5 q'
 }
 
 precmd_functions+=(_fix_cursor)
-# }}}
+# )))
 
-# {{{ autoloads
+# ((( autoloads
 autoload -U colors && colors
 autoload sticky-note
-# }}}
+# )))
 
-# {{{ completion
+# ((( completion
 #   ____ ___  __  __ ____  _     _____ _____ ___ ___  _   _
 #  / ___/ _ \|  \/  |  _ \| |   | ____|_   _|_ _/ _ \| \ | |
 # | |  | | | | |\/| | |_) | |   |  _|   | |  | | | | |  \| |
@@ -187,12 +187,12 @@ zstyle ':completion:*' keep-prefix true
 
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,${HOME}/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
-# }}}
+# )))
 
-# {{{ plugins
+# ((( plugins
 for plugin in $(echo ${HOME}/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
-# }}}
-#{{{ Tools
+# )))
+#((( Tools
 eval "$(mise activate zsh)"
 export EDITOR=nvim
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
@@ -238,9 +238,9 @@ unset RUBY_3
 function mise-toolchain {
   mise list --missing | awk '{print $1"@"$5}' | xargs mise use
 }
-#}}}
+#)))
 
-# {{{ PATH
+# ((( PATH
 export PATH="$HOME/.local/bin:${PATH}"
 export PATH="$HOME/go/bin:${PATH}"
 source ${HOME}/.cargo/env
@@ -249,9 +249,9 @@ source ${HOME}/.cargo/env
 export PATH="/opt/nvim:${PATH}"
 {{- end}}
 
-# }}} 
+# ))) 
 
-#{{{ Aliases and functions
+#((( Aliases and functions
 # CLI conveniences
 alias n=nvim
 alias vim=nvim
@@ -331,7 +331,7 @@ function brew (){
   esac
 }
 
-#{{{Yazi
+#(((Yazi
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -340,9 +340,9 @@ function y() {
 	rm -f -- "$tmp"
 }
 alias ranger=y
-#}}}
+#)))
 
-#{{{Neovim experimentation
+#(((Neovim experimentation
 function nuke-nv(){
   rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
   [ -d "${HOME}/.local/share/nvim" ] && echo 'share not deleted' && exit 1
@@ -352,9 +352,9 @@ function nuke-nv(){
   echo 'about to mv "${HOME}/.config/nvim" "${HOME}/.config/bk". Please confirm w/ sudo.'
   sudo mv "${HOME}/.config/nvim" "${HOME}/.config/bk"
 }
-#}}}
+#)))
 
-#{{{ Git conveniences
+#((( Git conveniences
 function gamf (){ git commit -a --fixup "${@:-@}" }
 alias gb='git branch'
 alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
@@ -369,9 +369,9 @@ alias gria='git rebase -i --autosquash'
 alias garia='gamf; gria'
 alias grim='git rebase -i origin/master'
 alias gst='git status'
-#}}}
+#)))
 
-#{{{ Java conveniences
+#((( Java conveniences
 gw () {
   [ -n 'gradlew' ] && ./gradlew $@ && return
   local tld=$(git rev-parse --show-toplevel)
@@ -382,16 +382,16 @@ gw () {
     "${eq}" || popd
   fi
 }
-#}}}
+#)))
 
-# {{{ Command History
+# ((( Command History
 hgrep() {
   fc -Dlim "*$@*" 1
 }
 
-# }}} 
+# ))) 
 
-# {{{ Text Search
+# ((( Text Search
 function fif() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   rg --files-with-matches --no-messages "$1" |
@@ -399,9 +399,9 @@ function fif() {
   rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || \
   rg --ignore-case --pretty --context 10 '$1' {}"
 }
-# }}} 
+# ))) 
 
-# {{{ Project aliases
+# ((( Project aliases
 function res {
 	local input=$1 
 	local dest="${WORKSPACE}/blehrer/resonance"
@@ -427,7 +427,7 @@ function self-signed-ssl-certificate {
     printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 }
 
-# }}}
-#}}}
+# )))
+#)))
 
-# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.tmpl
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.tmpl foldmarker=(((,)))
