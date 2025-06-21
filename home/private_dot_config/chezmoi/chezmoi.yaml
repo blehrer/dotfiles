@@ -5,8 +5,7 @@ git:
 edit:
   watch: true
 diff:
-  command: delta
-  pager: diff-so-fancy
+  pager: bat
 merge:
   command: nvim
   args:
