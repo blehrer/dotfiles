@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# {{{ mac
+# ((( mac
 {{ if eq .chezmoi.os "darwin" -}}
 
 # System settings
@@ -17,9 +17,9 @@ defaults write -g KB_SingleQuoteOption -string "'abc'"
 brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
 
 {{- end }}
-# }}}
+# )))
 
-# {{{ linux
+# ((( linux
 
 {{ if eq .chezmoi.os "linux" -}}
 
@@ -94,9 +94,9 @@ fi
   mv ./dasel ${HOME}/.local/bin/dasel
 }
 {{- end }}
-# }}}
+# )))
 
-# {{{ all
+# ((( all
 
 # Rustup, and restore
 [ $(command -v rustup) ] || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -111,6 +111,6 @@ mise install --cd ${HOME}
 mise cache prune
 mise reshim
 
-# }}}
+# )))
 
-# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotmpl
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotmpl foldmarker=(((,)))
