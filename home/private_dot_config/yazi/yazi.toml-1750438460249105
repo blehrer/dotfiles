@@ -1,5 +1,5 @@
 #:schema https://yazi-rs.github.io/schemas/schemas/yazi.schema.json
 
-[mgr]
+[manager]
 show_hidden = true
 show_symlink = true
