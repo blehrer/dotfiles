@@ -10,7 +10,7 @@ def main(args):
     paths = list(itertools.dropwhile(lambda p: not os.path.exists(p), [
         cz_brew, cz_lx1, cz_lx2]))
     if len(paths) > 0:
-        os.system(f'{paths[0]} edit {os.path.join(home, ".zshrc")}')
+        os.system(f'{paths[0]} edit {args}')
 
 
 if __name__ == "__main__":
