@@ -1,0 +1,1 @@
+#only sourced when zsh is run as login shell, e.g. when logging in on the console or via SSH
