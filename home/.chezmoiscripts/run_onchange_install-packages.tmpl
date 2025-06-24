@@ -42,14 +42,17 @@ flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/fl
 $(flatpak list --user | grep org.deskflow.deskflow) || flatpak install --user --assumeyes org.deskflow.deskflow
 
 # JetBrainsMono NerdFont
-function downloadJetbrainsMonoNF {
-	wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip \
+function downloadNerdFont {
+	wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/$1.zip \
 	&& cd ~/.local/share/fonts \
-	&& unzip JetBrainsMono.zip \
-	&& rm JetBrainsMono.zip \
+	&& unzip $1.zip \
+	&& rm $1.zip \
 	&& fc-cache -fv
 }
-ls ~/.local/share/fonts/JetBrainsMonoNerdFont* > /dev/null 2>&1 || downloadJetbrainsMonoNF
+ls ~/.local/share/fonts/JetBrainsMonoNerdFont* > /dev/null 2>&1 || downloadNerdFont 'JetBrainsMono'
+ls ~/.local/share/fonts/HasklugNerdFont* > /dev/null 2>&1 || downloadNerdFont 'Hasklig'
+
+
 
 # Warpd
 function installWarpd {
