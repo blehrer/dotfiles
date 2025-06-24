@@ -1,4 +1,12 @@
-echo START ZSHRC
+       # ${ZDOTDIR:-HOME}/.zshrc
+       # ${ZDOTDIR:-HOME}/.zlogin
+       # ${ZDOTDIR:-HOME}/.zlogout
+       # ${TMPPREFIX}*   (default is /tmp/zsh*)
+       # /etc/zshenv
+       # /etc/zprofile
+       # /etc/zshrc
+       # /etc/zlogin
+       # /etc/zlogout
 # ((( setopt imperatives
 setopt append_history
 setopt inc_append_history
@@ -111,8 +119,6 @@ setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 # | completions after compinit |
 # +----------------------------+
 
-export PATH="${HOME}/.local/bin:${PATH}"
-export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
 # eval "$(register-python-argcomplete pipx)"
 
 # disabled until https://github.com/Aloxaf/fzf-tab/issues/503 is fixed
@@ -243,6 +249,7 @@ function mise-toolchain {
 
 # ((( PATH
 export PATH="$HOME/.local/bin:${PATH}"
+export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
 export PATH="$HOME/go/bin:${PATH}"
 source ${HOME}/.cargo/env
 
