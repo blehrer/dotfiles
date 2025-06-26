@@ -435,13 +435,13 @@ function self-signed-ssl-certificate {
     printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 }
 
-function gemini {
-  if [ ! $GEMINI_API_KEY ]; then
-    echo setting up GEMINI_API_KEY...
-    export GEMINI_API_KEY=$(bw list items  --search 'gemini-api-key' | jq '.[0].login.password')
-  fi
-  command gemini $@
-}
+# function gemini {
+#   if [ ! $GEMINI_API_KEY ]; then
+#     echo setting up GEMINI_API_KEY...
+#     export GEMINI_API_KEY=$(bw list items  --search 'gemini-api-key' | jq '.[0].login.password')
+#   fi
+#   command gemini $@
+# }
 
 # )))
 #)))
