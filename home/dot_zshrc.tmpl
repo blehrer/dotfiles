@@ -445,6 +445,11 @@ function self-signed-ssl-certificate {
 
 # )))
 #)))
+
+{{ if eq .chezmoi.os "linux" -}}
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+{{ else if eq .chezmoi.os "darwin" -}}
 export PATH="/opt/homebrew/bin:$PATH"
+{{- end}}
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.tmpl foldmarker=(((,)))
