@@ -5,8 +5,6 @@
 
 ## Install
 
-[Install ChezMoi](https://www.chezmoi.io/install/), and then run:
-
 ```sh
-chezmoi init --apply blehrer
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply blehrer
 ```
