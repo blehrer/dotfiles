@@ -1,7 +1,8 @@
 [".fzf"]
 type = "git-repo"
 url = "https://github.com/junegunn/fzf"
+clone.args = ["--depth", "1"]
 branch = "master"
 refreshPeriod = "24h"
-pull.args = ["--ff-only"]
+pull.args = ["--ff-only", "--depth", "1"]
 

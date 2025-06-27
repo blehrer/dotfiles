@@ -202,4 +202,4 @@ autocmd FileType xml exe ":silent %!xmllint --format --recover - 2>/dev/null"
 nnoremap <silent><C-w><C-f> <C-W>vgf
 
 " add fzf to runtime path
-set rtp+=/opt/homebrew/opt/fzf
+set rtp+=$HOME/.fzf
