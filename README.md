@@ -5,6 +5,10 @@
 
 ## Install
 
-```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply blehrer
+```sh"
+RTP=$HOME/.local/bin"
+if [ $(echo ${PATH} | grep "$RTP")] && [[ 'bin' = $(basename $RTP)]]; then
+    cd $(dirname $RTP)
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply blehrer
+fi
 ```
