@@ -1,4 +1,4 @@
-[".local/share/fzf"]
+[".fzf"]
 type = "git-repo"
 url = "https://github.com/junegunn/fzf"
 branch = "master"
