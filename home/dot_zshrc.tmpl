@@ -196,7 +196,7 @@ for plugin in $(echo ${HOME}/.config/zsh/custom/plugins/* | sort); do source $pl
 # plugins )))
 
 # ((( $DOTFILES_HOME/home/.chezmoitemplates/rc_profile.tmpl
-{{includeTemplate "rc_profile.tmpl"}}
+{{includeTemplate "rc_profile.tmpl" .}}
 # $DOTFILES_HOME/home/.chezmoitemplates/rc_profile.tmpl )))
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.tmpl foldmarker=(((,)))
