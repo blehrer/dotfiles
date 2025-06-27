@@ -206,7 +206,6 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init zsh)"
 eval "$(thefuck --alias)"
 
-export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/fzf/bin:${PATH}"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 function fzfCompletion(){
   local version=$(fzf --version)
