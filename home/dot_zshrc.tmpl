@@ -41,7 +41,7 @@ autoload -U colors && colors
 autoload sticky-note
 # )))
 
-# ((( completion
+# ((( Completion
 #   ____ ___  __  __ ____  _     _____ _____ ___ ___  _   _
 #  / ___/ _ \|  \/  |  _ \| |   | ____|_   _|_ _/ _ \| \ | |
 # | |  | | | | |\/| | |_) | |   |  _|   | |  | | | | |  \| |
@@ -126,11 +126,6 @@ setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 # zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 # source <(carapace _carapace)
 
-# +-----+
-# + lua |
-# #-----+
-[ $(command -v luarocks) ] && eval $(luarocks path --bin)
-
 # +---------+
 # | zstyles |
 # +---------+
@@ -194,263 +189,14 @@ zstyle ':completion:*' keep-prefix true
 
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,${HOME}/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
-# )))
+# Completion )))
 
 # ((( plugins
 for plugin in $(echo ${HOME}/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
-# )))
-#((( Tools
-eval "$(mise activate zsh)"
-export EDITOR=nvim
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
-eval "$(starship init zsh)"
-eval "$(thefuck --alias)"
+# plugins )))
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
-function fzfCompletion(){
-  local version=$(fzf --version)
-  if [[ $version > "0.47" ]]; then
-    source <(fzf --zsh)
-  else
-    # local localCompletion="${HOME}/.local/share/zsh/site-functions/_fzf"
-    # [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
-    # source $localCompletion
-    source ${HOME}/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
-  fi
-}
-
-fzfCompletion
-
-export RANGER_LOAD_DEFAULT_RC=FALSE
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/nobut/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-# pnpm
-export PNPM_HOME="/Users/nobut/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# Mise currently failing to install ruby on my mac, so here is a workaround
-source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh
-source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
-RUBY_3=$(ls ${HOME}/.rubies | egrep 'ruby-3\.*' | tail -n1)
-mise link --force ruby@3 ${HOME}/.rubies/${RUBY_3} && mise reshim
-unset RUBY_3
-
-# Init toolchain with mise
-function mise-toolchain {
-  mise list --missing | awk '{print $1"@"$5}' | xargs mise use
-}
-#)))
-
-# ((( PATH
-export PATH="$HOME/.local/bin:${PATH}"
-export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
-export PATH="$HOME/go/bin:${PATH}"
-source ${HOME}/.cargo/env
-
-{{ if eq .chezmoi.os "linux" -}}
-export PATH="/opt/nvim:${PATH}"
-{{- end}}
-
-# ))) 
-
-#((( Aliases and functions
-# CLI conveniences
-alias n=nvim
-alias vim=nvim
-alias ivm=nvim
-alias vimdiff='nvim -d'
-alias vo='nvim -c "Oil"'
-alias vd='nvim'
-alias @nv="cd ${HOME}/.config/nvim"
-alias nv="@nv; n"
-alias nvo="@nv; vo"
-alias nvd="nvd"
-alias nvc=nvo
-alias ag='rg'
-
-alias cz=chezmoi
-
-alias l=eza
-alias ll='l --long --all'
-alias tree='l --tree --ignore-glob ".git/*|node_modules/*"'
-
-alias mkdir='mkdir -p'
-
-alias lg="lazygit -ucd ${HOME}/.config/lazygit"
-
-alias icat='kitten icat'
-alias kc='cz edit ${HOME}/.config/kitty/kitty.conf'
-
-export OBSIDIAN_VAULT="$HOME/vaults/noe"
-alias nn="cd ${OBSIDIAN_VAULT}; nvim -c 'lua require(\"obsidian\")' -c 'ObsidianNew'"
-alias @scratch="cd ${OBSIDIAN_VAULT}/notes/dailies"
-alias @notes="cd ${OBSIDIAN_VAULT}/notes"
-alias scratch="nn"
-
-export DOTFILES_HOME="$(cz dump-config | jq -r '.workingTree')"
-alias @dfd="cz cd"
-alias dfd="@dfd; vd"
-
-alias z='cz edit ${HOME}/.zshrc'
-alias sz='source ${HOME}/.zshrc'
-
-alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
-
-[ $(command -v fdfind) ] && alias fd=fdfind
-
-alias nu="XDG_CONFIG_HOME=${HOME}/.config nu"
-function brew (){
-  local function updateBrewfile(){
-    local brewfile=$DOTFILES_HOME/assets/Brewfile
-    echo "Dumping changed Brewfile ($brewfile)"
-    brew bundle dump --file=$brewfile --force
-    if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
-      pushd $DOTFILES_HOME
-      if [ $? ] && [ ! $(git diff --quiet) ]; then
-        echo "Adding changes to Brewfile"
-        git add $brewfile
-        echo "Commiting changes to Brewfile"
-        git commit -m "Update assets/Brewfile"
-        if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
-          echo "Pushing changes to Brewfile"
-          git push origin
-        fi
-      else 
-        echo "No change to Brewfile"
-      fi
-      popd
-    fi
-  }
-  case $1 in
-    install)
-      ;&
-    uninstall)
-      command brew "$@" && updateBrewfile
-      ;;
-    *)
-      command brew "$@"
-      ;;
-  esac
-}
-
-#(((Yazi
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
-}
-alias ranger=y
-#)))
-
-#(((Neovim experimentation
-function nuke-nv(){
-  rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
-  [ -d "${HOME}/.local/share/nvim" ] && echo 'share not deleted' && exit 1
-  [ -d "${HOME}/.local/state/nvim" ] && echo 'state not deleted' && exit 1
-  [ -d "${HOME}/.cache/nvim" ] && echo 'cache note deleted' && exit 1
-  mkdir "${HOME}/.config/.bk"
-  echo 'about to mv "${HOME}/.config/nvim" "${HOME}/.config/bk". Please confirm w/ sudo.'
-  sudo mv "${HOME}/.config/nvim" "${HOME}/.config/bk"
-}
-#)))
-
-#((( Git conveniences
-function gamf (){ git commit -a --fixup "${@:-@}" }
-alias gb='git branch'
-alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
-alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"'
-alias gc='git checkout'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})'
-alias glga='git log --graph --decorate --oneline --all'
-alias gri='git rebase -i'
-alias gria='git rebase -i --autosquash'
-alias garia='gamf; gria'
-alias grim='git rebase -i origin/master'
-alias gst='git status'
-#)))
-
-#((( Java conveniences
-gw () {
-  [ -n 'gradlew' ] && ./gradlew $@ && return
-  local tld=$(git rev-parse --show-toplevel)
-  if [ $? ]; then
-    eq=$(test $(pwd) = "${tld}")
-    "${eq}" || pushd "${tld}"
-    ./gradlew $@
-    "${eq}" || popd
-  fi
-}
-#)))
-
-# ((( Command History
-hgrep() {
-  fc -Dlim "*$@*" 1
-}
-
-# ))) 
-
-# ((( Text Search
-function fif() {
-  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-  rg --files-with-matches --no-messages "$1" |
-  fzf --preview "highlight -O ansi -l {} 2> /dev/null | \
-  rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || \
-  rg --ignore-case --pretty --context 10 '$1' {}"
-}
-# ))) 
-
-# ((( Project aliases
-function res {
-	local input=$1 
-	local dest="${WORKSPACE}/blehrer/resonance"
-	[ $input ] && cd $dest/$input || cd $dest
-}
-function bl {
-	local input=$1 
-	local dest="${WORKSPACE}/blehrer"
-	[ $input ] && cd $dest/$input || cd $dest
-}
-alias blog='bl blehrer.github.io.git/ && chruby ruby-3.4.1'
-
-# https://certbot.eff.org/
-alias certbot="certbot \
-  --config-dir ${HOME}/.config/certbot \
-  --work-dir ${HOME}/.local/share/certbot \
-  --logs-dir ${HOME}/.local/state/certbot/logs"
-
-function self-signed-ssl-certificate {
-  openssl req -x509 -out localhost.crt -keyout localhost.key \
-    -newkey rsa:2048 -nodes -sha256 \
-    -subj '/CN=localhost' -extensions EXT -config <( \
-    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
-}
-
-# function gemini {
-#   if [ ! $GEMINI_API_KEY ]; then
-#     echo setting up GEMINI_API_KEY...
-#     export GEMINI_API_KEY=$(bw list items  --search 'gemini-api-key' | jq '.[0].login.password')
-#   fi
-#   command gemini $@
-# }
-
-# )))
-#)))
-
-{{ if eq .chezmoi.os "linux" -}}
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-{{ else if eq .chezmoi.os "darwin" -}}
-export PATH="/opt/homebrew/bin:$PATH"
-{{- end}}
+# ((( $DOTFILES_HOME/home/.chezmoitemplates/rc_profile.tmpl
+{{includeTemplate "rc_profile.tmpl"}}
+# $DOTFILES_HOME/home/.chezmoitemplates/rc_profile.tmpl )))
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.tmpl foldmarker=(((,)))
