@@ -20,3 +20,4 @@ refreshPeriod = "672h"
 [".local/share/zsh/custom/fzf-tab-completion"]
 type = "git-repo"
 url = "https://github.com/lincheney/fzf-tab-completion"
+
