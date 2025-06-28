@@ -179,3 +179,5 @@ symbol = " "
 
 [gradle]
 symbol = " "
+
+[disabled]
