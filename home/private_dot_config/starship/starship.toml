@@ -180,4 +180,4 @@ symbol = " "
 [gradle]
 symbol = " "
 
-[disabled]
+disabled=[]
