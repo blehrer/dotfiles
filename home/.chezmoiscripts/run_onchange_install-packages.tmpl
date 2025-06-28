@@ -103,6 +103,7 @@ fi
 
 # Rustup, and restore
 [ $(command -v rustup) ] || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install --git https://github.com/itsjunetime/cargo-restore.git
 cargo restore --fix-target
 
 # Starship
