@@ -1,3 +1,4 @@
+shellname=$(echo $0 | sed -e 's/-//')
 # ((( PATH
 export PATH="$HOME/.local/bin:${PATH}"
 export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
@@ -22,13 +23,13 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 {{ else if eq .chezmoi.os "darwin" -}}
 export PATH="/opt/homebrew/bin:$PATH"
 {{- end}}
-# PATH))) 
+# PATH)))
 
 # (((FZF
-fzf_cfg="${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.$(basename $0)
-if [ -f $fzf_cfg ]; then 
-  source $fzf_cfg
-fi
+# fzf_cfg="${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.$shellname
+# if [ -f $fzf_cfg ]; then
+#   source $fzf_cfg
+# fi
 # )))
 
 #((( CLI conveniences
@@ -97,7 +98,7 @@ function brew {
             echo "Pushing changes to Brewfile"
             git push origin
           fi
-        else 
+        else
           echo "No change to Brewfile"
         fi
         popd
@@ -112,12 +113,12 @@ function brew {
 
 # ((( Project aliases
 function res {
-	local input=$1 
+	local input=$1
 	local dest="${WORKSPACE}/blehrer/resonance"
 	[ $input ] && cd $dest/$input || cd $dest
 }
 function bl {
-	local input=$1 
+	local input=$1
 	local dest="${WORKSPACE}/blehrer"
 	[ $input ] && cd $dest/$input || cd $dest
 }
@@ -160,7 +161,7 @@ function gw {
 function hgrep {
   fc -Dlim "*$@*" 1
 }
-# Command History ))) 
+# Command History )))
 
 # ((( Text Search
 function fif {
@@ -170,7 +171,7 @@ function fif {
   rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || \
   rg --ignore-case --pretty --context 10 '$1' {}"
 }
-# ))) 
+# )))
 
 #(((Neovim experimentation
 function nuke-nv {
@@ -211,7 +212,7 @@ alias ranger=y
 #)))
 
 #((( Tools
-eval "$(mise activate $(basename $0))"
+eval "$(mise activate $shellname)"
 
 # Init toolchain with mise
 function mise-toolchain {
@@ -222,7 +223,7 @@ export EDITOR=nvim
 export SUDO_EDITOR=nvim
 
 export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
-eval "$(starship init $(basename $0))"
+eval "$(starship init $shellname)"
 
 eval "$(thefuck --alias)"
 
@@ -240,7 +241,7 @@ eval "$(thefuck --alias)"
 #     source ${HOME}/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
 #   fi
 # }
-# if [[ 'zsh' = $(basename $0) ]] ; then 
+# if [[ 'zsh' = $shellname ]] ; then
 #   fzfCompletion
 # fi
 
