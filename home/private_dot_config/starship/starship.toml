@@ -3,6 +3,7 @@
 
 # Inserts a blank line between shell prompts
 add_newline = true
+disabled=[]
 
 [aws]
 symbol = "  "
@@ -180,4 +181,3 @@ symbol = " "
 [gradle]
 symbol = " "
 
-disabled=[]
