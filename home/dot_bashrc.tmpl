@@ -1,0 +1,11 @@
+set -o vi
+
+omakub_rc=${XDG_DATA_HOME:-$HOME/.local/share}/omakub/defaults/bash/rc
+
+if [ -f $omakub_rc ]; then
+ source $omakub_rc
+fi
+
+{{ includeTemplate "rc_profile.tmpl" . }}
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=bash.tmpl

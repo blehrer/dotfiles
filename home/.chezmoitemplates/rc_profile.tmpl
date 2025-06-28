@@ -24,6 +24,13 @@ export PATH="/opt/homebrew/bin:$PATH"
 {{- end}}
 # PATH))) 
 
+# (((FZF
+fzf_cfg="${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.$(basename $0)
+if [ -f $fzf_cfg ]; then 
+  source $fzf_cfg
+fi
+# )))
+
 #((( CLI conveniences
 alias n=nvim
 alias vim=nvim
@@ -63,39 +70,38 @@ alias dfd="@dfd; vd"
 
 alias z='cz edit ${DOTFILES_HOME}/home/.chezmoitemplates/rc_profile'
 alias sz='cz apply ${HOME}/.zshrc; source ${HOME}/.zshrc'
+alias sb='cz apply ${HOME}/.bashrc; source ${HOME}/.bashrc'
 
 alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 [ $(command -v fdfind) ] && alias fd=fdfind
 
 alias nu="XDG_CONFIG_HOME=${HOME}/.config nu"
-function brew (){
-  local function updateBrewfile(){
-    local brewfile=$DOTFILES_HOME/assets/Brewfile
-    echo "Dumping changed Brewfile ($brewfile)"
-    brew bundle dump --file=$brewfile --force
-    if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
-      pushd $DOTFILES_HOME
-      if [ $? ] && [ ! $(git diff --quiet) ]; then
-        echo "Adding changes to Brewfile"
-        git add $brewfile
-        echo "Commiting changes to Brewfile"
-        git commit -m "Update assets/Brewfile"
-        if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
-          echo "Pushing changes to Brewfile"
-          git push origin
-        fi
-      else 
-        echo "No change to Brewfile"
-      fi
-      popd
-    fi
-  }
+function brew {
   case $1 in
     install)
       ;&
     uninstall)
-      command brew "$@" && updateBrewfile
+      command brew "$@"
+      local brewfile=$DOTFILES_HOME/assets/Brewfile
+      echo "Dumping changed Brewfile ($brewfile)"
+      brew bundle dump --file=$brewfile --force
+      if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
+        pushd $DOTFILES_HOME
+        if [ $? ] && [ ! $(git diff --quiet) ]; then
+          echo "Adding changes to Brewfile"
+          git add $brewfile
+          echo "Commiting changes to Brewfile"
+          git commit -m "Update assets/Brewfile"
+          if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
+            echo "Pushing changes to Brewfile"
+            git push origin
+          fi
+        else 
+          echo "No change to Brewfile"
+        fi
+        popd
+      fi
       ;;
     *)
       command brew "$@"
@@ -119,7 +125,9 @@ alias blog='bl blehrer.github.io.git/ && chruby ruby-3.4.1'
 # Project aliases)))
 
 #((( Git conveniences
-function gamf (){ git commit -a --fixup "${@:-@}" }
+function gamf {
+  git commit -a --fixup "${@:-@}"
+}
 alias gb='git branch'
 alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
 alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"'
@@ -136,7 +144,7 @@ alias gst='git status'
 # Git conveniences )))
 
 #((( Java conveniences
-gw () {
+function gw {
   [ -n 'gradlew' ] && ./gradlew $@ && return
   local tld=$(git rev-parse --show-toplevel)
   if [ $? ]; then
@@ -149,13 +157,13 @@ gw () {
 # Java conveniences )))
 
 # ((( Command History
-hgrep() {
+function hgrep {
   fc -Dlim "*$@*" 1
 }
 # Command History ))) 
 
 # ((( Text Search
-function fif() {
+function fif {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   rg --files-with-matches --no-messages "$1" |
   fzf --preview "highlight -O ansi -l {} 2> /dev/null | \
@@ -165,7 +173,7 @@ function fif() {
 # ))) 
 
 #(((Neovim experimentation
-function nuke-nv(){
+function nuke-nv {
   rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
   [ -d "${HOME}/.local/share/nvim" ] && echo 'share not deleted' && exit 1
   [ -d "${HOME}/.local/state/nvim" ] && echo 'state not deleted' && exit 1
@@ -192,7 +200,7 @@ function self-signed-ssl-certificate {
 #)))
 
 #(((Yazi
-function y() {
+function y {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
 	IFS= read -r -d '' cwd < "$tmp"
@@ -203,7 +211,7 @@ alias ranger=y
 #)))
 
 #((( Tools
-eval "$(mise activate zsh)"
+eval "$(mise activate $(basename $0))"
 
 # Init toolchain with mise
 function mise-toolchain {
@@ -211,28 +219,30 @@ function mise-toolchain {
 }
 
 export EDITOR=nvim
+export SUDO_EDITOR=nvim
 
 export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
-eval "$(starship init zsh)"
+eval "$(starship init $(basename $0))"
 
 eval "$(thefuck --alias)"
 
 [ $(command -v luarocks) ] && eval $(luarocks path --bin)
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
-function fzfCompletion(){
-  local version=$(fzf --version)
-  if [[ $version > "0.47" ]]; then
-    source <(fzf --zsh)
-  else
-    # local localCompletion="${HOME}/.local/share/zsh/site-functions/_fzf"
-    # [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
-    # source $localCompletion
-    source ${HOME}/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
-  fi
-}
-fzfCompletion
+# function fzfCompletion {
+#   local version=$(fzf --version)
+#   if [[ $version > "0.47" ]]; then
+#     source <(fzf --zsh)
+#   else
+#     # local localCompletion="${HOME}/.local/share/zsh/site-functions/_fzf"
+#     # [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
+#     # source $localCompletion
+#     source ${HOME}/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
+#   fi
+# }
+# if [[ 'zsh' = $(basename $0) ]] ; then 
+#   fzfCompletion
+# fi
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
@@ -244,4 +254,4 @@ mise link --force ruby@3 ${HOME}/.rubies/${RUBY_3} && mise reshim
 unset RUBY_3
 # Tools )))
 
-# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.tmpl foldmarker=(((,)))
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh.tmpl foldmarker=(((,)))
