@@ -1,4 +1,4 @@
-shellname=$(echo $0 | sed -e 's/-//')
+shellname=$(echo $0 | xargs basename | sed -e 's/-//')
 # ((( PATH
 export PATH="$HOME/.local/bin:${PATH}"
 export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
