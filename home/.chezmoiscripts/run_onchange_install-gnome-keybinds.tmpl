@@ -1,0 +1,42 @@
+# see github.com/basecamp/omakub/install/desktop/set-gnome-hotkeys.sh
+# should be run after installing omakub
+
+{{if (eq .chezmoi.os 'linux') && (eq .chezmoi.osRelease.id 'ubuntu')}}
+# Alt+F4 is very cumbersome
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super>w']"
+
+# Use 6 fixed workspaces instead of dynamic mode
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 5
+
+# Use F16-F20 for workspaces
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['F16']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['F17']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-3 "['F18']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-4 "['F19']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-5 "['F20']"
+
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/, '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/,'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/']"
+
+# Set ulauncher to Super+Space
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source "@as []"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Ulauncher'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'ulauncher-toggle'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>space'
+
+# Set flameshot (with the sh fix for starting under Wayland) on alternate print screen key
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Flameshot'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'sh -c -- "flameshot gui"'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Control>Print'
+
+
+# warpd - 2-hint mode
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ name 'warpd hint-mode'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ binding '<Control><Shift>;'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/ command "sh -c '/usr/local/bin/warpd --hint2'"
+
+# warpd - grid mode
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ name 'warpd hint-mode'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ binding '<Control><Shift>/'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ command "sh -c '/usr/local/bin/warpd --grid'"
+{{-end}}
