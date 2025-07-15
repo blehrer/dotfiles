@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 fzf_head="${HOME}/.fzf/.git/HEAD"
-cmd="${HOME}/.local/share/fzf/install --all --xdg --key-bindings --completion --update-rc"
+cmd="${HOME}/.fzf/install --all --xdg --key-bindings --completion --update-rc"
 
 if [ -z $fzf_head ] && [ ! $(command -v fzf > /dev/null) ]; then
-  echo INSTALL fzf?
   exec $cmd
 fi
 
