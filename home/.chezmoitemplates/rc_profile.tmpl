@@ -1,4 +1,4 @@
-shellname=$(echo $0 | xargs basename | sed -e 's/-//')
+shellname=$(echo $SHELL | xargs basename | sed -e 's/-//')
 # Declarations
 # ((( PATH
 export PATH="$HOME/.local/bin:${PATH}"
