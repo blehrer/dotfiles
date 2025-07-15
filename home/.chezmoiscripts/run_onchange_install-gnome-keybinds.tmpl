@@ -1,7 +1,8 @@
 # see github.com/basecamp/omakub/install/desktop/set-gnome-hotkeys.sh
 # should be run after installing omakub
 
-{{if (eq .chezmoi.os 'linux') && (eq .chezmoi.osRelease.id 'ubuntu')}}
+{{if eq .chezmoi.os "linux"}}
+{{if eq .chezmoi.osRelease.id "ubuntu"}}
 # Alt+F4 is very cumbersome
 gsettings set org.gnome.desktop.wm.keybindings close "['<Super>w']"
 
@@ -39,4 +40,6 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ name 'warpd hint-mode'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ binding '<Control><Shift>/'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/ command "sh -c '/usr/local/bin/warpd --grid'"
-{{-end}}
+{{- end}}
+{{- end}}
+
