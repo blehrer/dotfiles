@@ -1,4 +1,5 @@
 shellname=$(echo $0 | xargs basename | sed -e 's/-//')
+# Declarations
 # ((( PATH
 export PATH="$HOME/.local/bin:${PATH}"
 export PATH="${HOME}/.local/share/nvim/mason/bin:${PATH}"
@@ -211,41 +212,27 @@ function y {
 alias ranger=y
 #)))
 
-#((( Tools
+#(((Editor
+export EDITOR=nvim
+export SUDO_EDITOR=nvim
+#)))
+
+#(((Ranger
+export RANGER_LOAD_DEFAULT_RC=FALSE
+#)))
+
+#(((starship
+export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
+#)))
+
+# Initializations and activations
+#((( Mise
 eval "$(mise activate $shellname)"
 
 # Init toolchain with mise
 function mise-toolchain {
   mise list --missing | awk '{print $1"@"$5}' | xargs mise use
 }
-
-export EDITOR=nvim
-export SUDO_EDITOR=nvim
-
-export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
-eval "$(starship init $shellname)"
-
-eval "$(thefuck --alias)"
-
-[ $(command -v luarocks) ] && eval $(luarocks path --bin)
-
-
-# function fzfCompletion {
-#   local version=$(fzf --version)
-#   if [[ $version > "0.47" ]]; then
-#     source <(fzf --zsh)
-#   else
-#     # local localCompletion="${HOME}/.local/share/zsh/site-functions/_fzf"
-#     # [ -f $localCompletion ] || curl https://raw.githubusercontent.com/junegunn/fzf/refs/tags/$version/shell/completion.zsh > $localCompletion
-#     # source $localCompletion
-#     source ${HOME}/.local/share/zsh/custom/fzf-tab-completion/zsh/fzf-zsh-completion.sh
-#   fi
-# }
-# if [[ 'zsh' = $shellname ]] ; then
-#   fzfCompletion
-# fi
-
-export RANGER_LOAD_DEFAULT_RC=FALSE
 
 # Mise currently failing to install ruby on my mac, so here is a workaround
 {{if eq .chezmoi.os "darwin"}}
@@ -254,6 +241,20 @@ source $(brew --prefix)/opt/chruby/share/chruby/auto.sh
 RUBY_3=$(ls ${HOME}/.rubies | egrep 'ruby-3\.*' | tail -n1)
 mise link --force ruby@3 ${HOME}/.rubies/${RUBY_3} && mise reshim
 unset RUBY_3
+#)))
+
+#(((Starship
+eval "$(starship init $shellname)"
+#)))
+
+#(((thefuck
+eval "$(thefuck --alias)"
+#)))
+
+#(((luarocks
+[ $(command -v luarocks) ] && eval $(luarocks path --bin)
+#)))
+
 {{end}}
 # Tools )))
 
