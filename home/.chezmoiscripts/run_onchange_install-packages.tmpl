@@ -22,32 +22,23 @@ brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
 # ((( linux
 
 {{ if eq .chezmoi.os "linux" -}}
+# ((( ubuntu
+{{   if eq .chezmoi.osRelease.id "ubuntu"}}
 
 # Utils
-sudo apt install ranger zsh bash fd-find wget bat fzf htop btop thefuck ripgrep jq lazygit
-
-# Mise
-[ $(command -v mise) ] || {
-  sudo apt update -y && sudo apt install -y gpg sudo wget curl
-  sudo install -dm 755 /etc/apt/keyrings
-  wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
-  echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
-  sudo apt update
-  sudo apt install -y mise
-}
+sudo apt install ranger zsh bash fd-find wget bat fzf htop btop thefuck ripgrep jq lazygit flatpack
 
 # Flatpak & Deskflow
-sudo apt install flatpak
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 $(flatpak list --user | grep org.deskflow.deskflow) || flatpak install --user --assumeyes org.deskflow.deskflow
 
 # JetBrainsMono NerdFont
 function downloadNerdFont {
-	wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/$1.zip \
-	&& cd ~/.local/share/fonts \
-	&& unzip $1.zip \
-	&& rm $1.zip \
-	&& fc-cache -fv
+    wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/$1.zip \
+        && cd ~/.local/share/fonts \
+        && unzip $1.zip \
+        && rm $1.zip \
+        && fc-cache -fv
 }
 ls ~/.local/share/fonts/JetBrainsMonoNerdFont* > /dev/null 2>&1 || downloadNerdFont 'JetBrainsMono'
 ls ~/.local/share/fonts/HasklugNerdFont* > /dev/null 2>&1 || downloadNerdFont 'Hasklig'
@@ -56,65 +47,72 @@ ls ~/.local/share/fonts/HasklugNerdFont* > /dev/null 2>&1 || downloadNerdFont 'H
 
 # Warpd
 function installWarpd {
-	git clone https://github.com/rvaiya/warpd.git
-	cd warpd
-	sudo apt install \
-		libxi-dev \
-		libxinerama-dev \
-		libxft-dev \
-		libxfixes-dev \
-		libxtst-dev \
-		libx11-dev \
-		libcairo2-dev \
-		libxkbcommon-dev \
-		libwayland-dev &&
-	make && sudo make install
-	cd ../ && rm -rf warpd
+    git clone https://github.com/rvaiya/warpd.git
+    cd warpd
+    sudo apt install \
+        libxi-dev \
+        libxinerama-dev \
+        libxft-dev \
+        libxfixes-dev \
+        libxtst-dev \
+        libx11-dev \
+        libcairo2-dev \
+        libxkbcommon-dev \
+        libwayland-dev &&
+    make && sudo make install
+    cd ../ && rm -rf warpd
 }
 command -v warpd || installWarpd
 
 # Neovim
 [ $(command -v nvim) ] || {
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-  chmod u+x nvim-linux-x86_64.appimage
-  mkdir -p /opt/nvim
-  mv nvim-linux-x86_64.appimage /opt/nvim/nvim
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+    chmod u+x nvim-linux-x86_64.appimage
+    mkdir -p /opt/nvim
+    mv nvim-linux-x86_64.appimage /opt/nvim/nvim
 }
 
 if [ ! $(update-alternatives --list editor | grep -q nvim) ]; then
-	echo installing editor \"$nvimShim\"
-	sudo update-alternatives --install $(which editor) editor $nvimShim 100
+    echo installing editor \"$nvimShim\"
+    sudo update-alternatives --install $(which editor) editor $nvimShim 100
 fi
 if [ ! $(readlink -f /usr/bin/editor | xargs basename)  = 'nvim' ]; then
-	echo selecting editor /opt/nvim/nvim
-	sudo update-alternatives --config editor /opt/nvim/nvim
+    echo selecting editor /opt/nvim/nvim
+    sudo update-alternatives --config editor /opt/nvim/nvim
 fi
 
 # Dasel
 [ $(command -v dasel) ] || {
-  curl -sSLf "$(curl -sSLf https://api.github.com/repos/tomwright/dasel/releases/latest | grep browser_download_url | grep linux_amd64 | grep -v .gz | cut -d\" -f 4)" -L -o dasel && chmod +x dasel
-  mkdir -p ${HOME}/.local/bin/
-  mv ./dasel ${HOME}/.local/bin/dasel
+    curl -sSLf "$(curl -sSLf https://api.github.com/repos/tomwright/dasel/releases/latest | grep browser_download_url | grep linux_amd64 | grep -v .gz | cut -d\" -f 4)" -L -o dasel && chmod +x dasel
+    mkdir -p ${HOME}/.local/bin/
+    mv ./dasel ${HOME}/.local/bin/dasel
 }
+{{-   end }}
 {{- end }}
+# )))
 # )))
 
 # ((( all
+# Mise
 
 # Rustup, and restore
-[ $(command -v rustup) ] || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --git https://github.com/itsjunetime/cargo-restore.git
-cargo restore --fix-target
+[ $(command -v rustup) ] || {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    cargo install --git https://github.com/itsjunetime/cargo-restore.git
+    cargo restore --fix-target
+}
 
 # Starship
-[ $(command -v starship) ] || curl -sS https://starship.rs/install.sh | sh
+[ $(command -v starship) ] ||{
+    curl -sS https://starship.rs/install.sh | sh
+}
 
 # Mise sdk manager
-eval "$(mise activate zsh)"
-mise install --cd ${HOME}
-mise cache prune
-mise reshim
-
+[ $(command -v mise) ] || {
+    curl https://mise.run | sh
+    eval "$(mise activate zsh)"
+    mise up
+}
 # )))
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotmpl foldmarker=(((,)))
