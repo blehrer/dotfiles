@@ -105,6 +105,7 @@ cask "shortcat"
 cask "vlc"
 cask "vscodium"
 cask "webex"
+cask "zed"
 mas "Quiver", id: 866773894
 mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
