@@ -77,6 +77,7 @@ brew "qmk/qmk/qmk"
 brew "speakeasy-api/tap/speakeasy"
 brew "yakitrak/yakitrak/obsidian-cli"
 cask "aerospace"
+cask "charles"
 cask "deskflow"
 cask "equinox"
 cask "font-caskaydia-cove-nerd-font"
@@ -107,6 +108,7 @@ cask "vlc"
 cask "vscodium"
 cask "webex"
 cask "zed"
+mas "Keynote", id: 409183694
 mas "Quiver", id: 866773894
 mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
