@@ -53,6 +53,7 @@ brew "llvm"
 brew "lua-language-server"
 brew "mas"
 brew "maven"
+brew "nbdime"
 brew "neovim", link: false
 brew "nginx"
 brew "nushell"
