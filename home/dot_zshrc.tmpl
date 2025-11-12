@@ -195,6 +195,12 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 for plugin in $(echo ${HOME}/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
 # plugins )))
 
+#((( Shell extensions
+# (((direnv
+eval "$(direnv hook zsh)"
+# )))
+#)))
+
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 # ((( $DOTFILES_HOME/home/.chezmoitemplates/rc_profile.tmpl
