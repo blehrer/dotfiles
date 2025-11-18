@@ -63,6 +63,23 @@ smudge = git-lfs smudge -- %f
 name = Brian Lehrer
 email = 661570+blehrer@users.noreply.github.com
 
+[includeIf "gitdir:~/workspace/desk-jockey/**/"]
+path = ~/.config/git/github.com/desk-jockey/desk-jockey-gitconfig
+
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+	
+[difftool "nbdime"]
+	cmd = "git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\""
+
+[difftool]
+	prompt = false
+	
+
+[mergetool]
+	prompt = false
+
 [alias]
 fixup = commit -a --fixup
 updiff = diff "@{u}"
@@ -76,5 +93,5 @@ delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')
 done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
 changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
 	      echo Changelist, relative to upstream branch $upstream && \
-	      git log --oneline --graph $upstream..@"
+		git log --oneline --graph $upstream..@"
 
