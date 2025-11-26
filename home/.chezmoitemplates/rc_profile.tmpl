@@ -14,8 +14,8 @@ export PATH="/opt/nvim:${PATH}"
 
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
 export PATH="$HOME/.rd/bin:$PATH"
@@ -82,59 +82,60 @@ alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 
 alias nu="XDG_CONFIG_HOME=${HOME}/.config nu"
 function brew {
-  case $1 in
-  install) ;&
-  uninstall)
-    command brew "$@"
-    local brewfile=$DOTFILES_HOME/assets/Brewfile
-    echo "Dumping changed Brewfile ($brewfile)"
-    brew bundle dump --file=$brewfile --force
-    if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
-      pushd $DOTFILES_HOME
-      if [ $? ] && [ ! $(git diff --quiet) ]; then
-        echo "Adding changes to Brewfile"
-        git add $brewfile
-        echo "Commiting changes to Brewfile"
-        git commit -m "Update assets/Brewfile"
-        if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
-          echo "Pushing changes to Brewfile"
-          git push origin
-        fi
-      else
-        echo "No change to Brewfile"
-      fi
-      popd
-    fi
-    ;;
-  *)
-    command brew "$@"
-    ;;
-  esac
+    case $1 in
+        install) ;&
+        uninstall)
+            command brew "$@"
+            local brewfile=$DOTFILES_HOME/assets/Brewfile
+            echo "Dumping changed Brewfile ($brewfile)"
+            brew bundle dump --file=$brewfile --force
+            if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
+                pushd $DOTFILES_HOME
+                if [ $? ] && [ ! $(git diff --quiet) ]; then
+                    echo "Adding changes to Brewfile"
+                    git add $brewfile
+                    echo "Commiting changes to Brewfile"
+                    git commit -m "Update assets/Brewfile"
+                    if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
+                        echo "Pushing changes to Brewfile"
+                        git push origin
+                    fi
+                else
+                    echo "No change to Brewfile"
+                fi
+                popd
+            fi
+            ;;
+        *)
+            command brew "$@"
+            ;;
+    esac
 }
 # CLI Conveniences)))
 
 # ((( Project aliases
 function res {
-  local input=$1
-  local dest="${WORKSPACE}/blehrer/resonance"
-  [ $input ] && cd $dest/$input || cd $dest
+    local input=$1
+    local dest="${WORKSPACE}/blehrer/resonance"
+    [ $input ] && cd $dest/$input || cd $dest
 }
 function bl {
-  local input=$1
-  local dest="${WORKSPACE}/blehrer"
-  [ $input ] && cd $dest/$input || cd $dest
+    local input=$1
+    local dest="${WORKSPACE}/blehrer"
+    [ $input ] && cd $dest/$input || cd $dest
 }
 function dj {
-  local input=$1
-  local dest="${WORKSPACE}/desk-jockey"
-  [ $input ] && cd $dest/$input || cd $dest
+    local input=$1
+    local dest="${WORKSPACE}/desk-jockey"
+    [ $input ] && cd $dest/$input || cd $dest
+    [ $(command -v coolify) ] && coolify context use hstgr
 }
 alias blog='bl blehrer.github.io.git/ && chruby ruby-3.4.1'
 # Project aliases)))
 
 #((( Git conveniences
 function gamf {
-  git commit -a --fixup "${@:-@}"
+    git commit -a --fixup "${@:-@}"
 }
 alias gb='git branch'
 alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
@@ -153,14 +154,14 @@ alias gst='git status'
 
 #((( Java conveniences
 function gw {
-  [ -n 'gradlew' ] && ./gradlew $@ && return
-  local tld=$(git rev-parse --show-toplevel)
-  if [ $? ]; then
-    eq=$(test $(pwd) = "${tld}")
-    "${eq}" || pushd "${tld}"
-    ./gradlew $@
-    "${eq}" || popd
-  fi
+    [ -n 'gradlew' ] && ./gradlew $@ && return
+    local tld=$(git rev-parse --show-toplevel)
+    if [ $? ]; then
+        eq=$(test $(pwd) = "${tld}")
+        "${eq}" || pushd "${tld}"
+        ./gradlew $@
+        "${eq}" || popd
+    fi
 }
 # Java conveniences )))
 
@@ -175,47 +176,47 @@ export VENV_HOME="$HOME/.virtualenvs"
 [[ -d $VENV_HOME ]] || mkdir $VENV_HOME
 
 lsvenv() {
-  ls -1 $VENV_HOME
+    ls -1 $VENV_HOME
 }
 
 venv() {
-  if [ $# -eq 0 ]; then
-    echo "Please provide venv name"
-  else
-    source "$VENV_HOME/$1/bin/activate"
-  fi
+    if [ $# -eq 0 ]; then
+        echo "Please provide venv name"
+    else
+        source "$VENV_HOME/$1/bin/activate"
+    fi
 }
 
 mkvenv() {
-  if [ $# -eq 0 ]; then
-    echo "Please provide venv name"
-  else
-    python3 -m venv $VENV_HOME/$1
-  fi
+    if [ $# -eq 0 ]; then
+        echo "Please provide venv name"
+    else
+        python3 -m venv $VENV_HOME/$1
+    fi
 }
 
 rmvenv() {
-  if [ $# -eq 0 ]; then
-    echo "Please provide venv name"
-  else
-    rm -r $VENV_HOME/$1
-  fi
+    if [ $# -eq 0 ]; then
+        echo "Please provide venv name"
+    else
+        rm -r $VENV_HOME/$1
+    fi
 }
 #)))
 
 # ((( Command History
 function hgrep {
-  fc -Dlim "*$@*" 1
+    fc -Dlim "*$@*" 1
 }
 # Command History )))
 
 # ((( Text Search
 function fif {
-  if [ ! "$#" -gt 0 ]; then
-    echo "Need a string to search for!"
-    return 1
-  fi
-  rg --files-with-matches --no-messages "$1" |
+    if [ ! "$#" -gt 0 ]; then
+        echo "Need a string to search for!"
+        return 1
+    fi
+    rg --files-with-matches --no-messages "$1" |
     fzf --preview "highlight -O ansi -l {} 2> /dev/null | \
   rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || \
   rg --ignore-case --pretty --context 10 '$1' {}"
@@ -224,13 +225,13 @@ function fif {
 
 #(((Neovim experimentation
 function nuke-nv {
-  rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
-  [ -d "${HOME}/.local/share/nvim" ] && echo 'share not deleted' && exit 1
-  [ -d "${HOME}/.local/state/nvim" ] && echo 'state not deleted' && exit 1
-  [ -d "${HOME}/.cache/nvim" ] && echo 'cache note deleted' && exit 1
-  mkdir "${HOME}/.config/.bk"
-  echo 'about to mv "${HOME}/.config/nvim" "${HOME}/.config/bk". Please confirm w/ sudo.'
-  sudo mv "${HOME}/.config/nvim" "${HOME}/.config/bk"
+    rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
+    [ -d "${HOME}/.local/share/nvim" ] && echo 'share not deleted' && exit 1
+    [ -d "${HOME}/.local/state/nvim" ] && echo 'state not deleted' && exit 1
+    [ -d "${HOME}/.cache/nvim" ] && echo 'cache note deleted' && exit 1
+    mkdir "${HOME}/.config/.bk"
+    echo 'about to mv "${HOME}/.config/nvim" "${HOME}/.config/bk". Please confirm w/ sudo.'
+    sudo mv "${HOME}/.config/nvim" "${HOME}/.config/bk"
 }
 #)))
 
@@ -242,21 +243,21 @@ alias certbot="certbot \
   --logs-dir ${HOME}/.local/state/certbot/logs"
 
 function self-signed-ssl-certificate {
-  openssl req -x509 -out localhost.crt -keyout localhost.key \
-    -newkey rsa:2048 -nodes -sha256 \
-    -subj '/CN=localhost' -extensions EXT -config <(
-      printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth"
+    openssl req -x509 -out localhost.crt -keyout localhost.key \
+        -newkey rsa:2048 -nodes -sha256 \
+        -subj '/CN=localhost' -extensions EXT -config <(
+        printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth"
     )
 }
 #)))
 
 #(((Yazi
 function y {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-  yazi "$@" --cwd-file="$tmp"
-  IFS= read -r -d '' cwd <"$tmp"
-  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-  rm -f -- "$tmp"
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd <"$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
 }
 alias ranger=y
 #)))
@@ -281,7 +282,7 @@ eval "$(mise activate $shellname)"
 
 # Init toolchain with mise
 function mise-toolchain {
-  mise list --missing | awk '{print $1"@"$5}' | xargs mise use
+    mise list --missing | awk '{print $1"@"$5}' | xargs mise use
 }
 
 # Mise currently failing to install ruby on my mac, so here is a workaround
