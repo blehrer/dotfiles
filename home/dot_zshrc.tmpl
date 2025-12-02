@@ -1,12 +1,12 @@
-       # ${ZDOTDIR:-HOME}/.zshrc
-       # ${ZDOTDIR:-HOME}/.zlogin
-       # ${ZDOTDIR:-HOME}/.zlogout
-       # ${TMPPREFIX}*   (default is /tmp/zsh*)
-       # /etc/zshenv
-       # /etc/zprofile
-       # /etc/zshrc
-       # /etc/zlogin
-       # /etc/zlogout
+# ${ZDOTDIR:-HOME}/.zshrc
+# ${ZDOTDIR:-HOME}/.zlogin
+# ${ZDOTDIR:-HOME}/.zlogout
+# ${TMPPREFIX}*   (default is /tmp/zsh*)
+# /etc/zshenv
+# /etc/zprofile
+# /etc/zshrc
+# /etc/zlogin
+# /etc/zlogout
 # ((( setopt imperatives
 setopt append_history
 setopt inc_append_history
@@ -30,7 +30,7 @@ bindkey "^N" push-line-or-edit
 
 # ((( vi cursor fix
 _fix_cursor() {
-   echo -ne '\e[5 q'
+    echo -ne '\e[5 q'
 }
 
 precmd_functions+=(_fix_cursor)
@@ -100,7 +100,12 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # +---------+
 autoload -U compinit; compinit
 _comp_options+=(globdots) # With hidden files
-# autoload -Uz bashcompinit && bashcompinit
+
+# +--------+
+# BASHCOMPINIT
+# +--------+
+autoload -Uz bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/tofu tofu
 
 # Only work with the Zsh function vman
 # See $DOTFILES/zsh/scripts.zsh
