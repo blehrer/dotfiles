@@ -3,10 +3,10 @@ jq = "latest"
 node = "latest"
 usage = "latest"
 java = "21"
-python = "3"
 go = "latest"
 deno = "latest"
 pipx = "latest"
 
 [settings]
 experimental = true
+idiomatic_version_file_enable_tools = ["python"]

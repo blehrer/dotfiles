@@ -63,8 +63,8 @@ smudge = git-lfs smudge -- %f
 name = Brian Lehrer
 email = 661570+blehrer@users.noreply.github.com
 
-[includeIf "gitdir:~/workspace/desk-jockey/**/"]
-path = ~/.config/git/github.com/desk-jockey/desk-jockey-gitconfig
+{{/* [includeIf "gitdir:~/workspace/desk-jockey/**/"] */}}
+{{/* path = ~/.config/git/github.com/desk-jockey/desk-jockey-gitconfig */}}
 
 [merge "jupyternotebook"]
 	driver = git-nbmergedriver merge %O %A %B %L %P

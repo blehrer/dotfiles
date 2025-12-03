@@ -13,7 +13,7 @@ recentrepos:
     - /Users/nobut/workspace/blehrer/deno-nvim
     - /Users/nobut/workspace/blehrer/AnimatedPythonPatterns
 startuppopupversion: 5
-lastversion: 0.52.0
+lastversion: 0.53.0
 customcommandshistory:
     - git rebase -i upstream
 hidecommandlog: false
