@@ -128,6 +128,7 @@ cask "signal"
 cask "vlc"
 cask "vscodium"
 cask "webex"
+cask "wireshark-app"
 cask "zed"
 mas "Keynote", id: 409183694
 mas "Quiver", id: 866773894
