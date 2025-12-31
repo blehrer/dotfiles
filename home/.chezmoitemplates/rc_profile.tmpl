@@ -304,9 +304,13 @@ eval "$(starship init $shellname)"
 eval "$(thefuck --alias)"
 #)))
 
-#(((luarocks
-[ $(command -v luarocks) ] && eval $(luarocks path --bin)
-#)))
+# #(((luarocks
+# [ $(command -v luarocks) ] && eval $(luarocks path --bin)
+# #)))
+
+# ((( try-cli
+eval "$(~/.local/try.rb init ~/src/tries)"
+# )))
 
 {{end}}
 # Tools )))
