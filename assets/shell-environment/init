@@ -1,0 +1,11 @@
+if [[ "Darwin" = $(uname) ]]; then
+    if has mise ; then
+        mise activate $(echo $0 | xargs basename)
+    fi
+    if has starship ; then
+        export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
+        eval "$(starship init $shellname)"
+    fi
+fi
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

@@ -1,7 +1,7 @@
-[".config/nvim"]
+[".config/kickstart.nvim"]
 type = "git-repo"
-# url = "https://github.com/blehrer/lazy-nvim"
 url = "https://github.com/blehrer/kickstart.nvim"
 refreshPeriod = "24h"
-[".config/nvim".pull]
+
+[".config/kickstart.nvim".pull]
 args = ["--ff-only"]

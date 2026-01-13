@@ -1,0 +1,8 @@
+_prexisting_aliases=$(alias -p)
+if [[ $_prexisting_aliases ]]; then
+    for a in 'g' 'gcm' 'gcam' 'gcad' 'c' 'r'; do
+        unalias $a
+    done
+fi
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

@@ -1,11 +1,15 @@
-set -o vi
-
-omakub_rc=${XDG_DATA_HOME:-$HOME/.local/share}/omakub/defaults/bash/rc
-
-if [ -f $omakub_rc ]; then
- source $omakub_rc
+{{if eq .chezmoi.os "linux"}}
+{{if eq .chezmoi.osRelease.name "Ubuntu Linux"}}
+omakase_rc=${XDG_DATA_HOME:-$HOME/.local/share}/omakub/defaults/bash/rc
+{{end}}
+{{if eq .chezmoi.osRelease.name "Arch Linux"}}
+omakase_rc=${XDG_DATA_HOME:-$HOME/.local/share}/omarchy/default/bash/rc
+{{end}}
+if [ -f $omakase_rc ]; then
+    source $omakase_rc
 fi
+{{end}}
 
-{{ includeTemplate "rc_profile.tmpl" . }}
+source ~/.local/share/chezmoi/assets/shell-environment/rc
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=bash.gotexttmpl

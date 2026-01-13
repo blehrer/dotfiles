@@ -1,0 +1,82 @@
+# builtins
+alias mkdir='mkdir -p'
+
+
+if has nvim; then
+    n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+    alias vim=n
+    alias ivm=n
+    alias vimdiff='n -d'
+    alias vd=n
+    alias @nv="cd ${HOME}/.config/${NVIM_APPNAME}"
+    alias nv="@nv; n"
+fi
+
+if has chezmoi ; then
+    alias cz=chezmoi
+    alias @dfd="cz cd"
+    alias dfd="@dfd; vd"
+    alias z="cz edit ~/.${shellname}rc"
+    alias sz="cz apply ${HOME}/.${shellname}rc; source $HOME}/.${shellname}rc"
+fi
+
+
+if has eza ; then
+    alias ls='eza -lh --group-directories-first --icons=auto'
+    alias l=eza
+    alias ll='l --long --all'
+    alias lsa='ls -a'
+    alias lt='eza --tree --level=2 --long --icons --git'
+    alias lta='lt -a'
+    alias tree='l --tree --ignore-glob ".git/*|node_modules/*"'
+fi
+
+if [ -d $OBSIDIAN_VAULT ]; then
+    alias nn="cd ${OBSIDIAN_VAULT}; nvim -c 'lua require(\"obsidian\")' -c 'ObsidianNew'"
+    alias @scratch="cd ${OBSIDIAN_VAULT}/notes/dailies"
+    alias @notes="cd ${OBSIDIAN_VAULT}/notes"
+    alias scratch="nn"
+fi
+
+if [[ ${TERM} = 'xterm-kitty' ]]; then
+    alias ssh='kitty +kitten ssh'
+    alias icat='kitten icat'
+    alias kc='cz edit ${HOME}/.config/kitty/kitty.conf'
+fi
+
+if has git ; then
+    function gamf {
+        git commit -a --fixup "${@:-@}"
+    }
+    alias gb='git branch'
+    alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
+    alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"'
+    alias gc='git checkout'
+    alias gd='git diff'
+    alias gds='git diff --staged'
+    alias glg='git log --graph --tags --decorate --oneline $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{u})'
+    alias glga='git log --graph --decorate --oneline --all'
+    alias gri='git rebase -i'
+    alias gria='git rebase -i --autosquash'
+    alias garia='gamf; gria'
+    alias grim='git rebase -i origin/master'
+    alias gst='git status'
+    has lazygit  && alias lg="lazygit -ucd ${HOME}/.config/lazygit"
+fi
+
+has rg  && alias ag=rg
+
+has nu  && alias nu="XDG_CONFIG_HOME=${HOME}/.config nu"
+
+has fdfind  && alias fd=fdfind
+
+has kubectl  && alias k=kubectl
+
+if has tofu ; then
+    alias tf=tofu
+else if has terraform ; then
+        alias tf=terraform
+    fi
+fi
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

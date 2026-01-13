@@ -1,0 +1,181 @@
+function has(){
+    command -v $1 &> /dev/null
+}
+
+function what {
+    echo "  - which:        $(which $1 2>/dev/null)"
+    echo "  - command -v:   $(command -v $1 2>/dev/null)"
+    echo "  - declare -f:   $(declare -f $1 2>/dev/null)"
+}
+
+#((( Namespaces with completions
+shellname=$(echo $0 | xargs basename)
+
+if [[ "bash" = $shellname ]]; then
+    # Allow Tab to cycle through completions instead of just listing them
+    bind '"\C-i": menu-complete'
+    # Show the list of possibilities while cycling
+    # bind '"set show-all-if-ambiguous on"'
+
+    _workspace_comp(){
+        _comp_initialize -- "$@" || return
+        local workspace_path=$1
+        compopt -o nospace -o filenames
+        local IFS=$'\n'
+        COMPREPLY=( $(
+                cd "$workspace_path" 2>/dev/null && \
+                    _comp_compgen_filedir && \
+                    printf '%s\n' "${COMPREPLY[@]}"
+        ) )
+        if [[ ${#COMPREPLY[@]} -eq 1 ]]; then
+            local full_path="$workspace_root/${COMPREPLY[0]}"
+            if [[ -d "$full_path" && "${COMPREPLY[0]}" != */ ]]; then
+                COMPREPLY[0]="${COMPREPLY[0]}/"
+            fi
+        fi
+    }
+fi
+
+function bl {
+    local input=$1
+    local dest="${WORKSPACE}/blehrer"
+    [ $input ] && cd $dest/$input || cd $dest
+}
+
+if [[ 'zsh' = $shellname ]]; then
+    _bl() {
+        _files -W ${WORKSPACE}/blehrer;
+    }
+    compdef _bl bl
+fi
+
+if [[ 'bash' = $shellname ]]; then
+    _bl (){
+        _workspace_comp ~/workspace/blehrer/
+    }
+    complete -F _bl bl
+fi
+
+function dj {
+    local input=$1
+    local dest="${WORKSPACE}/desk-jockey"
+    [ $input ] && cd $dest/$input || cd $dest
+    [ $(command -v coolify) ] && coolify context use hstgr
+}
+
+if [[ 'zsh' = $shellname ]]; then
+    _dj() {
+        _files -W ${WORKSPACE}/desk-jockey;
+    }
+    compdef _dj dj
+fi
+
+if [[ 'bash' = $shellname ]]; then
+    _dj(){
+        _workspace_comp ~/workspace/desk-jockey
+    }
+    complete -F _dj dj
+fi
+unset shellname
+#)))
+
+# ((( Gradle
+function gw {
+    [ -n 'gradlew' ] && ./gradlew $@ && return
+    local tld=$(git rev-parse --show-toplevel)
+    if [ $? ]; then
+        eq=$(test $(pwd) = "${tld}")
+        "${eq}" || pushd "${tld}"
+        ./gradlew $@
+        "${eq}" || popd
+    fi
+}
+# )))
+
+#((( Python venv
+# usage
+# $ mkvenv myvirtualenv # creates venv under ~/.virtualenvs/
+# $ venv myvirtualenv   # activates venv
+# $ deactivate          # deactivates venv
+# $ rmvenv myvirtualenv # removes venv
+
+[[ -d $VENV_HOME ]] || mkdir $VENV_HOME
+
+lsvenv() {
+    ls -1 $VENV_HOME
+}
+
+venv() {
+    if [ $# -eq 0 ]; then
+        echo "Please provide venv name"
+    else
+        source "$VENV_HOME/$1/bin/activate"
+    fi
+}
+
+mkvenv() {
+    if [ $# -eq 0 ]; then
+        echo "Please provide venv name"
+    else
+        python3 -m venv $VENV_HOME/$1
+    fi
+}
+
+rmvenv() {
+    if [ $# -eq 0 ]; then
+        echo "Please provide venv name"
+    else
+        rm -r $VENV_HOME/$1
+    fi
+}
+#)))
+
+if has yazi  ; then
+    function y {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d '' cwd <"$tmp"
+        [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+        rm -f -- "$tmp"
+    }
+    alias ranger=y
+fi
+
+if [[ 'Darwin' = $(uname) ]]; then
+    if has brew  && has jq  && has chezmoi
+    then
+        function brew {
+            case $1 in
+                install) ;&
+                uninstall)
+                    command brew "$@"
+                    local brewfile=$DOTFILES_HOME/assets/Brewfile
+                    echo "Dumping changed Brewfile ($brewfile)"
+                    brew bundle dump --file=$brewfile --force
+                    if [ $? ] && \ [[ "true" = $(chezmoi dump-config | jq '.git.autocommit') ]]
+                    then
+                        pushd $DOTFILES_HOME
+                        if [ $? ] && [ ! $(git diff --quiet) ]; then
+                            echo "Adding changes to Brewfile"
+                            git add $brewfile
+                            echo "Commiting changes to Brewfile"
+                            git commit -m "Update assets/Brewfile"
+                            if [ $? ] && [[ "true" = $(chezmoi dump-config | jq '.git.autopush') ]]; then
+                                echo "Pushing changes to Brewfile"
+                                git push origin
+                            fi
+                        else
+                            echo "No change to Brewfile"
+                        fi
+                        popd
+                    fi
+                    ;;
+                *)
+                    command brew "$@"
+                    ;;
+            esac
+        }
+    fi
+fi
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

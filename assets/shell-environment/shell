@@ -1,0 +1,5 @@
+set -o vi
+shopt -s autocd
+bind '"\C-l":clear-screen'
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

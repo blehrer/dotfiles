@@ -1,0 +1,8 @@
+source ~/.local/share/chezmoi/assets/shell-environment/undo_omakase
+source ~/.local/share/chezmoi/assets/shell-environment/shell
+source ~/.local/share/chezmoi/assets/shell-environment/envs
+source ~/.local/share/chezmoi/assets/shell-environment/functions
+source ~/.local/share/chezmoi/assets/shell-environment/aliases
+source ~/.local/share/chezmoi/assets/shell-environment/init
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
