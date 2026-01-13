@@ -7,10 +7,10 @@ edit:
 diff:
   pager: bat
 textconv:
-  - pattern: '**/*.json'
+  - pattern: "**/*.json"
     command: jq
     args:
-     - '.'
+      - "."
 merge:
   command: nvim
   args:
