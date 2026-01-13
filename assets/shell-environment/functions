@@ -4,6 +4,7 @@ function has(){
 
 function what {
     echo "  - which:        $(which $1 2>/dev/null)"
+    echo "  - whereis:      $(whereis $1 2>/dev/null)"
     echo "  - command -v:   $(command -v $1 2>/dev/null)"
     echo "  - declare -f:   $(declare -f $1 2>/dev/null)"
 }
