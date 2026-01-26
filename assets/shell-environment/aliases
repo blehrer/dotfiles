@@ -1,7 +1,6 @@
 # builtins
 alias mkdir='mkdir -p'
 
-
 if has nvim; then
     n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
     alias vim=n
@@ -17,7 +16,7 @@ if has chezmoi ; then
     alias @dfd="cz cd"
     alias dfd="@dfd; vd"
     alias z="cz edit ~/.${shellname}rc"
-    alias sz="cz apply ${HOME}/.${shellname}rc; source $HOME}/.${shellname}rc"
+    alias sz="cz apply ${HOME}/.${shellname}rc; source ${HOME}/.${shellname}rc"
 fi
 
 

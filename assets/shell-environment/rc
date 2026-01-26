@@ -1,8 +1,7 @@
-source ~/.local/share/chezmoi/assets/shell-environment/undo_omakase
-source ~/.local/share/chezmoi/assets/shell-environment/shell
-source ~/.local/share/chezmoi/assets/shell-environment/envs
-source ~/.local/share/chezmoi/assets/shell-environment/functions
-source ~/.local/share/chezmoi/assets/shell-environment/aliases
-source ~/.local/share/chezmoi/assets/shell-environment/init
+export _bl_dotfiles_shell=$(echo $0 | xargs basename)
+for f in undo_omakase shell envs functions aliases init; do
+    shellname=$_bl_dotfiles_shell source ~/.local/share/chezmoi/assets/shell-environment/$f
+done
+unset _bl_dotfiles_shell
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

@@ -10,7 +10,6 @@ function what {
 }
 
 #((( Namespaces with completions
-shellname=$(echo $0 | xargs basename)
 
 if [[ "bash" = $shellname ]]; then
     # Allow Tab to cycle through completions instead of just listing them
