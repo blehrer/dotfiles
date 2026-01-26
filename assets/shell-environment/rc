@@ -1,5 +1,5 @@
 export _bl_dotfiles_shell=$(echo $0 | xargs basename)
-for f in undo_omakase shell envs functions aliases init; do
+for f in undo_omacom shell envs functions aliases init; do
     shellname=$_bl_dotfiles_shell source ~/.local/share/chezmoi/assets/shell-environment/$f
 done
 unset _bl_dotfiles_shell

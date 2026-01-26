@@ -1,12 +1,17 @@
 export NVIM_APPNAME=kickstart.nvim
 
-if [[ 'Linux' = $(uname) ]]; then
+if [[ 'Linux' = $(uname) ]];  then
     export WORKSPACE=${HOME}/Work
+    if [ -f /.dockerenv ]; then
+        export WORKSPACE=/workspace
+    fi
 else
     export WORKSPACE=${HOME}/workspace
 fi
 
-export OBSIDIAN_VAULT="${HOME}/vaults/noe"
+if [ -z /.dockerenv ]; then
+    export OBSIDIAN_VAULT="${HOME}/vaults/noe"
+fi
 
 if [ $(command -v chezmoi &> /dev/null) ] && [ $(command -v jq &> /dev/null) ]; then
     export DOTFILES_HOME="$(chezmoi dump-config | jq -r '.workingTree')"
@@ -17,7 +22,7 @@ fi
 export VENV_HOME="$HOME/.virtualenvs"
 
 h=${HOME}
-data=${XDG_DATA_HOME:-~/.local/share/}
+data=${XDG_DATA_HOME:-$h/.local/share/}
 paths=($h/.local/bin $data/${NVIM_APPNAME}/mason/bin $h/go/bin /opt/homebrew/bin $h/.rd/bin)
 
 if [[ 'Darwin' = $(uname) ]]; then
@@ -30,6 +35,5 @@ for p in ${paths}; do
 done
 
 [ -d $h/.cargo ] && [ -f $h/.cargo/env ] && source $h/.cargo/env
-
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

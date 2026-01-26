@@ -1,5 +1,13 @@
+function has {
+    command -v $1 &> /dev/null
+}
+
+function is_omacom {
+    [ $(has omarchy-version) || $(has omakub) ]
+}
+
 _prexisting_aliases=$(alias -p)
-if [[ $_prexisting_aliases ]]; then
+if [[ $_prexisting_aliases ]] && [ is_omacom ]; then
     for a in 'g' 'gcm' 'gcam' 'gcad' 'c' 'r'; do
         unalias $a
     done

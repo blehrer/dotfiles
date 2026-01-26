@@ -36,45 +36,47 @@ if [[ "bash" = $shellname ]]; then
     }
 fi
 
-function bl {
-    local input=$1
-    local dest="${WORKSPACE}/blehrer"
-    [ $input ] && cd $dest/$input || cd $dest
-}
-
-if [[ 'zsh' = $shellname ]]; then
-    _bl() {
-        _files -W ${WORKSPACE}/blehrer;
+if [ -z /.dockerenv ]; then
+    function bl {
+        local input=$1
+        local dest="${WORKSPACE}/blehrer"
+        [ $input ] && cd $dest/$input || cd $dest
     }
-    compdef _bl bl
-fi
 
-if [[ 'bash' = $shellname ]]; then
-    _bl (){
-        _workspace_comp ~/workspace/blehrer/
+    if [[ 'zsh' = $shellname ]]; then
+        _bl() {
+            _files -W ${WORKSPACE}/blehrer;
+        }
+        compdef _bl bl
+    fi
+
+    if [[ 'bash' = $shellname ]]; then
+        _bl (){
+            _workspace_comp ~/workspace/blehrer/
+        }
+        complete -F _bl bl
+    fi
+
+    function dj {
+        local input=$1
+        local dest="${WORKSPACE}/desk-jockey"
+        [ $input ] && cd $dest/$input || cd $dest
+        [ $(command -v coolify) ] && coolify context use hstgr
     }
-    complete -F _bl bl
-fi
 
-function dj {
-    local input=$1
-    local dest="${WORKSPACE}/desk-jockey"
-    [ $input ] && cd $dest/$input || cd $dest
-    [ $(command -v coolify) ] && coolify context use hstgr
-}
+    if [[ 'zsh' = $shellname ]]; then
+        _dj() {
+            _files -W ${WORKSPACE}/desk-jockey;
+        }
+        compdef _dj dj
+    fi
 
-if [[ 'zsh' = $shellname ]]; then
-    _dj() {
-        _files -W ${WORKSPACE}/desk-jockey;
-    }
-    compdef _dj dj
-fi
-
-if [[ 'bash' = $shellname ]]; then
-    _dj(){
-        _workspace_comp ~/workspace/desk-jockey
-    }
-    complete -F _dj dj
+    if [[ 'bash' = $shellname ]]; then
+        _dj(){
+            _workspace_comp ~/workspace/desk-jockey
+        }
+        complete -F _dj dj
+    fi
 fi
 unset shellname
 #)))
