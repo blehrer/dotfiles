@@ -78,4 +78,6 @@ else if has terraform ; then
     fi
 fi
 
+has lazydocker && alias ld=lazydocker
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
