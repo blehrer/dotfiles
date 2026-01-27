@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# --- Submap: Chromium ---
+# Activate when active window is Chromium
+
+handle() {
+    local event="$1"
+    local data="$2"
+
+    if [[ "$event" == "activewindow" ]]; then
+        if [[ "${data}" == *chromium* ]]; then
+            hyprctl dispatch submap chromium
+        else
+            hyprctl dispatch submap reset
+        fi
+    fi
+}
+
+socat -U - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" \
+    | while IFS=">>" read -r event x data; do
+    handle "$event" "$data"
+done
