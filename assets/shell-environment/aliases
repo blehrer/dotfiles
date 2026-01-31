@@ -11,6 +11,16 @@ if has nvim; then
     alias nv="@nv; n"
 fi
 
+if has fzf; then
+    if has bat; then
+        alias nn='$EDITOR $(fd | fzf --preview "bat {}")'
+    elif has less; then
+        alias nn='$EDITOR $(fd | fzf --preview "less {}")'
+    elif has more; then
+        alias nn='$EDITOR $(fd | fzf --preview "more {}")'
+    fi
+fi
+
 if has chezmoi ; then
     alias cz=chezmoi
     alias @dfd="cz cd"
@@ -31,7 +41,7 @@ if has eza ; then
 fi
 
 if [ -d $OBSIDIAN_VAULT ]; then
-    alias nn="cd ${OBSIDIAN_VAULT}; nvim -c 'lua require(\"obsidian\")' -c 'ObsidianNew'"
+    alias note="cd ${OBSIDIAN_VAULT}; nvim -c 'lua require(\"obsidian\")' -c 'ObsidianNew'"
     alias @scratch="cd ${OBSIDIAN_VAULT}/notes/dailies"
     alias @notes="cd ${OBSIDIAN_VAULT}/notes"
     alias scratch="nn"
@@ -78,6 +88,6 @@ else if has terraform ; then
     fi
 fi
 
-has lazydocker && alias ld=lazydocker
+has lazydocker && alias lzd=lazydocker
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
