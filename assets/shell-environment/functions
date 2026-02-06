@@ -9,6 +9,9 @@ function what {
     echo "  - declare -f:   $(declare -f $1 2>/dev/null)"
 }
 
+function sticky-note {
+  ~/.local/bin/sticky-note.zsh
+}
 #((( Namespaces with completions
 
 if [[ "bash" = $shellname ]]; then
