@@ -2,6 +2,10 @@ function has(){
     command -v $1 &> /dev/null
 }
 
+function shellname() {
+    ps -o cmd= -p $$ | xargs basename
+}
+
 function what {
     echo "  - which:        $(which $1 2>/dev/null)"
     echo "  - whereis:      $(whereis $1 2>/dev/null)"
@@ -14,7 +18,7 @@ function sticky-note {
 }
 #((( Namespaces with completions
 
-if [[ "bash" = $shellname ]]; then
+if [[ "bash" = $(shellname) ]]; then
     # Allow Tab to cycle through completions instead of just listing them
     bind '"\C-i": menu-complete'
     # Show the list of possibilities while cycling
@@ -46,14 +50,14 @@ if [ -z /.dockerenv ]; then
         [ $input ] && cd $dest/$input || cd $dest
     }
 
-    if [[ 'zsh' = $shellname ]]; then
+    if [[ 'zsh' = $(shellname) ]]; then
         _bl() {
             _files -W ${WORKSPACE}/blehrer;
         }
         compdef _bl bl
     fi
 
-    if [[ 'bash' = $shellname ]]; then
+    if [[ 'bash' = $(shellname) ]]; then
         _bl (){
             _workspace_comp ~/workspace/blehrer/
         }
@@ -67,21 +71,20 @@ if [ -z /.dockerenv ]; then
         [ $(command -v coolify) ] && coolify context use hstgr
     }
 
-    if [[ 'zsh' = $shellname ]]; then
+    if [[ 'zsh' = $(shellname) ]]; then
         _dj() {
             _files -W ${WORKSPACE}/desk-jockey;
         }
         compdef _dj dj
     fi
 
-    if [[ 'bash' = $shellname ]]; then
+    if [[ 'bash' = $(shellname) ]]; then
         _dj(){
             _workspace_comp ~/workspace/desk-jockey
         }
         complete -F _dj dj
     fi
 fi
-unset shellname
 #)))
 
 # ((( Gradle

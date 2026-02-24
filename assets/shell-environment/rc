@@ -1,7 +1,19 @@
-export _bl_dotfiles_shell=$(ps -o cmd= -p $$ | xargs basename)
-for f in undo_omacom shell envs functions aliases init; do
-    shellname=$_bl_dotfiles_shell source ~/.local/share/chezmoi/assets/shell-environment/$f
+shellenv=$(ps -o cmd= -p $$ | xargs basename)
+test -d ~/.local/share/omarchy && is_omarchy=true
+cz_base=~/.local/share/chezmoi/assets/shell-environment
+omarchy_base=~/.local/share/omarchy/default/bash
+if [[ $is_omarchy = 'true' ]]; then
+    source $cz_base/undo_omacom
+    if [[ $shellenv = 'zsh' ]]; then
+        for f in envs functions aliases; do
+            source $omarchy_base/$f
+        done
+        inits=$(cat $omarchy_base/init | sed -e 's/bash/zsh/g')
+        eval $inits
+    fi
+fi
+for f in shell envs functions aliases init; do
+    source $cz_base/$f
 done
-unset _bl_dotfiles_shell
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

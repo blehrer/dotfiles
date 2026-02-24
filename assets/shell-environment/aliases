@@ -7,7 +7,7 @@ if has nvim; then
     alias ivm=n
     alias vimdiff='n -d'
     alias vd=n
-    alias @nv="cd ${HOME}/.config/${NVIM_APPNAME}"
+    alias @nv="cd ${HOME}/.config/${NVIM_APPNAME:-nvim}"
     alias nv="@nv; n"
 fi
 
@@ -25,8 +25,8 @@ if has chezmoi ; then
     alias cz=chezmoi
     alias @dfd="cz cd"
     alias dfd="@dfd; vd"
-    alias z="cz edit ~/.${shellname}rc"
-    alias sz="cz apply ${HOME}/.${shellname}rc; source ${HOME}/.${shellname}rc"
+    alias z="cz edit ~/.$(shellname)rc"
+    alias sz="cz apply ${HOME}/.$(shellname)rc; source ${HOME}/.$(shellname)rc"
 fi
 
 
