@@ -1,6 +1,5 @@
 # builtins
 alias mkdir='mkdir -p'
-shellname=$(echo $0 | xargs basename)
 
 if has nvim; then
     n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }

@@ -10,7 +10,7 @@ function what {
 }
 
 function sticky-note {
-  ~/.local/bin/sticky-note.zsh
+    ~/.local/bin/sticky-note.zsh
 }
 #((( Namespaces with completions
 
