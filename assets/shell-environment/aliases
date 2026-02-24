@@ -1,5 +1,6 @@
 # builtins
 alias mkdir='mkdir -p'
+shellname=$(echo $0 | xargs basename)
 
 if has nvim; then
     n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
@@ -89,5 +90,7 @@ else if has terraform ; then
 fi
 
 has lazydocker && alias lzd=lazydocker
+
+has tmux && alias tmux='tmux -f ~/.config/tmux/tmux.conf'
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

@@ -6,7 +6,12 @@ function is_omacom {
     [ $(has omarchy-version) || $(has omakub) ]
 }
 
-_prexisting_aliases=$(alias -p)
+if [[ $0 = bash ]]; then
+  _prexisting_aliases=$(alias -p)
+elif [[ $0 = zsh ]]; then
+  _prexisting_aliases=$(alias -r)
+fi
+
 if [[ $_prexisting_aliases ]] && [ is_omacom ]; then
     for a in 'g' 'gcm' 'gcam' 'gcad' 'c' 'r'; do
         unalias $a
