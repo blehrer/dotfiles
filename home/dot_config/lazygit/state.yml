@@ -1,0 +1,20 @@
+lastupdatecheck: 0
+recentrepos:
+    - /home/nobut/Work/tries/2026-01-14-clone-plus-devcon-gay/final
+    - /home/nobut/Work/tries/2026-01-14-gayfols-dkr-cp/puck/rails
+    - /home/nobut/Work/tries/2026-01-14-gayfols-dkr-cp/app
+    - /home/nobut/.local/share/chezmoi
+    - /home/nobut/.config/kickstart.nvim
+    - /home/nobut/Work/tries/2026-01-14-clone-plus-devcon-gay/gayfols_rails
+    - /home/nobut/Work/tries/2026-01-14-clone-plus-devcon-gay/bare_gayfols/devcontainer
+    - /home/nobut/Work/tries/2026-01-25-redo-this-bish/attempt-1
+    - /home/nobut/Work/tries/2026-01-14-clone-plus-devcon-gay/bare_gayfols/mega
+    - /home/nobut/Work/tries/2026-01-22-scaffolder-rails/demo
+    - /home/nobut/Work/tries/2026-01-17-fresh-rails-kgen/domo
+    - /home/nobut/Work/tries/2026-01-11-gayfols-kamal/gayfols_rails
+startuppopupversion: 5
+didshowhunkstaginghint: true
+lastversion: 0.58.1
+customcommandshistory:
+    - consolidate credentials
+hidecommandlog: false
