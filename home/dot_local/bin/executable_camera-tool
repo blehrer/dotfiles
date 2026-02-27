@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# 1. Map cameras to 'Name|/dev/videoX'
+map_cameras() {
+    v4l2-ctl --list-devices | awk '/^[^ \t]/ { name=$0; getline; sub(/^[ \t]*/, "", $0); print name "|" $0 }'
+}
+
+# 2. Preview Function: Captures 1 frame and renders it in the terminal
+# This is called by fzf for every selection change
+preview_cam() {
+    local dev=$1
+    # Capture 1 frame with ffmpeg and pipe to chafa for terminal rendering
+    ffmpeg -f v4l2 -i "$dev" -frames:v 1 -update 1 -f image2 - 2>/dev/null | chafa -s 60x40
+}
+export -f preview_cam # Make function available to fzf subshell
+
+# 3. Interactive Camera Selection with Live Preview
+selection=$(map_cameras | fzf \
+    --prompt="Select Webcam: " \
+    --delimiter="|" \
+    --with-nth=1 \
+    --preview='bash -c "preview_cam {2}"' \
+    --preview-window=right:60%)
+
+[ -z "$selection" ] && exit 0
+camera_name=$(echo "$selection" | cut -d'|' -f1)
+device=$(echo "$selection" | cut -d'|' -f2)
+
+# 4. Define Actions (Extensible Map)
+action_preview() {
+    mpv "av://v4l2:${device}" --screenshot-folder=~/Pictures --title="Live: ${camera_name}"
+}
+
+declare -A ACTIONS=(
+    ["Turn on Camera Preview"]="action_preview"
+    ["View Hardware Specs"]="v4l2-ctl -d $device --all | less"
+)
+
+# 5. Select Action
+act_name=$(printf "%s\n" "${!ACTIONS[@]}" | fzf --prompt="Action for ${camera_name}: ")
+[ -n "$act_name" ] && eval "${ACTIONS[$act_name]}"
+
