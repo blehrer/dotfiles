@@ -63,19 +63,22 @@ smudge = git-lfs smudge -- %f
 name = Brian Lehrer
 email = 661570+blehrer@users.noreply.github.com
 
+[user "github.com"]
+name = blehrer
+
 [merge "jupyternotebook"]
-	driver = git-nbmergedriver merge %O %A %B %L %P
-	name = jupyter notebook merge driver
+driver = git-nbmergedriver merge %O %A %B %L %P
+name = jupyter notebook merge driver
 	
 [difftool "nbdime"]
-	cmd = "git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\""
+cmd = "git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\""
 
 [difftool]
-	prompt = false
+prompt = false
 	
 
 [mergetool]
-	prompt = false
+prompt = false
 
 [alias]
 fixup = commit -a --fixup
