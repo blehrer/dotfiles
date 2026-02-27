@@ -16,10 +16,10 @@ export -f preview_cam # Make function available to fzf subshell
 
 # 3. Interactive Camera Selection with Live Preview
 selection=$(map_cameras | fzf \
-    --prompt="Select Webcam: " \
-    --delimiter="|" \
-    --with-nth=1 \
-    --preview='bash -c "preview_cam {2}"' \
+        --prompt="Select Webcam: " \
+        --delimiter="|" \
+        --with-nth=1 \
+        --preview='bash -c "preview_cam {2}"' \
     --preview-window=right:60%)
 
 [ -z "$selection" ] && exit 0
@@ -28,7 +28,7 @@ device=$(echo "$selection" | cut -d'|' -f2)
 
 # 4. Define Actions (Extensible Map)
 action_preview() {
-    mpv "av://v4l2:${device}" --screenshot-folder=~/Pictures --title="Live: ${camera_name}"
+    mpv "av://v4l2:${device}" --profile=low-latency --title="Live: ${camera_name}"
 }
 
 declare -A ACTIONS=(
