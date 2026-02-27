@@ -12,6 +12,12 @@ if has nvim; then
 fi
 
 if has fzf; then
+    shellenv=$(ps -o cmd= -p $$ | xargs basename)
+    if [[ $shellenv = bash ]]; then
+        eval "$(fzf --bash)"
+    elif [[ $shellenv = zsh ]]; then
+        source <(fzf --zsh)
+    fi
     if has bat; then
         alias nn='$EDITOR $(fd | fzf --preview "bat {}")'
     elif has less; then
