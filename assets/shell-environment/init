@@ -8,4 +8,16 @@ if [[ "Darwin" = $(uname) ]]; then
     fi
 fi
 
+if [[ -z "$ZELLIJ" ]] && [[ "$ZELLIJ_INIT" == "true" ]]; then
+    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+        zellij attach -c
+    else
+        zellij
+    fi
+
+    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+        exit
+    fi
+fi
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

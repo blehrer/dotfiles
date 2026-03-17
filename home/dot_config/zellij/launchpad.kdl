@@ -1,0 +1,5 @@
+layout {
+  pane command="zellij" {
+    args "plugin" "-f" "--" "zellij:session-manager"
+  }
+}
