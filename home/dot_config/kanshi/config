@@ -1,0 +1,16 @@
+# 1. Laptop only
+profile {
+    output eDP-1 enable mode 1920x1080@60Hz position 0,0
+}
+
+# 2. Laptop + HDMI (Lid open)
+profile {
+    output eDP-1 enable mode 1920x1080@60Hz position 0,0
+    output HDMI-A-1 enable mode 3440x1440@49.99Hz position 1920,0
+}
+
+# 3. HDMI only (Lid closed / Clamshell)
+profile {
+    output eDP-1 disable
+    output HDMI-A-1 enable mode 3440x1440@49.99Hz position 0,0
+}
