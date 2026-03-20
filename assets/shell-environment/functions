@@ -186,4 +186,19 @@ if [[ 'Darwin' = $(uname) ]]; then
     fi
 fi
 
+if has zellij; then
+    function zellij-sesh {
+        if [ $(zellij ls -n | grep -v 'EXITED - attach to resurrect' | wc -l) -le 1 ]; then
+            zellij -l welcome
+        else
+            zellij -l $HOME/.config/zellij/layouts/launchpad.kdl
+        fi
+    }
+fi
+if [[ $(declare -f z) = $(echo "z () {\n\t__zoxide_z \"\$@\"\n}") ]];then
+    alias cd=z
+else
+    alias cd='builtin pushd'
+fi
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

@@ -3,7 +3,6 @@ test -d ~/.local/share/omarchy && is_omarchy=true
 cz_base=~/.local/share/chezmoi/assets/shell-environment
 omarchy_base=~/.local/share/omarchy/default/bash
 if [[ $is_omarchy = 'true' ]]; then
-    source $cz_base/undo_omacom
     if [[ $shellenv = 'zsh' ]]; then
         for f in envs functions aliases; do
             source $omarchy_base/$f
@@ -11,6 +10,7 @@ if [[ $is_omarchy = 'true' ]]; then
         inits=$(cat $omarchy_base/init | sed -e 's/bash/zsh/g')
         eval $inits
     fi
+    source $cz_base/undo_omacom
 fi
 for f in shell envs functions aliases init; do
     source $cz_base/$f

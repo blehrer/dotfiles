@@ -6,15 +6,29 @@ function is_omacom {
     [ $(has omarchy-version) || $(has omakub) ]
 }
 
-if [[ $0 = bash ]]; then
-  _prexisting_aliases=$(alias -p)
-elif [[ $0 = zsh ]]; then
-  _prexisting_aliases=$(alias -r)
-fi
+if [ is_omacom ]; then
+    if [[ $shellenv = bash ]]; then
+        _prexisting_aliases=$(alias -p)
+    elif [[ $shellenv = zsh ]]; then
+        _prexisting_aliases=$(alias -r)
+    fi
 
-if [[ $_prexisting_aliases ]] && [ is_omacom ]; then
-    for a in 'g' 'gcm' 'gcam' 'gcad' 'c' 'r'; do
-        unalias $a
+    if [[ $_prexisting_aliases ]]; then
+        for a in 'g' 'gcm' 'gcam' 'gcad' 'c' 'r' 'cd'; do
+            unalias $a
+        done
+    fi
+
+    for f in 'ga' 'gd' 'zd'; do
+        if [[ $shellenv = bash ]]; then
+            # 1. Copy the function definition
+            eval "$(echo "omacom-$f ()"; declare -f $f | tail -n +2)"
+            # 2. Remove the old function
+            unset -f $f
+        elif [[ $shellenv = zsh ]]; then
+            functions["omacom-$f"]=$functions["$f"]
+            unfunction "$f"
+        fi
     done
 fi
 
