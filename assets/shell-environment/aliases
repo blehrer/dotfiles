@@ -31,7 +31,7 @@ if has chezmoi ; then
     alias cz=chezmoi
     alias @dfd="cz cd"
     alias dfd="@dfd; vd"
-    alias z="cz edit ~/.$(shellname)rc"
+    alias ez="cz edit ~/.$(shellname)rc"
     alias sz="cz apply ${HOME}/.$(shellname)rc; source ${HOME}/.$(shellname)rc"
 fi
 
