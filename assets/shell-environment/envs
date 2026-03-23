@@ -1,6 +1,6 @@
 export NVIM_APPNAME=kickstart.nvim
 
-if [[ 'Linux' = $(uname) ]];  then
+if is_linux;  then
     export WORKSPACE=${HOME}/Work
     if [ -f /.dockerenv ]; then
         export WORKSPACE=/workspace
@@ -13,7 +13,7 @@ if [ -z /.dockerenv ]; then
     export OBSIDIAN_VAULT="${HOME}/vaults/noe"
 fi
 
-if [ $(command -v chezmoi &> /dev/null) ] && [ $(command -v jq &> /dev/null) ]; then
+if has chezmoi && has jq; then
     export DOTFILES_HOME="$(chezmoi dump-config | jq -r '.workingTree')"
 else
     export DOTFILES_HOME=${XDG_DATA_HOME:-${HOME}/.local/share}/chezmoi
@@ -25,7 +25,7 @@ h=${HOME}
 data=${XDG_DATA_HOME:-$h/.local/share/}
 paths=($h/.local/bin $data/${NVIM_APPNAME}/mason/bin $h/go/bin /opt/homebrew/bin $h/.rd/bin)
 
-if [[ 'Darwin' = $(uname) ]]; then
+if is_darwin; then
     export PNPM_HOME=$h/Library/pnpm
     paths+=${PNPM_HOME}
 fi
