@@ -1,19 +1,38 @@
-shellenv=$(ps -o cmd= -p $$ | xargs basename)
-test -d ~/.local/share/omarchy && is_omarchy=true
+function has {
+  command -v $1 &> /dev/null
+}
+
+function is_omarchy {
+  test -d ~/.local/share/omarchy
+}
+
+function is_darwin {
+  test $(uname) = Darwin
+}
+
+function is_linux {
+  test $(uname) = Linux
+}
+
+function shellname {
+  is_omarchy && echo $(ps -o cmd= -p $$ | xargs basename)
+  is_darwin && echo $(echo $SHELL | xargs basename)
+}
+
 cz_base=~/.local/share/chezmoi/assets/shell-environment
 omarchy_base=~/.local/share/omarchy/default/bash
-if [[ $is_omarchy = 'true' ]]; then
-    if [[ $shellenv = 'zsh' ]]; then
-        for f in envs functions aliases; do
-            source $omarchy_base/$f
-        done
-        inits=$(cat $omarchy_base/init | sed -e 's/bash/zsh/g')
-        eval $inits
-    fi
-    source $cz_base/undo_omacom
+if is_omarchy; then
+  if [[ $(shellname) = 'zsh' ]]; then
+    for f in envs functions aliases; do
+      source $omarchy_base/$f
+    done
+    inits=$(cat $omarchy_base/init | sed -e 's/bash/zsh/g')
+    eval $inits
+  fi
+  source $cz_base/undo_omacom
 fi
 for f in shell envs functions aliases init; do
-    source $cz_base/$f
+  shellenv=$(shellname) source $cz_base/$f
 done
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

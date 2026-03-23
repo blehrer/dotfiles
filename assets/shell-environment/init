@@ -1,23 +1,23 @@
-if [[ "Darwin" = $(uname) ]]; then
-    if has mise ; then
-        mise activate $(echo $0 | xargs basename)
-    fi
-    if has starship ; then
-        export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
-        eval "$(starship init $shellname)"
-    fi
+if is_darwin; then 
+  if has mise ; then
+    eval "$(mise activate $shellenv)"
+  fi
+  if has starship ; then
+    export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
+    eval "$(starship init $shellenv)"
+  fi
 fi
 
 if [[ -z "$ZELLIJ" ]] && [[ "$ZELLIJ_INIT" == "true" ]]; then
-    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
-        zellij attach -c
-    else
-        zellij
-    fi
+  if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+    zellij attach -c
+  else
+    zellij
+  fi
 
-    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
-        exit
-    fi
+  if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+    exit
+  fi
 fi
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

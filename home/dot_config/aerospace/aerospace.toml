@@ -1,14 +1,11 @@
-{{ if eq .chezmoi.os "darwin" -}}
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 
-# You can use it to add commands that run after login to macOS user session.
-# 'start-at-login' needs to be 'true' for 'after-login-command' to work
-# Available commands: https://nikitabobko.github.io/AeroSpace/commands
-after-login-command = []
+# Config version for compatibility and deprecations
+# Fallback value (if you omit the key): config-version = 1
+config-version = 2
 
 # You can use it to add commands that run after AeroSpace startup.
-# 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = []
 
@@ -220,6 +217,10 @@ if.app-id = 'net.kovidgoyal.kitty'
 run = ['move-node-to-workspace --focus-follows-window 1']
 
 [[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['move-node-to-workspace --focus-follows-window 1']
+
+[[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = ['move-node-to-workspace --focus-follows-window 2']
 
@@ -240,4 +241,3 @@ if.app-id = 'com.apple.MobileSMS'
 run = ['move-node-to-workspace --focus-follows-window 5']
 
 # vim: ts=2 sts=2 sw=2 et ft=toml.template
-{{- end }}
