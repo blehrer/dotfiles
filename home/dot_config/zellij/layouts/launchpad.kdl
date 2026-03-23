@@ -1,0 +1,5 @@
+layout name="launchpad" {
+  pane {
+    plugin location="zellij:session-manager"
+  }
+}
