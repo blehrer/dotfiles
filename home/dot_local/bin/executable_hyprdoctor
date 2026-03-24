@@ -1,0 +1,209 @@
+#!/bin/bash
+
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+echo -e "${BLUE}=== Hyprland Monitor Diagnostics ===${NC}"
+echo
+
+FAILED=()
+PASSED=()
+FIXED=()
+SKIPPED=()
+
+check() {
+    local name="$1"
+    local cmd="$2"
+    local fix="$3"
+    
+    echo -n "Checking: $name... "
+    if eval "$cmd" > /dev/null 2>&1; then
+        echo -e "${GREEN}PASS${NC}"
+        PASSED+=("$name")
+        return 0
+    else
+        echo -e "${RED}FAIL${NC}"
+        FAILED+=("$name")
+        if [[ -n "$fix" ]]; then
+            echo "  Attempting fix: $fix"
+            if eval "$fix" > /dev/null 2>&1; then
+                echo -e "  ${GREEN}Fixed!${NC}"
+                FIXED+=("$name")
+                FAILED=("${FAILED[@]/$name}")
+                return 0
+            else
+                echo -e "  ${RED}Fix failed${NC}"
+            fi
+        fi
+        return 1
+    fi
+}
+
+section() {
+    echo
+    echo -e "${BLUE}--- $1 ---${NC}"
+}
+
+section "1. Kanshi Daemon Status"
+KANSHI_COUNT=$(pgrep -cx kanshi 2>/dev/null | tr -d '[:space:]' || echo "0")
+
+if [[ "$KANSHI_COUNT" -gt 1 ]]; then
+    echo -e "  ${YELLOW}Found $KANSHI_COUNT stale kanshi processes - cleaning up${NC}"
+    pkill kanshi
+    sleep 0.5
+    KANSHI_COUNT=0
+fi
+
+if [[ "$KANSHI_COUNT" -eq 1 ]]; then
+    echo -e "  kanshi process: ${GREEN}RUNNING (1 instance)${NC}"
+    PASSED+=("kanshi daemon running")
+elif [[ "$KANSHI_COUNT" -eq 0 ]]; then
+    echo -e "  kanshi process: ${RED}NOT RUNNING${NC}"
+    FAILED+=("kanshi daemon running")
+    echo "  Starting kanshi..."
+    uwsm-app -- kanshi &
+    sleep 1
+    if pgrep -x kanshi > /dev/null 2>&1; then
+        echo -e "  ${GREEN}Started!${NC}"
+        FIXED+=("kanshi daemon running")
+        FAILED=("${FAILED[@]/$'kanshi daemon running'}")
+    else
+        echo -e "  ${RED}Failed to start${NC}"
+    fi
+fi
+
+section "2. Hyprland Monitor Detection"
+HYPR_MONITORS=$(hyprctl monitors -j 2>/dev/null || echo "[]")
+echo "Detected monitors:"
+echo "$HYPR_MONITORS" | jq -r '.[] | "  - \(.name): \(.width)x\(.height)@\(.refreshRate) Hz"' 2>/dev/null || echo "  (failed to parse)"
+
+LAPTOP_MONITOR=$(echo "$HYPR_MONITORS" | jq -r '.[] | select(.name | startswith("eDP")) | .name' 2>/dev/null)
+HDMI_MONITOR=$(echo "$HYPR_MONITORS" | jq -r '.[] | select(.name | contains("HDMI")) | .name' 2>/dev/null)
+
+if [[ -n "$LAPTOP_MONITOR" ]]; then
+    echo -e "  Laptop display: ${GREEN}$LAPTOP_MONITOR${NC}"
+    PASSED+=("Laptop monitor detected")
+else
+    echo -e "  Laptop display: ${RED}not detected${NC}"
+    FAILED+=("Laptop monitor detection")
+fi
+
+if [[ -n "$HDMI_MONITOR" ]]; then
+    echo -e "  HDMI display: ${GREEN}$HDMI_MONITOR${NC}"
+    PASSED+=("HDMI monitor detected")
+else
+    echo -e "  HDMI display: ${YELLOW}not connected${NC}"
+    SKIPPED+=("HDMI monitor (not connected)")
+fi
+
+section "3. Kanshi Configuration Validation"
+KANSHI_CONFIG="$HOME/.config/kanshi/config"
+if [[ -f "$KANSHI_CONFIG" ]]; then
+    check "kanshi config exists" "test -f '$KANSHI_CONFIG'"
+    
+    CONFIG_LAPTOP=$(grep -oP 'output \K[a-zA-Z0-9\-]+' "$KANSHI_CONFIG" | head -1)
+    CONFIG_HDMI=$(grep -oP 'output \K[a-zA-Z0-9\-]+' "$KANSHI_CONFIG" | grep -i hdmi | head -1)
+    
+    echo "  Config expects laptop: $CONFIG_LAPTOP"
+    echo "  Config expects HDMI: $CONFIG_HDMI"
+    
+    if [[ "$CONFIG_LAPTOP" == "$LAPTOP_MONITOR" ]] || [[ -z "$LAPTOP_MONITOR" ]]; then
+        echo -e "  Laptop match: ${GREEN}OK${NC}"
+    else
+        echo -e "  Laptop match: ${YELLOW}mismatch (may work anyway)${NC}"
+    fi
+else
+    echo -e "${RED}kanshi config not found at $KANSHI_CONFIG${NC}"
+    FAILED+=("kanshi config missing")
+fi
+
+section "4. Kanshi Event Testing"
+echo "Reloading kanshi configuration..."
+if kanshictl reload 2>/dev/null; then
+    echo -e "  ${GREEN}kanshictl reload: SUCCESS${NC}"
+    PASSED+=("kanshi reload")
+else
+    echo -e "  ${RED}kanshictl reload: FAILED${NC}"
+    FAILED+=("kanshi reload")
+fi
+
+echo "Waiting 2 seconds for profile to apply..."
+sleep 2
+
+NEW_MONITORS=$(hyprctl monitors -j 2>/dev/null)
+echo "Monitors after reload:"
+echo "$NEW_MONITORS" | jq -r '.[] | "  - \(.name)"' 2>/dev/null || echo "  (failed to parse)"
+
+section "5. Lid Switch Status"
+LID_STATE=$(cat /proc/acpi/button/lid/LID*/state 2>/dev/null | head -1 | awk '{print $2}' || echo "unknown")
+echo "Lid state: $LID_STATE"
+
+section "6. Hyprland Bindings"
+BINDINGS=$(hyprctl bindings -j 2>/dev/null || echo "[]")
+LID_BINDINGS=$(echo "$BINDINGS" | jq -r '.[] | select(.type == "lid" or .type == "switch") | .type + ": " + .keyd' 2>/dev/null || true)
+if [[ -n "$LID_BINDINGS" ]]; then
+    echo "Active lid/switch bindings:"
+    echo "$LID_BINDINGS" | while read -r binding; do
+        echo "  - $binding"
+    done
+else
+    echo -e "  ${GREEN}No conflicting lid bindings (good)${NC}"
+    PASSED+=("No conflicting bindings")
+fi
+
+section "7. Live Event Monitoring (5 seconds)"
+echo "Plug/unplug your monitor or open/close lid now..."
+echo "To watch events manually, run: journalctl --user -f"
+echo "(kanshi logs to stdout when run via uwsm, not journal)"
+
+section "Summary"
+echo
+echo -e "${GREEN}Passed:${NC} ${#PASSED[@]}"
+for item in "${PASSED[@]}"; do
+    echo "  ✓ $item"
+done
+
+echo
+echo -e "${YELLOW}Fixed:${NC} ${#FIXED[@]}"
+for item in "${FIXED[@]}"; do
+    echo "  ↻ $item"
+done
+
+echo
+echo -e "${RED}Failed:${NC} ${#FAILED[@]}"
+for item in "${FAILED[@]}"; do
+    echo "  ✗ $item"
+done
+
+echo
+echo -e "${BLUE}Skipped:${NC} ${#SKIPPED[@]}"
+for item in "${SKIPPED[@]}"; do
+    echo "  ○ $item"
+done
+
+echo
+if [[ ${#FAILED[@]} -eq 0 ]]; then
+    echo -e "${GREEN}=== All checks passed! ===${NC}"
+    echo "Your monitor setup should be working. Try:"
+    echo "  1. Plug/unplug HDMI cable"
+    echo "  2. Close/open laptop lid"
+    echo "  3. Run hyprdoctor again if issues persist"
+else
+    echo -e "${YELLOW}=== Some checks failed. Next steps:${NC}"
+    echo
+    echo "Manual diagnostics to run:"
+    echo "  journalctl --user -u kanshi -f           # Watch live events"
+    echo "  hyprctl monitors                          # See current state"
+    echo "  kanshictl reload                          # Force reload"
+    echo "  systemctl --user status kanshi           # Daemon status"
+    echo
+    echo "If kanshi isn't responding to events, try:"
+    echo "  1. Kill kanshi: pkill kanshi"
+    echo "  2. Restart it: uwsm-app -- kanshi"
+    echo "  3. Check config: kanshictl config-validate"
+fi
