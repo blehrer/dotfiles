@@ -115,6 +115,34 @@ section() {
     echo "--- $text ---" | debug
 }
 
+notify_monitors() {
+    local monitors_json=$(hyprctl -j monitors)
+    local lid_state=$(cat /proc/acpi/button/lid/LID*/state 2>/dev/null | head -1 | awk '{print $2}' || echo "unknown")
+
+    # If lid is closed, exclude eDP monitors
+    local filter=".disabled == false"
+    if [[ "$lid_state" == "closed" ]]; then
+        filter="$filter and (.name | startswith(\"eDP\") | not)"
+    fi
+
+    local enabled_json=$(echo "$monitors_json" | jq "[.[] | select($filter)]")
+    local count=$(echo "$enabled_json" | jq 'length')
+
+    [[ "$count" -eq 0 ]] && return
+
+    local initial_focus=$(echo "$monitors_json" | jq -r '.[] | select(.focused == true) | .name')
+    local monitors=($(echo "$enabled_json" | jq -r '.[].name'))
+
+    local idx=1
+    for monitor in "${monitors[@]}"; do
+        notify-send -a hyprdoctor "󱄄    $monitor ($idx/$count)"
+        idx=$((idx + 1))
+        sleep 0.3
+    done
+
+    [[ -n "$initial_focus" ]] && hyprctl dispatch focusmonitor "$initial_focus" >/dev/null 2>&1
+}
+
 
 if [[ "${HYPRDOCTOR_NO_GUM:-}" == "1" ]]; then
     USE_GUM=false
@@ -228,6 +256,10 @@ if kanshictl reload 2>/dev/null; then
 else
     err "kanshictl reload: FAILED"
     FAILED+=("kanshi reload")
+fi
+
+if [[ "${HYPRDOCTOR_NOTIFY:-1}" == "1" ]]; then
+    notify_monitors
 fi
 
 echo "Waiting for profile to apply..."
