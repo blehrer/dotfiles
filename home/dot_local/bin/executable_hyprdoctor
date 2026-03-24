@@ -204,7 +204,7 @@ mapfile -t MONITOR_LINES < <(echo "$HYPR_MONITORS" | jq -r '.[] | "\(.name): \(.
 if [[ ${#MONITOR_LINES[@]} -gt 0 ]] && [[ -n "${MONITOR_LINES[0]}" ]]; then
     li "${MONITOR_LINES[@]}"
 else
-    grey "(failed to parse)"
+    err "Failed to parse 'hyprctl monitors -j'"
 fi
 
 LAPTOP_MONITOR=$(echo "$HYPR_MONITORS" | jq -r '.[] | select(.name | startswith("eDP")) | .name' 2>/dev/null)
