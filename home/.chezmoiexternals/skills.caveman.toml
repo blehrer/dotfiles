@@ -1,0 +1,7 @@
+[".config/agents/skills/caveman"]
+type = "git-repo"
+url = "https://github.com/JuliusBrussee/caveman"
+refreshPeriod = "24h"
+
+[".config/agents/skills/caveman".pull]
+args = ["--ff-only"]
