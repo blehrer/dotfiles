@@ -106,8 +106,6 @@ brew "mas"
 brew "moreutils"
 # Jupyter Notebook Diff and Merge tools
 brew "nbdime"
-# E-mail reader with support for Notmuch, NNTP and much more
-brew "neomutt"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
@@ -126,8 +124,6 @@ brew "opencode"
 brew "opentofu"
 # Friendly PIL fork (Python Imaging Library)
 brew "pillow"
-# CLI for the Pkl programming language
-brew "pkl"
 # Paste PNG into files
 brew "pngpaste"
 # Tool for managing OCI containers and pods
