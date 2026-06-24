@@ -152,7 +152,7 @@ if [[ 'Darwin' = $(uname) ]]; then
                     local brewfile=$DOTFILES_HOME/assets/Brewfile
                     echo "Dumping changed Brewfile ($brewfile)"
                     brew bundle dump --file=$brewfile --force
-                    if [ $? ] && \ [[ "true" = $(chezmoi dump-config | jq '.git.autocommit') ]]
+                    if [ $? ] && [[ "true" = $(chezmoi dump-config | jq '.git.autocommit') ]]
                     then
                         pushd $DOTFILES_HOME
                         if [ $? ] && [ ! $(git diff --quiet) ]; then
@@ -192,5 +192,19 @@ if [[ $(declare -f z) = $(echo "z () {\n\t__zoxide_z \"\$@\"\n}") ]];then
 else
     alias cd='builtin pushd'
 fi
+
+function personal (){
+  if [ -d ~/.config/.personal ] ; then
+    source ~/.config/.personal/*
+  fi
+}
+
+function aid() {
+  if has zellij && has fzf && has agent && has zoxide && has zi; then
+    zi && 
+      export AI_DEV_ROOT=$(pwd) && 
+      zellij --layout ~/.config/zellij/ai-dev.kdl
+  fi
+}
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

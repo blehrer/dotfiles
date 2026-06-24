@@ -6,6 +6,9 @@ if is_darwin; then
     export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
     eval "$(starship init $shellenv)"
   fi
+  if has try; then
+    eval "$(try init $WORKSPACE/tries)"
+  fi
 fi
 
 if [[ -z "$ZELLIJ" ]] && [[ "$ZELLIJ_INIT" == "true" ]]; then
@@ -20,4 +23,15 @@ if [[ -z "$ZELLIJ" ]] && [[ "$ZELLIJ_INIT" == "true" ]]; then
   fi
 fi
 
+if has zoxide; then
+  eval "$(zoxide init $shellenv)"
+fi
+
+if [[ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]] ; then
+  export SDKMAN_DIR="$HOME/.sdkman"
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
+
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
+[ -f ~/.config/op/plugins.sh ] && source ~/.config/op/plugins.sh

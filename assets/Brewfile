@@ -156,8 +156,6 @@ brew "semgrep"
 brew "sevenzip"
 # Terminal based presentation tool
 brew "slides"
-# Opinionated Lua code formatter
-brew "stylua"
 # Change macOS audio source from the command-line
 brew "switchaudio-osx"
 # Modernized, complete, self-contained TeX/LaTeX engine
@@ -244,6 +242,7 @@ mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Slack", id: 803453959
+vscode "anysphere.remote-containers"
 vscode "anysphere.remote-ssh"
 vscode "esbenp.prettier-vscode"
 vscode "gitlab.gitlab-workflow"

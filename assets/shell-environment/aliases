@@ -63,7 +63,9 @@ if has git ; then
         git commit -a --fixup "${@:-@}"
     }
     alias gb='git branch'
-    alias gbls="git branch -vv | egrep -v '^\s*(ABANDONED|DONE)'"
+    alias gbls="git branch -vv --sort=-committerdate | grep -vE '^\s*(ABANDONED|DONE|ARCHIVE|Z_MERGED)'"
+    alias gstack='git log --oneline --graph --decorate origin/develop..HEAD'
+    alias restack='git fetch origin && git rebase --onto origin/develop origin/ci-SONE-28556-e2e-in-pipeline e2e-work-stories'
     alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"'
     alias gc='git checkout'
     alias gd='git diff'
@@ -95,6 +97,14 @@ fi
 
 has lazydocker && alias lzd=lazydocker
 
-has tmux && alias tmux='tmux -f ~/.config/tmux/tmux.conf'
+# has tmux && alias tmux='tmux -f ~/.config/tmux/tmux.conf'
+
+# Compression
+compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
+alias decompress="tar -xzf"
+
+alias cdw='cd $WORKSPACE'
+
+has podman && alias docker=podman
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

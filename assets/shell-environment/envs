@@ -1,3 +1,5 @@
+export EDITOR=nvim
+export VISUAL=nvim
 export NVIM_APPNAME=kickstart.nvim
 
 if is_linux;  then
@@ -6,12 +8,13 @@ if is_linux;  then
         export WORKSPACE=/workspace
     fi
 else
-    export WORKSPACE=${HOME}/workspace
+    export WORKSPACE=${HOME}/src
 fi
 
-if [ -z /.dockerenv ]; then
+if [ -n /.dockerenv ]; then
     export OBSIDIAN_VAULT="${HOME}/vaults/noe"
 fi
+
 
 if has chezmoi && has jq; then
     export DOTFILES_HOME="$(chezmoi dump-config | jq -r '.workingTree')"
@@ -35,5 +38,6 @@ for p in ${paths}; do
 done
 
 [ -d $h/.cargo ] && [ -f $h/.cargo/env ] && source $h/.cargo/env
+
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
