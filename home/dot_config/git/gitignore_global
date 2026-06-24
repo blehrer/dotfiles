@@ -29,3 +29,4 @@ _Deparsed_XSubs.pm
 **/runtime
 **/build
 scratch
+.codereview.nvim

@@ -1,0 +1,17 @@
+# Bookmarks for `aid` (ctrl-b in the fzf picker).
+# One entry per line. After trimming, a line whose first character is # is a comment.
+#
+# Supported forms:
+#   Plain path (shell env vars and ~ expand after parse):
+#     ~/src/myproject
+#     ${HOME}/src/myproject
+#
+#   Markdown inline link (path may be double- or single-quoted):
+#     [chezmoi]("${HOME}/.local/share/chezmoi")
+#     [dotfiles]('${DOTFILES_HOME}/repo')
+#
+#   Markdown reference-style (path after ]:):
+#     [dotfiles]: ${DOTFILES_HOME}
+#     [notes]: /abs/path/to/notes
+#
+# Paths may not contain unbalanced ) in inline form. $$ is preserved in env expansion.

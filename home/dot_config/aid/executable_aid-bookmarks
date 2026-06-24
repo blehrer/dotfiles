@@ -1,0 +1,95 @@
+#!/usr/bin/env zsh
+# List bookmark paths for aid(1) fzf reload. Reads bookmarks.aid: one entry per
+# line, # starts a full-line comment (after trim). Outputs one path per line.
+# SECURITY-REVIEW: expands only $VAR / ${VAR} for POSIX-style names (no command
+# substitution). Bookmarks file is user-owned config under ~/.config.
+
+emulate -L zsh
+setopt extended_glob
+
+aid_expand_env_in_path() {
+    local _out="$1" _n _val _i
+    _out="${_out//\$\$/__AID_DD__}"
+    _i=0
+    while (( _i++ < 64 )) && [[ "$_out" =~ '\$\{([A-Za-z_][A-Za-z0-9_]*)\}' ]]; do
+        _n="${match[1]}"
+        if (( ${+parameters[$_n]} )); then
+            _val="${(P)_n}"
+            _out="${_out//\$\{${_n}\}/${_val}}"
+        else
+            _out="${_out//\$\{${_n}\}/}"
+        fi
+    done
+    _i=0
+    while (( _i++ < 64 )) && [[ "$_out" =~ '\$([A-Za-z_][A-Za-z0-9_]*)' ]]; do
+        _n="${match[1]}"
+        if (( ${+parameters[$_n]} )); then
+            _val="${(P)_n}"
+            _out="${_out//\$${_n}/${_val}}"
+        else
+            _out="${_out//\$${_n}/}"
+        fi
+    done
+    _out="${_out//__AID_DD__/\$\$}"
+    printf '%s' "$_out"
+}
+
+aid_expand_tilde() {
+    local _p="$1"
+    if [[ $_p == \~/* ]]; then
+        # Avoid ${var#\~/}: ~ in the pattern is expanded by the shell.
+        printf '%s' "${HOME}/${_p[3,-1]}"
+    elif [[ $_p == \~ ]]; then
+        printf '%s' "$HOME"
+    else
+        printf '%s' "$_p"
+    fi
+}
+
+aid_strip_outer_quotes() {
+    local _p="$1"
+    if [[ ${_p} == \"*\" ]]; then
+        _p="${_p#\"}"
+        _p="${_p%\"}"
+    elif [[ ${_p} == \'*\' ]]; then
+        _p="${_p#\'}"
+        _p="${_p%\'}"
+    fi
+    printf '%s' "$_p"
+}
+
+aid_parse_line() {
+    local raw="$1" line path rest
+    line="${raw##[[:space:]]##}"
+    line="${line%%[[:space:]]##}"
+    [[ -z "$line" ]] && return 1
+    [[ "$line" == \#* ]] && return 1
+
+    if [[ "$line" == \[*\]\(* ]]; then
+        rest="${line#*\]\(}"
+        path="${rest%\)}"
+        path="$(aid_strip_outer_quotes "$path")"
+    elif [[ "$line" == \[*\]:* ]]; then
+        path="${line#\[*\]:}"
+        path="${path##[[:space:]]##}"
+        path="${path%%[[:space:]]##}"
+        path="$(aid_strip_outer_quotes "$path")"
+    else
+        path="$line"
+    fi
+
+    path="${path##[[:space:]]##}"
+    path="${path%%[[:space:]]##}"
+    [[ -z "$path" ]] && return 1
+
+    path="$(aid_expand_tilde "$path")"
+    path="$(aid_expand_env_in_path "$path")"
+    print -r -- "$path"
+}
+
+_file="${1:?usage: aid-bookmarks /path/to/bookmarks.aid}"
+[[ -r "$_file" ]] || exit 0
+
+while IFS= read -r _line || [[ -n "$_line" ]]; do
+    aid_parse_line "$_line" || true
+done <"$_file"

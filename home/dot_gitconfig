@@ -81,6 +81,7 @@ prompt = false
 prompt = false
 
 [alias]
+wt = worktree
 fixup = commit -a --fixup
 updiff = diff "@{u}"
 shwo = show

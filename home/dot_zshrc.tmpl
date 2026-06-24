@@ -57,7 +57,6 @@ autoload sticky-note
 # +---------+
 
 # export environment variables used in completions
-export WORKSPACE="${HOME}/workspace"
 
 # Load more completions
 fpath=(${HOME}/.local/share/zsh/site-functions $fpath)
@@ -103,7 +102,7 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # +---------+
 #  COMPINIT
 # +---------+
-autoload -U compinit; compinit
+autoload -Uz compinit && compinit
 _comp_options+=(globdots) # With hidden files
 
 # +--------+
@@ -214,5 +213,7 @@ eval "$(direnv hook zsh)"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 source ~/.local/share/chezmoi/assets/shell-environment/rc
+
+. "$HOME/.local/bin/env"
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotexttmpl foldmarker=(((,)))
