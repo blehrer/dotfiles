@@ -30,3 +30,4 @@ _Deparsed_XSubs.pm
 **/build
 scratch
 .codereview.nvim
+**/src/**/.obsidian*
