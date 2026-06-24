@@ -82,36 +82,25 @@ alias fzf="fzf --preview 'file {}' --bind '?:preview:bat {}'"
 [ $(command -v fdfind) ] && alias fd=fdfind
 
 alias nu="XDG_CONFIG_HOME=${HOME}/.config nu"
-function brew {
-    case $1 in
-        install) ;&
-        uninstall)
-            command brew "$@"
-            local brewfile=$DOTFILES_HOME/assets/Brewfile
-            echo "Dumping changed Brewfile ($brewfile)"
-            brew bundle dump --file=$brewfile --force
-            if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autocommit') ]]; then
-                pushd $DOTFILES_HOME
-                if [ $? ] && [ ! $(git diff --quiet) ]; then
-                    echo "Adding changes to Brewfile"
-                    git add $brewfile
-                    echo "Commiting changes to Brewfile"
-                    git commit -m "Update assets/Brewfile"
-                    if [ $? ] && [[ "true" = $(cz dump-config | jq '.git.autopush') ]]; then
-                        echo "Pushing changes to Brewfile"
-                        git push origin
-                    fi
-                else
-                    echo "No change to Brewfile"
-                fi
-                popd
-            fi
-            ;;
-        *)
-            command brew "$@"
-            ;;
-    esac
-}
+if has brew && has jq && has chezmoi; then
+    source "${DOTFILES_HOME}/assets/shell-environment/brewfile"
+    function brew {
+        case $1 in
+            install) ;&
+            uninstall)
+                command brew "$@"
+                local brewfile
+                brewfile=$(brewfile_machine_path)
+                echo "Dumping changed Brewfile ($brewfile)"
+                brew bundle dump --file="$brewfile" --force
+                brewfile_autocommit "Update"
+                ;;
+            *)
+                command brew "$@"
+                ;;
+        esac
+    }
+fi
 alias k=kubectl
 alias tf=tofu
 # CLI Conveniences)))

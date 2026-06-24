@@ -14,7 +14,9 @@ defaults write -g KB_DoubleQuoteOption -string "\"abc\""
 defaults write -g KB_SingleQuoteOption -string "'abc'"
 
 # Utils
-brew bundle install --file {{.chezmoi.workingTree}}/assets/Brewfile
+export DOTFILES_HOME='{{ .chezmoi.workingTree }}'
+source "$DOTFILES_HOME/assets/shell-environment/brewfile"
+brew bundle install --file "$(brewfile_machine_path)"
 
 {{- end }}
 # )))

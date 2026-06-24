@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+# ((( mac
+{{ if eq .chezmoi.os "darwin" -}}
+export DOTFILES_HOME='{{ .chezmoi.workingTree }}'
+source "$DOTFILES_HOME/assets/shell-environment/brewfile"
+brewfile_bootstrap
+{{- end }}
+# )))
+
+# vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotmpl foldmarker=(((,)))

@@ -1,0 +1,106 @@
+# ponytail: one helper file for machine Brewfile path + bootstrap; upgrade = split if logic grows
+has() { command -v "$1" >/dev/null 2>&1; }
+
+brewfile_machine_name() {
+  hostname -s 2>/dev/null || hostname
+}
+
+brewfile_machine_slug() {
+  echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]-_'
+}
+
+brewfile_dir() {
+  echo "${DOTFILES_HOME}/assets/brewfiles"
+}
+
+brewfile_machine_path() {
+  local slug
+  slug=$(brewfile_machine_slug "$(brewfile_machine_name)")
+  echo "$(brewfile_dir)/${slug}"
+}
+
+brewfile_template_source() {
+  local dir source
+  dir=$(brewfile_dir)
+  source=$(ls -t "${dir}"/*(N) 2>/dev/null | head -1)
+  if [[ -z "$source" && -f "${DOTFILES_HOME}/assets/Brewfile" ]]; then
+    source="${DOTFILES_HOME}/assets/Brewfile"
+  fi
+  echo "$source"
+}
+
+brewfile_bootstrap() {
+  local dir dest source taps rest selected tmp
+  dir=$(brewfile_dir)
+  dest=$(brewfile_machine_path)
+  mkdir -p "$dir"
+  [[ -f "$dest" ]] && return 0
+
+  source=$(brewfile_template_source)
+  if [[ -z "$source" ]]; then
+    echo "No Brewfile template found in ${dir} or assets/Brewfile" >&2
+    return 1
+  fi
+
+  echo "Creating $(brewfile_machine_name) Brewfile from ${source:t}"
+  tmp="${dest}.tmp.$$"
+  cp "$source" "$tmp"
+
+  if [[ -t 0 ]] && has fzf; then
+    taps=("${(@f)$(grep -E '^[[:space:]]*tap ' "$tmp")}")
+    rest=("${(@f)$(grep -vE '^[[:space:]]*($|#|tap )' "$tmp")}")
+    selected=$(printf '%s\n' "${rest[@]}" | fzf --multi \
+      --bind 'tab:toggle,ctrl-a:select-all,ctrl-d:deselect-all' \
+      --header "Packages for $(brewfile_machine_name) — TAB toggle, ENTER confirm" \
+      --preview 'echo {}' --height=80% --border)
+    if [[ -z "$selected" ]]; then
+      echo "Brewfile bootstrap cancelled" >&2
+      rm -f "$tmp"
+      return 1
+    fi
+  else
+    echo "No TTY/fzf; copying template unchanged"
+    selected=$(grep -vE '^[[:space:]]*($|#|tap )' "$tmp")
+    taps=("${(@f)$(grep -E '^[[:space:]]*tap ' "$tmp")}")
+  fi
+
+  {
+    [[ ${#taps[@]} -gt 0 ]] && print -rl -- "${taps[@]}"
+    print -rl -- "${(@f)selected}"
+  } > "$dest"
+  rm -f "$tmp"
+  echo "Wrote $dest"
+}
+
+brewfile_autocommit() {
+  local brewfile action
+  brewfile=$(brewfile_machine_path)
+  action=$1
+  if [[ ! -f "$brewfile" ]]; then
+    echo "No Brewfile at $brewfile" >&2
+    return 1
+  fi
+  if ! has chezmoi || ! has jq; then
+    return 0
+  fi
+  if [[ "true" != $(chezmoi dump-config | jq -r '.git.autocommit') ]]; then
+    return 0
+  fi
+  pushd "$DOTFILES_HOME" >/dev/null || return 1
+  if git diff --quiet -- "$brewfile" 2>/dev/null && git diff --cached --quiet -- "$brewfile" 2>/dev/null; then
+    echo "No change to $brewfile"
+    popd >/dev/null
+    return 0
+  fi
+  echo "Adding changes to $brewfile"
+  git add -- "$brewfile"
+  echo "Commiting changes to $brewfile"
+  git commit -m "${action} $(brewfile_machine_name) Brewfile"
+  if [[ "true" = $(chezmoi dump-config | jq -r '.git.autopush') ]]; then
+    echo "Pushing Brewfile changes"
+    git push origin
+  fi
+  popd >/dev/null
+}
+
+# vim: ts=2 sts=2 sw=2 et ft=sh

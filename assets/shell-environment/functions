@@ -142,33 +142,19 @@ if has yazi  ; then
 fi
 
 if [[ 'Darwin' = $(uname) ]]; then
-    if has brew  && has jq  && has chezmoi
+    if has brew  && has jq  && has chezmoi && [[ -n "$ZSH_VERSION" ]]
     then
+        source "${DOTFILES_HOME}/assets/shell-environment/brewfile"
         function brew {
             case $1 in
                 install) ;&
                 uninstall)
                     command brew "$@"
-                    local brewfile=$DOTFILES_HOME/assets/Brewfile
+                    local brewfile
+                    brewfile=$(brewfile_machine_path)
                     echo "Dumping changed Brewfile ($brewfile)"
-                    brew bundle dump --file=$brewfile --force
-                    if [ $? ] && [[ "true" = $(chezmoi dump-config | jq '.git.autocommit') ]]
-                    then
-                        pushd $DOTFILES_HOME
-                        if [ $? ] && [ ! $(git diff --quiet) ]; then
-                            echo "Adding changes to Brewfile"
-                            git add $brewfile
-                            echo "Commiting changes to Brewfile"
-                            git commit -m "Update assets/Brewfile"
-                            if [ $? ] && [[ "true" = $(chezmoi dump-config | jq '.git.autopush') ]]; then
-                                echo "Pushing changes to Brewfile"
-                                git push origin
-                            fi
-                        else
-                            echo "No change to Brewfile"
-                        fi
-                        popd
-                    fi
+                    brew bundle dump --file="$brewfile" --force
+                    brewfile_autocommit "Update"
                     ;;
                 *)
                     command brew "$@"

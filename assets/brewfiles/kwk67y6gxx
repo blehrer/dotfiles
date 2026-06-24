@@ -1,4 +1,3 @@
-# Fallback seed for new-machine Brewfile bootstrap (see assets/brewfiles/)
 tap "benjiwolff/neovim-nightly"
 tap "daveshanley/vacuum"
 tap "deskflow/tap"

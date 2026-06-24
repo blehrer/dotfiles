@@ -110,6 +110,7 @@ _comp_options+=(globdots) # With hidden files
 # +--------+
 autoload -Uz bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/tofu tofu
+source "${HOME}/.local/share/zsh/site-functions/_glab"
 
 # Only work with the Zsh function vman
 # See $DOTFILES/zsh/scripts.zsh
