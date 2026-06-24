@@ -102,7 +102,7 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 # +---------+
 #  COMPINIT
 # +---------+
-autoload -Uz compinit && compinit
+autoload -U -z compinit && compinit
 _comp_options+=(globdots) # With hidden files
 
 # +--------+
