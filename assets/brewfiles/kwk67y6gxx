@@ -218,8 +218,6 @@ cask "hammerspoon"
 cask "keymapp"
 # Application launcher
 cask "leader-key"
-# Free cross-platform office suite, fresh version
-cask "libreoffice"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # App wrapper for Postgres
