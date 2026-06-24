@@ -110,7 +110,6 @@ _comp_options+=(globdots) # With hidden files
 # +--------+
 autoload -Uz bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/tofu tofu
-source "${HOME}/.local/share/zsh/site-functions/_glab"
 
 # Only work with the Zsh function vman
 # See $DOTFILES/zsh/scripts.zsh
@@ -214,6 +213,16 @@ eval "$(direnv hook zsh)"
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 source ~/.local/share/chezmoi/assets/shell-environment/rc
+
+# 1Password plugin aliases expand to `op plugin run -- …`, so zsh completes _op instead.
+# ponytail: function wrapper keeps op auth; compdef restores native _glab completion.
+if (( $+aliases[glab] )); then
+  unalias glab
+  function glab {
+    op plugin run -- glab "$@"
+  }
+  compdef _glab glab
+fi
 
 . "$HOME/.local/bin/env"
 
