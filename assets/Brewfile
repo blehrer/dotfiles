@@ -156,6 +156,8 @@ brew "semgrep"
 brew "sevenzip"
 # Terminal based presentation tool
 brew "slides"
+# Opinionated Lua code formatter
+brew "stylua"
 # Change macOS audio source from the command-line
 brew "switchaudio-osx"
 # Modernized, complete, self-contained TeX/LaTeX engine
