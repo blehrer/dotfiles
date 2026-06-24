@@ -1,0 +1,61 @@
+# try-rs tab completion for directory names
+_try_rs_get_tries_path() {
+    # Check TRY_PATH environment variable first
+    if [[ -n "${TRY_PATH}" ]]; then
+        if [[ "${TRY_PATH}" == *","* ]]; then
+            echo "${TRY_PATH}" | tr ',' '\n'
+        else
+            echo "${TRY_PATH}"
+        fi
+        return
+    fi
+    
+    # Try to read from config file
+    local config_paths=("$HOME/.config/try-rs/config.toml" "$HOME/.try-rs/config.toml")
+    for config_path in "${config_paths[@]}"; do
+        if [[ -f "$config_path" ]]; then
+            # Try tries_path (supports single or multiple paths with comma)
+            local tries_path=$(grep -E '^[[:space:]]*tries_path[[:space:]]*=' "$config_path" 2>/dev/null | sed 's/.*=[[:space:]]*"\?\([^"]*\)"\?.*/\1/' | sed "s|~|$HOME|" | tr -d '[:space:]')
+            if [[ -n "$tries_path" ]]; then
+                if [[ "$tries_path" == *","* ]]; then
+                    echo "$tries_path" | tr ',' '\n'
+                else
+                    echo "$tries_path"
+                fi
+                return
+            fi
+        fi
+    done
+    
+    # Default path
+    echo "$HOME/work/tries"
+}
+
+_try_rs_complete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local tries_paths=$(_try_rs_get_tries_path)
+    local -a dirs=()
+    
+    # Split by comma if multiple paths
+    IFS=',' read -ra PATH_ARRAY <<< "$tries_paths"
+    
+    for tries_path in "${PATH_ARRAY[@]}"; do
+        # Trim whitespace
+        tries_path=$(echo "$tries_path" | xargs)
+        
+        if [[ -d "$tries_path" ]]; then
+            # Get list of directories
+            while IFS= read -r dir; do
+                dirs+=("$dir")
+            done < <(ls -1 "$tries_path" 2>/dev/null | while read -r dir; do
+                if [[ -d "$tries_path/$dir" ]]; then
+                    echo "$dir"
+                fi
+            done)
+        fi
+    done
+    
+    COMPREPLY=($(compgen -W "${dirs[*]}" -- "$cur"))
+}
+
+complete -o default -F _try_rs_complete try-rs
