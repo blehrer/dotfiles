@@ -1,0 +1,18 @@
+// ai-dev.kdl
+
+layout {
+    tab {
+        pane split_direction="vertical" {
+            pane {
+                cwd "${AI_DEV_ROOT}"
+                command "nvim"
+                args "."
+            }
+            // pane  {
+            //     cwd "${AI_DEV_ROOT}"
+            //     command "agent"
+            //     size "30%"
+            // }
+        }
+    }
+}
