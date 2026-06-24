@@ -3,7 +3,7 @@ tap "daveshanley/vacuum"
 tap "deskflow/tap"
 tap "felixkratz/formulae"
 tap "grishka/grishka"
-tap "nikitabobko/tap"
+tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
 # Run your GitHub Actions locally
@@ -114,8 +114,6 @@ brew "neovim"
 brew "nginx"
 # Port scanning utility for large networks
 brew "nmap"
-# Modern shell for the GitHub era
-brew "nushell"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
@@ -224,6 +222,8 @@ cask "hammerspoon"
 cask "keymapp"
 # Application launcher
 cask "leader-key"
+# Free cross-platform office suite, fresh version
+cask "libreoffice"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # App wrapper for Postgres
