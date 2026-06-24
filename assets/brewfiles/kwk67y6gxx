@@ -192,8 +192,6 @@ brew "zsh"
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "nikitabobko/tap/aerospace"
-# Transfer files from and to an Android smartphone
-cask "android-file-transfer"
 # Virtual Audio Driver
 cask "blackhole-16ch"
 # Virtual Audio Driver
@@ -216,8 +214,6 @@ cask "ghostty"
 cask "hammerspoon"
 # ZSA keyboard firmware flasher
 cask "keymapp"
-# Application launcher
-cask "leader-key"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # App wrapper for Postgres
