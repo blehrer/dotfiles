@@ -339,7 +339,7 @@ theme "kanagawa"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "bsl"
 
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -401,9 +401,8 @@ pane_frames false
 //
 // copy_command "xclip -selection clipboard" // x11
 // copy_command "wl-copy"                    // wayland
-// copy_command "pbcopy"                     // osx
+copy_command "pbcopy"                     // osx
 // 
-copy_command "wl-copy"
 
 // Choose the destination for copied text
 // Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.
@@ -428,13 +427,13 @@ copy_command "wl-copy"
 // otherwise this will error if such a session exists.
 // Default: <RANDOM>
 // 
-// session_name "My singleton session"
+session_name "dev"
 
 // When `session_name` is provided, attaches to that session
 // if it is already running or creates it otherwise.
 // Default: false
 // 
-// attach_to_session true
+attach_to_session true
 
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:
@@ -571,6 +570,4 @@ show_startup_tips false
 shared_except "locked" {
     bind "Super Shift [" { GoToPrevousTab; }
     bind "Super Shift ]" { GoToNextTab; }
-}
-keybinds {
 }
