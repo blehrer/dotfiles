@@ -176,5 +176,14 @@ function personal (){
   fi
 }
 
+function wt() {
+  local wt_root="${HOME}/src/worktrees"
+  local wt_dir="${wt_root}/"
+  vared -p "Worktree root: " wt_dir
+  wt_dir="${wt_dir%/}"
+  [[ -z "$wt_dir" ]] && { print "No directory given." >&2; return 1; }
+  cd $wt_dir
+}
+
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
