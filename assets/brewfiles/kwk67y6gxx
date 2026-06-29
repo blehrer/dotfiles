@@ -216,8 +216,6 @@ cask "hammerspoon"
 cask "keymapp"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
-# App wrapper for Postgres
-cask "postgres-app"
 # Collaboration platform for API development
 cask "postman"
 # Quick Look generator for Markdown files
