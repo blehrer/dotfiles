@@ -6,7 +6,7 @@ tap "grishka/grishka"
 tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
-tap "railwaycat/emacsmacport"
+tap "railwaycat/emacsmacport", trusted: true
 # Run your GitHub Actions locally
 brew "act"
 # Email client that runs in your terminal
@@ -189,6 +189,8 @@ brew "zellij"
 brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
+# YAMAMOTO Mitsuharu's Mac port of GNU Emacs
+brew "railwaycat/emacsmacport/emacs-mac@29", link: false
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
