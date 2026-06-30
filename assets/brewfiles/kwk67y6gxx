@@ -6,6 +6,7 @@ tap "grishka/grishka"
 tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
+tap "railwaycat/emacsmacport"
 # Run your GitHub Actions locally
 brew "act"
 # Email client that runs in your terminal
