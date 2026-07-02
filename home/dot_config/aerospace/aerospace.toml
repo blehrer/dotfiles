@@ -108,6 +108,8 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-tab = 'layout h_tiles v_accordion'
+    ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-next'
+    shift-ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-prev'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     alt-h = 'focus left'
@@ -126,18 +128,18 @@ on-mode-changed = []
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    ctrl-alt-y = 'summon-workspace 1'
-    ctrl-alt-u = 'summon-workspace 2'
-    ctrl-alt-i = 'summon-workspace 3'
-    ctrl-alt-o = 'summon-workspace 4'
-    ctrl-alt-p = 'summon-workspace X'
+    ctrl-alt-y = 'workspace 1'
+    ctrl-alt-u = 'workspace 2'
+    ctrl-alt-i = 'workspace 3'
+    ctrl-alt-o = 'workspace 4'
+    ctrl-alt-p = 'workspace X'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    ctrl-alt-shift-y = 'move-node-to-workspace 1'
-    ctrl-alt-shift-u = 'move-node-to-workspace 2'
-    ctrl-alt-shift-i = 'move-node-to-workspace 3'
-    ctrl-alt-shift-o = 'move-node-to-workspace 4'
-    ctrl-alt-shift-p = 'move-node-to-workspace X'
+    ctrl-alt-shift-y = ['move-node-to-workspace 1', 'workspace 1']
+    ctrl-alt-shift-u = ['move-node-to-workspace 2', 'workspace 2']
+    ctrl-alt-shift-i = ['move-node-to-workspace 3', 'workspace 3']
+    ctrl-alt-shift-o = ['move-node-to-workspace 4', 'workspace 4']
+    ctrl-alt-shift-p = ['move-node-to-workspace X', 'workspace X']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-quote = 'mode service'
@@ -159,21 +161,21 @@ on-mode-changed = []
     l = ['join-with right', 'mode main']
 
 [workspace-to-monitor-force-assignment]
-    1 = 'primary'
-    2 = 'primary'
-    3 = 'primary'
-    4 = 'primary'
-    X = ['secondary', 'primary']
+    1 = 'main'
+    2 = 'main'
+    3 = 'main'
+    4 = 'main'
+    X = 'Built-in Retina Display'
 
 [[on-window-detected]]
     if.app-id = 'com.microsoft.teams2'
-    run = ['move-node-to-workspace X', 'summon-workspace X']
+    run = ['move-node-to-workspace X', 'workspace X']
 
 [[on-window-detected]]
     # osascript -e 'id of "Outlook (PWA)"'
     if.app-id = 'com.google.Chrome.app.eoficlgicibekocmfdomjbfnjmehnhcd'
-    run = ['move-node-to-workspace X', 'summon-workspace X']
+    run = ['move-node-to-workspace X', 'workspace X']
 
 [[on-window-detected]]
     if.app-id = 'com.jamfsoftware.selfservice.mac'
-    run = ['move-node-to-workspace X', 'summon-workspace X']
+    run = ['move-node-to-workspace X', 'workspace X']
