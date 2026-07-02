@@ -7,10 +7,6 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift g" { SwitchToMode "normal"; }
     }
     pane {
-        bind "left" { MoveFocus "left"; }
-        bind "down" { MoveFocus "down"; }
-        bind "up" { MoveFocus "up"; }
-        bind "right" { MoveFocus "right"; }
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
         bind "d" { NewPane "down"; SwitchToMode "normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
@@ -150,17 +146,6 @@ keybinds clear-defaults=true {
     shared_except "locked" {
         bind "Alt p" { TogglePaneInGroup; }
         bind "Alt Shift p" { ToggleGroupMarking; }
-        bind "Alt y" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/harpoon.wasm" {
-                floating true; move_to_focused_tab true;
-            }
-        }
-        bind "Alt b" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij_forgot.wasm" {
-                floating true
-                move_to_focused_tab true
-            }
-        }
     }
     shared_except "locked" "entersearch" "renametab" "renamepane" "move" "prompt" "tmux" {
         bind "Ctrl Alt Shift h" { SwitchToMode "move"; }

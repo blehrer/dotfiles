@@ -21,31 +21,29 @@ gui:
   shortTimeFormat: 3:04PM
   theme:
     activeBorderColor:
-      - green
+      - "#7e9cd8"
       - bold
     inactiveBorderColor:
-      - default
+      - "#54546d"
     searchingActiveBorderColor:
-      - cyan
+      - "#ffa066"
       - bold
     optionsTextColor:
-      - blue
+      - "#7e9cd8"
     selectedLineBgColor:
-      - blue
-    inactiveViewSelectedLineBgColor:
-      - bold
-    cherryPickedCommitFgColor:
-      - blue
+      - "#223249"
     cherryPickedCommitBgColor:
-      - cyan
+      - "#54546d"
+    cherryPickedCommitFgColor:
+      - "#7e9cd8"
     markedBaseCommitFgColor:
-      - blue
+      - "#7e9cd8"
     markedBaseCommitBgColor:
       - yellow
     unstagedChangesColor:
-      - red
+      - "#c34043"
     defaultFgColor:
-      - default
+      - "#dcd7ba"
   commitLength:
     show: true
   showListFooter: true
@@ -72,9 +70,9 @@ gui:
   filterMode: substring
   spinner:
     frames:
-      - '|'
+      - "|"
       - /
-      - '-'
+      - "-"
       - \
     rate: 50
   statusPanelView: dashboard
@@ -104,7 +102,10 @@ git:
   fetchAll: true
   autoStageResolvedConflicts: true
   branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
-  allBranchesLogCmds: [git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium]
+  allBranchesLogCmds:
+    [
+      git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium,
+    ]
   overrideGpg: false
   disableForcePushing: false
   commitPrefix: null
@@ -140,12 +141,12 @@ keybinding:
     nextItem: <down>
     prevItem-alt: k
     nextItem-alt: j
-    prevPage: ','
+    prevPage: ","
     nextPage: .
     scrollLeft: H
     scrollRight: L
     gotoTop: <
-    gotoBottom: '>'
+    gotoBottom: ">"
     toggleRangeSelect: v
     rangeSelectDown: <s-down>
     rangeSelectUp: <s-up>
@@ -165,7 +166,7 @@ keybinding:
     prevMatch: "N"
     startSearch: /
     optionMenu: <disabled>
-    optionMenu-alt1: '?'
+    optionMenu-alt1: "?"
     select: <space>
     goInto: <enter>
     confirm: <enter>
@@ -180,14 +181,14 @@ keybinding:
     scrollDownMain-alt1: J
     scrollUpMain-alt2: <c-u>
     scrollDownMain-alt2: <c-d>
-    executeShellCommand: ':'
+    executeShellCommand: ":"
     createRebaseOptionsMenu: m
     pushFiles: P
     pullFiles: p
     refresh: R
     createPatchOptionsMenu: <c-p>
-    nextTab: ']'
-    prevTab: '['
+    nextTab: "]"
+    prevTab: "["
     nextScreenMode: +
     prevScreenMode: _
     undo: z
@@ -198,10 +199,10 @@ keybinding:
     copyToClipboard: <c-o>
     openRecentRepos: <c-r>
     submitEditorText: <enter>
-    extrasMenu: '@'
+    extrasMenu: "@"
     toggleWhitespaceInDiffView: <c-w>
-    increaseContextInDiffView: '}'
-    decreaseContextInDiffView: '{'
+    increaseContextInDiffView: "}"
+    decreaseContextInDiffView: "{"
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
     openDiffTool: <c-t>
@@ -223,7 +224,7 @@ keybinding:
     toggleStagedAll: a
     viewResetOptions: D
     fetch: f
-    toggleTreeView: '`'
+    toggleTreeView: "`"
     openMergeOptions: M
     openStatusFilter: <c-b>
     copyFileInfoToClipboard: "y"

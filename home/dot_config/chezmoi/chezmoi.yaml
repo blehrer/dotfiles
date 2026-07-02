@@ -15,6 +15,7 @@ merge:
   command: nvim
   args:
     - -d
+    - "-c let g:dst_buf=1 | let g:src_buf=2 | let g:tgt_buf=3"
     - "{{ .Destination }}"
     - "{{ .Source }}"
     - "{{ .Target }}"
