@@ -100,7 +100,7 @@ _wt_init() {
     selection=$(find "$src_root" -maxdepth 5 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null \
       | sed 's|/\.git$||' \
       | sort -u \
-      | fzf --multi --header "Source Repos" --prompt "Filter: ")
+      | fzf --multi --header "Source Repos" --prompt "Filter (Use TAB to select many, submit with ENTER): ")
     [[ -z "$selection" ]] && { print "No repos selected."; return 0; }
     repo_paths=("${(f)selection}")
   else
