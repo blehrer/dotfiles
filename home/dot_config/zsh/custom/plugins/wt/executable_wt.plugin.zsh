@@ -70,8 +70,8 @@ _wt_mv() {
 }
 
 _wt_init() {
-  local src_root="$HOME/src/gitlab.disney.com"
-  local wt_root="$HOME/src/worktrees"
+  local src_root="$bsl_repos"
+  local wt_root="$bsl_wts"
   local branch_name=""
   local ref_name=""
   local -a repos=()
