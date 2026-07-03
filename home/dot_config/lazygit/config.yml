@@ -83,7 +83,6 @@ git:
   pagers:
     - colorArg: always
       pager: ""
-      useConfig: false
       externalDiffCommand: ""
   commit:
     signOff: false
@@ -108,7 +107,7 @@ git:
     ]
   overrideGpg: false
   disableForcePushing: false
-  commitPrefix: null
+  commitPrefix: []
   commitPrefixes: {}
   branchPrefix: ""
   parseEmoji: false
@@ -166,7 +165,6 @@ keybinding:
     prevMatch: "N"
     startSearch: /
     optionMenu: <disabled>
-    optionMenu-alt1: "?"
     select: <space>
     goInto: <enter>
     confirm: <enter>
@@ -265,7 +263,7 @@ keybinding:
     markCommitAsBaseForRebase: B
     tagCommit: T
     checkoutCommit: <space>
-    resetCherryPick: <c-R>
+    resetCherryPick: R
     copyCommitAttributeToClipboard: "y"
     openLogMenu: <c-l>
     openInBrowser: o
