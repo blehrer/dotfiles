@@ -147,6 +147,8 @@ brew "ranger"
 brew "rumdl"
 # Manage postgresql database schema migrations
 brew "schema-evolution-manager"
+# Semantic version control CLI with entity-level diffs and blame
+brew "sem-cli"
 # Easily detect and prevent bugs and anti-patterns in your codebase
 brew "semgrep"
 # 7-Zip is a file archiver with a high compression ratio
