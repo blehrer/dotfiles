@@ -145,6 +145,8 @@ brew "rancher-cli"
 brew "ranger"
 # Markdown Linter and Formatter written in Rust
 brew "rumdl"
+# Manage postgresql database schema migrations
+brew "schema-evolution-manager"
 # Easily detect and prevent bugs and anti-patterns in your codebase
 brew "semgrep"
 # 7-Zip is a file archiver with a high compression ratio
