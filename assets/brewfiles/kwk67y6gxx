@@ -27,6 +27,8 @@ brew "btop"
 brew "freetype"
 # Multi-shell multi-command argument completer
 brew "carapace"
+# Create and run Linux containers using lightweight virtual machines
+brew "container"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # JSON, YAML, TOML, XML, and CSV query and modification tool
