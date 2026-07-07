@@ -233,6 +233,8 @@ cask "qlmarkdown"
 cask "scoot"
 # App that enables mouse-free UI interaction
 cask "shortcat"
+# Sound and audio controller
+cask "soundsource@test"
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
