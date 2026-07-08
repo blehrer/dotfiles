@@ -22,6 +22,10 @@ else
     export DOTFILES_HOME=${XDG_DATA_HOME:-${HOME}/.local/share}/chezmoi
 fi
 
+if has bat; then
+    export BAT_PAGER='less -R -I'
+fi
+
 export VENV_HOME="$HOME/.virtualenvs"
 
 h=${HOME}
