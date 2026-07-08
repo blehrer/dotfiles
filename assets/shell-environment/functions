@@ -162,6 +162,10 @@ if [[ 'Darwin' = $(uname) ]]; then
             esac
         }
     fi
+    function ask {
+      local in=$@
+      apfel --stream "$in"
+    }
 fi
 
 if [[ $(declare -f z) = $(echo "z () {\n\t__zoxide_z \"\$@\"\n}") ]];then
