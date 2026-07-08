@@ -17,14 +17,14 @@ autoCorrect = true
 defaultBranch = main
 
 [diff]
-#colorMoved = dimmed-zebra
+; colorMoved = dimmed-zebra
 colorMoved = blocks
 #colorMoved = no
 #color-moved-ws = allow-indentation-change
 tool = nvim -d
 noprefix = true
 renameLimit = 50000
-pager = delta
+	; external = /Users/brian.lehrer.-nd/.local/bin/sem-diff-wrapper
 
 [diff "zip"]
 textconv = unzip -v
@@ -96,3 +96,9 @@ changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) 
 	      echo Changelist, relative to upstream branch $upstream && \
 		git log --oneline --graph $upstream..@"
 
+[core]
+    ; pager = delta -s
+    pager = diff-so-fancy | bat --paging auto --style changes
+
+[interactive]
+    diffFilter = odelta --color-only
