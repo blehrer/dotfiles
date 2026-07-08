@@ -11,6 +11,8 @@ tap "railwaycat/emacsmacport", trusted: true
 brew "act"
 # Email client that runs in your terminal
 brew "aerc"
+# Apple Intelligence from the command-line, with OpenAi-compatible API server
+brew "apfel"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
 # Thin wrapper around the `aws` command-line interface for use with LocalStack
