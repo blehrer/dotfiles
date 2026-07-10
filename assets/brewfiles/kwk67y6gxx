@@ -220,6 +220,7 @@ cask "cursor-cli"
 cask "font-fira-code-nerd-font"
 cask "font-geist-mono-nerd-font"
 cask "font-hasklug-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
 cask "font-lilex-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
