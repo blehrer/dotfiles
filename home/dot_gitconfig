@@ -2,103 +2,103 @@
 # [includeIf "gitdir:~/Documents/jira/**/"]
 #    path = ~/.config/dotfiles/git/github.com/NBCUniversalOTS/gitconfig
 [core]
-autocrlf = input
-excludesfile = ~/.config/git/gitignore_global
+    autocrlf = input
+    excludesfile = ~/.config/git/gitignore_global
 
 [log]
-follow = true
+    follow = true
 
 [advice]
-skippedCherryPicks = false
+    skippedCherryPicks = false
 
 [help]
-autoCorrect = true
+    autoCorrect = true
 [init]
-defaultBranch = main
+    defaultBranch = main
 
 [diff]
 ; colorMoved = dimmed-zebra
-colorMoved = blocks
+    colorMoved = blocks
 #colorMoved = no
 #color-moved-ws = allow-indentation-change
-tool = nvim -d
-noprefix = true
-renameLimit = 50000
-	; external = /Users/brian.lehrer.-nd/.local/bin/sem-diff-wrapper
+    tool = nvim -d
+    noprefix = true
+    renameLimit = 50000
+    ; external = /Users/brian.lehrer.-nd/.local/bin/sem-diff-wrapper
 
 [diff "zip"]
-textconv = unzip -v
-binary = true
+    textconv = unzip -v
+    binary = true
 
 [merge]
-tool = nvimdiff
+    tool = nvimdiff
 
 [fetch]
-prune = true
+    prune = true
 
 [prune]
-prune = true
+    prune = true
 
 [rebase]
-autosquash = true
-updateRefs = true
+    autosquash = true
+    updateRefs = true
 
 [status]
-submoduleSummary = false
+    submoduleSummary = false
 
 [pull]
-rebase = false
-prune = true
+    rebase = false
+    prune = true
 
 [rerere]
-enabled = true
+    enabled = true
 
 [filter "lfs"]
-process = git-lfs filter-process
-required = true
-clean = git-lfs clean -- %f
-smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
 
 [user]
-name = Brian Lehrer
-email = 661570+blehrer@users.noreply.github.com
+    name = Brian Lehrer
+    email = 661570+blehrer@users.noreply.github.com
 
 [user "github.com"]
-name = blehrer
+    name = blehrer
 
 [merge "jupyternotebook"]
-driver = git-nbmergedriver merge %O %A %B %L %P
-name = jupyter notebook merge driver
-	
+    driver = git-nbmergedriver merge %O %A %B %L %P
+    name = jupyter notebook merge driver
+
 [difftool "nbdime"]
-cmd = "git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\""
+    cmd = "git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\""
 
 [difftool]
-prompt = false
-	
+    prompt = false
+
 
 [mergetool]
-prompt = false
+    prompt = false
 
 [alias]
-wt = worktree
-fixup = commit -a --fixup
-updiff = diff "@{u}"
-shwo = show
-amend = commit -a --amend --no-edit
-branch-name = rev-parse --abbrev-ref HEAD
-backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
-blaame = blame -w -C -C -C
-clone-gh = "!git clone git@github.com:$1"
-delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
-done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
-changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
-	      echo Changelist, relative to upstream branch $upstream && \
-		git log --oneline --graph $upstream..@"
+    wt = worktree
+    fixup = commit -a --fixup
+    updiff = diff "@{u}"
+    shwo = show
+    amend = commit -a --amend --no-edit
+    branch-name = rev-parse --abbrev-ref HEAD
+    backup = "!git push -f -u origin HEAD:bl-backup/$(git branch-name)"
+    blaame = blame -w -C -C -C
+    clone-gh = "!git clone git@github.com:$1"
+    delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
+    done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
+    changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
+        echo Changelist, relative to upstream branch $upstream && \
+        git log --oneline --graph $upstream..@"
 
 [core]
     ; pager = delta -s
     pager = diff-so-fancy | bat --paging auto --style changes
 
 [interactive]
-    diffFilter = odelta --color-only
+    diffFilter = delta --color-only
