@@ -217,6 +217,7 @@ cask "claude-code"
 cask "cursor"
 # Command-line agent for Cursor
 cask "cursor-cli"
+cask "font-fira-code-nerd-font"
 cask "font-geist-mono-nerd-font"
 cask "font-hasklug-nerd-font"
 cask "font-lilex-nerd-font"
