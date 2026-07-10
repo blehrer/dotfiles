@@ -219,6 +219,7 @@ cask "cursor"
 cask "cursor-cli"
 cask "font-geist-mono-nerd-font"
 cask "font-hasklug-nerd-font"
+cask "font-lilex-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Desktop automation application
