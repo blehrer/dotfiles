@@ -77,7 +77,7 @@ if has git ; then
     alias garia='gamf; gria'
     alias grim='git rebase -i origin/master'
     alias gst='git status'
-    has lazygit  && alias lg="lazygit -ucd ${HOME}/.config/lazygit"
+    has lazygit  && alias lg="lazygit -ucd ${HOME}/.config/lazygit,$(dark_or_light)_theme.yml"
 fi
 
 has rg  && alias ag=rg

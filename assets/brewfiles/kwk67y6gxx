@@ -99,6 +99,8 @@ brew "kind"
 brew "lazydocker"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Cross-platform TUI database management tool
+brew "lazysql"
 # Language Server for the Lua language
 brew "lua-language-server"
 # Just-In-Time Compiler (JIT) for the Lua programming language

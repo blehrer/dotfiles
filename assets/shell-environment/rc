@@ -14,6 +14,16 @@ function is_linux {
   test $(uname) = Linux
 }
 
+function dark_or_light {
+  if is_darwin ; then
+    if [[ -n $(defaults read -g AppleInterfaceStyle 2>/dev/null) ]]
+      echo 'dark'
+    else
+      echo 'light'
+    fi
+  fi
+}
+
 function shellname {
   is_omarchy && echo $(ps -o cmd= -p $$ | xargs basename)
   is_darwin && echo $(echo $SHELL | xargs basename)
