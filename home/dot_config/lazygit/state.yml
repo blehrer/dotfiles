@@ -1,11 +1,11 @@
 lastupdatecheck: 0
 recentrepos:
     - /Users/brian.lehrer.-nd/src/worktrees/s1/trs-api/studio-monorepo
+    - /Users/brian.lehrer.-nd/src/worktrees/s1/trs-placement-notes/studio-monorepo
+    - /Users/brian.lehrer.-nd/src/worktrees/s1/trs-foundation/studio-monorepo
     - /Users/brian.lehrer.-nd/src/worktrees/s1/trs-regression/studio-monorepo
-    - /Users/brian.lehrer.-nd/src/worktrees/legale2e-testdata-cleanup/studio-monorepo.git
     - /Users/brian.lehrer.-nd/.local/share/chezmoi
     - /Users/brian.lehrer.-nd/src/worktrees/s1/trs-api/dmt-global-trailer-orders
-    - /Users/brian.lehrer.-nd/src/worktrees/s1/trs-foundation/studio-monorepo
     - /Users/brian.lehrer.-nd/.config/nvim-scratch
     - /Users/brian.lehrer.-nd/.config/kickstart.nvim
     - /Users/brian.lehrer.-nd/research/test-automation-research-pipeline
