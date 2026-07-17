@@ -19,31 +19,6 @@ gui:
   language: auto
   timeFormat: 02 Jan 06
   shortTimeFormat: 3:04PM
-  theme:
-    activeBorderColor:
-      - "#7e9cd8"
-      - bold
-    inactiveBorderColor:
-      - "#54546d"
-    searchingActiveBorderColor:
-      - "#ffa066"
-      - bold
-    optionsTextColor:
-      - "#7e9cd8"
-    selectedLineBgColor:
-      - "#223249"
-    cherryPickedCommitBgColor:
-      - "#54546d"
-    cherryPickedCommitFgColor:
-      - "#7e9cd8"
-    markedBaseCommitFgColor:
-      - "#7e9cd8"
-    markedBaseCommitBgColor:
-      - yellow
-    unstagedChangesColor:
-      - "#c34043"
-    defaultFgColor:
-      - "#dcd7ba"
   commitLength:
     show: true
   showListFooter: true
