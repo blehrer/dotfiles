@@ -16,7 +16,7 @@ function is_linux {
 
 function dark_or_light {
   if is_darwin ; then
-    if [[ -n $(defaults read -g AppleInterfaceStyle 2>/dev/null) ]]
+    if [[ -n $(defaults read -g AppleInterfaceStyle 2>/dev/null) ]]; then
       echo 'dark'
     else
       echo 'light'
