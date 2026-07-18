@@ -96,9 +96,9 @@
         echo Changelist, relative to upstream branch $upstream && \
         git log --oneline --graph $upstream..@"
 
-[core]
+; [core]
     ; pager = delta -s
-    pager = diff-so-fancy | bat --paging auto --style changes
+    ; pager = diff-so-fancy | bat --paging auto --style changes
 
-[interactive]
-    diffFilter = delta --color-only
+; [interactive]
+    ; diffFilter = delta --color-only
