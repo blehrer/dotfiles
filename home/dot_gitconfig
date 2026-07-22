@@ -99,9 +99,9 @@
         git log --oneline --graph $upstream..@"
 
 [pager]
-    log = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less
-    show = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less
-    diff = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less
+    log = perl /opt/homebrew/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
+    show = perl /opt/homebrew/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
+    diff = perl /opt/homebrew/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
 
 ;
 ; [core]
