@@ -24,6 +24,8 @@
     tool = nvim -d
     noprefix = true
     renameLimit = 50000
+    algorithm = histogram
+    
     ; external = /Users/brian.lehrer.-nd/.local/bin/sem-diff-wrapper
 
 [diff "zip"]
@@ -96,9 +98,18 @@
         echo Changelist, relative to upstream branch $upstream && \
         git log --oneline --graph $upstream..@"
 
-; [core]
-    ; pager = delta -s
-    ; pager = diff-so-fancy | bat --paging auto --style changes
+[core]
+    pager = delta
 
-; [interactive]
-    ; diffFilter = delta --color-only
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between file diff sections
+    line-numbers = true
+    side-by-side = false # Set to true if you prefer a split-screen view
+    dark = true        # Change to light = true if you use a white terminal theme
+
+[merge]
+    conflictStyle = zdiff3
+
