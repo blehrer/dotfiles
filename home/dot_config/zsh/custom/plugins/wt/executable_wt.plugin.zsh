@@ -112,18 +112,71 @@ _wt_print_status_for_root() {
   return $failed
 }
 
+_wt_fzf_pick_lines() {
+  local header="$1" selection
+  shift
+  local -a choices=("$@")
+
+  (( $+commands[fzf] )) || return 2
+  [[ ${#choices[@]} -gt 0 ]] || return 1
+
+  selection=$(print -rl -- "${choices[@]}" | sort | command fzf \
+    --height '~12' \
+    --layout reverse \
+    --border \
+    --info inline \
+    --header "$header" \
+    --prompt "Filter: ") || return 1
+  [[ -n "$selection" ]] || return 1
+  REPLY="$selection"
+  return 0
+}
+
+_wt_nested_worktree_group_roots() {
+  local wt_base="${1:A}"
+  local parent candidate
+  local -a roots=()
+
+  [[ -d "$wt_base" ]] || return 1
+
+  setopt localoptions extendedglob nullglob
+  for parent in "$wt_base"/*(N/); do
+    for candidate in "$parent"/*(N/); do
+      _wt_has_worktree_children "$candidate" && roots+=("${candidate:A}")
+    done
+  done
+
+  reply=("${roots[@]}")
+  return 0
+}
+
 _wt_pick_worktree_root() {
+  local header="${1:-Select worktree group}"
   local wt_base="${bsl_wts:-$HOME/src/worktrees}"
-  local wt_root
+  local -a groups labels
+  local root
 
   [[ -d "$wt_base" ]] || { print "Worktree base not found: $wt_base" >&2; return 1; }
+  wt_base="${wt_base:A}"
 
-  print -u2 "Select the worktree group to edit."
-  wt_root=$(find "$wt_base" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort \
-    | fzf --header "Select worktree group" --prompt "Filter: ")
-  [[ -z "$wt_root" ]] && return 1
+  _wt_nested_worktree_group_roots "$wt_base" || return 1
+  groups=("${reply[@]}")
+  [[ ${#groups[@]} -gt 0 ]] || { print "No worktree groups found in: $wt_base" >&2; return 1; }
 
-  print -r -- "$wt_root"
+  for root in "${groups[@]}"; do
+    labels+=("${root#${wt_base}/}")
+  done
+
+  if _wt_fzf_pick_lines "$header" "${labels[@]}"; then
+    local i
+    for i in {1..${#groups[@]}}; do
+      if [[ "${labels[i]}" == "$REPLY" ]]; then
+        print -r -- "${groups[i]}"
+        return 0
+      fi
+    done
+  fi
+  return 1
 }
 
 _wt_repo_git_dir_for_worktree() {
@@ -208,6 +261,93 @@ _wt_run_with_progress() {
   return $rc
 }
 
+# ponytail: scan one directory level with -d; no compsys or extendedglob
+_wt_directory_match_prefix() {
+  local dir="$1" prefix="$2" entry base
+  local -a results
+
+  dir="${~dir}"
+  [[ -d "$dir" ]] || return 1
+  [[ "$dir" == */ ]] || dir="${dir}/"
+
+  setopt localoptions nullglob
+  for entry in "$dir"*; do
+    [[ -d "$entry" ]] || continue
+    base="${entry:t}"
+    [[ -z "$prefix" || "$base" == "$prefix"* ]] && results+=("$entry")
+  done
+
+  reply=("${results[@]}")
+}
+
+_wt_directory_complete_word() {
+  local dir prefix common m len
+  local -a matches names
+
+  if [[ -z "$LBUFFER" ]]; then
+    dir="${PWD}/"
+    prefix=""
+  elif [[ "$LBUFFER" == */ ]]; then
+    dir="$LBUFFER"
+    prefix=""
+  elif [[ "$LBUFFER" == */* ]]; then
+    dir="${LBUFFER%/*}/"
+    prefix="${LBUFFER##*/}"
+  else
+    dir="${PWD}/"
+    prefix="$LBUFFER"
+  fi
+
+  _wt_directory_match_prefix "$dir" "$prefix" || { zle beep; return 1 }
+  matches=("${reply[@]}")
+  if (( ${#matches[@]} == 0 )); then
+    zle beep
+    return 1
+  fi
+
+  if (( ${#matches[@]} == 1 )); then
+    LBUFFER="${matches[1]}/"
+  else
+    common="${matches[1]}"
+    for m in "${matches[2,-1]}"; do
+      len=${#common}
+      while (( len > 0 )) && [[ "${common[1,$len]}" != "${m[1,$len]}" ]]; do
+        (( len-- ))
+      done
+      common="${common[1,$len]}"
+    done
+    if [[ -n "$common" && "$common" != "$LBUFFER" ]]; then
+      LBUFFER="$common"
+    else
+      names=("${(@)matches[@]:t}")
+      zle -M "${(j:,:)names}"
+    fi
+  fi
+  CURSOR=$#LBUFFER
+}
+
+_wt_vared_directory() {
+  local prompt="$1"
+  local parameter="$2"
+  local keymap="wt-directory-${$}-${RANDOM}"
+  local widget="_wt-directory-complete-${$}-${RANDOM}"
+  local rc
+
+  zle -N "$widget" _wt_directory_complete_word
+  bindkey -N "$keymap" main
+  bindkey -M "$keymap" '^I' "$widget"
+
+  if vared -M "$keymap" -p "$prompt" "$parameter"; then
+    rc=0
+  else
+    rc=$?
+  fi
+
+  bindkey -D "$keymap"
+  zle -D "$widget"
+  return $rc
+}
+
 _wt_status() {
   local wt_root=""
 
@@ -248,6 +388,318 @@ _wt_status() {
   return $failed
 }
 
+_wt_doctor_worktrees_for_root() {
+  local wt_root="${1:A}"
+  local wt_path
+
+  [[ -d "$wt_root" ]] || return 1
+  for wt_path in "$wt_root"/*(N/); do
+    print -r -- "${wt_path:A}"
+  done
+}
+
+_wt_doctor_worktree_label() {
+  local wt_path="${1:A}"
+  local wt_root="${2:A}"
+  local root_label="${wt_root:t}"
+
+  if [[ -n "$root_label" ]]; then
+    print -r -- "$root_label/${wt_path:t}"
+  else
+    print -r -- "${wt_path:t}"
+  fi
+}
+
+_wt_doctor_read_gitdir() {
+  local wt_path="${1:A}"
+  local git_file="$wt_path/.git"
+  local gitdir_line gitdir_raw repo_path
+
+  [[ -f "$git_file" && ! -d "$git_file" ]] || return 1
+  IFS= read -r gitdir_line < "$git_file" || return 1
+  [[ "$gitdir_line" == gitdir:\ * ]] || return 1
+
+  gitdir_raw="${gitdir_line#gitdir: }"
+  gitdir_raw="${gitdir_raw#"${gitdir_raw%%[![:space:]]*}"}"
+  gitdir_raw="${gitdir_raw%"${gitdir_raw##*[![:space:]]}"}"
+  [[ -n "$gitdir_raw" ]] || return 1
+
+  if [[ "$gitdir_raw" = ~* ]]; then
+    repo_path="${~gitdir_raw:A}"
+  elif [[ "$gitdir_raw" = /* ]]; then
+    repo_path="${gitdir_raw:A}"
+  else
+    repo_path="$(cd "$wt_path" && cd "$gitdir_raw" && pwd -P)" || return 1
+  fi
+
+  [[ -d "$repo_path" ]] || return 1
+
+  print -r -- "$repo_path"
+}
+
+_wt_doctor_repo_knows_worktree() {
+  local repo_path="$1"
+  local wt_path="${2:A}"
+  local line
+
+  while IFS= read -r line; do
+    [[ "$line" == worktree\ * ]] || continue
+    [[ "${line#worktree }" == "$wt_path" ]] && return 0
+  done < <(git -C "$repo_path" worktree list --porcelain 2>/dev/null)
+
+  return 1
+}
+
+_wt_doctor_report_error() {
+  local code="$1" wt_path="$2" detail="$3" label="$4"
+
+  print -u2 -r -- "error [$code] $label: $detail"
+  _wt_doctor_errors+=("$code|$wt_path|$detail|$label")
+}
+
+_wt_doctor_print_status() {
+  local label="$1"
+  local state="$2"
+
+  case "$state" in
+    ok)
+      print -P -r -- "  $label  %F{green}OK%f"
+      ;;
+    orphan)
+      print -P -r -- "  $label  %F{red}ORPHAN%f"
+      ;;
+    *)
+      print -P -r -- "  $label  %F{red}NOT OK%f"
+      ;;
+  esac
+}
+
+_wt_doctor_check_worktree() {
+  local wt_path="${1:A}"
+  local wt_root="${2:A}"
+  local label="$(_wt_doctor_worktree_label "$wt_path" "$wt_root")"
+  local git_file="$wt_path/.git"
+  local repo_path git_raw gitdir_raw
+
+  if [[ -d "$git_file" ]]; then
+    _wt_doctor_report_error gitdir_invalid "$wt_path" \
+      ".git is a directory, expected a file with 'gitdir: /path/to/repo'" "$label"
+    reply=(not_ok)
+    return 1
+  fi
+  if [[ ! -f "$git_file" ]]; then
+    _wt_doctor_report_error missing_git "$wt_path" "no .git file" "$label"
+    reply=(not_ok)
+    return 1
+  fi
+
+  git_raw=$(< "$git_file")
+  git_raw="${git_raw#"${git_raw%%[![:space:]]*}"}"
+  git_raw="${git_raw%"${git_raw##*[![:space:]]}"}"
+
+  if [[ "$git_raw" == gitdir:\ * ]]; then
+    gitdir_raw="${git_raw#gitdir: }"
+  else
+    _wt_doctor_report_error gitdir_invalid "$wt_path" \
+      ".git missing gitdir line (expected 'gitdir: /path/to/repo')" "$label"
+    reply=(not_ok)
+    return 1
+  fi
+
+  if ! repo_path=$(_wt_doctor_read_gitdir "$wt_path"); then
+    _wt_doctor_report_error gitdir_invalid "$wt_path" \
+      ".git gitdir points to missing or empty path: ${gitdir_raw:-<empty>}" "$label"
+    reply=(not_ok)
+    return 1
+  fi
+
+  if ! _wt_doctor_repo_knows_worktree "$repo_path" "$wt_path"; then
+    _wt_doctor_report_error gitdir_worktree_unknown "$wt_path" \
+      "main repo does not list this worktree ($repo_path)" "$label"
+    reply=(orphan)
+    return 1
+  fi
+
+  reply=(ok)
+  return 0
+}
+
+_wt_doctor_prompt_missing_git() {
+  local wt_path="$1"
+  local label="$2"
+
+  cat <<EOF
+You are helping repair a git worktree managed by the wt zsh plugin.
+
+Worktree path: $wt_path
+Label: $label
+Problem: missing .git file
+
+The worktree directory should contain a .git file with one line like:
+gitdir: /absolute/path/to/main/repo
+
+Suggest concrete shell commands to create the correct .git file and verify the setup. Prefer read-only checks first, then minimal writes.
+EOF
+}
+
+_wt_doctor_prompt_gitdir_invalid() {
+  local wt_path="$1"
+  local detail="$2"
+  local label="$3"
+
+  cat <<EOF
+You are helping repair a git worktree managed by the wt zsh plugin.
+
+Worktree path: $wt_path
+Label: $label
+Problem: invalid .git gitdir
+Details: $detail
+
+The .git file should contain one line like:
+gitdir: /absolute/path/to/main/repo
+
+Suggest concrete shell commands to diagnose and fix the .git file. Prefer read-only checks first, then minimal writes.
+EOF
+}
+
+_wt_doctor_prompt_gitdir_worktree_unknown() {
+  local wt_path="$1"
+  local detail="$2"
+  local label="$3"
+
+  cat <<EOF
+You are helping repair a git worktree managed by the wt zsh plugin.
+
+Worktree path: $wt_path
+Label: $label
+Problem: main repository does not register this worktree
+Details: $detail
+
+The .git gitdir path exists but \`git -C <repo> worktree list\` does not include this worktree directory.
+
+Suggest concrete shell commands to re-register or repair the worktree link without losing uncommitted work when possible.
+EOF
+}
+
+_wt_doctor_prompt_for() {
+  local code="$1" wt_path="$2" detail="$3" label="$4"
+
+  case "$code" in
+    missing_git)
+      _wt_doctor_prompt_missing_git "$wt_path" "$label"
+      ;;
+    gitdir_invalid)
+      _wt_doctor_prompt_gitdir_invalid "$wt_path" "$detail" "$label"
+      ;;
+    gitdir_worktree_unknown)
+      _wt_doctor_prompt_gitdir_worktree_unknown "$wt_path" "$detail" "$label"
+      ;;
+    *)
+      print -r -- "Unknown wt doctor error code: $code (worktree: $wt_path; detail: $detail)"
+      ;;
+  esac
+}
+
+_wt_doctor_apfel_suggest() {
+  local prompt="$1"
+
+  (( $+commands[apfel] )) || { print "apfel not found in PATH" >&2; return 1; }
+  # SECURITY-REVIEW: prompt is built from local paths and error codes, not raw user input.
+  apfel --stream "$prompt"
+}
+
+_wt_doctor_suggest_fixes() {
+  local entry code wt_path detail label prompt failed=0
+
+  [[ ${#_wt_doctor_errors[@]} -gt 0 ]] || return 0
+
+  for entry in "${_wt_doctor_errors[@]}"; do
+    local -a parts=("${(@s:|:)entry}")
+    code="$parts[1]"
+    wt_path="$parts[2]"
+    detail="$parts[3]"
+    label="$parts[4]"
+
+    prompt=$(_wt_doctor_prompt_for "$code" "$wt_path" "$detail" "$label")
+    print -r -- ""
+    print -r -- "suggest [$code] $label"
+    if ! _wt_doctor_apfel_suggest "$prompt"; then
+      failed=1
+    fi
+  done
+
+  return $failed
+}
+
+_wt_doctor_check_root() {
+  local wt_root="${1:A}"
+  local -a worktrees=()
+  local wt_path failed=0
+
+  [[ -d "$wt_root" ]] || { print "Worktree root not found: $wt_root" >&2; return 1; }
+
+  worktrees=("${(@f)$(_wt_doctor_worktrees_for_root "$wt_root")}")
+  [[ ${#worktrees[@]} -gt 0 ]] || { print "No worktrees found in: $(_wt_status_root_label "$wt_root")"; return 0; }
+
+  print -r -- "$(_wt_status_root_label "$wt_root")"
+  for wt_path in "${worktrees[@]}"; do
+    local label="$(_wt_doctor_worktree_label "$wt_path" "$wt_root")"
+    _wt_doctor_check_worktree "$wt_path" "$wt_root"
+    _wt_doctor_print_status "$label" "${reply[1]}"
+    (( ${#reply[@]} > 0 && reply[1] != ok )) && failed=1
+  done
+
+  return $failed
+}
+
+_wt_doctor() {
+  local wt_root=""
+  local suggest=0
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --worktree-root) wt_root="$2"; shift 2 ;;
+      --suggest) suggest=1; shift ;;
+      --help|-h)
+        print "Usage: wt doctor [--worktree-root DIR] [--suggest]"
+        print ""
+        print "Check worktrees for .git gitdir health and optionally ask apfel for fix suggestions."
+        return 0 ;;
+      *)
+        print "Unknown argument: $1" >&2
+        return 1 ;;
+    esac
+  done
+
+  typeset -ga _wt_doctor_errors=()
+
+  local roots_output
+  if [[ -n "$wt_root" ]]; then
+    roots_output="${wt_root:A}"
+  else
+    roots_output=$(_wt_status_roots_for_cwd) || return 1
+  fi
+
+  local -a roots=("${(@f)roots_output}")
+  [[ ${#roots[@]} -gt 0 ]] || { print "No worktree roots found."; return 0; }
+
+  local failed=0
+  local root
+  local first=1
+  for root in "${roots[@]}"; do
+    (( first )) || print ""
+    _wt_doctor_check_root "$root" || failed=1
+    first=0
+  done
+
+  if (( suggest && ${#_wt_doctor_errors[@]} > 0 )); then
+    _wt_doctor_suggest_fixes || failed=1
+  fi
+
+  (( ${#_wt_doctor_errors[@]} == 0 )) || failed=1
+  return $failed
+}
+
 _wt_edit() {
   local wt_root=""
 
@@ -266,7 +718,7 @@ _wt_edit() {
   done
 
   if [[ -z "$wt_root" ]]; then
-    wt_root=$(_wt_current_worktree_root) || wt_root=$(_wt_pick_worktree_root) || return 0
+    wt_root=$(_wt_current_worktree_root) || wt_root=$(_wt_pick_worktree_root "Select worktree group to edit") || return 0
   fi
 
   wt_root="${wt_root:A}"
@@ -341,7 +793,7 @@ _wt_mv() {
   print "  mv semantics: existing dir → move inside it; new path → rename."
   print "Current: $wt_dir"
   local dest="${wt_root}/"
-  vared -p "Move to: " dest
+  _wt_vared_directory "Move to: " dest
   dest="${dest%/}"
   [[ -z "$dest" ]] && { print "No destination given." >&2; return 1; }
 
@@ -351,7 +803,7 @@ _wt_mv() {
   while [[ -e "$new_wt_dir" ]]; do
     print "'$new_wt_dir' already exists. Choose a different destination."
     dest="${wt_root}/"
-    vared -p "Move to: " dest
+    _wt_vared_directory "Move to: " dest
     dest="${dest%/}"
     [[ -z "$dest" ]] && return 1
     [[ -d "$dest" ]] && new_wt_dir="${dest}/$(basename "$wt_dir")" || new_wt_dir="$dest"
@@ -452,7 +904,7 @@ _wt_init() {
   print ""
   print "Enter the directory that will group all these worktrees. Tab-completion is available."
   local wt_dir="${wt_root}/"
-  vared -p "Worktree root: " wt_dir
+  _wt_vared_directory "Worktree root: " wt_dir
   wt_dir="${wt_dir%/}"
   [[ -z "$wt_dir" ]] && { print "No directory given." >&2; return 1; }
 
@@ -514,6 +966,7 @@ _wt_completion() {
     "init:Create a new worktree group"
     "edit:Remove selected worktrees"
     "status:Show Starship prompts for worktrees"
+    "doctor:Check worktrees and suggest fixes"
     "mv:Move a worktree group"
     "move:Move a worktree group"
     "completion:Print zsh completion script"
@@ -550,6 +1003,12 @@ _wt_completion() {
             "--worktree-root[Worktree root]:directory:_directories" \
             {-h,--help}"[Show help]"
           ;;
+        doctor)
+          _arguments \
+            "--worktree-root[Worktree root]:directory:_directories" \
+            "--suggest[Ask apfel for fix suggestions]" \
+            {-h,--help}"[Show help]"
+          ;;
         mv|move)
           _message "move is interactive"
           ;;
@@ -574,26 +1033,29 @@ wt() {
     init)      shift; _wt_init "$@"; return ;;
     edit)      shift; _wt_edit "$@"; return ;;
     status)    shift; _wt_status "$@"; return ;;
+    doctor)    shift; _wt_doctor "$@"; return ;;
     mv|move)   shift; _wt_mv   "$@"; return ;;
     completion) shift; _wt_completion_script; return ;;
     -h|--help)
-      print "Usage: wt [init|edit|status|mv|move|completion] [-h|--help]"
+      print "Usage: wt [init|edit|status|doctor|mv|move|completion] [-h|--help]"
       print ""
-      print "  (bare)     prompt for a worktree group path and cd into it"
+      print "  (bare)     pick a worktree group with fzf and cd into it"
       print "  init       create a new worktree group from one or more repos"
       print "  edit       remove selected worktrees from a worktree group"
       print "  status     show Starship prompts for worktrees"
+      print "  doctor     check .git gitdir health and suggest fixes"
       print "  mv|move    move a worktree group to a new location"
       print "  completion print zsh completion script"
       return 0 ;;
   esac
 
-  local wt_root="${HOME}/src/worktrees"
-  print "Enter the worktree group to jump into. Tab-completion is available."
-  local wt_dir="${wt_root}/"
-  vared -p "Worktree root: " wt_dir
-  wt_dir="${wt_dir%/}"
-  [[ -z "$wt_dir" ]] && { print "No directory given." >&2; return 1; }
+  local wt_root="${bsl_wts:-$HOME/src/worktrees}"
+  local wt_dir
+
+  [[ -d "$wt_root" ]] || { print "Worktree base not found: $wt_root" >&2; return 1; }
+
+  print "Select the worktree group to jump into."
+  wt_dir=$(_wt_pick_worktree_root "Select worktree group") || return 0
   cd "$wt_dir"
 }
 

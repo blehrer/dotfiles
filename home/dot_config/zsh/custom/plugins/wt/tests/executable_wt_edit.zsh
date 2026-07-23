@@ -71,9 +71,11 @@ assert_removed "$repo" "$wt_path"
 
 repo2="$tmpdir/repo2"
 wt_base2="$tmpdir/base2"
-wt_root2="$wt_base2/group"
+wt_parent="$wt_base2/nested"
+wt_root2="$wt_parent/group"
 wt_path2="$wt_root2/repo2"
 count_file="$tmpdir/fzf-count"
+mkdir -p "$wt_parent"
 create_worktree "$repo2" "$wt_path2" "edit-test-2"
 
 cat > "$fake_bin/fzf" <<EOF
@@ -83,7 +85,7 @@ count=0
 (( count++ ))
 print -r -- "\$count" > "$count_file"
 if (( count == 1 )); then
-  print -r -- "$wt_root2"
+  print -r -- "nested/group"
 else
   print -r -- "$wt_path2"
 fi
