@@ -166,7 +166,8 @@ on-mode-changed = []
     2 = 'main'
     3 = 'main'
     4 = 'main'
-    X = ['Built-in Retina Display', 'secondary']
+    X = ['secondary']
+    A = ['Built-in Retina Display']
 
 [[on-window-detected]]
     if.app-id = 'com.microsoft.teams2'
