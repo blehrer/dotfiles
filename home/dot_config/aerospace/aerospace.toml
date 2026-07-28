@@ -1,4 +1,4 @@
-# Place a copy of this config to ~/.aerospace.toml
+
 # After that, you can edit ~/.aerospace.toml to your liking
 
 # Config version for compatibility and deprecations
@@ -167,7 +167,6 @@ on-mode-changed = []
     3 = 'main'
     4 = 'main'
     X = ['secondary']
-    A = ['Built-in Retina Display']
 
 [[on-window-detected]]
     if.app-id = 'com.microsoft.teams2'
