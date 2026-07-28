@@ -45,7 +45,7 @@ automatically-unhide-macos-hidden-apps = false
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-# persistent-workspaces = ["1", "2", "3", "4", "X" ]
+persistent-workspaces = ["1", "2", "3", "4", "X" ]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -107,7 +107,7 @@ on-mode-changed = []
     # '''
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-    alt-tab = 'layout h_tiles v_accordion'
+    alt-tab = 'layout h_tiles v_accordion v_tiles'
     ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-next'
     shift-ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-prev'
 
@@ -165,7 +165,7 @@ on-mode-changed = []
     2 = 'main'
     3 = 'main'
     4 = 'main'
-    X = 'Built-in Retina Display'
+    X = ['Built-in Retina Display', 'secondary']
 
 [[on-window-detected]]
     if.app-id = 'com.microsoft.teams2'
