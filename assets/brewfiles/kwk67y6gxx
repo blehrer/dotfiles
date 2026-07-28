@@ -183,6 +183,8 @@ brew "vale"
 brew "vips"
 # Generator for LS_COLORS with support for multiple color themes
 brew "vivid"
+# Entity-level semantic merge driver for Git using tree-sitter
+brew "weave"
 # Internet file retriever
 brew "wget"
 # Network analyzer and capture tool - without graphical user interface
