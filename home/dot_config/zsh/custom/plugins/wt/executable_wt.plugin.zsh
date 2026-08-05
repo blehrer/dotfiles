@@ -220,7 +220,7 @@ _wt_progress_line() {
     (( i++ ))
   done
 
-  print -rn -- "\rRemoving [$bar] $done/$total $spinner $label"
+  print -nu2 -r -- $'\e[2K\r'"Removing [$bar] $done/$total $spinner $label"
 }
 
 _wt_run_with_progress() {
@@ -232,16 +232,20 @@ _wt_run_with_progress() {
   local tmp_output
   tmp_output=$(mktemp "${TMPDIR:-/tmp}/wt-edit.XXXXXX") || return 1
 
+  # ponytail: NO_MONITOR keeps zsh from printing [N] pid / done lines that break \r progress.
+  setopt LOCAL_OPTIONS NO_MONITOR
   "$@" > "$tmp_output" 2>&1 &
   local pid=$!
   local -a spinners=("|" "/" "-" "\\")
   local spinner_index=1
 
-  while kill -0 "$pid" 2>/dev/null; do
-    _wt_progress_line "$done" "$total" "$label" "$spinners[$spinner_index]"
-    spinner_index=$(( spinner_index % ${#spinners[@]} + 1 ))
-    sleep 0.2
-  done
+  if [[ -t 2 ]]; then
+    while kill -0 "$pid" 2>/dev/null; do
+      _wt_progress_line "$done" "$total" "$label" "$spinners[$spinner_index]"
+      spinner_index=$(( spinner_index % ${#spinners[@]} + 1 ))
+      sleep 0.2
+    done
+  fi
 
   wait "$pid"
   local rc=$?
@@ -251,7 +255,7 @@ _wt_run_with_progress() {
   else
     _wt_progress_line "$done" "$total" "$label" "failed"
   fi
-  print ""
+  print -u2 ""
 
   if [[ -s "$tmp_output" ]]; then
     print -u2 -r -- "$(< "$tmp_output")"
