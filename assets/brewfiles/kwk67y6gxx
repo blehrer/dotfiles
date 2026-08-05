@@ -23,6 +23,8 @@ brew "azure-cli"
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Memory upgrade for your coding agent
+brew "beads"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Software library to render fonts
@@ -252,11 +254,12 @@ mas "Pages", id: 409201541
 mas "Slack", id: 803453959
 vscode "anysphere.remote-containers"
 vscode "anysphere.remote-ssh"
+vscode "asvetliakov.vscode-neovim"
 vscode "esbenp.prettier-vscode"
 vscode "gitlab.gitlab-workflow"
 vscode "ms-playwright.playwright"
 vscode "nrwl.angular-console"
-vscode "vscodevim.vim"
+vscode "webhooked.kanso-theme"
 go "golang.org/x/tools/cmd/callgraph"
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/davidrjenni/reftools/cmd/fillswitch"
