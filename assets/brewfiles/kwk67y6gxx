@@ -26,8 +26,6 @@ brew "bash"
 brew "bat"
 # Memory upgrade for your coding agent
 brew "beads"
-# CLI of the open-source IDE For exploring and testing APIs
-brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Software library to render fonts
