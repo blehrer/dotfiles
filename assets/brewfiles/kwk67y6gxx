@@ -1,6 +1,7 @@
 tap "benjiwolff/neovim-nightly"
 tap "daveshanley/vacuum"
 tap "deskflow/tap"
+tap "dicklesworthstone/tap"
 tap "felixkratz/formulae"
 tap "grishka/grishka"
 tap "nikitabobko/tap", trusted: true
@@ -203,6 +204,8 @@ brew "zellij"
 brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
+# Graph-aware task management TUI for beads projects
+brew "dicklesworthstone/tap/bv", trusted: true
 # YAMAMOTO Mitsuharu's Mac port of GNU Emacs
 brew "railwaycat/emacsmacport/emacs-mac@29"
 # Command-line interface for 1Password
