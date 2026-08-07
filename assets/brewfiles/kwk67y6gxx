@@ -14,6 +14,8 @@ brew "act"
 brew "aerc"
 # Apple Intelligence from the command-line, with OpenAi-compatible API server
 brew "apfel"
+# Code searching, linting, rewriting
+brew "ast-grep"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
 # Thin wrapper around the `aws` command-line interface for use with LocalStack
@@ -265,6 +267,7 @@ vscode "gitlab.gitlab-workflow"
 vscode "ms-playwright.playwright"
 vscode "nrwl.angular-console"
 vscode "webhooked.kanso-theme"
+go "github.com/Dicklesworthstone/beads_viewer/cmd/bv"
 go "golang.org/x/tools/cmd/callgraph"
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/davidrjenni/reftools/cmd/fillswitch"
