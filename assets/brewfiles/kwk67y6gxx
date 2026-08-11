@@ -184,6 +184,8 @@ brew "tree-sitter-cli"
 brew "uv"
 # Syntax-aware linter for prose
 brew "vale"
+# Your CLI home video recorder
+brew "vhs"
 # Image processing library
 brew "vips"
 # Generator for LS_COLORS with support for multiple color themes
