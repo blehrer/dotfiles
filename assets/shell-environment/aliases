@@ -77,7 +77,14 @@ if has git ; then
     alias garia='gamf; gria'
     alias grim='git rebase -i origin/master'
     alias gst='git status'
-    has lazygit  && alias lg="lazygit -ucd ${HOME}/.config/lazygit,$(dark_or_light)_theme.yml"
+    if has lazygit; then
+      function lg {
+        local mode
+        mode=$(dark_or_light)
+        mode=${mode:-dark}
+        lazygit --use-config-file="${HOME}/.config/lazygit/config.yml,${HOME}/.config/lazygit/${mode}_theme.yml" "$@"
+      }
+    fi
 fi
 
 has rg  && alias ag=rg
