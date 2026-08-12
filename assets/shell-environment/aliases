@@ -79,10 +79,20 @@ if has git ; then
     alias gst='git status'
     if has lazygit; then
       function lg {
-        local mode
+        local mode theme_family theme_file
         mode=$(dark_or_light)
         mode=${mode:-dark}
-        lazygit --use-config-file="${HOME}/.config/lazygit/config.yml,${HOME}/.config/lazygit/${mode}_theme.yml" "$@"
+        theme_family=$(chezmoi data --format json 2>/dev/null | jq -r '.theme // "kanagawa"')
+        if [[ $theme_family = kanso ]]; then
+          if [[ $mode = light ]]; then
+            theme_file=kanso_pearl_theme.yml
+          else
+            theme_file=kanso_ink_theme.yml
+          fi
+        else
+          theme_file=${mode}_theme.yml
+        fi
+        lazygit --use-config-file="${HOME}/.config/lazygit/config.yml,${HOME}/.config/lazygit/${theme_file}" "$@"
       }
     fi
 fi

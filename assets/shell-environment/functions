@@ -8,6 +8,42 @@ function what {
 function sticky-note {
     ~/.local/bin/sticky-note.zsh
 }
+
+function theme {
+  local want="${1:-}"
+  local data cur
+  data="$(chezmoi source-path 2>/dev/null)/.chezmoidata.toml"
+  cur=$(sed -n 's/^theme = "\(.*\)"/\1/p' "$data")
+
+  if [[ -z $want ]]; then
+    echo "$cur"
+    return 0
+  fi
+
+  case "$want" in
+    kanagawa|kanso) ;;
+    toggle)
+      [[ $cur = kanagawa ]] && want=kanso || want=kanagawa
+      ;;
+    *)
+      echo "usage: theme [kanagawa|kanso|toggle]" >&2
+      return 1
+      ;;
+  esac
+
+  [[ $want = "$cur" ]] && { echo "already $want"; return 0; }
+
+  perl -pi -e 's/^theme = ".*"/theme = "'"$want"'"/' "$data"
+  chezmoi apply --force \
+    "$HOME/.config/ghostty/config" \
+    "$HOME/.config/kitty/dark-theme.auto.conf" \
+    "$HOME/.config/kitty/light-theme.auto.conf" \
+    "$HOME/.config/yazi/theme.toml" \
+    "$HOME/.config/zellij/config.kdl"
+
+  echo "theme: $want"
+  echo "reload ghostty, open a new kitty window, restart zellij, reopen yazi; lg picks it up next run"
+}
 #((( Namespaces with completions
 
 if [[ "bash" = $(shellname) ]]; then

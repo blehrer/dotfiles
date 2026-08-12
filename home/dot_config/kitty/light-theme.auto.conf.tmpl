@@ -1,0 +1,5 @@
+{{- if eq .theme "kanso" -}}
+{{ include "dot_config/kitty/themes/kanso-pearl.conf" }}
+{{- else -}}
+{{ include "dot_config/kitty/themes/kanagawa-paper-canvas.conf" }}
+{{- end -}}

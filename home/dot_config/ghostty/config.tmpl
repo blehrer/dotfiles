@@ -1,4 +1,4 @@
-theme = light:kanagawa-paper-canvas,dark:kanagawa-paper-ink
+theme = light:{{ if eq .theme "kanso" -}}kanso-pearl{{- else -}}kanagawa-paper-canvas{{- end -}},dark:{{ if eq .theme "kanso" -}}kanso-ink{{- else -}}kanagawa-paper-ink{{- end }}
 
 keybind = super+shift+,=reload_config
 keybind = super+,=open_config

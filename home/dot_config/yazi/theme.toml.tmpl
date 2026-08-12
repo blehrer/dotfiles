@@ -1,0 +1,6 @@
+#:schema https://yazi-rs.github.io/schemas/schemas/theme.schema.json
+[flavor]
+dark = "{{ if eq .theme "kanso" }}kanso-ink{{ else }}kanagawa-dragon{{ end }}"
+{{- if eq .theme "kanso" }}
+light = "kanso-pearl"
+{{- end }}
