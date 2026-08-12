@@ -42,7 +42,7 @@ function theme {
     "$HOME/.config/zellij/config.kdl"
 
   echo "theme: $want"
-  echo "reload ghostty, open a new kitty window, restart zellij, reopen yazi; lg picks it up next run"
+  echo "reload ghostty, open a new kitty window, restart zellij, reopen yazi; restart nvim; lg picks it up next run"
 }
 #((( Namespaces with completions
 
