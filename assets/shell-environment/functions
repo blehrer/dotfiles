@@ -34,6 +34,7 @@ function theme {
   [[ $want = "$cur" ]] && { echo "already $want"; return 0; }
 
   perl -pi -e 's/^theme = ".*"/theme = "'"$want"'"/' "$data"
+  rm -f "${XDG_DATA_HOME:-$HOME/.local/share}/${NVIM_APPNAME:-kickstart.nvim}/colorscheme.current"
   chezmoi apply --force \
     "$HOME/.config/ghostty/config" \
     "$HOME/.config/kitty/dark-theme.auto.conf" \
