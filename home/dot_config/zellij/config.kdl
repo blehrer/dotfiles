@@ -337,7 +337,8 @@ default_layout "bsl"
 
 // The folder in which Zellij will look for themes
 // (Requires restart)
-// 
+// ponytail: default CONFIG_DIR/themes works; zellij does not expand ~ in theme_dir
+//
 // theme_dir "/tmp"
 
 // Toggle enabling the mouse mode.
