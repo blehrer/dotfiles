@@ -60,6 +60,8 @@ brew "fd"
 brew "ffmpeg"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# Multi-agent workspace manager
+brew "gastown"
 # GNU awk utility
 brew "gawk"
 # Distributed revision control system
