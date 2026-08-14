@@ -32,6 +32,10 @@ if [[ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]] ; then
   source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
+[ -f ~/.config/op/plugins.sh ] && source ~/.config/op/plugins.sh
+
+# --- Gas Town Integration (managed by gt) ---
+[[ -f "$HOME/.config/gastown/shell-hook.sh" ]] && source "$HOME/.config/gastown/shell-hook.sh"
+# --- End Gas Town ---
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
-[ -f ~/.config/op/plugins.sh ] && source ~/.config/op/plugins.sh
