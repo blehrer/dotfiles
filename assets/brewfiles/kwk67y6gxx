@@ -4,6 +4,7 @@ tap "deskflow/tap"
 tap "dicklesworthstone/tap"
 tap "felixkratz/formulae"
 tap "grishka/grishka"
+tap "hashicorp/tap"
 tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
@@ -210,6 +211,8 @@ brew "zellij"
 brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
+# Vault
+brew "hashicorp/tap/vault", trusted: true
 # YAMAMOTO Mitsuharu's Mac port of GNU Emacs
 brew "railwaycat/emacsmacport/emacs-mac@29"
 # Command-line interface for 1Password
