@@ -30,7 +30,13 @@ export VENV_HOME="$HOME/.virtualenvs"
 
 h=${HOME}
 data=${XDG_DATA_HOME:-$h/.local/share/}
-paths=($h/.local/bin $data/${NVIM_APPNAME}/mason/bin $h/go/bin /opt/homebrew/bin $h/.rd/bin $h/.emacs.d/bin $h/.local/share/${NVIM_APPNAME}/mason/bin)
+paths=($h/.local/bin $data/${NVIM_APPNAME}/mason/bin)
+paths+=($h/go/bin)
+paths+=(/opt/homebrew/bin)
+paths+=($h/.rd/bin)
+paths+=($h/.emacs.d/bin)
+paths+=($h/.local/share/${NVIM_APPNAME}/mason/bin)
+paths+=($h/.bun/bin)
 
 if is_darwin; then
     export PNPM_HOME=$h/Library/pnpm
