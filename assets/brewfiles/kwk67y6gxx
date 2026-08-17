@@ -81,6 +81,8 @@ brew "graphviz"
 brew "hadolint"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
+# Agent multiplexer that lives in your terminal
+brew "herdr"
 # Client library for huggingface.co hub
 brew "hf"
 # Improved top (interactive process viewer)
