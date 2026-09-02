@@ -69,6 +69,8 @@ brew "gawk"
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Run gitlab pipelines locally as shell executor or docker executor
+brew "gitlab-ci-local"
 # Open-source GitLab command-line tool
 brew "glab"
 # Render markdown on the CLI
