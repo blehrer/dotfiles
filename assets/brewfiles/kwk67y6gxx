@@ -55,6 +55,8 @@ brew "direnv"
 brew "doctl"
 # Converts Microsoft Office docx documents to equivalent text documents
 brew "docx2txt"
+# Diff that operates at the word level
+brew "dwdiff"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
@@ -289,4 +291,3 @@ cargo "typst-cli"
 cargo "wordnet-ls"
 uv "graphifyy"
 uv "mempalace"
-npm "corepack"
