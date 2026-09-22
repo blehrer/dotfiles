@@ -84,6 +84,11 @@ keybinds clear-defaults=true {
     }
     scroll {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
+        // Zellij has no keyboard selection cursor, so "v" hands the scrollback to
+        // nvim, where real visual mode and the rest of the vim motions live.
+        bind "v" { EditScrollback; SwitchToMode "normal"; }
+        bind "y" { Copy; SwitchToMode "normal"; }
+        bind "Y" { CopyLastCommandOutput; SwitchToMode "normal"; }
         bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "Ctrl Alt Shift s" { SwitchToMode "normal"; }
     }
@@ -161,6 +166,7 @@ keybinds clear-defaults=true {
     shared_except "locked" "entersearch" "renametab" "renamepane" "prompt" "tmux" {
         bind "Ctrl Alt Shift g" { SwitchToMode "locked"; }
         bind "Ctrl Alt Shift q" { Quit; }
+        bind "Alt y" { EditScrollback; }
     }
     shared_except "locked" "entersearch" "renametab" "renamepane" "session" "prompt" "tmux" {
         bind "Ctrl Alt Shift o" { SwitchToMode "session"; }
@@ -220,6 +226,15 @@ keybinds clear-defaults=true {
         bind "k" { ScrollUp; }
         bind "l" { PageScrollDown; }
         bind "u" { HalfPageScrollUp; }
+        bind "g" { ScrollToTop; }
+        bind "G" { ScrollToBottom; }
+        bind "Ctrl d" { HalfPageScrollDown; }
+        bind "Ctrl u" { HalfPageScrollUp; }
+        // Prompt-to-prompt jumping and command selection need OSC 133 marks from
+        // the shell; see the starship block in assets/shell-environment/init.
+        bind "[" { ScrollToPreviousPrompt; }
+        bind "]" { ScrollToNextPrompt; }
+        bind "m" { SelectCommandAtScrollPosition; }
     }
     entersearch {
         bind "Ctrl c" { SwitchToMode "scroll"; }

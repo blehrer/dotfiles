@@ -111,6 +111,9 @@ _comp_options+=(globdots) # With hidden files
 # +--------+
 autoload -Uz bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/tofu tofu
+for f in ~/.local/share/bash-completion/completions/*; do 
+  source $f
+done
 
 # Only work with the Zsh function vman
 # See $DOTFILES/zsh/scripts.zsh
@@ -205,12 +208,6 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 for plugin in $(echo ${HOME}/.config/zsh/custom/plugins/* | sort); do source $plugin/*.plugin.zsh; done
 # plugins )))
 
-# ((( Shell extensions
-# (((direnv
-eval "$(direnv hook zsh)"
-# )))
-#)))
-
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 source ~/.local/share/chezmoi/assets/shell-environment/rc
@@ -226,5 +223,11 @@ if (( $+aliases[glab] )); then
 fi
 
 . "$HOME/.local/bin/env"
+
+# ((( Shell extensions
+# (((direnv
+eval "$(direnv hook zsh)"
+# )))
+#)))
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=zsh.gotexttmpl foldmarker=(((,)))
