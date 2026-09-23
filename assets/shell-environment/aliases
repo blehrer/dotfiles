@@ -117,6 +117,8 @@ has lazydocker && alias lzd=lazydocker
 
 # has tmux && alias tmux='tmux -f ~/.config/tmux/tmux.conf'
 
+has gitlab-ci-local && alias gcl='gitlab-ci-local' && alias glci='gitlab-ci-local'
+
 # Compression
 compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
 alias decompress="tar -xzf"
