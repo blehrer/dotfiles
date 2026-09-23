@@ -42,7 +42,8 @@ if has eza ; then
     alias lsa='ls -a'
     alias lt='eza --tree --level=2 --long --icons --git'
     alias lta='lt -a'
-    alias tree='l --tree --ignore-glob ".git/*|node_modules/*"'
+    alias tree='l --tree --ignore-glob ".git|node_modules|dist" -a'
+    alias dtree='tree -D -L ${1:-2}'
 fi
 
 if [ -d $OBSIDIAN_VAULT ]; then
