@@ -93,7 +93,7 @@
     blaame = blame -w -C -C -C
     clone-gh = "!git clone git@github.com:$1"
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
-    done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
+    done = "!f(){ b=${1:-$(git branch-name)}; git branch -m $b DONE/$b; }; f"
     changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
         echo Changelist, relative to upstream branch $upstream && \
         git log --oneline --graph $upstream..@"
