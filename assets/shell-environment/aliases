@@ -129,4 +129,6 @@ has podman && alias docker=podman
 
 has ifconfig && alias _.ip='ipconfig getifaddr en0'
 
+alias dfda="pushd $DOTFILES_HOME/assets/shell-environment/ ; nvim ."
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
