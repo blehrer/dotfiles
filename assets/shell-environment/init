@@ -5,6 +5,24 @@ if is_darwin; then
   if has starship ; then
     export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
     eval "$(starship init $shellenv)"
+    if [[ $shellenv = zsh ]]; then
+      # Zellij reads OSC 133 marks; stock zsh and Starship do not send them.
+      # After each command: D = output ended (with exit code), A = prompt region starts.
+      # STARSHIP_CMD_STATUS holds the code Starship captured in its precmd; $? is wrong here.
+      _osc133_precmd() { print -Pn "\e]133;D;${STARSHIP_CMD_STATUS:-0}\a\e]133;A\a" }
+
+      # Right after Enter, before the command runs: C = command output starts.
+      _osc133_preexec() { print -Pn "\e]133;C\a" }
+
+      # Register precmd hook (runs before Starship redraws the prompt).
+      precmd_functions+=(_osc133_precmd)
+
+      # Register preexec hook (runs when a command line is submitted).
+      preexec_functions+=(_osc133_preexec)
+
+      # After Starship builds PROMPT: B = prompt finished, input begins (non-printing).
+      PROMPT+=$'%{\e]133;B\a%}'
+    fi
   fi
   if has try; then
     eval "$(try init $WORKSPACE/tries)"
