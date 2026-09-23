@@ -34,8 +34,14 @@ fi
 
 [ -f ~/.config/op/plugins.sh ] && source ~/.config/op/plugins.sh
 
+# studioshare launch
+export LAUNCH_HOME="$HOME/.launch"
+export PATH="$LAUNCH_HOME/bin:$PATH"
+# launch completions
+[ -s "$LAUNCH_HOME/complete/_launch" ] && source "$LAUNCH_HOME/complete/_launch"
+
 # --- Gas Town Integration (managed by gt) ---
-[[ -f "$HOME/.config/gastown/shell-hook.sh" ]] && source "$HOME/.config/gastown/shell-hook.sh"
+# [[ -f "$HOME/.config/gastown/shell-hook.sh" ]] && source "$HOME/.config/gastown/shell-hook.sh"
 # --- End Gas Town ---
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
