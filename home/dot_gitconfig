@@ -34,6 +34,7 @@
 
 [merge]
     tool = nvimdiff
+	conflictStyle = zdiff3
 
 [fetch]
     prune = true
@@ -68,6 +69,15 @@
 [user "github.com"]
     name = blehrer
 
+
+# Disney GitLab — SCP remotes (most common)
+[includeIf "hasconfig:remote.*.url:git@gitlab.disney.com:*/**"]
+    path = ~/.config/.secret/work/disney.gitconfig
+
+# Disney GitLab — ssh:// remotes
+[includeIf "hasconfig:remote.*.url:ssh://git@gitlab.disney.com/**"]
+    path = ~/.config/.secret/work/disney.gitconfig
+
 [merge "jupyternotebook"]
     driver = git-nbmergedriver merge %O %A %B %L %P
     name = jupyter notebook merge driver
@@ -93,7 +103,7 @@
     blaame = blame -w -C -C -C
     clone-gh = "!git clone git@github.com:$1"
     delete-from-origin = "!git push -d origin $(git branch-name | tr -d '[:space:]')"
-    done = "!f(){ b=${1:-$(git branch-name)}; git branch -m $b DONE/$b; }; f"
+    done = "!git branch -m ${1:-`git branch-name`} 'DONE/'${1:-`git branch-name`}"
     changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
         echo Changelist, relative to upstream branch $upstream && \
         git log --oneline --graph $upstream..@"
