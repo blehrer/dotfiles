@@ -149,8 +149,6 @@ brew "opentofu"
 brew "pillow"
 # Paste PNG into files
 brew "pngpaste"
-# Tool for managing OCI containers and pods
-brew "podman"
 # Podman Terminal User Interface
 brew "podman-tui"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
