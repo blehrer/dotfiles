@@ -125,7 +125,7 @@ alias decompress="tar -xzf"
 
 alias cdw='cd $WORKSPACE'
 
-has podman && alias docker=podman
+# has podman && alias docker=podman
 
 has ifconfig && alias _.ip='ipconfig getifaddr en0'
 
