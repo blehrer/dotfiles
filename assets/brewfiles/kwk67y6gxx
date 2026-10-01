@@ -63,6 +63,8 @@ brew "fastfetch"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# Banner-like program prints strings as ASCII art
+brew "figlet"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # Multi-agent workspace manager
@@ -275,6 +277,7 @@ mas "Slack", id: 803453959
 vscode "anysphere.remote-containers"
 vscode "anysphere.remote-ssh"
 vscode "asvetliakov.vscode-neovim"
+vscode "datadog.datadog-vscode"
 vscode "esbenp.prettier-vscode"
 vscode "gitlab.gitlab-workflow"
 vscode "ms-playwright.playwright"
