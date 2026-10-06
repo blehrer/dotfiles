@@ -161,6 +161,8 @@ brew "procs"
 brew "protobuf"
 # Protoc plugin for generating gRPC Swift stubs
 brew "protoc-gen-grpc-swift"
+# Show ps output as a tree
+brew "pstree"
 # Unified tool to manage your Rancher server
 brew "rancher-cli"
 # File browser
@@ -292,3 +294,4 @@ cargo "typst-cli"
 cargo "wordnet-ls"
 uv "graphifyy"
 uv "mempalace"
+uv "specify-cli", source: "git+https://github.com/github/spec-kit.git"
