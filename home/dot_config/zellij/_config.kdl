@@ -1,0 +1,83 @@
+layout {
+//{{{ layout
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left "{tabs}"
+                format_right   "{mode} #[fg=#8BA4B0,bold]{session} "
+                format_center ""
+                format_space  ""
+
+                // Configuremode_normal
+                mode_normal        "#[fg=#C4B28A]   󱅾    "
+                mode_locked        "#[fg=#6c7086]  󰵋     "
+                mode_resize        "#[fg=#8EA4A2]   󰺾    "
+                mode_pane          "#[fg=#8EA4A2]       "
+                mode_tab           "#[fg=#8EA4A2]   󰓪    "
+                mode_scroll        "#[fg=#8EA4A2]   󱕒    "
+                mode_enter_search  "#[fg=#8EA4A2]    󰿄  "
+                mode_search        "#[fg=#8EA4A2]       "
+                mode_rename_tab    "#[fg=#8A9A7B]   󰓪   "
+                mode_rename_pane   "#[fg=#8A9A7B]      "
+                mode_session       "#[fg=#8EA4A2]   󰋃    "
+                mode_move          "#[fg=#8EA4A2]       "
+                mode_prompt        "#[fg=#8A9A7B]       "
+                mode_tmux          "#[fg=#eba0ac]       "
+                // formatting for inactive tabs
+                tab_normal              "#[fg=#6C7086,italic] {name} "
+                tab_normal_fullscreen   "#[fg=#6C7086,italic] {name} [] "
+                tab_normal_sync         "#[fg=#6C7086,italic] {name} <> "
+
+                // formatting for the current active tab
+                tab_active              "#[fg=#9399B2,bold,italic] {name} {floating_indicator}"
+                tab_active_fullscreen   "#[fg=#9399B2,bold,italic] {name} {fullscreen_indicator}"
+                tab_active_sync         "#[fg=#9399B2,bold,italic] {name} {sync_indicator}"
+
+                // separator between the tabs
+                tab_separator           "#[fg=#6C7086] 󰟥 "
+
+                // format when renaming a tab
+                tab_rename              "#[fg=#eba0ac] {index} {name} {floating_indicator} "
+
+                // indicators
+                tab_sync_indicator       "<> "
+                tab_fullscreen_indicator "[] "
+                tab_floating_indicator   "⬚ "
+
+                // limit tab display count
+                // tab_display_count         "3"  // limit to showing 3 tabs
+                tab_truncate_start_format "#[fg=#eba0ac,bg=#181825] < +{count} ..."
+                tab_truncate_end_format   "#[fg=#eba0ac,bg=#181825] ... +{count} >"
+
+                // index configuration
+                tab_zero_based_index      "false" // start with 0 instead of 1 for the index
+            }
+        }
+        children
+    }
+//}}} layout
+}
+
+// Plugin aliases - can be used to change the implementation of Zellij
+// changing these requires a restart to take effect
+plugins {
+// {{{
+
+    about location="zellij:about"
+    compact-bar location="zellij:compact-bar"
+    configuration location="zellij:configuration"
+    filepicker location="zellij:strider" {
+        cwd "/"
+    }
+    plugin-manager location="zellij:plugin-manager"
+    session-manager location="zellij:session-manager"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    tab-bar location="zellij:tab-bar"
+    welcome-screen location="zellij:session-manager" {
+        welcome_screen true
+    }
+// }}}
+}
+
+// vim: foldmethod=marker foldmarker={{{,}}}
