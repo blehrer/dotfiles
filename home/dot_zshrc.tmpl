@@ -29,6 +29,42 @@ bindkey "^R" history-incremental-search-backward
 bindkey "^E" end-of-line
 bindkey "^A" beginning-of-line
 bindkey "^N" push-line-or-edit
+
+_vi_clipboard_copy() {
+  (( $+commands[pbcopy] )) && print -rn -- "$CUTBUFFER" | pbcopy
+  (( $+commands[wl-copy] )) && print -rn -- "$CUTBUFFER" | wl-copy -n
+  (( $+commands[xclip] )) && print -rn -- "$CUTBUFFER" | xclip -selection clipboard -quiet
+}
+
+_vi_clipboard_paste() {
+  if (( $+commands[pbpaste] )); then
+    CUTBUFFER="$(pbpaste)"
+  elif (( $+commands[wl-paste] )); then
+    CUTBUFFER="$(wl-paste -n)"
+  elif (( $+commands[xclip] )); then
+    CUTBUFFER="$(xclip -selection clipboard -o -quiet)"
+  fi
+}
+
+_vi_yank_clipboard() {
+  zle .$WIDGET
+  _vi_clipboard_copy
+}
+
+_vi_put_clipboard() {
+  _vi_clipboard_paste
+  zle .$WIDGET
+}
+
+for _w in \
+  vi-yank vi-yank-eol vi-yank-whole-line \
+  vi-delete vi-delete-char vi-backward-delete-char vi-kill-eol; do
+  zle -N $_w _vi_yank_clipboard
+done
+for _w in put-after put-before; do
+  zle -N $_w _vi_put_clipboard
+done
+unset _w
 # )))
 
 # ((( vi cursor fix
