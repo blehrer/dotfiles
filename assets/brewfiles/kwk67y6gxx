@@ -65,6 +65,8 @@ brew "fd"
 brew "ffmpeg"
 # Banner-like program prints strings as ASCII art
 brew "figlet"
+# Command-line outline and bitmap font editor/converter
+brew "fontforge"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # Multi-agent workspace manager
