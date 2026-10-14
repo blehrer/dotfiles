@@ -217,5 +217,38 @@ function personal (){
   fi
 }
 
+if [[ $(shellname) = 'zsh' ]]; then
+  function  tictic() {
+    # 1. Error if no arguments are provided
+    [[ $# -eq 0 ]] && { echo "Error: No command specified." >&2; return 1; }
+
+    # Default interval is 1 second (1000 ms)
+    local interval=1
+
+    # 2. Check if the first argument is numeric (ms per tic)
+    if [[ "$1" =~ ^[0-9]+$ ]]; then
+      # Convert milliseconds to seconds for the sleep command
+      interval=$(zcalc -e "$1 / 1000.0")
+      shift
+    fi
+
+    # Error if the interval was stripped and no command remains
+    [[ $# -eq 0 ]] && { echo "Error: No command specified after interval." >&2; return 1; }
+
+    # Execute the remaining arguments as the command in the background
+    "$@" & local pid=$!
+    
+    # Track start time using Zsh's high-precision float epoch variable
+    zmodload zsh/datetime
+    local start=$EPOCHREALTIME
+
+    # Loop while the background process exists
+    while kill -0 $pid 2>/dev/null; do
+      sleep $interval
+      # Print high-precision elapsed time formatted to 3 decimal places
+      printf "Elapsed: %.3fs\n" $(( EPOCHREALTIME - start ))
+    done
+  }
+fi
 
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
