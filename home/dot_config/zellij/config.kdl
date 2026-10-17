@@ -324,7 +324,10 @@ keybinds clear-defaults=true {
 plugins {
     // {{{ plugins
     about location="zellij:about"
-    compact-bar location="zellij:compact-bar"
+    // keymap-ref: zellij-keybind-tooltip
+    compact-bar location="zellij:compact-bar" {
+        tooltip "Super /"
+    }
     configuration location="zellij:configuration"
     filepicker location="zellij:strider" {
         cwd "/"
@@ -345,6 +348,7 @@ plugins {
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
     // {{{ load plugins
+    compact-bar location="zellij:compact-bar"
     "file:./plugins/zjframes.wasm" {
         hide_frame_for_single_pane       "true"
         hide_frame_except_for_search     "true"

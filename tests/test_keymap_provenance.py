@@ -42,6 +42,7 @@ GHOSTTY_NATIVE_LINK = (
     / "home/Library/Application Support/com.mitchellh.ghostty/symlink_config.ghostty"
 )
 ZELLIJ_FAMILY_CATALOG = (
+    ("// keymap-ref: zellij-keybind-tooltip", "    compact-bar location="),
     ("// keymap-ref: zellij-pane-mode", "    pane {"),
     ("// keymap-ref: zellij-tab-mode", "    tab {"),
     ("// keymap-ref: zellij-resize-mode", "    resize {"),
@@ -139,6 +140,11 @@ class KeymapProvenanceTest(unittest.TestCase):
         for binding in ZELLIJ_REMOVED_MEH_OP_BINDINGS:
             with self.subTest(binding=binding):
                 self.assertNotIn(binding, ZELLIJ)
+
+    def test_zellij_compact_bar_tooltip_loads_in_background(self):
+        load_plugins = ZELLIJ.split("load_plugins {", 1)[1].split("\n}", 1)[0]
+        self.assertIn('tooltip "Super /"', ZELLIJ)
+        self.assertIn('compact-bar location="zellij:compact-bar"', load_plugins)
 
     def test_zellij_family_markers_once_and_adjacent_to_bindings(self):
         for marker, binding in ZELLIJ_FAMILY_CATALOG:
