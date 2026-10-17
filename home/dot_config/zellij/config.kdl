@@ -395,7 +395,7 @@ plugins {
     // {{{ plugins
     about location="zellij:about"
     // keymap-ref: zellij-keybind-tooltip
-    forgot-normal location="file:./plugins/zellij_forgot.wasm" {
+    forgot-normal location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close help" "Esc / Ctrl+C"
         "cycle to locked mode" "Meh+PageDown"
@@ -418,7 +418,7 @@ plugins {
         "tab mode" "Meh+T"
         "tmux mode" "Ctrl+B"
     }
-    forgot-locked location="file:./plugins/zellij_forgot.wasm" {
+    forgot-locked location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close help" "Esc / Ctrl+C"
         "cycle to normal mode" "Meh+PageUp"
@@ -432,7 +432,7 @@ plugins {
         "search help" "type"
         "unlock" "Meh+G"
     }
-    forgot-pane location="file:./plugins/zellij_forgot.wasm" {
+    forgot-pane location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close focused pane" "X"
         "close help" "Esc / Ctrl+C"
@@ -456,7 +456,7 @@ plugins {
         "toggle pane pinned" "I"
         "toggle pane frames" "Z"
     }
-    forgot-tab location="file:./plugins/zellij_forgot.wasm" {
+    forgot-tab location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "break pane" "B"
         "break pane left / right" "[ / ]"
@@ -477,7 +477,7 @@ plugins {
         "toggle active sync" "S"
         "toggle previous tab" "Tab"
     }
-    forgot-resize location="file:./plugins/zellij_forgot.wasm" {
+    forgot-resize location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close help" "Esc / Ctrl+C"
         "cycle to locked / pane mode" "Meh+PageUp / PageDown"
@@ -494,7 +494,7 @@ plugins {
         "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
         "search help" "type"
     }
-    forgot-move location="file:./plugins/zellij_forgot.wasm" {
+    forgot-move location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close help" "Esc / Ctrl+C"
         "cycle to session / prompt mode" "Meh+PageUp / PageDown"
@@ -509,7 +509,7 @@ plugins {
         "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
         "search help" "type"
     }
-    forgot-scroll location="file:./plugins/zellij_forgot.wasm" {
+    forgot-scroll location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close help" "Esc / Ctrl+C"
         "copy" "Y"
@@ -531,7 +531,7 @@ plugins {
         "select command" "M"
         "top / bottom" "G / Shift+G"
     }
-    forgot-search location="file:./plugins/zellij_forgot.wasm" {
+    forgot-search location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close help" "Esc / Ctrl+C"
         "cycle to enter-search / rename-tab mode" "Meh+PageUp / PageDown"
@@ -552,7 +552,7 @@ plugins {
         "toggle case / whole word / wrap" "C / O / W"
         "top / bottom" "G / Shift+G"
     }
-    forgot-session location="file:./plugins/zellij_forgot.wasm" {
+    forgot-session location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "about" "A"
         "close help" "Esc / Ctrl+C"
@@ -571,7 +571,7 @@ plugins {
         "session manager" "W"
         "share" "S"
     }
-    forgot-tmux location="file:./plugins/zellij_forgot.wasm" {
+    forgot-tmux location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
         "close focused pane" "X"
         "close help" "Esc / Ctrl+C"

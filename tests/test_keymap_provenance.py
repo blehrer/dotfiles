@@ -57,7 +57,7 @@ ZELLIJ_FORGOT_MODES = (
 ZELLIJ_FAMILY_CATALOG = (
     (
         "// keymap-ref: zellij-keybind-tooltip",
-        '    forgot-normal location="file:./plugins/zellij_forgot.wasm" {',
+        '    forgot-normal location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {',
     ),
     ("// keymap-ref: zellij-pane-mode", "    pane {"),
     ("// keymap-ref: zellij-tab-mode", "    tab {"),
@@ -175,7 +175,7 @@ class KeymapProvenanceTest(unittest.TestCase):
                     ZELLIJ,
                 )
                 alias = ZELLIJ.split(
-                    f'forgot-{mode} location="file:./plugins/zellij_forgot.wasm" {{',
+                    f'forgot-{mode} location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {{',
                     1,
                 )[1].split("\n    }", 1)[0]
                 self.assertIn('"LOAD_ZELLIJ_BINDINGS" "false"', alias)
