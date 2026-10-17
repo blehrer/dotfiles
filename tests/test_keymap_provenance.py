@@ -3,7 +3,7 @@ from pathlib import Path
 
 REPO = Path(__file__).parents[1]
 ZELLIJ = (REPO / "home/dot_config/zellij/config.kdl").read_text()
-GHOSTTY = (REPO / "home/dot_config/ghostty/config.tmpl").read_text()
+GHOSTTY = (REPO / "home/dot_config/ghostty/config").read_text()
 
 ZELLIJ_MARKER = "// keymap-ref: zellij-mode-cycle"
 ZELLIJ_MODE_CYCLE_COMMENT = "// Meh PageUp/PageDown mode-cycle bindings repeat in every mode below."
