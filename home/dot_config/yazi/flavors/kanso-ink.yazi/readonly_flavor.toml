@@ -13,7 +13,7 @@ find_position = {}
 
 tab_active = { reversed = true }
 tab_inactive = {}
-tab_width = 1
+# tab_width = 1
 
 count_copied = { fg = "#14171D", bg = "#87A987" }
 count_cut = { fg = "#14171D", bg = "#E46876" }
@@ -93,8 +93,8 @@ rules = [
   { mime = "{audio,video}/*", fg = "#938AA9" },
   { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#e46876" },
   { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#A292A3" },
-  { name = "*", is = "orphan", fg = "#E46876" },
-  { name = "*", is = "exec", fg = "#7AA89F" },
-  { name = "*", fg = "#C5C9C7" },
-  { name = "*/", fg = "#8BA4B0" },
+  { name = "*", mime = "*", is = "orphan", fg = "#E46876"},
+  { name = "*", mime = "*", is = "exec", fg = "#7AA89F" },
+  { name = "*",  mime = "*", fg = "#C5C9C7" },
+  { name = "*/", mime = "*", fg = "#8BA4B0" },
 ]

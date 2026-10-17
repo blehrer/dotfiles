@@ -13,7 +13,7 @@ find_position = {}
 
 tab_active = { reversed = true }
 tab_inactive = {}
-tab_width = 1
+# tab_width = 1
 
 count_copied = { fg = "#f2f1ef", bg = "#6f894e" }
 count_cut = { fg = "#f2f1ef", bg = "#c84053" }
