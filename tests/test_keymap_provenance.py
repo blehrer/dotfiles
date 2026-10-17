@@ -10,6 +10,20 @@ ZELLIJ_MODE_CYCLE_COMMENT = "// Meh PageUp/PageDown mode-cycle bindings repeat i
 ZELLIJ_BLOCK = "    normal {"
 GHOSTTY_MARKER = "# keymap-ref: ghostty-f5-reload"
 GHOSTTY_BINDING = "keybind = unconsumed:f5=reload_config"
+GHOSTTY_SUPER_DIRECTION_BINDINGS = (
+    "keybind = super+h=csi:104;9u",
+    "keybind = super+j=csi:106;9u",
+    "keybind = super+k=csi:107;9u",
+    "keybind = super+l=csi:108;9u",
+)
+GHOSTTY_REPLACED_BINDINGS = (
+    "keybind = super+j=scroll_to_selection",
+    "keybind = super+k=clear_screen",
+)
+GHOSTTY_NATIVE_LINK = (
+    REPO
+    / "home/Library/Application Support/com.mitchellh.ghostty/symlink_config.ghostty"
+)
 ZELLIJ_FAMILY_CATALOG = (
     ("// keymap-ref: zellij-pane-mode", "    pane {"),
     ("// keymap-ref: zellij-tab-mode", "    tab {"),
@@ -76,6 +90,19 @@ class KeymapProvenanceTest(unittest.TestCase):
     def test_ghostty_f5_reload_marker_absent(self):
         self.assertNotIn(GHOSTTY_MARKER, GHOSTTY)
         self.assertIn(GHOSTTY_BINDING, GHOSTTY)
+
+    def test_ghostty_super_directions_and_native_config_link(self):
+        self.assertIn("keybind = clear", GHOSTTY)
+        for binding in GHOSTTY_SUPER_DIRECTION_BINDINGS:
+            with self.subTest(binding=binding):
+                self.assertIn(binding, GHOSTTY)
+        for binding in GHOSTTY_REPLACED_BINDINGS:
+            with self.subTest(binding=binding):
+                self.assertNotIn(binding, GHOSTTY)
+        self.assertEqual(
+            GHOSTTY_NATIVE_LINK.read_text().strip(),
+            "../../../.config/ghostty/config",
+        )
 
     def test_zellij_family_markers_once_and_adjacent_to_bindings(self):
         for marker, binding in ZELLIJ_FAMILY_CATALOG:
