@@ -1,5 +1,6 @@
 keybinds clear-defaults=true {
     //{{{ keybinds
+    // keymap-ref: zellij-mode-cycle
     normal {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "tmux"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "locked"; }
