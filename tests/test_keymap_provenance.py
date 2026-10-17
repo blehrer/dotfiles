@@ -36,6 +36,7 @@ ZELLIJ_REMOVED_MEH_OP_BINDINGS = (
 GHOSTTY_REPLACED_BINDINGS = (
     "keybind = super+j=scroll_to_selection",
     "keybind = super+k=clear_screen",
+    "keybind = super+t=new_tab",
 )
 GHOSTTY_NATIVE_LINK = (
     REPO
