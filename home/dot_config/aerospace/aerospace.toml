@@ -107,28 +107,34 @@ on-mode-changed = []
     # '''
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
+    # keymap-ref: aerospace-layout-cycle
     alt-tab = 'layout horizontal vertical'
     alt-shift-tab = 'layout tiles accordion'
+    # keymap-ref: aerospace-focus-cycle
     ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-next'
     shift-ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-prev'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
+    # keymap-ref: aerospace-directional-focus
     alt-h = 'focus left'
     alt-j = 'focus down'
     alt-k = 'focus up'
     alt-l = 'focus right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
+    # keymap-ref: aerospace-directional-move
     alt-shift-h = 'move left'
     alt-shift-j = 'move down'
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
+    # keymap-ref: aerospace-resize
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+    # keymap-ref: aerospace-workspaces
     ctrl-alt-y = 'workspace 1'
     ctrl-alt-u = 'workspace 2'
     ctrl-alt-i = 'workspace 3'
@@ -143,6 +149,7 @@ on-mode-changed = []
     ctrl-alt-shift-p = ['move-node-to-workspace X', 'workspace X']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
+    # keymap-ref: aerospace-service-mode
     alt-shift-quote = 'mode service'
 
 # 'service' binding mode declaration.

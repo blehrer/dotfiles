@@ -10,6 +10,19 @@ ZELLIJ_MODE_CYCLE_COMMENT = "// Meh PageUp/PageDown mode-cycle bindings repeat i
 ZELLIJ_BLOCK = "    normal {"
 GHOSTTY_MARKER = "# keymap-ref: ghostty-f5-reload"
 GHOSTTY_BINDING = "keybind = unconsumed:f5=reload_config"
+AEROSPACE = (REPO / "home/dot_config/aerospace/aerospace.toml").read_text()
+AEROSPACE_FAMILY_CATALOG = (
+    ("# keymap-ref: aerospace-layout-cycle", "    alt-tab = 'layout horizontal vertical'"),
+    (
+        "# keymap-ref: aerospace-focus-cycle",
+        "    ctrl-tab = 'focus --boundaries workspace --boundaries-action wrap-around-the-workspace dfs-next'",
+    ),
+    ("# keymap-ref: aerospace-directional-focus", "    alt-h = 'focus left'"),
+    ("# keymap-ref: aerospace-directional-move", "    alt-shift-h = 'move left'"),
+    ("# keymap-ref: aerospace-resize", "    alt-minus = 'resize smart -50'"),
+    ("# keymap-ref: aerospace-workspaces", "    ctrl-alt-y = 'workspace 1'"),
+    ("# keymap-ref: aerospace-service-mode", "    alt-shift-quote = 'mode service'"),
+)
 
 
 class KeymapProvenanceTest(unittest.TestCase):
@@ -40,6 +53,17 @@ class KeymapProvenanceTest(unittest.TestCase):
             after_marker.startswith("\n" + GHOSTTY_BINDING),
             "marker must be immediately above f5 reload_config keybind",
         )
+
+    def test_aerospace_family_markers_once_and_adjacent_to_bindings(self):
+        for marker, binding in AEROSPACE_FAMILY_CATALOG:
+            with self.subTest(marker=marker):
+                self.assertEqual(AEROSPACE.count(marker), 1, marker)
+                idx = AEROSPACE.index(marker)
+                after_marker = AEROSPACE[idx + len(marker) :]
+                self.assertTrue(
+                    after_marker.startswith("\n" + binding),
+                    f"{marker} must be immediately above binding",
+                )
 
 
 if __name__ == "__main__":
