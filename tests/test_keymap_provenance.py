@@ -169,6 +169,7 @@ class KeymapProvenanceTest(unittest.TestCase):
                     f'            LaunchOrFocusPlugin "forgot-{mode}" {{\n'
                     "                floating true\n"
                     "                move_to_focused_tab true\n"
+                    f'                title "{mode.upper()}"\n'
                     "            }\n"
                     "        }",
                     ZELLIJ,
@@ -178,7 +179,7 @@ class KeymapProvenanceTest(unittest.TestCase):
                     1,
                 )[1].split("\n    }", 1)[0]
                 self.assertIn('"LOAD_ZELLIJ_BINDINGS" "false"', alias)
-                self.assertIn(f'"Mode" "{mode}"', alias)
+                self.assertNotIn('"Mode"', alias)
 
     def test_zellij_family_markers_once_and_adjacent_to_bindings(self):
         for marker, binding in ZELLIJ_FAMILY_CATALOG:

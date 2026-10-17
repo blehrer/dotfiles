@@ -7,6 +7,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-normal" {
                 floating true
                 move_to_focused_tab true
+                title "NORMAL"
             }
         }
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "tmux"; }
@@ -17,6 +18,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-locked" {
                 floating true
                 move_to_focused_tab true
+                title "LOCKED"
             }
         }
         bind "Ctrl Alt Shift g" { SwitchToMode "normal"; }
@@ -29,6 +31,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-pane" {
                 floating true
                 move_to_focused_tab true
+                title "PANE"
             }
         }
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
@@ -55,6 +58,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-tab" {
                 floating true
                 move_to_focused_tab true
+                title "TAB"
             }
         }
         bind "left" { GoToPreviousTab; }
@@ -94,6 +98,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-resize" {
                 floating true
                 move_to_focused_tab true
+                title "RESIZE"
             }
         }
         bind "left" { Resize "Increase left"; }
@@ -121,6 +126,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-move" {
                 floating true
                 move_to_focused_tab true
+                title "MOVE"
             }
         }
         bind "left" { MovePane "left"; }
@@ -144,6 +150,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-scroll" {
                 floating true
                 move_to_focused_tab true
+                title "SCROLL"
             }
         }
         bind "e" { EditScrollback; SwitchToMode "normal"; }
@@ -162,6 +169,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-search" {
                 floating true
                 move_to_focused_tab true
+                title "SEARCH"
             }
         }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
@@ -178,6 +186,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-session" {
                 floating true
                 move_to_focused_tab true
+                title "SESSION"
             }
         }
         bind "a" {
@@ -348,6 +357,7 @@ keybinds clear-defaults=true {
             LaunchOrFocusPlugin "forgot-tmux" {
                 floating true
                 move_to_focused_tab true
+                title "TMUX"
             }
         }
         bind "left" { MoveFocus "left"; SwitchToMode "normal"; }
@@ -387,7 +397,6 @@ plugins {
     // keymap-ref: zellij-keybind-tooltip
     forgot-normal location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "normal"
         "close help" "Esc / Ctrl+C"
         "cycle to locked mode" "Meh+PageDown"
         "cycle to tmux mode" "Meh+PageUp"
@@ -411,7 +420,6 @@ plugins {
     }
     forgot-locked location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "locked"
         "close help" "Esc / Ctrl+C"
         "cycle to normal mode" "Meh+PageUp"
         "cycle to resize mode" "Meh+PageDown"
@@ -426,7 +434,6 @@ plugins {
     }
     forgot-pane location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "pane"
         "close focused pane" "X"
         "close help" "Esc / Ctrl+C"
         "cycle to resize / tab mode" "Meh+PageUp / PageDown"
@@ -451,7 +458,6 @@ plugins {
     }
     forgot-tab location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "tab"
         "break pane" "B"
         "break pane left / right" "[ / ]"
         "close help" "Esc / Ctrl+C"
@@ -473,7 +479,6 @@ plugins {
     }
     forgot-resize location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "resize"
         "close help" "Esc / Ctrl+C"
         "cycle to locked / pane mode" "Meh+PageUp / PageDown"
         "decrease all" "-"
@@ -491,7 +496,6 @@ plugins {
     }
     forgot-move location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "move"
         "close help" "Esc / Ctrl+C"
         "cycle to session / prompt mode" "Meh+PageUp / PageDown"
         "edit scrollback" "Alt+Y"
@@ -507,7 +511,6 @@ plugins {
     }
     forgot-scroll location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "scroll"
         "close help" "Esc / Ctrl+C"
         "copy" "Y"
         "copy last command output" "Shift+Y"
@@ -530,7 +533,6 @@ plugins {
     }
     forgot-search location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "search"
         "close help" "Esc / Ctrl+C"
         "cycle to enter-search / rename-tab mode" "Meh+PageUp / PageDown"
         "edit scrollback" "Alt+Y"
@@ -552,7 +554,6 @@ plugins {
     }
     forgot-session location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "session"
         "about" "A"
         "close help" "Esc / Ctrl+C"
         "configuration" "C"
@@ -572,7 +573,6 @@ plugins {
     }
     forgot-tmux location="file:./plugins/zellij_forgot.wasm" {
         "LOAD_ZELLIJ_BINDINGS" "false"
-        "Mode" "tmux"
         "close focused pane" "X"
         "close help" "Esc / Ctrl+C"
         "cycle to prompt / normal mode" "Meh+PageUp / PageDown"
