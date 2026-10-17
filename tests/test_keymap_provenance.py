@@ -17,6 +17,23 @@ GHOSTTY_SUPER_DIRECTION_BINDINGS = (
     "keybind = super+k=csi:107;9u",
     "keybind = super+l=csi:108;9u",
 )
+GHOSTTY_SUPER_ZELLIJ_BINDINGS = (
+    "keybind = super+/=csi:47;9u",
+    "keybind = super+t=csi:116;9u",
+    "keybind = super+shift+[=csi:91;10u",
+    "keybind = super+shift+]=csi:93;10u",
+    "keybind = super+shift+left_bracket=csi:91;10u",
+    "keybind = super+shift+right_bracket=csi:93;10u",
+)
+GHOSTTY_TAB_ACTIONS = (
+    "previous_tab",
+    "next_tab",
+    "goto_tab",
+    "last_tab",
+    "close_tab",
+    "new_tab",
+    "move_tab",
+)
 ZELLIJ_SUPER_DIRECTION_BINDINGS = (
     '        bind "Super h" { MoveFocusOrTab "left"; }',
     '        bind "Super j" { MoveFocus "down"; }',
@@ -45,13 +62,13 @@ GHOSTTY_NATIVE_LINK = (
 ZELLIJ_FORGOT_MODES = (
     "normal",
     "locked",
+    "resize",
     "pane",
     "tab",
-    "resize",
-    "move",
     "scroll",
     "search",
     "session",
+    "move",
     "tmux",
 )
 ZELLIJ_FAMILY_CATALOG = (
@@ -133,6 +150,14 @@ class KeymapProvenanceTest(unittest.TestCase):
         for binding in GHOSTTY_SUPER_DIRECTION_BINDINGS:
             with self.subTest(binding=binding):
                 self.assertIn(binding, GHOSTTY)
+        for binding in GHOSTTY_SUPER_ZELLIJ_BINDINGS:
+            with self.subTest(binding=binding):
+                self.assertIn(binding, GHOSTTY)
+        for action in GHOSTTY_TAB_ACTIONS:
+            with self.subTest(action=action):
+                self.assertNotIn(f"={action}", GHOSTTY)
+        self.assertIn("keybind = super+shift+bracket_left=unbind", GHOSTTY)
+        self.assertIn("keybind = super+shift+[=unbind", GHOSTTY)
         for binding in GHOSTTY_REPLACED_BINDINGS:
             with self.subTest(binding=binding):
                 self.assertNotIn(binding, GHOSTTY)

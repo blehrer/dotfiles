@@ -167,6 +167,35 @@ rmvenv() {
 }
 #)))
 
+# ((( Zellij
+# Update the Zellij tab name to the running process name
+function zellij_tab_name_update() {
+    if [[ -n $ZELLIJ ]]; then
+        # Extract the first word of the executed command
+        local title=${1%% *}
+        command nohup zellij action rename-tab "$title" >/dev/null 2>&1
+    fi
+}
+
+# Reset tab name to the current directory when the command finishes
+function zellij_tab_name_reset() {
+    if [[ -n $ZELLIJ ]]; then
+        local current_dir=$(echo "$(basename "$(dirname "$PWD")")/${PWD##*/}")
+        [[ $PWD == $HOME ]] && current_dir="~"
+        command nohup zellij action rename-tab " $current_dir" >/dev/null 2>&1
+    fi
+}
+
+append_zellij_hooks() {
+    # Hook into preexec (before command runs) and precmd (before prompt displays)
+    autoload -Uz add-zsh-hook
+    add-zsh-hook preexec zellij_tab_name_update
+    add-zsh-hook precmd zellij_tab_name_reset
+}
+[[ -n $ZELLIJ ]] && append_zellij_hooks
+# )))
+
+
 if has yazi  ; then
     function y {
         local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
