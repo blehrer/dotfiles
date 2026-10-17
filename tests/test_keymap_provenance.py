@@ -16,6 +16,18 @@ GHOSTTY_SUPER_DIRECTION_BINDINGS = (
     "keybind = super+k=csi:107;9u",
     "keybind = super+l=csi:108;9u",
 )
+ZELLIJ_SUPER_DIRECTION_BINDINGS = (
+    '        bind "Super h" { MoveFocusOrTab "left"; }',
+    '        bind "Super j" { MoveFocus "down"; }',
+    '        bind "Super k" { MoveFocus "up"; }',
+    '        bind "Super l" { MoveFocusOrTab "right"; }',
+)
+ZELLIJ_ALT_DIRECTION_BINDINGS = (
+    '        bind "Alt h" { MoveFocusOrTab "left"; }',
+    '        bind "Alt j" { MoveFocus "down"; }',
+    '        bind "Alt k" { MoveFocus "up"; }',
+    '        bind "Alt l" { MoveFocusOrTab "right"; }',
+)
 GHOSTTY_REPLACED_BINDINGS = (
     "keybind = super+j=scroll_to_selection",
     "keybind = super+k=clear_screen",
@@ -103,6 +115,17 @@ class KeymapProvenanceTest(unittest.TestCase):
             GHOSTTY_NATIVE_LINK.read_text().strip(),
             "../../../.config/ghostty/config",
         )
+
+    def test_zellij_super_directions_replace_shadowed_alt_directions(self):
+        normal_locked = ZELLIJ.split(
+            '    shared_among "normal" "locked" {', 1
+        )[1].split("\n    }", 1)[0]
+        for binding in ZELLIJ_SUPER_DIRECTION_BINDINGS:
+            with self.subTest(binding=binding):
+                self.assertIn(binding, normal_locked)
+        for binding in ZELLIJ_ALT_DIRECTION_BINDINGS:
+            with self.subTest(binding=binding):
+                self.assertNotIn(binding, ZELLIJ)
 
     def test_zellij_family_markers_once_and_adjacent_to_bindings(self):
         for marker, binding in ZELLIJ_FAMILY_CATALOG:
