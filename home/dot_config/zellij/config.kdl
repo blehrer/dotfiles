@@ -180,6 +180,7 @@ keybinds clear-defaults=true {
         bind "Alt Shift p" { ToggleGroupMarking; }
         unbind "Alt Left"
         unbind "Alt Right"
+        // keymap-ref: zellij-new-tab
         bind "Super t" { NewTab; SwitchToMode "normal"; }
     }
     // keymap-ref: zellij-mode-entry

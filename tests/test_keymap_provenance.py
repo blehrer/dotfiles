@@ -29,6 +29,10 @@ ZELLIJ_FAMILY_CATALOG = (
         "// keymap-ref: zellij-mode-entry",
         '    shared_except "locked" "entersearch" "renametab" "renamepane" "move" "prompt" "tmux" {',
     ),
+    (
+        "// keymap-ref: zellij-new-tab",
+        '        bind "Super t" { NewTab; SwitchToMode "normal"; }',
+    ),
     ('// keymap-ref: zellij-alt-quick-actions', '    shared_except "normal" "locked" {'),
     ('// keymap-ref: zellij-scroll-navigation', '    shared_among "scroll" "search" {'),
     ("// keymap-ref: zellij-rename-modes", "    renametab {"),
