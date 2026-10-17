@@ -42,8 +42,23 @@ GHOSTTY_NATIVE_LINK = (
     REPO
     / "home/Library/Application Support/com.mitchellh.ghostty/symlink_config.ghostty"
 )
+ZELLIJ_FORGOT_MODES = (
+    "normal",
+    "locked",
+    "pane",
+    "tab",
+    "resize",
+    "move",
+    "scroll",
+    "search",
+    "session",
+    "tmux",
+)
 ZELLIJ_FAMILY_CATALOG = (
-    ("// keymap-ref: zellij-keybind-tooltip", "    compact-bar location="),
+    (
+        "// keymap-ref: zellij-keybind-tooltip",
+        '    forgot-normal location="file:./plugins/zellij_forgot.wasm" {',
+    ),
     ("// keymap-ref: zellij-pane-mode", "    pane {"),
     ("// keymap-ref: zellij-tab-mode", "    tab {"),
     ("// keymap-ref: zellij-resize-mode", "    resize {"),
@@ -142,10 +157,28 @@ class KeymapProvenanceTest(unittest.TestCase):
             with self.subTest(binding=binding):
                 self.assertNotIn(binding, ZELLIJ)
 
-    def test_zellij_compact_bar_tooltip_loads_in_background(self):
+    def test_zellij_forgot_has_one_manual_configuration_per_non_editing_mode(self):
         load_plugins = ZELLIJ.split("load_plugins {", 1)[1].split("\n}", 1)[0]
-        self.assertIn('tooltip "Super /"', ZELLIJ)
-        self.assertIn('compact-bar location="zellij:compact-bar"', load_plugins)
+        self.assertNotIn('tooltip "Super /"', ZELLIJ)
+        self.assertNotIn('compact-bar location="zellij:compact-bar"', load_plugins)
+        self.assertEqual(ZELLIJ.count('bind "Super /"'), len(ZELLIJ_FORGOT_MODES))
+        for mode in ZELLIJ_FORGOT_MODES:
+            with self.subTest(mode=mode):
+                self.assertIn(
+                    f'bind "Super /" {{\n'
+                    f'            LaunchOrFocusPlugin "forgot-{mode}" {{\n'
+                    "                floating true\n"
+                    "                move_to_focused_tab true\n"
+                    "            }\n"
+                    "        }",
+                    ZELLIJ,
+                )
+                alias = ZELLIJ.split(
+                    f'forgot-{mode} location="file:./plugins/zellij_forgot.wasm" {{',
+                    1,
+                )[1].split("\n    }", 1)[0]
+                self.assertIn('"LOAD_ZELLIJ_BINDINGS" "false"', alias)
+                self.assertIn(f'"Mode" "{mode}"', alias)
 
     def test_zellij_family_markers_once_and_adjacent_to_bindings(self):
         for marker, binding in ZELLIJ_FAMILY_CATALOG:

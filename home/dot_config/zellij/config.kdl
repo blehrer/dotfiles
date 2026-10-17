@@ -3,16 +3,34 @@ keybinds clear-defaults=true {
     // Meh PageUp/PageDown mode-cycle bindings repeat in every mode below.
     // keymap-ref: zellij-mode-cycle
     normal {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-normal" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "tmux"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "locked"; }
     }
     locked {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-locked" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "Ctrl Alt Shift g" { SwitchToMode "normal"; }
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "normal"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "resize"; }
     }
     // keymap-ref: zellij-pane-mode
     pane {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-pane" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
         bind "d" { NewPane "down"; SwitchToMode "normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
@@ -33,6 +51,12 @@ keybinds clear-defaults=true {
     }
     // keymap-ref: zellij-tab-mode
     tab {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-tab" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "left" { GoToPreviousTab; }
         bind "down" { GoToNextTab; }
         bind "up" { GoToPreviousTab; }
@@ -66,6 +90,12 @@ keybinds clear-defaults=true {
     }
     // keymap-ref: zellij-resize-mode
     resize {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-resize" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "left" { Resize "Increase left"; }
         bind "down" { Resize "Increase down"; }
         bind "up" { Resize "Increase up"; }
@@ -87,6 +117,12 @@ keybinds clear-defaults=true {
     }
     // keymap-ref: zellij-move-mode
     move {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-move" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "left" { MovePane "left"; }
         bind "down" { MovePane "down"; }
         bind "up" { MovePane "up"; }
@@ -104,6 +140,12 @@ keybinds clear-defaults=true {
     }
     // keymap-ref: zellij-scroll-search-modes
     scroll {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-scroll" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "e" { EditScrollback; SwitchToMode "normal"; }
         // Zellij has no keyboard selection cursor, so "v" hands the scrollback to
         // nvim, where real visual mode and the rest of the vim motions live.
@@ -116,6 +158,12 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "entersearch"; }
     }
     search {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-search" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "n" { Search "down"; }
         bind "o" { SearchToggleOption "WholeWord"; }
@@ -126,6 +174,12 @@ keybinds clear-defaults=true {
     }
     // keymap-ref: zellij-session-mode
     session {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-session" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "a" {
             LaunchOrFocusPlugin "zellij:about" {
                 floating true
@@ -290,6 +344,12 @@ keybinds clear-defaults=true {
     }
     // keymap-ref: zellij-tmux-mode
     tmux {
+        bind "Super /" {
+            LaunchOrFocusPlugin "forgot-tmux" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
         bind "left" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "down" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "up" { MoveFocus "up"; SwitchToMode "normal"; }
@@ -325,8 +385,212 @@ plugins {
     // {{{ plugins
     about location="zellij:about"
     // keymap-ref: zellij-keybind-tooltip
-    compact-bar location="zellij:compact-bar" {
-        tooltip "Super /"
+    forgot-normal location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "normal"
+        "close help" "Esc / Ctrl+C"
+        "cycle to locked mode" "Meh+PageDown"
+        "cycle to tmux mode" "Meh+PageUp"
+        "edit scrollback" "Alt+Y"
+        "focus down" "Cmd+J"
+        "focus left / previous tab" "Cmd+H"
+        "focus right / next tab" "Cmd+L"
+        "focus up" "Cmd+K"
+        "lock" "Meh+G"
+        "move mode" "Meh+H"
+        "new tab" "Cmd+T"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "previous / next tab" "Cmd+Shift+[ / ]"
+        "quit" "Meh+Q"
+        "resize" "Meh+- / ="
+        "resize mode" "Meh+N"
+        "scroll mode" "Meh+S"
+        "search help" "type"
+        "tab mode" "Meh+T"
+        "tmux mode" "Ctrl+B"
+    }
+    forgot-locked location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "locked"
+        "close help" "Esc / Ctrl+C"
+        "cycle to normal mode" "Meh+PageUp"
+        "cycle to resize mode" "Meh+PageDown"
+        "focus down" "Cmd+J"
+        "focus left / previous tab" "Cmd+H"
+        "focus right / next tab" "Cmd+L"
+        "focus up" "Cmd+K"
+        "previous / next tab" "Cmd+Shift+[ / ]"
+        "resize" "Meh+- / ="
+        "search help" "type"
+        "unlock" "Meh+G"
+    }
+    forgot-pane location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "pane"
+        "close focused pane" "X"
+        "close help" "Esc / Ctrl+C"
+        "cycle to resize / tab mode" "Meh+PageUp / PageDown"
+        "edit scrollback" "Alt+Y"
+        "focus pane" "H / J / K / L"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+H / N / S / T; Ctrl+B"
+        "new pane" "N"
+        "new pane down / right / stacked" "D / R / S"
+        "new tab" "Cmd+T"
+        "normal mode" "Enter / Esc"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "rename pane" "C"
+        "search help" "type"
+        "switch focus" "P"
+        "toggle floating panes" "W"
+        "toggle fullscreen" "F"
+        "toggle pane embed / floating" "E"
+        "toggle pane pinned" "I"
+        "toggle pane frames" "Z"
+    }
+    forgot-tab location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "tab"
+        "break pane" "B"
+        "break pane left / right" "[ / ]"
+        "close help" "Esc / Ctrl+C"
+        "close tab" "X"
+        "cycle to pane / scroll mode" "Meh+PageUp / PageDown"
+        "edit scrollback" "Alt+Y"
+        "go to tab" "1-9"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+H / N / S; Ctrl+B"
+        "move between tabs" "arrows / H / J / K / L"
+        "new tab" "N / T / Cmd+T"
+        "normal mode" "Enter / Esc / Meh+T"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "rename tab" "E / R"
+        "search help" "type"
+        "toggle active sync" "S"
+        "toggle previous tab" "Tab"
+    }
+    forgot-resize location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "resize"
+        "close help" "Esc / Ctrl+C"
+        "cycle to locked / pane mode" "Meh+PageUp / PageDown"
+        "decrease all" "-"
+        "decrease direction" "Shift+H / J / K / L"
+        "edit scrollback" "Alt+Y"
+        "increase all" "+ / ="
+        "increase direction" "arrows / H / J / K / L"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+H / S / T; Ctrl+B"
+        "new tab" "Cmd+T"
+        "normal mode" "Enter / Esc / Meh+N"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "search help" "type"
+    }
+    forgot-move location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "move"
+        "close help" "Esc / Ctrl+C"
+        "cycle to session / prompt mode" "Meh+PageUp / PageDown"
+        "edit scrollback" "Alt+Y"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+N / S / T; Ctrl+B"
+        "move pane" "arrows / H / J / K / L / N / Tab"
+        "move pane backwards" "P"
+        "new tab" "Cmd+T"
+        "normal mode" "Enter / Esc / Meh+H"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "search help" "type"
+    }
+    forgot-scroll location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "scroll"
+        "close help" "Esc / Ctrl+C"
+        "copy" "Y"
+        "copy last command output" "Shift+Y"
+        "cycle to tab / enter-search mode" "Meh+PageUp / PageDown"
+        "edit scrollback" "E / V / Alt+Y"
+        "half-page down / up" "D / U / Ctrl+D / Ctrl+U"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+H / N / T"
+        "new tab" "Cmd+T"
+        "normal mode" "Enter / Esc / Ctrl+C"
+        "next / previous prompt" "] / ["
+        "page down / up" "PageDown / PageUp / Ctrl+F / Ctrl+B / L / H"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "scroll down / up" "Down / Up / J / K"
+        "search" "S"
+        "search help" "type"
+        "select command" "M"
+        "top / bottom" "G / Shift+G"
+    }
+    forgot-search location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "search"
+        "close help" "Esc / Ctrl+C"
+        "cycle to enter-search / rename-tab mode" "Meh+PageUp / PageDown"
+        "edit scrollback" "Alt+Y"
+        "half-page down / up" "D / U / Ctrl+D / Ctrl+U"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+H / N / S / T"
+        "new tab" "Cmd+T"
+        "next / previous match" "N / P"
+        "normal mode" "Enter / Esc / Ctrl+C"
+        "next / previous prompt" "] / ["
+        "page down / up" "PageDown / PageUp / Ctrl+F / Ctrl+B / L / H"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "scroll down / up" "Down / Up / J / K"
+        "search help" "type"
+        "select command" "M"
+        "toggle case / whole word / wrap" "C / O / W"
+        "top / bottom" "G / Shift+G"
+    }
+    forgot-session location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "session"
+        "about" "A"
+        "close help" "Esc / Ctrl+C"
+        "configuration" "C"
+        "cycle to rename-pane / move mode" "Meh+PageUp / PageDown"
+        "detach" "D"
+        "edit scrollback" "Alt+Y"
+        "lock / quit" "Meh+G / Meh+Q"
+        "mode shortcuts" "Meh+H / N / S / T; Ctrl+B"
+        "new tab" "Cmd+T"
+        "normal mode" "Enter / Esc"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "plugin manager" "P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "search help" "type"
+        "session manager" "W"
+        "share" "S"
+    }
+    forgot-tmux location="file:./plugins/zellij_forgot.wasm" {
+        "LOAD_ZELLIJ_BINDINGS" "false"
+        "Mode" "tmux"
+        "close focused pane" "X"
+        "close help" "Esc / Ctrl+C"
+        "cycle to prompt / normal mode" "Meh+PageUp / PageDown"
+        "detach" "D"
+        "focus pane" "arrows / H / J / K / L"
+        "focus next pane" "O"
+        "new pane down / right" "\" / %"
+        "new tab" "C / Cmd+T"
+        "next / previous tab" "N / P"
+        "normal mode" "Enter / Esc"
+        "pane grouping" "Alt+P / Alt+Shift+P"
+        "quick actions" "Alt+- / = / [ / ] / F / I / N / O"
+        "rename tab" ","
+        "scroll mode" "["
+        "search help" "type"
+        "send Ctrl+B" "Ctrl+B"
+        "toggle fullscreen" "Z"
+        "swap layout" "Space"
     }
     configuration location="zellij:configuration"
     filepicker location="zellij:strider" {
@@ -348,7 +612,6 @@ plugins {
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
     // {{{ load plugins
-    compact-bar location="zellij:compact-bar"
     "file:./plugins/zjframes.wasm" {
         hide_frame_for_single_pane       "true"
         hide_frame_except_for_search     "true"
