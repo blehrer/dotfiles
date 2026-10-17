@@ -10,6 +10,30 @@ ZELLIJ_MODE_CYCLE_COMMENT = "// Meh PageUp/PageDown mode-cycle bindings repeat i
 ZELLIJ_BLOCK = "    normal {"
 GHOSTTY_MARKER = "# keymap-ref: ghostty-f5-reload"
 GHOSTTY_BINDING = "keybind = unconsumed:f5=reload_config"
+ZELLIJ_FAMILY_CATALOG = (
+    ("// keymap-ref: zellij-pane-mode", "    pane {"),
+    ("// keymap-ref: zellij-tab-mode", "    tab {"),
+    ("// keymap-ref: zellij-resize-mode", "    resize {"),
+    ("// keymap-ref: zellij-move-mode", "    move {"),
+    ("// keymap-ref: zellij-scroll-search-modes", "    scroll {"),
+    ("// keymap-ref: zellij-session-mode", "    session {"),
+    (
+        "// keymap-ref: zellij-quick-pane-tab",
+        '        bind "Super Shift ]" { MoveFocusOrTab "right"; }',
+    ),
+    (
+        "// keymap-ref: zellij-quick-resize",
+        '        bind "Ctrl Alt Shift  +" { Resize "Increase"; }',
+    ),
+    (
+        "// keymap-ref: zellij-mode-entry",
+        '    shared_except "locked" "entersearch" "renametab" "renamepane" "move" "prompt" "tmux" {',
+    ),
+    ('// keymap-ref: zellij-alt-quick-actions', '    shared_except "normal" "locked" {'),
+    ('// keymap-ref: zellij-scroll-navigation', '    shared_among "scroll" "search" {'),
+    ("// keymap-ref: zellij-rename-modes", "    renametab {"),
+    ("// keymap-ref: zellij-tmux-mode", "    tmux {"),
+)
 AEROSPACE = (REPO / "home/dot_config/aerospace/aerospace.toml").read_text()
 AEROSPACE_FAMILY_CATALOG = (
     ("# keymap-ref: aerospace-layout-cycle", "    alt-tab = 'layout horizontal vertical'"),
@@ -45,14 +69,20 @@ class KeymapProvenanceTest(unittest.TestCase):
             ZELLIJ,
         )
 
-    def test_ghostty_marker_once_and_adjacent_to_f5_reload(self):
-        self.assertEqual(GHOSTTY.count(GHOSTTY_MARKER), 1)
-        idx = GHOSTTY.index(GHOSTTY_MARKER)
-        after_marker = GHOSTTY[idx + len(GHOSTTY_MARKER) :]
-        self.assertTrue(
-            after_marker.startswith("\n" + GHOSTTY_BINDING),
-            "marker must be immediately above f5 reload_config keybind",
-        )
+    def test_ghostty_f5_reload_marker_absent(self):
+        self.assertNotIn(GHOSTTY_MARKER, GHOSTTY)
+        self.assertIn(GHOSTTY_BINDING, GHOSTTY)
+
+    def test_zellij_family_markers_once_and_adjacent_to_bindings(self):
+        for marker, binding in ZELLIJ_FAMILY_CATALOG:
+            with self.subTest(marker=marker):
+                self.assertEqual(ZELLIJ.count(marker), 1, marker)
+                idx = ZELLIJ.index(marker)
+                after_marker = ZELLIJ[idx + len(marker) :]
+                self.assertTrue(
+                    after_marker.startswith("\n" + binding),
+                    f"{marker} must be immediately above binding",
+                )
 
     def test_aerospace_family_markers_once_and_adjacent_to_bindings(self):
         for marker, binding in AEROSPACE_FAMILY_CATALOG:

@@ -11,6 +11,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "normal"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "resize"; }
     }
+    // keymap-ref: zellij-pane-mode
     pane {
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
         bind "d" { NewPane "down"; SwitchToMode "normal"; }
@@ -31,6 +32,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "resize"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "tab"; }
     }
+    // keymap-ref: zellij-tab-mode
     tab {
         bind "left" { GoToPreviousTab; }
         bind "down" { GoToNextTab; }
@@ -63,6 +65,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "pane"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "scroll"; }
     }
+    // keymap-ref: zellij-resize-mode
     resize {
         bind "left" { Resize "Increase left"; }
         bind "down" { Resize "Increase down"; }
@@ -83,6 +86,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "locked"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "pane"; }
     }
+    // keymap-ref: zellij-move-mode
     move {
         bind "left" { MovePane "left"; }
         bind "down" { MovePane "down"; }
@@ -99,6 +103,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "session"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "prompt"; }
     }
+    // keymap-ref: zellij-scroll-search-modes
     scroll {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
         // Zellij has no keyboard selection cursor, so "v" hands the scrollback to
@@ -120,6 +125,7 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "entersearch"; }
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "renametab"; }
     }
+    // keymap-ref: zellij-session-mode
     session {
         bind "a" {
             LaunchOrFocusPlugin "zellij:about" {
@@ -161,8 +167,10 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift PageDown" { SwitchToMode "move"; }
     }
     shared_among "normal" "locked" {
+        // keymap-ref: zellij-quick-pane-tab
         bind "Super Shift ]" { MoveFocusOrTab "right"; }
         bind "Super Shift [" { MoveFocusOrTab "left"; }
+        // keymap-ref: zellij-quick-resize
         bind "Ctrl Alt Shift  +" { Resize "Increase"; }
         bind "Ctrl Alt Shift  -" { Resize "Decrease"; }
         bind "Ctrl Alt Shift  =" { Resize "Increase"; }
@@ -174,6 +182,7 @@ keybinds clear-defaults=true {
         unbind "Alt Right"
         bind "Super t" { NewTab; SwitchToMode "normal"; }
     }
+    // keymap-ref: zellij-mode-entry
     shared_except "locked" "entersearch" "renametab" "renamepane" "move" "prompt" "tmux" {
         bind "Ctrl Alt Shift h" { SwitchToMode "move"; }
     }
@@ -200,6 +209,7 @@ keybinds clear-defaults=true {
     shared_except "locked" "resize" "entersearch" "renametab" "renamepane" "prompt" "tmux" {
         bind "Ctrl Alt Shift n" { SwitchToMode "resize"; }
     }
+    // keymap-ref: zellij-alt-quick-actions
     shared_except "normal" "locked" {
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
@@ -224,6 +234,7 @@ keybinds clear-defaults=true {
     shared_among "pane" "tmux" {
         bind "x" { CloseFocus; SwitchToMode "normal"; }
     }
+    // keymap-ref: zellij-scroll-navigation
     shared_among "scroll" "search" {
         bind "PageDown" { PageScrollDown; }
         bind "PageUp" { PageScrollUp; }
@@ -267,6 +278,7 @@ keybinds clear-defaults=true {
         bind "Ctrl s" { SwitchToMode "scroll"; }
         bind "Ctrl t" { SwitchToMode "tab"; }
     }
+    // keymap-ref: zellij-rename-modes
     renametab {
         bind "esc" { UndoRenameTab; SwitchToMode "tab"; }
         bind "Ctrl Alt Shift PageUp" { SwitchToMode "search"; }
@@ -283,6 +295,7 @@ keybinds clear-defaults=true {
     shared_among "session" "tmux" {
         bind "d" { Detach; }
     }
+    // keymap-ref: zellij-tmux-mode
     tmux {
         bind "left" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "down" { MoveFocus "down"; SwitchToMode "normal"; }
