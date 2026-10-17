@@ -1,7 +1,13 @@
 keybinds clear-defaults=true {
     //{{{ keybinds
+    normal {
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "tmux"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "locked"; }
+    }
     locked {
         bind "Ctrl Alt Shift g" { SwitchToMode "normal"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "normal"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "resize"; }
     }
     pane {
         bind "c" { SwitchToMode "renamepane"; PaneNameInput 0; }
@@ -20,6 +26,8 @@ keybinds clear-defaults=true {
         bind "s" { NewPane "stacked"; SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "z" { TogglePaneFrames; SwitchToMode "normal"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "resize"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "tab"; }
     }
     tab {
         bind "left" { GoToPreviousTab; }
@@ -50,6 +58,8 @@ keybinds clear-defaults=true {
         bind "Ctrl Alt Shift t" { SwitchToMode "normal"; }
         bind "x" { CloseTab; SwitchToMode "normal"; }
         bind "tab" { ToggleTab; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "pane"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "scroll"; }
     }
     resize {
         bind "left" { Resize "Increase left"; }
@@ -68,6 +78,8 @@ keybinds clear-defaults=true {
         bind "k" { Resize "Increase up"; }
         bind "l" { Resize "Increase right"; }
         bind "Ctrl Alt Shift n" { SwitchToMode "normal"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "locked"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "pane"; }
     }
     move {
         bind "left" { MovePane "left"; }
@@ -82,6 +94,8 @@ keybinds clear-defaults=true {
         bind "n" { MovePane; }
         bind "p" { MovePaneBackwards; }
         bind "tab" { MovePane; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "session"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "prompt"; }
     }
     scroll {
         bind "e" { EditScrollback; SwitchToMode "normal"; }
@@ -92,6 +106,8 @@ keybinds clear-defaults=true {
         bind "Y" { CopyLastCommandOutput; SwitchToMode "normal"; }
         bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "Ctrl Alt Shift s" { SwitchToMode "normal"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "tab"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "entersearch"; }
     }
     search {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
@@ -99,6 +115,8 @@ keybinds clear-defaults=true {
         bind "o" { SearchToggleOption "WholeWord"; }
         bind "p" { Search "up"; }
         bind "w" { SearchToggleOption "Wrap"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "entersearch"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "renametab"; }
     }
     session {
         bind "a" {
@@ -137,6 +155,8 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "normal"
         }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "renamepane"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "move"; }
     }
     shared_among "normal" "locked" {
         bind "Super Shift ]" { MoveFocusOrTab "right"; }
@@ -232,6 +252,8 @@ keybinds clear-defaults=true {
         bind "Ctrl c" { SwitchToMode "scroll"; }
         bind "esc" { SwitchToMode "scroll"; }
         bind "enter" { SwitchToMode "search"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "scroll"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "search"; }
     }
     shared_among "entersearch" "renametab" "renamepane" "prompt" "tmux" {
         bind "Ctrl g" { SwitchToMode "locked"; }
@@ -245,12 +267,16 @@ keybinds clear-defaults=true {
     }
     renametab {
         bind "esc" { UndoRenameTab; SwitchToMode "tab"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "search"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "renamepane"; }
     }
     shared_among "renametab" "renamepane" {
         bind "Ctrl c" { SwitchToMode "normal"; }
     }
     renamepane {
         bind "esc" { UndoRenamePane; SwitchToMode "pane"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "renametab"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "session"; }
     }
     shared_among "session" "tmux" {
         bind "d" { Detach; }
@@ -275,6 +301,12 @@ keybinds clear-defaults=true {
         bind "o" { FocusNextPane; }
         bind "p" { GoToPreviousTab; SwitchToMode "normal"; }
         bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "prompt"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "normal"; }
+    }
+    prompt {
+        bind "Ctrl Alt Shift PageUp" { SwitchToMode "move"; }
+        bind "Ctrl Alt Shift PageDown" { SwitchToMode "tmux"; }
     }
     // }}}
 }
