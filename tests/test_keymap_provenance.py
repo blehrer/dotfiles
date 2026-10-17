@@ -29,6 +29,10 @@ ZELLIJ_ALT_DIRECTION_BINDINGS = (
     '        bind "Alt k" { MoveFocus "up"; }',
     '        bind "Alt l" { MoveFocusOrTab "right"; }',
 )
+ZELLIJ_REMOVED_MEH_OP_BINDINGS = (
+    'bind "Ctrl Alt Shift o"',
+    'bind "Ctrl Alt Shift p"',
+)
 GHOSTTY_REPLACED_BINDINGS = (
     "keybind = super+j=scroll_to_selection",
     "keybind = super+k=clear_screen",
@@ -128,6 +132,11 @@ class KeymapProvenanceTest(unittest.TestCase):
             with self.subTest(binding=binding):
                 self.assertIn(binding, normal_locked)
         for binding in ZELLIJ_ALT_DIRECTION_BINDINGS:
+            with self.subTest(binding=binding):
+                self.assertNotIn(binding, ZELLIJ)
+
+    def test_zellij_has_no_meh_o_or_p_bindings(self):
+        for binding in ZELLIJ_REMOVED_MEH_OP_BINDINGS:
             with self.subTest(binding=binding):
                 self.assertNotIn(binding, ZELLIJ)
 
