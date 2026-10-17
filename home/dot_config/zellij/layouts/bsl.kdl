@@ -13,21 +13,21 @@ layout {
         pane size=1 borderless=true {
             plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
                 //  󱗿  󰇙  󰟥 󰵈
-                format_left "{mode} {tabs}"
+                format_left "{mode} "
                 format_right   "#[fg=#8BA4B0,bold]  {session} "
-                format_center ""
+                format_center "{tabs}"
                 format_space  "#[bg=#181825]"
 
                 // Configuremode_normal
                 mode_normal        "#[fg=#C4B28A]   󱗿    "
                 mode_locked        "#[fg=#6c7086]  󰵋     "
                 mode_resize        "#[fg=#8EA4A2]   󰺾    "
-                mode_pane          "#[fg=#8EA4A2]       "
-                mode_tab           "#[fg=#8EA4A2]   󰓪    "
                 mode_scroll        "#[fg=#8EA4A2]   󱕒    "
                 mode_enter_search  "#[fg=#8EA4A2]    󰿄  "
                 mode_search        "#[fg=#8EA4A2]       "
-                mode_rename_tab    "#[fg=#8A9A7B]   󰓪   "
+                mode_tab           "#[fg=#8EA4A2]   󰉗    "
+                mode_rename_tab    "#[fg=#8A9A7B]   󰉗   "
+                mode_pane          "#[fg=#8EA4A2]       "
                 mode_rename_pane   "#[fg=#8A9A7B]      "
                 mode_session       "#[fg=#8EA4A2]   󰋃    "
                 mode_move          "#[fg=#8EA4A2]       "
@@ -52,7 +52,7 @@ layout {
                 // indicators
                 tab_sync_indicator       "<> "
                 tab_fullscreen_indicator "[] "
-                tab_floating_indicator   "⬚ "
+                tab_floating_indicator   "󱗼 "
 
                 // limit tab display count
                 // tab_display_count         "3"  // limit to showing 3 tabs
