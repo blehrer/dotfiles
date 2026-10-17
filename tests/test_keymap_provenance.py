@@ -10,6 +10,7 @@ ZELLIJ_MODE_CYCLE_COMMENT = "// Meh PageUp/PageDown mode-cycle bindings repeat i
 ZELLIJ_BLOCK = "    normal {"
 GHOSTTY_MARKER = "# keymap-ref: ghostty-f5-reload"
 GHOSTTY_BINDING = "keybind = unconsumed:f5=reload_config"
+GHOSTTY_CONSUMED_ESCAPE_BINDING = "keybind = escape=end_search"
 GHOSTTY_SUPER_DIRECTION_BINDINGS = (
     "keybind = super+h=csi:104;9u",
     "keybind = super+j=csi:106;9u",
@@ -102,6 +103,9 @@ class KeymapProvenanceTest(unittest.TestCase):
     def test_ghostty_f5_reload_marker_absent(self):
         self.assertNotIn(GHOSTTY_MARKER, GHOSTTY)
         self.assertIn(GHOSTTY_BINDING, GHOSTTY)
+
+    def test_ghostty_does_not_consume_escape(self):
+        self.assertNotIn(GHOSTTY_CONSUMED_ESCAPE_BINDING, GHOSTTY)
 
     def test_ghostty_super_directions_and_native_config_link(self):
         self.assertIn("keybind = clear", GHOSTTY)
