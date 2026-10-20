@@ -631,7 +631,7 @@ theme "kanso-ink"
 default_layout "bsl"
 pane_frames false
 copy_command "pbcopy"                     // osx
-session_name "bsl "
+session_name "bsl"
 attach_to_session true
 scrollback_lines_to_serialize 100000
 show_startup_tips false
