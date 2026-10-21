@@ -20,7 +20,9 @@ function inspect-rerere() {
       hash=$(basename "$dir")
       echo "### === $hash ==="
       if [[ -f "$dir/postimage" ]]; then
+        echo '```diff'
         diff -u "$dir/preimage" "$dir/postimage" || true
+        echo '```'
       else
         echo "(no postimage — conflict not resolved yet?)"
         echo '```diff'
