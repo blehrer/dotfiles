@@ -19,12 +19,16 @@ function inspect-rerere() {
     for dir in "${dirs[@]}"; do
       hash=$(basename "$dir")
       echo "### === $hash ==="
+      echo
       if [[ -f "$dir/postimage" ]]; then
+        echo
         echo '```diff'
         diff -u "$dir/preimage" "$dir/postimage" || true
         echo '```'
       else
+        echo
         echo "(no postimage — conflict not resolved yet?)"
+        echo
         echo '```diff'
         rg '^(<<<<<<<|=======|>>>>>>>)' "$dir/preimage" || true
         echo '```'
@@ -35,6 +39,7 @@ function inspect-rerere() {
 
   echo "### === merge-tree dry run (HEAD vs origin/main) ==="
   git merge-tree "$(git merge-base HEAD origin/main)" HEAD origin/main 2>/dev/null |
+    echo
     echo '```diff'
     rg 'changed in both|<<<<<<<' || echo "(no conflict markers in dry run)"
     echo '```'
