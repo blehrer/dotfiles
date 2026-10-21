@@ -2,7 +2,7 @@ if is_darwin; then
   if has mise ; then
     eval "$(mise activate $shellenv)"
   fi
-  if has starship ; then
+  if has starship && [[ ${TERM:-} != dumb ]]; then
     export STARSHIP_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml
     eval "$(starship init $shellenv)"
     if [[ $shellenv = zsh ]]; then
@@ -29,7 +29,7 @@ if is_darwin; then
   fi
 fi
 
-if [[ -z "$ZELLIJ" ]] && [[ "$ZELLIJ_INIT" == "true" ]]; then
+if [[ -z "$ZELLIJ" ]] && [[ "$ZELLIJ_INIT" == "true" ]] && [[ ${TERM:-} != dumb ]] && [[ -t 1 ]]; then
   if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
     zellij attach -c
   else
