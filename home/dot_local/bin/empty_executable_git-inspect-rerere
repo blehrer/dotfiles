@@ -23,9 +23,9 @@ function inspect-rerere() {
         diff -u "$dir/preimage" "$dir/postimage" || true
       else
         echo "(no postimage — conflict not resolved yet?)"
-        echo "```diff"
+        echo '```diff'
         rg '^(<<<<<<<|=======|>>>>>>>)' "$dir/preimage" || true
-        echo "```"
+        echo '```'
       fi
       echo
     done
@@ -33,8 +33,8 @@ function inspect-rerere() {
 
   echo "### === merge-tree dry run (HEAD vs origin/main) ==="
   git merge-tree "$(git merge-base HEAD origin/main)" HEAD origin/main 2>/dev/null |
-    echo "```diff"
+    echo '```diff'
     rg 'changed in both|<<<<<<<' || echo "(no conflict markers in dry run)"
-    echo "```"
+    echo '```'
 }
 inspect-rerere
