@@ -109,7 +109,7 @@
     changelist = "!upstream=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) && \
         echo Changelist, relative to upstream branch $upstream && \
         git log --oneline --graph $upstream..@"
-    inspect-rerere = "!inspect rerere"
+    inspect-rerere = "!git-inspect-rerere"
 
 [pager]
     log = perl /opt/homebrew/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less

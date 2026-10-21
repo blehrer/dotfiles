@@ -198,7 +198,7 @@ append_zellij_hooks() {
 # )))
 
 # ((( git
-inspect-rerere() {
+git-inspect-rerere() {
   local root days=1
   root=$(git rev-parse --show-toplevel 2>/dev/null) || return 1
   [[ -d "$root/.git/rr-cache" ]] || { echo "no rr-cache"; return 1; }
