@@ -21,7 +21,7 @@
     colorMoved = blocks
 #colorMoved = no
 #color-moved-ws = allow-indentation-change
-    tool = nvim -d
+    tool = nvimdiff
     noprefix = true
     renameLimit = 50000
     algorithm = histogram
@@ -88,6 +88,8 @@
 [difftool]
     prompt = false
 
+[difftool "nvimdiff"]
+    cmd = nvim -d "$LOCAL" "$REMOTE"
 
 [mergetool]
     prompt = false
