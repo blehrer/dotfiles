@@ -97,7 +97,7 @@ autoload sticky-note
 # Load more completions
 fpath=(${HOME}/.local/share/zsh/site-functions $fpath)
 fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
-[ -f ~/.local/share/gss/completions ] && fpath=(~/.local/share/gss/completions $fpath)
+[ -d ~/.local/share/gss/completions ] && fpath=(~/.local/share/gss/completions $fpath)
 
 # Should be called before compinit
 zmodload zsh/complist
