@@ -64,7 +64,7 @@ if has git ; then
         git commit -a --fixup "${@:-@}"
     }
     alias gb='git branch'
-    alias gbls="git branch -vv --sort=-committerdate | grep -vE '^\s*(ABANDONED|DONE|ARCHIVE|Z_MERGED).*'"
+    alias gbls="git branch --sort=-committerdate $* | grep -vE '\s*(ABANDONED|LATER|DONE|ARCHIVE|bk|backup)'"
     alias gstack='git log --oneline --graph --decorate origin/develop..HEAD'
     alias restack='git fetch origin && git rebase --onto origin/develop origin/ci-SONE-28556-e2e-in-pipeline e2e-work-stories'
     alias gbu='echo "The upstream branch: $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"'

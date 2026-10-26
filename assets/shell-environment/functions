@@ -198,40 +198,6 @@ append_zellij_hooks() {
 # )))
 
 # ((( git
-git-inspect-rerere() {
-  local root days=1
-  root=$(git rev-parse --show-toplevel 2>/dev/null) || return 1
-  [[ -d "$root/.git/rr-cache" ]] || { echo "no rr-cache"; return 1; }
-
-  # optional: inspect-rerere 7  → last 7 days
-  [[ "${1:-}" =~ ^[0-9]+$ ]] && days=$1
-
-  local -a dirs=()
-  while IFS= read -r -d '' preimage; do
-    dirs+=("$(dirname "$preimage")")
-  done < <(find "$root/.git/rr-cache" -name preimage -mtime "-$days" -print0 2>/dev/null)
-
-  if ((${#dirs[@]} == 0)); then
-    echo "no rr-cache entries in the last ${days} day(s)"
-  else
-    for dir in "${dirs[@]}"; do
-      hash=$(basename "$dir")
-      echo "=== $hash ==="
-      if [[ -f "$dir/postimage" ]]; then
-        diff -u "$dir/preimage" "$dir/postimage" || true
-      else
-        echo "(no postimage — conflict not resolved yet?)"
-        rg '^(<<<<<<<|=======|>>>>>>>)' "$dir/preimage" || true
-      fi
-      echo
-    done
-  fi
-
-  echo "=== merge-tree dry run (HEAD vs origin/main) ==="
-  local base=$(git merge-base HEAD origin/main)
-  git merge-tree "$base" HEAD origin/main 2>/dev/null |
-    rg 'changed in both|<<<<<<<' || echo "(no conflict markers in dry run)"
-}
 # )))
 
 if has yazi  ; then
