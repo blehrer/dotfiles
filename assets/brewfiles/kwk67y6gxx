@@ -225,8 +225,6 @@ brew "zoxide"
 brew "zsh"
 # Vault
 brew "hashicorp/tap/vault", trusted: true
-# YAMAMOTO Mitsuharu's Mac port of GNU Emacs
-brew "railwaycat/emacsmacport/emacs-mac@29"
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
