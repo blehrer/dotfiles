@@ -31,3 +31,6 @@ _Deparsed_XSubs.pm
 scratch
 .codereview.nvim
 **/src/**/.obsidian*
+graphify-out/
+.envrc
+playwright-report.json
