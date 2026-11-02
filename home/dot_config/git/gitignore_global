@@ -33,6 +33,3 @@ scratch
 **/src/**/.obsidian*
 
 **/.claude/settings.local.json
-graphify-out/
-.envrc
-playwright-report.json
