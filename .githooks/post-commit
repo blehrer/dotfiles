@@ -1,0 +1,4 @@
+#!/bin/sh
+# Sync chezmoi source (home/) to ~ after commits. One-time: git config core.hooksPath .githooks
+command -v chezmoi >/dev/null 2>&1 || exit 0
+chezmoi apply
