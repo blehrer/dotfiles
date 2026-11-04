@@ -5,7 +5,7 @@ tap "dicklesworthstone/tap"
 tap "felixkratz/formulae"
 tap "grishka/grishka"
 tap "hashicorp/tap"
-tap "microsoft/mssql-release"
+tap "microsoft/mssql-release", trusted: { formulae: ["mssql-tools"] }
 tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
