@@ -248,8 +248,6 @@ cask "cursor"
 cask "cursor-cli"
 # Monitoring and security across systems, apps, and services
 cask "datadog-agent"
-# Universal database tool and SQL client
-cask "dbeaver-community"
 cask "font-fira-code-nerd-font"
 cask "font-geist-mono-nerd-font"
 cask "font-hasklug-nerd-font"
