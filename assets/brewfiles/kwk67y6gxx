@@ -5,7 +5,7 @@ tap "dicklesworthstone/tap"
 tap "felixkratz/formulae"
 tap "grishka/grishka"
 tap "hashicorp/tap"
-tap "microsoft/mssql-release", trusted: { formulae: ["mssql-tools"] }
+tap "microsoft/mssql-release", trusted: { formulae: ["msodbcsql1", "msodbcsql17"] }
 tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
@@ -226,6 +226,8 @@ brew "zoxide"
 brew "zsh"
 # Vault
 brew "hashicorp/tap/vault", trusted: true
+# Sqlcmd and Bcp for Microsoft(R) SQL Server(R)
+brew "microsoft/mssql-release/mssql-tools", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
