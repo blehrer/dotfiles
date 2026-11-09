@@ -292,4 +292,30 @@ if [[ $(shellname) = 'zsh' ]]; then
   }
 fi
 
+if [ -d "$HOME/Documents/worklog/log" ]; then
+  function ls-worklog {
+    /bin/ls "$HOME/Documents/worklog/log" | sort -r | head -n1
+  }
+
+  function _worklog_clip {
+    awk '/^---$/{if(++n==2){body=1;next}} body&&/^## Session log/{exit} body'
+  }
+
+  function cat-worklog {
+    /bin/cat "$HOME/Documents/worklog/log/$(ls-worklog)"
+  }
+
+  function cp-worklog {
+    local dir=$HOME/Documents/worklog/log f body
+    for f in $(/bin/ls "$dir" 2>/dev/null | sort -r); do
+      body=$(/bin/cat "$dir/$f" | _worklog_clip)
+      if printf '%s\n' "$body" | grep -qE '^- .+'; then
+        printf '%s\n' "$body" | pbcopy
+        return 0
+      fi
+    done
+    cat-worklog | _worklog_clip | pbcopy
+  }
+fi
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))
