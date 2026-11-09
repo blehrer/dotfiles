@@ -4,4 +4,11 @@ if [[ $0 = bash ]]; then
   bind '"\C-l":clear-screen'
 fi
 
+# Worklog helpers are functions (sourced later); drop legacy aliases before parse.
+unalias ls-worklog cat-worklog cp-worklog 2>/dev/null
+unset -f ls-worklog cat-worklog cp-worklog _worklog_clip 2>/dev/null
+if [ -n "${ZSH_VERSION:-}" ]; then
+  unfunction ls-worklog cat-worklog cp-worklog _worklog_clip 2>/dev/null
+fi
+
 # vim: ts=2 sts=2 sw=2 et foldmethod=marker ft=sh foldmarker=(((,)))

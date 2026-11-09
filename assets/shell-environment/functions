@@ -1,8 +1,16 @@
 function what {
-    echo "  - which:        $(which $1 2>/dev/null)"
-    echo "  - whereis:      $(whereis $1 2>/dev/null)"
-    echo "  - command -v:   $(command -v $1 2>/dev/null)"
-    echo "  - declare -f:   $(declare -f $1 2>/dev/null)"
+  local cmd=$1 file line
+  [ -n "$cmd" ] || { echo "usage: what NAME" >&2; return 1; }
+
+  echo "  - which:        $(which $cmd 2>/dev/null)"
+  echo "  - whereis:      $(whereis $cmd 2>/dev/null)"
+  echo "  - command -v:   $(command -v $cmd 2>/dev/null)"
+  echo "  - declare -f:   $(declare -f $cmd 2>/dev/null)"
+
+  if [ -n "${ZSH_VERSION:-}" ]; then
+    echo "  - whence -va:"
+    whence -va "$cmd" 2>/dev/null | sed 's/^/      /'
+  fi
 }
 
 function sticky-note {
