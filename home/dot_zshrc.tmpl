@@ -56,9 +56,8 @@ _vi_put_clipboard() {
   zle .$WIDGET
 }
 
-for _w in \
-  vi-yank vi-yank-eol vi-yank-whole-line \
-  vi-delete vi-delete-char vi-backward-delete-char vi-kill-eol; do
+# System clipboard only on explicit yank (not delete/kill — those clobber like dw)
+for _w in vi-yank vi-yank-eol vi-yank-whole-line; do
   zle -N $_w _vi_yank_clipboard
 done
 for _w in put-after put-before; do
