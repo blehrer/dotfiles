@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+: "${bsl_repos:=$HOME/src}"
+: "${bsl_wts:=$HOME/wt}"
+
 _wt_has_worktree_children() {
   local wt_root="$1"
   local wt_path
@@ -54,7 +57,7 @@ _wt_status_roots_for_cwd() {
     return 0
   fi
 
-  local wt_base="${bsl_wts:-$HOME/src/worktrees}"
+  local wt_base="${bsl_wts:-$HOME/wt}"
   local dir="${PWD:A}"
   local base="${wt_base:A}"
 
@@ -70,7 +73,7 @@ _wt_status_roots_for_cwd() {
 
 _wt_status_root_label() {
   local wt_root="${1:A}"
-  local wt_base="${bsl_wts:-$HOME/src/worktrees}"
+  local wt_base="${bsl_wts:-$HOME/wt}"
   local base="${wt_base:A}"
 
   if [[ -d "$base" && "$wt_root" == "$base"/* ]]; then
@@ -134,17 +137,16 @@ _wt_fzf_pick_lines() {
 
 _wt_nested_worktree_group_roots() {
   local wt_base="${1:A}"
-  local parent candidate
+  local candidate
   local -a roots=()
 
   [[ -d "$wt_base" ]] || return 1
 
   setopt localoptions extendedglob nullglob
-  for parent in "$wt_base"/*(N/); do
-    for candidate in "$parent"/*(N/); do
-      _wt_has_worktree_children "$candidate" && roots+=("${candidate:A}")
-    done
-  done
+  # ponytail: maxdepth 8 for gitlab_path_mirror (e.g. wt/acme/team/widget)
+  while IFS= read -r -d '' candidate; do
+    _wt_has_worktree_children "$candidate" && roots+=("${candidate:A}")
+  done < <(find "$wt_base" -mindepth 1 -maxdepth 8 -type d -print0 2>/dev/null)
 
   reply=("${roots[@]}")
   return 0
@@ -152,7 +154,7 @@ _wt_nested_worktree_group_roots() {
 
 _wt_pick_worktree_root() {
   local header="${1:-Select worktree group}"
-  local wt_base="${bsl_wts:-$HOME/src/worktrees}"
+  local wt_base="${bsl_wts:-$HOME/wt}"
   local -a groups labels
   local root
 
@@ -784,19 +786,17 @@ _wt_edit() {
 }
 
 _wt_mv() {
-  local wt_root="$HOME/src/worktrees"
+  local wt_base="${bsl_wts:-$HOME/wt}"
+  local wt_dir
 
   print "Select the worktree group (directory of worktrees) to relocate."
-  local wt_dir
-  wt_dir=$(find "$wt_root" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort \
-    | fzf --header "Select worktree group to move" --prompt "Filter: ")
-  [[ -z "$wt_dir" ]] && return 0
+  wt_dir=$(_wt_pick_worktree_root "Select worktree group to move") || return 0
 
   print ""
   print "Enter the destination. Tab-completion is available."
   print "  mv semantics: existing dir → move inside it; new path → rename."
   print "Current: $wt_dir"
-  local dest="${wt_root}/"
+  local dest="${wt_base}/"
   _wt_vared_directory "Move to: " dest
   dest="${dest%/}"
   [[ -z "$dest" ]] && { print "No destination given." >&2; return 1; }
@@ -806,7 +806,7 @@ _wt_mv() {
 
   while [[ -e "$new_wt_dir" ]]; do
     print "'$new_wt_dir' already exists. Choose a different destination."
-    dest="${wt_root}/"
+    dest="${wt_base}/"
     _wt_vared_directory "Move to: " dest
     dest="${dest%/}"
     [[ -z "$dest" ]] && return 1
@@ -852,24 +852,77 @@ _wt_mv() {
   fi
 }
 
+_wt_is_interactive() {
+  [[ -o interactive ]] && [[ -t 0 ]]
+}
+
+# ponytail: branch-exists check only; already-checked-out fails at git with a clear error
+_wt_git_worktree_add() {
+  local repo="$1" wt_path="$2" branch_name="$3" ref_name="$4" force_new="$5"
+
+  if [[ -z "$branch_name" ]]; then
+    git -C "$repo" worktree add "$wt_path" || return 1
+    return 0
+  fi
+  if (( force_new )); then
+    git -C "$repo" worktree add -b "$branch_name" "$wt_path" "${ref_name:-HEAD}" || return 1
+    return 0
+  fi
+  if git -C "$repo" show-ref --verify --quiet "refs/heads/${branch_name}"; then
+    git -C "$repo" worktree add "$wt_path" "$branch_name" || return 1
+    return 0
+  fi
+  git -C "$repo" worktree add -b "$branch_name" "$wt_path" "${ref_name:-HEAD}" || return 1
+}
+
+_wt_unique_leaf_path() {
+  local wt_dir="$1" base="$2"
+  local candidate="$wt_dir/$base" n=2
+
+  while [[ -e "$candidate" ]]; do
+    candidate="$wt_dir/${base}-${n}"
+    (( n++ ))
+  done
+  print -r -- "$candidate"
+}
+
 _wt_init() {
   local src_root="$bsl_repos"
-  local wt_root="$bsl_wts"
+  local wt_root=""
+  local wt_root_cli=0
   local branch_name=""
   local ref_name=""
+  local leaf_name=""
+  local assume_yes=0
+  local force_new_branch=0
   local -a repos=()
   local -a repo_paths=()
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --src-root)      src_root="$2";               shift 2 ;;
-      --worktree-root) wt_root="$2";                shift 2 ;;
+      --worktree-root) wt_root="${2%/}";            wt_root_cli=1; shift 2 ;;
       --branch)        branch_name="$2";            shift 2 ;;
       --ref)           ref_name="$2";               shift 2 ;;
+      --name|--leaf)   leaf_name="$2";              shift 2 ;;
       --repos)         repos=("${(s:,:)2}");        shift 2 ;;
+      --yes|-y)        assume_yes=1;                shift ;;
+      --new-branch)    force_new_branch=1;          shift ;;
       --help|-h)
-        print "Usage: wt init [--src-root DIR] [--worktree-root DIR] [--branch NAME] [--ref REF] [--repos NAME,...]"
-        return 0 ;;
+        print "Usage: wt init [options]"
+        print ""
+        print "  --src-root DIR          repo search root (default: \$bsl_repos)"
+        print "  --worktree-root DIR     worktree group (skip root prompt when set)"
+        print "  --repos NAME,...        home repo basename(s); fzf if omitted"
+        print "  --branch NAME           branch to check out in the new leaf"
+        print "  --ref REF               start ref for --new-branch only (default HEAD)"
+        print "  --name|--leaf NAME      leaf directory name (skip name prompt when set)"
+        print "  --new-branch            always git worktree add -b (ignore existing branch)"
+        print "  --yes|-y                assume yes to add-worktrees-in-existing-dir"
+        print ""
+        print "Existing local branch: git worktree add PATH BRANCH (no -b). New name: -b."
+        return 0
+      ;;
       *)
         print "Unknown argument: $1" >&2
         return 1 ;;
@@ -877,10 +930,10 @@ _wt_init() {
   done
 
   # Step 1: resolve repo paths
-  print "Select one or more source repos to create worktrees from (Tab to multi-select)."
   if [[ ${#repos[@]} -eq 0 ]]; then
+    print "Select one or more source repos to create worktrees from (Tab to multi-select)."
     local selection
-    selection=$(find "$src_root" -maxdepth 5 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null \
+    selection=$(find "$src_root" -maxdepth 8 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null \
       | sed 's|/\.git$||' \
       | sort -u \
       | fzf --multi --header "Source Repos" --prompt "Filter (Use TAB to select many, submit with ENTER): ")
@@ -888,7 +941,7 @@ _wt_init() {
     repo_paths=("${(f)selection}")
   else
     local all_repos
-    all_repos=$(find "$src_root" -maxdepth 5 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null | sed 's|/\.git$||')
+    all_repos=$(find "$src_root" -maxdepth 8 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null | sed 's|/\.git$||')
     for r in "${repos[@]}"; do
       if [[ -d "$r" ]]; then
         repo_paths+=("$r")
@@ -904,53 +957,79 @@ _wt_init() {
     done
   fi
 
-  # Step 2: prompt for worktree root dir
-  print ""
-  print "Enter the directory that will group all these worktrees. Tab-completion is available."
-  local wt_dir="${wt_root}/"
-  _wt_vared_directory "Worktree root: " wt_dir
-  wt_dir="${wt_dir%/}"
+  # Step 2: worktree group dir
+  local wt_dir=""
+  if (( wt_root_cli )) && [[ -n "$wt_root" ]]; then
+    wt_dir="$wt_root"
+  elif _wt_is_interactive; then
+    print ""
+    print "Enter the directory that will group all these worktrees. Tab-completion is available."
+    local wt_dir_input="${bsl_wts}/"
+    _wt_vared_directory "Worktree root: " wt_dir_input
+    wt_dir="${wt_dir_input%/}"
+  else
+    print "wt init: --worktree-root is required in non-interactive shells." >&2
+    return 1
+  fi
   [[ -z "$wt_dir" ]] && { print "No directory given." >&2; return 1; }
 
   # Step 3: existing dir guard
-  if [[ -d "$wt_dir" ]]; then
-    local confirm
-    read -r "confirm?Directory '$wt_dir' exists. Add worktrees here? [Y/n] "
-    [[ "${confirm:l}" == "n" ]] && return 0
+  if [[ -d "$wt_dir" ]] && (( ! assume_yes )); then
+    if _wt_is_interactive; then
+      local confirm
+      read -r "confirm?Directory '$wt_dir' exists. Add worktrees here? [Y/n] "
+      [[ "${confirm:l}" == "n" ]] && return 0
+    fi
   fi
   mkdir -p "$wt_dir"
 
   # Step 4: branch/ref prompt (once for all repos)
+  local first_repo="${repo_paths[1]}"
   if [[ -z "$branch_name" ]]; then
-    read -r "branch_name?New branch name (empty = detached worktree): "
-    if [[ -n "$branch_name" && -z "$ref_name" ]]; then
+    if _wt_is_interactive; then
+      read -r "branch_name?Branch name (empty = detached HEAD): "
+    else
+      print "wt init: --branch is required in non-interactive shells." >&2
+      return 1
+    fi
+  fi
+  if [[ -n "$branch_name" && -z "$ref_name" ]] && _wt_is_interactive; then
+    if (( force_new_branch )) || ! git -C "$first_repo" show-ref --verify --quiet "refs/heads/${branch_name}"; then
       ref_name="HEAD"
       vared -p "Starting ref [$ref_name]: " ref_name
       [[ -z "$ref_name" ]] && ref_name="HEAD"
     fi
-  elif [[ -n "$branch_name" && -z "$ref_name" ]]; then
-    ref_name="HEAD"
   fi
 
   # Step 5: create each worktree
   local failed=0
   for repo in "${repo_paths[@]}"; do
-    local wt_name
-    wt_name=$(basename "$repo")
-    vared -p "Worktree name for '$(basename "$repo")': " wt_name
+    local wt_name wt_path
 
-    local wt_path="$wt_dir/$wt_name"
-    while [[ -e "$wt_path" ]]; do
-      print "Path '$wt_path' already exists. Choose a different name."
-      vared -p "Worktree name: " wt_name
+    if [[ -n "$leaf_name" ]]; then
+      wt_name="$leaf_name"
+      wt_path="$(_wt_unique_leaf_path "$wt_dir" "$wt_name")"
+      wt_name="${wt_path:t}"
+      if [[ "$wt_path" != "$wt_dir/$leaf_name" ]]; then
+        print "wt init: leaf '$leaf_name' exists; using '$wt_name'." >&2
+      fi
+    elif _wt_is_interactive; then
+      wt_name=$(basename "$repo")
+      vared -p "Worktree name for '$(basename "$repo")': " wt_name
       wt_path="$wt_dir/$wt_name"
-    done
-
-    if [[ -n "$branch_name" ]]; then
-      git -C "$repo" worktree add -b "$branch_name" "$wt_path" "$ref_name" || { failed=1; continue; }
+      while [[ -e "$wt_path" ]]; do
+        print "Path '$wt_path' already exists. Choose a different name."
+        vared -p "Worktree name: " wt_name
+        wt_path="$wt_dir/$wt_name"
+      done
     else
-      git -C "$repo" worktree add "$wt_path" || { failed=1; continue; }
+      wt_name="${branch_name:-$(basename "$repo")}"
+      wt_path="$(_wt_unique_leaf_path "$wt_dir" "$wt_name")"
+      wt_name="${wt_path:t}"
     fi
+
+    _wt_git_worktree_add "$repo" "$wt_path" "$branch_name" "$ref_name" "$force_new_branch" \
+      || { failed=1; continue; }
     print "  created: $wt_path"
   done
 
@@ -991,10 +1070,14 @@ _wt_completion() {
         init)
           _arguments \
             "--src-root[Source repo root]:directory:_directories" \
-            "--worktree-root[Worktree root]:directory:_directories" \
-            "--branch[New branch name]:branch name:" \
-            "--ref[Starting ref]:ref:" \
+            "--worktree-root[Worktree group directory]:directory:_directories" \
+            "--branch[Branch to check out]:branch name:" \
+            "--ref[Starting ref for --new-branch]:ref:" \
+            "--name[Leaf directory name]:name:" \
+            "--leaf[Leaf directory name]:name:" \
             "--repos[Comma-separated repo names]:repo names:" \
+            "--new-branch[Force git worktree add -b]" \
+            "--yes[Assume yes to prompts]" \
             {-h,--help}"[Show help]"
           ;;
         edit)
@@ -1053,7 +1136,7 @@ wt() {
       return 0 ;;
   esac
 
-  local wt_root="${bsl_wts:-$HOME/src/worktrees}"
+  local wt_root="${bsl_wts:-$HOME/wt}"
   local wt_dir
 
   [[ -d "$wt_root" ]] || { print "Worktree base not found: $wt_root" >&2; return 1; }

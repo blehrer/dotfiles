@@ -124,6 +124,8 @@ compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
 alias decompress="tar -xzf"
 
 alias cdw='cd $WORKSPACE'
+alias cdwt='cd ${bsl_wts:-$HOME/wt}'
+alias cdsrc='cd ${bsl_repos:-$HOME/src}'
 
 # has podman && alias docker=podman
 

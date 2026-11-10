@@ -11,6 +11,10 @@ else
     export WORKSPACE=${HOME}/src
 fi
 
+# wt plugin + gitlab_path_mirror (homes under ~/src/…, groups under ~/wt/…)
+export bsl_repos="${bsl_repos:-$HOME/src}"
+export bsl_wts="${bsl_wts:-$HOME/wt}"
+
 if [ -n /.dockerenv ]; then
     export OBSIDIAN_VAULT="${HOME}/vaults/noe"
 fi

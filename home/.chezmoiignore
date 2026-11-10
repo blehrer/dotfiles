@@ -4,3 +4,8 @@
 dot_cursor/memory/episodes/**
 dot_cursor/memory/beliefs/**
 dot_cursor/memory/consolidations/**
+# Machine-local wt registry (employer repos stay off dotfiles)
+dot_cursor/wt-registry/registry.yaml
+dot_cursor/wt-registry/migrate-*.sh
+dot_cursor/rules/*.local.mdc
+dot_cursor/AGENTS.local.md

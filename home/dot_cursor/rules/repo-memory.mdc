@@ -1,0 +1,21 @@
+---
+description: Cross-worktree chat retention, episodic archive, belief consolidation, and AGENTS.md promotion across your repos
+alwaysApply: false
+---
+
+# Repo memory
+
+When the user asks what happened on a topic, whether an old belief is outdated, or for the current mental model of a codebase, use the **repo-memory** skill.
+
+Store of record on disk (until promoted into a repo):
+
+- Registry: `~/.cursor/wt-registry/registry.yaml`
+- Episodes: `~/.cursor/memory/episodes/`
+- Beliefs (semantic layer): `~/.cursor/memory/beliefs/<repo-id>.yaml`
+- Consolidation queue: `~/.cursor/memory/queue/pending-consolidation.yaml`
+
+**Agents do not silently rewrite a repo's `AGENTS.md`.** Propose a diff; the human approves; apply only in the **canonical home** checkout.
+
+Background synthesis is **deferred** (RecMem-style): raw episodes are cheap to store; LLM consolidation runs from the queue—not on every message.
+
+**Cadence:** **weekly** review at most. **Never consolidate without your explicit confirmation** in that chat (even if a timer or cron fired). The agent may summarize pending items and ask yes/no.

@@ -1,0 +1,55 @@
+---
+description: Personal git worktree layout, wt zsh plugin boundary, and canonical repo homes
+alwaysApply: true
+---
+
+# Worktree layout
+
+## Paths
+
+- **Canonical home checkout** (one per repo, never delete): `~/src/<gitlab_path>/` (mirrors GitLab/GitHub project path; see registry `gitlab_path`).
+- **Worktree group** (container): `~/wt/<gitlab_path>/`
+- **Ephemeral task checkouts** (siblings inside the group): `~/wt/<gitlab_path>/<name>/` — remove with `wt edit`, not by deleting `~/src/...`
+- **Path policy:** `gitlab_path_mirror` in `registry.yaml`; derive with `layout-from-origin.py`; **wt-workflow** `INIT_HOME` clones + registers.
+
+Plugin defaults: `bsl_repos=$HOME/src`, `bsl_wts=$HOME/wt` (set at load in `wt.plugin.zsh`; override only if needed).
+
+## Default Cursor workspace (optional, machine-local)
+
+For a **multi-repo product folder** (siblings under one parent path, not a git root), you may prefer that parent as the Cursor workspace. Put real paths in **`~/.cursor/rules/worktree-layout.local.mdc`** (chezmoiignored; never in the public dotfiles repo). Implementation still uses **registry home or wt leaf** via `resolve-implementation-checkout.sh`.
+
+## Who runs git
+
+### Agents **do** (implementation default)
+
+When you assign **repo + branch** work (MR feedback, “fix on `test-data-provisioning-spec`”, ticket on a named branch), the agent **resolves and uses the right checkout without making you open that folder first**:
+
+1. Load `~/.cursor/wt-registry/registry.yaml` → `home` + `wt_group` for the repo basename (e.g. `widget` from `acme/widget`).
+2. Run `~/.cursor/wt-registry/resolve-implementation-checkout.sh <repo> <branch>` **or** equivalent: `git -C "$home" worktree list` and find a leaf already on that branch.
+3. If no leaf exists: create one on the **home** repo (linked worktree, not a fresh clone):
+   - Prefer `wt init --yes --worktree-root "$wt_group" --src-root ~/src --branch BR --name LEAF --repos REPO`, or
+   - `git -C "$home" worktree add "$wt_group/LEAF" BR` when `BR` already exists locally.
+4. Run **all** git/npm/test commands with `cwd` = that absolute path; edit files there even if the Cursor workspace root is a parent folder or home.
+
+Report the resolved path once per task (`Implementation checkout: …`).
+
+### Agents **do not** (still human or explicit ask)
+
+- **`wt edit` / `git worktree remove` / `rm -rf` wt leaves** — archive repo-memory first; you confirm removal.
+- **Branch cleanup, prune registry, INIT_HOME** unless you asked.
+- **Destructive git** (force push, hard reset) — blocked by other rules.
+
+Interactive **wt-workflow** FSA (you’re planning layouts, not implementing) may still emit copy-paste `wt` commands instead of running them.
+
+## Cursor paths vs repo identity
+
+Cursor indexes agent transcripts under `~/.cursor/projects/<path-slug>/`, keyed by **absolute workspace path**, not by `origin`. Parent-folder workspaces reduce “wrong folder” friction but do not replace **resolve-implementation-checkout** for which branch is checked out.
+
+**Before removing or abandoning a worktree path**, run the **repo-memory** skill step **Archive session** so chats are indexed under **repo id**, not folder slug.
+
+## Opening folders
+
+- **Multi-repo session:** optional parent path (see `worktree-layout.local.mdc` on this machine)
+- **Durable docs / mental model:** canonical **home** for that repo
+- **Single-repo deep work:** the **wt leaf** on your MR branch is fine to open in Cursor if you want sidebar scoped to that leaf
+- Do not invent ad-hoc locations outside `~/wt/<gitlab_path>/` without updating `registry.yaml`

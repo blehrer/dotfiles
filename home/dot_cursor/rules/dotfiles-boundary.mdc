@@ -1,0 +1,41 @@
+---
+description: Keep employer and client-specific config out of the public dotfiles repo; safe chezmoi add discipline
+alwaysApply: true
+---
+
+# Dotfiles boundary (chezmoi)
+
+This machine’s dotfiles live in the **chezmoi source** git repo (`~/.local/share/chezmoi`, `home/**` → `~`). That repo is **public** (GitHub). Employer and client material must stay **machine-local**.
+
+## Never commit to dotfiles
+
+- Populated `repos:` in `~/.cursor/wt-registry/registry.yaml` (origins, `home`, `wt_group`, internal hostnames)
+- Employer/client **git remotes**, **checkout paths**, **host-specific migrate scripts**, or **docs/examples** that name real internal projects
+- Secrets, VPN-only URLs, or anything under `~/.config/.secret/` (use `includeIf` + local includes only)
+
+**Allowed in dotfiles:** generic examples (`acme/widget`), empty `repos: {}`, defaults, skills, and tooling that writes **only** to ignored paths on apply.
+
+## Chezmoi `add` = publish
+
+On this machine, chezmoi **`git.autocommit`** and **`git.autopush`** are on. Treat **`chezmoi add <path>`** like push-to-GitHub: only add paths that are safe in a public repo.
+
+**Do not** `chezmoi add`:
+
+- `~/.cursor/wt-registry/registry.yaml` after INIT_HOME / REGISTER (chezmoiignored; stays local)
+- Any file you have just filled with employer-specific paths or registry entries
+
+Prefer editing **`home/`** in the chezmoi source and committing with **`git`** in `~/.local/share/chezmoi` when you intend to publish template changes.
+
+## Machine-local (chezmoiignored)
+
+- `~/.cursor/wt-registry/registry.yaml` — per-host repo registry
+- `dot_cursor/wt-registry/migrate-*.sh` — one-off migration scripts with real paths
+- `dot_cursor/rules/*.local.mdc` — employer workspace and layout overrides (`worktree-layout.local.mdc`)
+
+See `home/dot_cursor/wt-registry/PLUGIN-ALIGNMENT.md` for wt + chezmoi details.
+
+## Agent checklist before dotfiles changes
+
+1. Grep the diff for internal git hosts and real project path segments you recognize as employer work.
+2. If updating wt-workflow / registry **templates**, keep `repos: {}` and fictional examples only.
+3. INIT_HOME / REGISTER: write registry on disk only; never `chezmoi add` the result.

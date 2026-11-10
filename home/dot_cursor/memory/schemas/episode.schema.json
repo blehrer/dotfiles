@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "repo-memory episode",
+  "type": "object",
+  "required": ["id", "repo_id", "workspace_path", "topic", "transcript_refs", "ingested_at", "consolidated"],
+  "properties": {
+    "id": { "type": "string" },
+    "repo_id": { "type": "string" },
+    "workspace_path": { "type": "string" },
+    "branch": { "type": "string" },
+    "topic": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "transcript_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slug"],
+        "properties": {
+          "slug": { "type": "string" },
+          "files": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "ingested_at": { "type": "string" },
+    "consolidated": { "type": "boolean" }
+  }
+}
