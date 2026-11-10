@@ -1,0 +1,6 @@
+
+# --- repo-shepherd (append to ~/.local/share/chezmoi/.chezmoiignore) ---
+# Local Cursor cache — not part of dot_cursor template
+dot_cursor/memory/episodes/**
+dot_cursor/memory/beliefs/**
+dot_cursor/memory/consolidations/**
