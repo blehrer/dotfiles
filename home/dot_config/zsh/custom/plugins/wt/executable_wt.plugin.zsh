@@ -3,6 +3,87 @@
 : "${bsl_repos:=$HOME/src}"
 : "${bsl_wts:=$HOME/wt}"
 
+_wt_wt_base() {
+  local wt_base="${bsl_wts:-$HOME/wt}"
+  wt_base="${wt_base:A}"
+  if [[ ! -d "$wt_base" ]]; then
+    wt_base="$HOME/wt"
+    wt_base="${wt_base:A}"
+  fi
+  print -r -- "$wt_base"
+}
+
+_wt_registry_wt_group_for_home() {
+  local home_path="${1:A}"
+  local registry="${HOME}/.cursor/wt-registry/registry.yaml"
+  local wt_group
+
+  [[ -f "$registry" ]] || return 1
+  wt_group="$(
+    WT_HOME="$home_path" python3 - "$registry" <<'PY'
+import os, re, sys
+from pathlib import Path
+
+reg = Path(sys.argv[1])
+home = Path(os.environ["WT_HOME"]).resolve()
+text = reg.read_text()
+for block in re.split(r"\n(?=  \S)", text):
+    m = re.search(r"^\s+home:\s+(\S+)\s*$", block, re.M)
+    if not m or Path(m.group(1)).resolve() != home:
+        continue
+    wt = re.search(r"^\s+wt_group:\s+(\S+)\s*$", block, re.M)
+    if wt:
+        print(wt.group(1))
+        break
+PY
+  )" || return 1
+  [[ -n "$wt_group" ]] || return 1
+  print -r -- "${wt_group:A}"
+}
+
+_wt_registry_wt_group_for_cwd() {
+  local git_top
+  git_top=$(command git rev-parse --show-toplevel 2>/dev/null) || return 1
+  _wt_registry_wt_group_for_home "$git_top"
+}
+
+_wt_list_worktree_leaves() {
+  local wt_root="${1:A}"
+  local wt_path
+
+  [[ -d "$wt_root" ]] || return 1
+  for wt_path in "$wt_root"/*(N/); do
+    [[ -f "$wt_path/.git" ]] && print -r -- "${wt_path:A}"
+  done
+}
+
+_wt_pick_worktree_leaf() {
+  local wt_root="${1:A}"
+  local header="${2:-Select worktree}"
+  local -a worktrees=()
+  local wt_path selection
+
+  while IFS= read -r wt_path; do
+    worktrees+=("$wt_path")
+  done < <(_wt_list_worktree_leaves "$wt_root")
+  [[ ${#worktrees[@]} -gt 0 ]] || return 1
+
+  if _wt_fzf_pick_lines "$header" "${worktrees[@]##*/}"; then
+    selection=
+    local i
+    for i in {1..${#worktrees[@]}}; do
+      if [[ "${worktrees[i]:t}" == "$REPLY" ]]; then
+        selection="${worktrees[i]}"
+        break
+      fi
+    done
+    [[ -n "$selection" ]] || return 1
+    print -r -- "$selection"
+    return 0
+  fi
+  return 1
+}
+
 _wt_has_worktree_children() {
   local wt_root="$1"
   local wt_path
@@ -57,13 +138,20 @@ _wt_status_roots_for_cwd() {
     return 0
   fi
 
-  local wt_base="${bsl_wts:-$HOME/wt}"
-  local dir="${PWD:A}"
-  local base="${wt_base:A}"
+  local wt_base dir base registry_group
+  wt_base=$(_wt_wt_base) || return 1
+  dir="${PWD:A}"
+  base="${wt_base:A}"
 
   [[ -d "$base" ]] || { print "Worktree base not found: $base" >&2; return 1; }
   if [[ "$dir" == "$base" || "$dir" == "$base"/* ]]; then
     _wt_find_worktree_roots_below "$dir"
+    return 0
+  fi
+
+  if registry_group=$(_wt_registry_wt_group_for_cwd) && [[ -d "$registry_group" ]] \
+      && _wt_has_worktree_children "$registry_group"; then
+    print -r -- "$registry_group"
     return 0
   fi
 
@@ -154,10 +242,10 @@ _wt_nested_worktree_group_roots() {
 
 _wt_pick_worktree_root() {
   local header="${1:-Select worktree group}"
-  local wt_base="${bsl_wts:-$HOME/wt}"
-  local -a groups labels
+  local wt_base -a groups labels
   local root
 
+  wt_base=$(_wt_wt_base) || return 1
   [[ -d "$wt_base" ]] || { print "Worktree base not found: $wt_base" >&2; return 1; }
   wt_base="${wt_base:A}"
 
@@ -1126,7 +1214,7 @@ wt() {
     -h|--help)
       print "Usage: wt [init|edit|status|doctor|mv|move|completion] [-h|--help]"
       print ""
-      print "  (bare)     pick a worktree group with fzf and cd into it"
+      print "  (bare)     from registry home: pick a worktree leaf; else pick a group"
       print "  init       create a new worktree group from one or more repos"
       print "  edit       remove selected worktrees from a worktree group"
       print "  status     show Starship prompts for worktrees"
@@ -1136,9 +1224,19 @@ wt() {
       return 0 ;;
   esac
 
-  local wt_root="${bsl_wts:-$HOME/wt}"
-  local wt_dir
+  local wt_root wt_dir registry_group leaf
 
+  if registry_group=$(_wt_registry_wt_group_for_cwd) && [[ -d "$registry_group" ]] \
+      && _wt_has_worktree_children "$registry_group"; then
+    print "Select a worktree under $(_wt_status_root_label "$registry_group")."
+    if leaf=$(_wt_pick_worktree_leaf "$registry_group" "Select worktree"); then
+      cd "$leaf"
+      return 0
+    fi
+    return 0
+  fi
+
+  wt_root=$(_wt_wt_base) || return 1
   [[ -d "$wt_root" ]] || { print "Worktree base not found: $wt_root" >&2; return 1; }
 
   print "Select the worktree group to jump into."
