@@ -134,3 +134,9 @@
 ; [merge]
 ;     conflictStyle = zdiff3
 ;
+[credential "https://origin.cursor.com/git"]
+	helper = 
+	helper = !/Users/brian.lehrer.-nd/.local/bin/origin credential-helper
+[credential "https://origin.cursor.com"]
+	helper = 
+	helper = !/Users/brian.lehrer.-nd/.local/bin/origin credential-helper
