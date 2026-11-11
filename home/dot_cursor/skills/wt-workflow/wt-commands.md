@@ -37,10 +37,30 @@ Registry field `wt_group` = `~/wt/<gitlab_path>` (the group root, not a leaf che
 
 ### Bare `wt`
 
-fzf-pick a worktree **group** → `cd` into that group directory.
+fzf-pick a worktree **leaf** → `cd` into that checkout.
+
+| Where you are | Behavior |
+|---------------|----------|
+| **Src home** with mirrored `~/wt/<same/gitlab_path>/` (registry or path mirror) | fzf that group’s leaves only |
+| Inside a **wt group** (not a leaf) | fzf that group’s leaves only |
+| **Wt leaf**, or nowhere with a matched group | fzf **all** leaves under `bsl_wts` |
 
 ```zsh
 wt
+```
+
+### `wt src`
+
+Jump to a canonical home repo under `bsl_repos`.
+
+| Where you are | Behavior |
+|---------------|----------|
+| Under **`bsl_wts`** with mirrored home repo (leaf gitdir or `~/wt/...` group path) | `cd` to `~/src/...` mirror (no fzf) |
+| Already in a **src home** checkout | fzf all repos under `bsl_repos` |
+| Anywhere else | fzf all repos under `bsl_repos` |
+
+```zsh
+wt src
 ```
 
 ### `wt init` (alias `mkwt`)
@@ -72,15 +92,25 @@ Omit `--repos` for fzf multi-select under `src-root`. Omit `--branch` for detach
 
 Interactive leaf name: `Worktree name for 'repo':` prompt (defaults to repo basename; use branch slug when basename would collide).
 
-### `wt edit`
+### `wt rm` / `wt edit` / `wt remove`
 
-fzf **multi-select** worktrees under a group; `git worktree remove` + `rm -rf` per selection.
+fzf **multi-select** worktrees under a group; optional repo-memory archive; then `git worktree remove` + `rm -rf` if the directory still exists. **`rm` is the primary name; `edit` and `remove` are aliases.**
 
 ```zsh
-wt edit --worktree-root "$HOME/wt/acme/widget"
+wt rm --archive --worktree-root "$HOME/wt/acme/widget"
+wt rm --worktree-root "$HOME/wt/acme/widget"          # interactive archive prompt
+wt rm --skip-archive --worktree-root "$HOME/wt/acme/widget"   # scripts / already ingested
 ```
 
-**Before remove:** repo-memory archive (`ingest-transcript.sh`) from each selected checkout.
+**Archive (`~/.cursor`):** The plugin calls `~/.cursor/memory/bin/ingest-transcript.sh` per selected leaf when archiving.
+
+| Mode | Behavior |
+|------|----------|
+| (default, interactive) | Prompt `[Y/n]` to archive when ingest script exists |
+| `--archive` | Archive each leaf before remove (fails if script missing) |
+| `--skip-archive` | No archive (non-interactive default) |
+
+Agents still run **ARCHIVE_CHECK** in `fsa.md`. When emitting commands for you, prefer `wt rm --archive`; use `--skip-archive` only after explicit ingest or waive.
 
 ### `wt status`
 
@@ -132,11 +162,11 @@ Nested path: `gitlab_path: acme/team/widget` → home `~/src/acme/team/widget`. 
 | Intent | Human runs |
 |--------|------------|
 | `NEW_WORKTREE` | `wt init` with `--worktree-root`, `--branch`, `--repos` (or interactive) |
-| `REMOVE_WORKTREE` | `wt edit --worktree-root …` after archive |
+| `REMOVE_WORKTREE` | `wt rm --archive --worktree-root …` (or `--skip-archive` after ingest) |
 | `LIST` | `wt status` |
 | `HEALTH` | `wt doctor` |
-| `JUMP_GROUP` | bare `wt` or `cd` to `wt_group` |
-| `OPEN_HOME` | `cd ~/src/org/repo` (no wt subcommand) |
+| `JUMP_LEAF` | bare `wt` (global fzf, or scoped in registry home) |
+| `OPEN_HOME` | `wt src` (global fzf, or direct from a wt leaf) |
 | `INIT_HOME` | agent: clone + `registry.yaml` |
 | `REGISTER` | agent edits `registry.yaml` |
 
@@ -161,6 +191,8 @@ wt init \
 ```
 
 ```zsh
-# wt-workflow: REMOVE_WORKTREE (after archive)
-wt edit --worktree-root "$HOME/wt/acme/widget"
+# wt-workflow: REMOVE_WORKTREE
+wt rm --archive --worktree-root "$HOME/wt/acme/widget"
+# If chats already ingested this session:
+# wt rm --skip-archive --worktree-root "$HOME/wt/acme/widget"
 ```

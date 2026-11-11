@@ -2,7 +2,7 @@
 set -euo pipefail
 
 cd "${0:A:h}/.."
-[[ -f wt.plugin.zsh ]] || ln -sf executable_wt.plugin.zsh wt.plugin.zsh
+plugin=./executable_wt.plugin.zsh
 
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
@@ -16,7 +16,7 @@ mkdir -p "$wtg"
 leaf="$wtg/leaf-a"
 
 # shellcheck disable=SC1091
-source ./wt.plugin.zsh
+source "$plugin"
 
 _wt_git_worktree_add "$tmpdir" "$leaf" feature/wt-init-test "" 0
 [[ -f "$leaf/.git" ]] || { print -u2 'expected worktree .git file'; exit 1 }

@@ -9,3 +9,5 @@ dot_cursor/wt-registry/registry.yaml
 dot_cursor/wt-registry/migrate-*.sh
 dot_cursor/rules/*.local.mdc
 dot_cursor/AGENTS.local.md
+# Test convenience symlink; chezmoi target is executable_wt.plugin.zsh only
+dot_config/zsh/custom/plugins/wt/wt.plugin.zsh

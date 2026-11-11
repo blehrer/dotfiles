@@ -32,10 +32,11 @@ One-shot patch on an old plugin copy (if defaults are missing):
 | Goal | Command |
 |------|---------|
 | Create worktree(s) | `wt init` / `mkwt` |
-| Remove worktree(s) | `wt edit` (fzf multi) |
+| Remove worktree(s) | `wt rm` (fzf multi; `--archive` / interactive prompt) |
 | Show branches/prompts | `wt status` |
 | Repair .git gitdir | `wt doctor [--suggest]` |
-| cd into a group | bare `wt` |
+| jump to a worktree leaf | bare `wt` |
+| jump to home repo | `wt src` |
 | Move whole group | `wt mv` |
 
 ## Nested groups
@@ -50,9 +51,9 @@ Example:
 
 ## Cursor agent boundaries
 
-- **init / edit / doctor** run git inside the plugin — **you** run them, not the agent.
+- **init / rm / doctor** run git inside the plugin — **you** run them, not the agent.
 - **registry.yaml** is agent-maintained until a `wt register` exists.
-- **Before `wt edit`:** `~/.cursor/memory/bin/ingest-transcript.sh` from each leaf being removed.
+- **Before / during `wt rm`:** `wt rm --archive`, interactive archive prompt, or manual `ingest-transcript.sh` (see `skills/wt-workflow/fsa.md` **ARCHIVE_CHECK**).
 
 ## Optional future plugin additions
 

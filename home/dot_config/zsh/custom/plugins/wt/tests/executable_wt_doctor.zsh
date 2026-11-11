@@ -2,7 +2,7 @@
 set -euo pipefail
 
 cd "${0:A:h}/.."
-plugin="${PWD}/wt.plugin.zsh"
+plugin="${0:A:h}/../executable_wt.plugin.zsh"
 
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT

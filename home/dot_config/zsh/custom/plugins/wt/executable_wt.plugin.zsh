@@ -13,6 +13,277 @@ _wt_wt_base() {
   print -r -- "$wt_base"
 }
 
+_wt_src_base() {
+  local src_base="${bsl_repos:-$HOME/src}"
+  src_base="${src_base:A}"
+  if [[ ! -d "$src_base" ]]; then
+    src_base="$HOME/src"
+    src_base="${src_base:A}"
+  fi
+  print -r -- "$src_base"
+}
+
+_wt_list_src_repos() {
+  local src_root="${1:-$(_wt_src_base)}"
+  src_root="${src_root:A}"
+  [[ -d "$src_root" ]] || return 1
+
+  find "$src_root" -maxdepth 8 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null \
+    | sed 's|/\.git$||' \
+    | sort -u
+}
+
+_wt_path_under_base() {
+  local dir="${1:A}" base="${2:A}"
+  [[ "$dir" == "$base" || "$dir" == "$base"/* ]]
+}
+
+_wt_nearest_worktree_leaf() {
+  local probe="${PWD:A}"
+
+  while [[ "$probe" != "/" ]]; do
+    if [[ -f "$probe/.git" && ! -d "$probe/.git" ]]; then
+      print -r -- "$probe"
+      return 0
+    fi
+    probe="${probe:h}"
+  done
+  return 1
+}
+
+# ponytail: gitlab_path mirror only (bsl_repos ↔ bsl_wts); registry overrides home→group
+_wt_resolve_wt_group_for_cwd() {
+  local dir wt_base probe
+
+  if dir=$(_wt_current_worktree_root); then
+    print -r -- "${dir:A}"
+    return 0
+  fi
+
+  wt_base=$(_wt_wt_base)
+  dir="${PWD:A}"
+  _wt_path_under_base "$dir" "$wt_base" || return 1
+
+  probe="$dir"
+  while [[ "$probe" == "$wt_base"/* || "$probe" == "$wt_base" ]]; do
+    if _wt_has_worktree_children "$probe"; then
+      print -r -- "${probe:A}"
+      return 0
+    fi
+    [[ "$probe" == "$wt_base" ]] && break
+    probe="${probe:h}"
+  done
+  return 1
+}
+
+_wt_mirror_src_home_for_wt_group() {
+  local wt_group="${1:A}"
+  local wt_base src_base mirror_src
+
+  wt_base=$(_wt_wt_base)
+  src_base=$(_wt_src_base)
+  wt_base="${wt_base:A}"
+  [[ "$wt_group" == "$wt_base"/* ]] || return 1
+
+  mirror_src="${src_base}/${wt_group#$wt_base/}"
+  mirror_src="${mirror_src:A}"
+  [[ -d "$mirror_src" && -e "$mirror_src/.git" ]] || return 1
+  print -r -- "$mirror_src"
+}
+
+_wt_mirror_wt_group_for_src_home() {
+  local src_home="${1:A}"
+  local wt_base src_base mirror_wt
+
+  wt_base=$(_wt_wt_base)
+  src_base=$(_wt_src_base)
+  src_base="${src_base:A}"
+  [[ "$src_home" == "$src_base"/* ]] || return 1
+
+  mirror_wt="${wt_base}/${src_home#$src_base/}"
+  mirror_wt="${mirror_wt:A}"
+  [[ -d "$mirror_wt" ]] || return 1
+  print -r -- "$mirror_wt"
+}
+
+_wt_src_home_checkout_for_cwd() {
+  local src_base git_top
+
+  git_top=$(command git rev-parse --show-toplevel 2>/dev/null) || return 1
+  git_top="${git_top:A}"
+  src_base=$(_wt_src_base)
+  _wt_path_under_base "$git_top" "$src_base" && [[ -d "$git_top/.git" ]] || return 1
+  print -r -- "$git_top"
+}
+
+_wt_complementary_src_for_cwd() {
+  local leaf repo_git_dir home wt_group
+
+  if leaf=$(_wt_nearest_worktree_leaf); then
+    if repo_git_dir=$(_wt_repo_git_dir_for_worktree "$leaf"); then
+      home="${repo_git_dir:h:A}"
+      [[ -d "$home" ]] && print -r -- "$home" && return 0
+    fi
+  fi
+
+  if wt_group=$(_wt_resolve_wt_group_for_cwd); then
+    _wt_mirror_src_home_for_wt_group "$wt_group" && return 0
+  fi
+  return 1
+}
+
+_wt_wt_group_for_cwd() {
+  local registry_group src_home mirror_wt wt_group
+
+  if registry_group=$(_wt_registry_wt_group_for_cwd) && [[ -d "$registry_group" ]] \
+      && _wt_has_worktree_children "$registry_group"; then
+    print -r -- "${registry_group:A}"
+    return 0
+  fi
+
+  if src_home=$(_wt_src_home_checkout_for_cwd); then
+    if mirror_wt=$(_wt_mirror_wt_group_for_src_home "$src_home") \
+        && _wt_has_worktree_children "$mirror_wt"; then
+      print -r -- "${mirror_wt:A}"
+      return 0
+    fi
+  fi
+
+  if wt_group=$(_wt_resolve_wt_group_for_cwd) && _wt_has_worktree_children "$wt_group"; then
+    print -r -- "${wt_group:A}"
+    return 0
+  fi
+  return 1
+}
+
+_wt_list_all_worktree_leaves() {
+  local wt_base="${1:-$(_wt_wt_base)}"
+  local -a groups=() group
+
+  wt_base="${wt_base:A}"
+  _wt_nested_worktree_group_roots "$wt_base" || return 1
+  groups=("${reply[@]}")
+  for group in "${groups[@]}"; do
+    _wt_list_worktree_leaves "$group"
+  done
+}
+
+_wt_pick_src_repo() {
+  local header="${1:-Select source repo}"
+  local src_base
+  local -a repos=() labels=()
+  local repo
+
+  src_base=$(_wt_src_base) || return 1
+  while IFS= read -r repo; do
+    [[ -n "$repo" ]] || continue
+    repos+=("${repo:A}")
+    if [[ "${repos[-1]}" == "$src_base"/* ]]; then
+      labels+=("${repos[-1]#${src_base}/}")
+    else
+      labels+=("${repos[-1]:t}")
+    fi
+  done < <(_wt_list_src_repos "$src_base")
+
+  [[ ${#repos[@]} -gt 0 ]] || { print "No source repos found under: $src_base" >&2; return 1 }
+
+  if _wt_fzf_pick_lines "$header" "${labels[@]}"; then
+    local i
+    for i in {1..${#labels[@]}}; do
+      if [[ "${labels[i]}" == "$REPLY" ]]; then
+        print -r -- "${repos[i]}"
+        return 0
+      fi
+    done
+  fi
+  return 1
+}
+
+_wt_pick_global_worktree_leaf() {
+  local header="${1:-Select worktree}"
+  local wt_base
+  local -a leaves=() labels=()
+  local leaf
+
+  wt_base=$(_wt_wt_base) || return 1
+  wt_base="${wt_base:A}"
+
+  while IFS= read -r leaf; do
+    [[ -n "$leaf" ]] || continue
+    leaves+=("${leaf:A}")
+    if [[ "${leaves[-1]}" == "$wt_base"/* ]]; then
+      labels+=("${leaves[-1]#${wt_base}/}")
+    else
+      labels+=("${leaves[-1]:t}")
+    fi
+  done < <(_wt_list_all_worktree_leaves "$wt_base")
+
+  [[ ${#leaves[@]} -gt 0 ]] || { print "No worktrees found under: $wt_base" >&2; return 1 }
+
+  if _wt_fzf_pick_lines "$header" "${labels[@]}"; then
+    local i
+    for i in {1..${#labels[@]}}; do
+      if [[ "${labels[i]}" == "$REPLY" ]]; then
+        print -r -- "${leaves[i]}"
+        return 0
+      fi
+    done
+  fi
+  return 1
+}
+
+_wt_nav_src() {
+  local home selection wt_base
+
+  if _wt_src_home_checkout_for_cwd >/dev/null; then
+    print "Select a source repo."
+    selection=$(_wt_pick_src_repo "Select source repo") || return 0
+    cd "$selection"
+    return 0
+  fi
+
+  wt_base=$(_wt_wt_base)
+  if _wt_path_under_base "${PWD:A}" "$wt_base" || _wt_nearest_worktree_leaf >/dev/null; then
+    if home=$(_wt_complementary_src_for_cwd); then
+      cd "$home"
+      return 0
+    fi
+  fi
+
+  print "Select a source repo."
+  selection=$(_wt_pick_src_repo "Select source repo") || return 0
+  cd "$selection"
+}
+
+_wt_nav_bare() {
+  local wt_group leaf
+
+  if _wt_nearest_worktree_leaf >/dev/null; then
+    print "Select a worktree."
+    if leaf=$(_wt_pick_global_worktree_leaf "Select worktree"); then
+      cd "$leaf"
+      return 0
+    fi
+    return 0
+  fi
+
+  if wt_group=$(_wt_wt_group_for_cwd); then
+    print "Select a worktree under $(_wt_status_root_label "$wt_group")."
+    if leaf=$(_wt_pick_worktree_leaf "$wt_group" "Select worktree"); then
+      cd "$leaf"
+      return 0
+    fi
+    return 0
+  fi
+
+  print "Select a worktree."
+  if leaf=$(_wt_pick_global_worktree_leaf "Select worktree"); then
+    cd "$leaf"
+    return 0
+  fi
+  return 0
+}
+
 _wt_registry_wt_group_for_home() {
   local home_path="${1:A}"
   local registry="${HOME}/.cursor/wt-registry/registry.yaml"
@@ -242,7 +513,8 @@ _wt_nested_worktree_group_roots() {
 
 _wt_pick_worktree_root() {
   local header="${1:-Select worktree group}"
-  local wt_base -a groups labels
+  local wt_base
+  local -a groups labels
   local root
 
   wt_base=$(_wt_wt_base) || return 1
@@ -340,10 +612,18 @@ _wt_run_with_progress() {
   wait "$pid"
   local rc=$?
 
-  if (( rc == 0 )); then
-    _wt_progress_line "$done" "$total" "$label" "done"
+  if [[ -t 2 ]]; then
+    if (( rc == 0 )); then
+      _wt_progress_line "$done" "$total" "$label" "done"
+    else
+      _wt_progress_line "$done" "$total" "$label" "failed"
+    fi
   else
-    _wt_progress_line "$done" "$total" "$label" "failed"
+    if (( rc == 0 )); then
+      print -u2 -r -- "Removing [$done/$total] $label done"
+    else
+      print -u2 -r -- "Removing [$done/$total] $label failed"
+    fi
   fi
   print -u2 ""
 
@@ -796,14 +1076,24 @@ _wt_doctor() {
 
 _wt_edit() {
   local wt_root=""
+  local archive_mode=prompt
+  local ingest_bin=""
+  local do_archive=0
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --worktree-root) wt_root="$2"; shift 2 ;;
+      --archive)       archive_mode=run; shift ;;
+      --skip-archive)  archive_mode=skip; shift ;;
       --help|-h)
-        print "Usage: wt edit [--worktree-root DIR]"
+        print "Usage: wt rm|edit [--worktree-root DIR] [--archive | --skip-archive]"
         print ""
-        print "Remove selected worktrees from a worktree group."
+        print "Remove selected worktrees from a worktree group (rm and remove are aliases)."
+        print ""
+        print "  --archive       run ~/.cursor/memory/bin/ingest-transcript.sh before each remove"
+        print "  --skip-archive  do not archive (non-interactive default)"
+        print ""
+        print "Interactive default: prompt to archive when ingest script exists."
         return 0 ;;
       *)
         print "Unknown argument: $1" >&2
@@ -812,7 +1102,7 @@ _wt_edit() {
   done
 
   if [[ -z "$wt_root" ]]; then
-    wt_root=$(_wt_current_worktree_root) || wt_root=$(_wt_pick_worktree_root "Select worktree group to edit") || return 0
+    wt_root=$(_wt_current_worktree_root) || wt_root=$(_wt_pick_worktree_root "Select worktree group to remove") || return 0
   fi
 
   wt_root="${wt_root:A}"
@@ -832,6 +1122,28 @@ _wt_edit() {
   [[ -z "$selection" ]] && { print "No worktrees selected."; return 0; }
 
   local -a selected=("${(f)selection}")
+  case "$archive_mode" in
+    run)  do_archive=1 ;;
+    skip) do_archive=0 ;;
+    prompt)
+      if ingest_bin=$(_wt_memory_ingest_bin); then
+        if _wt_is_interactive; then
+          local confirm
+          print "Archive Cursor transcripts (repo-memory) for ${#selected[@]} worktree(s) before remove?"
+          read -r "confirm? [Y/n] "
+          [[ "${confirm:l}" != n ]] && do_archive=1
+        fi
+      fi
+      ;;
+  esac
+
+  if (( do_archive )) && [[ -z "$ingest_bin" ]]; then
+    ingest_bin=$(_wt_memory_ingest_bin) || {
+      print "wt edit: --archive requires ~/.cursor/memory/bin/ingest-transcript.sh" >&2
+      return 1
+    }
+  fi
+
   local failed=0
   local total=${#selected[@]}
   local done=0
@@ -850,6 +1162,24 @@ _wt_edit() {
       (( failed++ ))
       continue
     }
+
+    if (( do_archive )); then
+      local archive_out
+      if ! archive_out=$(_wt_archive_worktree_leaf "$wt_abs" "$ingest_bin" 2>&1); then
+        print "Archive failed for $wt_abs:" >&2
+        print -r -- "$archive_out" >&2
+        if _wt_is_interactive; then
+          local proceed
+          read -r "proceed?Remove anyway without archive? [y/N] "
+          [[ "${proceed:l}" == y ]] || { (( failed++ )); continue; }
+        else
+          (( failed++ ))
+          continue
+        fi
+      else
+        print -r -- "$archive_out"
+      fi
+    fi
 
     # SECURITY-REVIEW: paths are user/fzf-selected but constrained to immediate children and quoted before git/rm.
     if _wt_run_with_progress "$done" "$total" "${wt_abs:t}" git --git-dir="$repo_git_dir" worktree remove "$wt_abs"; then
@@ -944,6 +1274,28 @@ _wt_is_interactive() {
   [[ -o interactive ]] && [[ -t 0 ]]
 }
 
+_wt_memory_ingest_bin() {
+  local bin="${HOME}/.cursor/memory/bin/ingest-transcript.sh"
+  [[ -x "$bin" ]] || return 1
+  print -r -- "${bin:A}"
+}
+
+# ponytail: single topic string; upgrade if ingest gains batch mode
+_wt_archive_worktree_leaf() {
+  local wt_abs="${1:A}"
+  local ingest="$2"
+  local topic branch
+
+  branch=$(git -C "$wt_abs" branch --show-current 2>/dev/null || true)
+  if [[ -n "$branch" ]]; then
+    topic="wt remove: $branch"
+  else
+    topic="wt remove: ${wt_abs:t}"
+  fi
+
+  "$ingest" --workspace "$wt_abs" --topic "$topic" --tags "wt-remove,archive"
+}
+
 # ponytail: branch-exists check only; already-checked-out fails at git with a clear error
 _wt_git_worktree_add() {
   local repo="$1" wt_path="$2" branch_name="$3" ref_name="$4" force_new="$5"
@@ -1021,15 +1373,13 @@ _wt_init() {
   if [[ ${#repos[@]} -eq 0 ]]; then
     print "Select one or more source repos to create worktrees from (Tab to multi-select)."
     local selection
-    selection=$(find "$src_root" -maxdepth 8 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null \
-      | sed 's|/\.git$||' \
-      | sort -u \
+    selection=$(_wt_list_src_repos "$src_root" \
       | fzf --multi --header "Source Repos" --prompt "Filter (Use TAB to select many, submit with ENTER): ")
     [[ -z "$selection" ]] && { print "No repos selected."; return 0; }
     repo_paths=("${(f)selection}")
   else
     local all_repos
-    all_repos=$(find "$src_root" -maxdepth 8 -type d \( -name ".git" -o -name "*.git" \) 2>/dev/null | sed 's|/\.git$||')
+    all_repos=$(_wt_list_src_repos "$src_root")
     for r in "${repos[@]}"; do
       if [[ -d "$r" ]]; then
         repo_paths+=("$r")
@@ -1134,8 +1484,11 @@ _wt_completion() {
 
   local -a subcommands
   subcommands=(
+    "src:Jump to a home repo (picker, or from a wt leaf)"
     "init:Create a new worktree group"
-    "edit:Remove selected worktrees"
+    "rm:Remove selected worktrees"
+    "edit:Remove selected worktrees (alias)"
+    "remove:Remove selected worktrees (alias)"
     "status:Show Starship prompts for worktrees"
     "doctor:Check worktrees and suggest fixes"
     "mv:Move a worktree group"
@@ -1168,9 +1521,11 @@ _wt_completion() {
             "--yes[Assume yes to prompts]" \
             {-h,--help}"[Show help]"
           ;;
-        edit)
+        edit|rm|remove)
           _arguments \
             "--worktree-root[Worktree root]:directory:_directories" \
+            "--archive[Ingest transcripts before remove]" \
+            "--skip-archive[Skip repo-memory archive]" \
             {-h,--help}"[Show help]"
           ;;
         status)
@@ -1205,18 +1560,20 @@ _wt_completion_script() {
 
 wt() {
   case "$1" in
+    src)       shift; _wt_nav_src; return ;;
     init)      shift; _wt_init "$@"; return ;;
-    edit)      shift; _wt_edit "$@"; return ;;
+    edit|rm|remove) shift; _wt_edit "$@"; return ;;
     status)    shift; _wt_status "$@"; return ;;
     doctor)    shift; _wt_doctor "$@"; return ;;
     mv|move)   shift; _wt_mv   "$@"; return ;;
     completion) shift; _wt_completion_script; return ;;
     -h|--help)
-      print "Usage: wt [init|edit|status|doctor|mv|move|completion] [-h|--help]"
+      print "Usage: wt [src|init|rm|edit|status|doctor|mv|move|completion] [-h|--help]"
       print ""
-      print "  (bare)     from registry home: pick a worktree leaf; else pick a group"
+      print "  (bare)     scoped worktrees when cwd mirrors a wt group (or registry home); else global"
+      print "  src        cd mirrored home from wt; picker when already in src; else global src fzf"
       print "  init       create a new worktree group from one or more repos"
-      print "  edit       remove selected worktrees from a worktree group"
+      print "  rm|edit    remove selected worktrees (edit/remove are aliases)"
       print "  status     show Starship prompts for worktrees"
       print "  doctor     check .git gitdir health and suggest fixes"
       print "  mv|move    move a worktree group to a new location"
@@ -1224,24 +1581,7 @@ wt() {
       return 0 ;;
   esac
 
-  local wt_root wt_dir registry_group leaf
-
-  if registry_group=$(_wt_registry_wt_group_for_cwd) && [[ -d "$registry_group" ]] \
-      && _wt_has_worktree_children "$registry_group"; then
-    print "Select a worktree under $(_wt_status_root_label "$registry_group")."
-    if leaf=$(_wt_pick_worktree_leaf "$registry_group" "Select worktree"); then
-      cd "$leaf"
-      return 0
-    fi
-    return 0
-  fi
-
-  wt_root=$(_wt_wt_base) || return 1
-  [[ -d "$wt_root" ]] || { print "Worktree base not found: $wt_root" >&2; return 1; }
-
-  print "Select the worktree group to jump into."
-  wt_dir=$(_wt_pick_worktree_root "Select worktree group") || return 0
-  cd "$wt_dir"
+  _wt_nav_bare
 }
 
 alias mkwt='wt init'

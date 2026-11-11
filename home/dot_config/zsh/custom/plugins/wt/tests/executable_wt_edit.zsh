@@ -2,7 +2,7 @@
 set -euo pipefail
 
 cd "${0:A:h}/.."
-plugin="${PWD}/wt.plugin.zsh"
+plugin="${0:A:h}/../executable_wt.plugin.zsh"
 
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
@@ -61,7 +61,7 @@ print -r -- "$wt_path"
 EOF
 chmod +x "$fake_bin/fzf"
 
-if ! output=$(PATH="$fake_bin:$PATH" zsh -fc "source ${(q)plugin}; wt edit --worktree-root ${(q)wt_root}" 2>&1); then
+if ! output=$(PATH="$fake_bin:$PATH" zsh -fc "source ${(q)plugin}; wt edit --skip-archive --worktree-root ${(q)wt_root}" 2>&1); then
   print -u2 -- "$output"
   exit 1
 fi
@@ -92,10 +92,55 @@ fi
 EOF
 chmod +x "$fake_bin/fzf"
 
-if ! output=$(PATH="$fake_bin:$PATH" bsl_wts="$wt_base2" zsh -fc "cd ${(q)tmpdir}; source ${(q)plugin}; wt edit" 2>&1); then
+if ! output=$(PATH="$fake_bin:$PATH" bsl_wts="$wt_base2" zsh -fc "cd ${(q)tmpdir}; source ${(q)plugin}; wt edit --skip-archive" 2>&1); then
   print -u2 -- "$output"
   exit 1
 fi
 assert_contains "$output" "Removing ["
 assert_contains "$output" "removed: ${wt_path2:A}"
 assert_removed "$repo2" "$wt_path2"
+
+# --archive runs mock ingest before git worktree remove
+repo3="$tmpdir/repo3"
+wt_root3="$tmpdir/archive-group"
+wt_path3="$wt_root3/leaf3"
+create_worktree "$repo3" "$wt_path3" "archive-branch"
+touch_log="$tmpdir/ingest.log"
+fake_home="$tmpdir/fake-home"
+mkdir -p "$fake_home/.cursor/memory/bin"
+cat > "$fake_home/.cursor/memory/bin/ingest-transcript.sh" <<EOF
+#!/usr/bin/env bash
+echo "ingest:\$1:\$3" >> "$touch_log"
+echo "Ingested ep-test"
+EOF
+chmod +x "$fake_home/.cursor/memory/bin/ingest-transcript.sh"
+
+cat > "$fake_bin/fzf" <<EOF
+#!/usr/bin/env zsh
+print -r -- "$wt_path3"
+EOF
+
+if ! output=$(PATH="$fake_bin:$PATH" HOME="$fake_home" zsh -fc "source ${(q)plugin}; wt edit --archive --worktree-root ${(q)wt_root3}" 2>&1); then
+  print -u2 -- "$output"
+  exit 1
+fi
+assert_contains "$output" "Ingested ep-test"
+assert_contains "$output" "removed: ${wt_path3:A}"
+[[ -f "$touch_log" ]] || { print -u2 "ingest was not called"; exit 1; }
+assert_removed "$repo3" "$wt_path3"
+
+# wt rm alias
+repo4="$tmpdir/repo4"
+wt_root4="$tmpdir/rm-group"
+wt_path4="$wt_root4/leaf4"
+create_worktree "$repo4" "$wt_path4" "rm-test"
+cat > "$fake_bin/fzf" <<EOF
+#!/usr/bin/env zsh
+print -r -- "$wt_path4"
+EOF
+if ! output=$(PATH="$fake_bin:$PATH" zsh -fc "source ${(q)plugin}; wt rm --skip-archive --worktree-root ${(q)wt_root4}" 2>&1); then
+  print -u2 -- "$output"
+  exit 1
+fi
+assert_contains "$output" "removed: ${wt_path4:A}"
+assert_removed "$repo4" "$wt_path4"
