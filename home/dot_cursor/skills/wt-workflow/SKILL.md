@@ -9,7 +9,7 @@ description: Use when creating, listing, opening, or removing worktrees under ~/
 
 Git worktree filesystem work uses the **wt** zsh plugin (`~/.config/zsh/custom/plugins/wt/wt.plugin.zsh`) and registry paths in `~/.cursor/wt-registry/registry.yaml`.
 
-Read `@fsa.md`, `@layout.md`, and `@wt-commands.md`. **Plugin facts:** subcommands are `init`, `edit`, `status`, `doctor`, `mv`. Defaults: `bsl_repos=$HOME/src`, `bsl_wts=$HOME/wt`.
+Read `@fsa.md`, `@layout.md`, and `@wt-commands.md`. **Plugin facts:** subcommands are `init`, `rm` (`edit`/`remove` aliases), `status`, `doctor`, `mv`. Defaults: `bsl_repos=$HOME/src`, `bsl_wts=$HOME/wt`.
 
 ## Two modes (pick from user intent)
 
@@ -21,13 +21,13 @@ User names a **repo + branch** (or MR on a known branch). **Do not** tell them t
 2. Use the printed absolute path as `cwd` for git, npm, and file edits (even if Cursor workspace is a multi-repo parent folder or home).
 3. If creation failed, fall back to `wt init --yes` per `wt-commands.md` (existing local branch).
 
-**Removal** of worktrees stays human-driven (`wt edit`) unless the user explicitly asks.
+**Removal** of worktrees stays human-driven (`wt rm` / `wt edit`) unless the user explicitly asks.
 
 ### B — Planning / layout FSA (no branch assigned yet)
 
 **Announce:** "Using wt-workflow: I'll ask for the next FSA input and give you `wt` commands to run."
 
-Elicit → validate → emit **copy-pasteable** commands → wait for `ok`. Many flows are interactive (fzf, vared). The agent does **not** run `wt edit` or delete leaves without explicit ask.
+Elicit → validate → emit **copy-pasteable** commands → wait for `ok`. Many flows are interactive (fzf, vared). The agent does **not** run `wt rm` or delete leaves without explicit ask.
 
 ## Step 0: Resolve repo context
 
@@ -78,7 +78,7 @@ After commands, say: *"Run in zsh; tell me `ok` or paste the error. Note any fzf
 
 On `ok`:
 
-1. **repo-memory**: after `wt edit` (remove), confirm archive ran; after `wt init`, optional ingest when closing the worktree later.
+1. **repo-memory**: after `wt rm`, confirm archive ran (`--archive`, interactive prompt, or prior ingest); after `wt init`, optional ingest when closing the worktree later.
 2. Update **local** `~/.cursor/wt-registry/registry.yaml` in **INIT_HOME** / **REGISTER** — not chezmoi/dotfiles.
 
 ## When NOT to use
@@ -90,17 +90,17 @@ On `ok`:
 
 | Mistake | Fix |
 |---------|-----|
-| `wt new` / `wt rm` | Use `wt init` / `wt edit` |
+| `wt new` | Use `wt init` |
 | Leaf path without group | Group is `wt_group`; leaves are siblings inside it |
 | Old plugin default `~/src/worktrees` | Run `apply-wt-defaults.sh` on `wt.plugin.zsh` |
-| `wt edit` without archive | ARCHIVE_CHECK in `fsa.md` |
+| Remove without archive when chats matter | **ARCHIVE_CHECK** in `fsa.md`; prefer `wt rm --archive` |
 
 ## Quick reference
 
 | State | Agent action |
 |-------|----------------|
 | `NEW_WORKTREE` | `wt init --worktree-root … --branch … --repos …` |
-| `REMOVE_WORKTREE` | archive → `wt edit --worktree-root …` |
+| `REMOVE_WORKTREE` | **ARCHIVE_CHECK** → `wt rm --archive --worktree-root …` (or `--skip-archive` if already ingested) |
 | `LIST` | `wt status` |
 | `HEALTH` | `wt doctor` |
 | `OPEN_HOME` | `cd` to registry `home` |

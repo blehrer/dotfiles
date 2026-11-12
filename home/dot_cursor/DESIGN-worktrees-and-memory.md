@@ -25,7 +25,7 @@ We skip a graph database in v1. YAML + grep + agent reads are enough until scale
 |-----------|-------|--------|
 | REGISTER | answers origin/home | `wt register` |
 | NEW | branch + worktree name prompts | `wt init` |
-| REMOVE | fzf select leaves | `wt edit` (after archive) |
+| REMOVE | fzf select leaves | `wt rm --archive` or ingest then `wt rm --skip-archive` |
 | LIST | — | `wt status` |
 
 Agent never substitutes for plugin execution.

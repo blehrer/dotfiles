@@ -52,7 +52,7 @@ One-time (or batch) bring-up: canonical home + registry. See `layout.md` (`gitla
 
 **Agent writes:** `registry.yaml` entry per repo (`repo_id`, `origin`, `gitlab_path`, `org`, `repo`, `home`, `wt_group`, `default_branch`).
 
-**Human still runs:** `wt init` / `wt edit` / bare `wt` (plugin interactivity).
+**Human still runs:** `wt init` / `wt rm` / bare `wt` (plugin interactivity).
 
 **Preflight (agent or emit):** DNS + SSH reachability for the git host when using `git@host:…` URLs.
 
@@ -110,7 +110,7 @@ One-time (or batch) bring-up: canonical home + registry. See `layout.md` (`gitla
 
 ## State: REMOVE (REMOVE_WORKTREE)
 
-**Slots:** `wt_group` (from registry); you select leaves in `wt edit` fzf
+**Slots:** `wt_group` (from registry); you select leaves in `wt rm` fzf
 
 **Guard:** never target `home_path`
 
@@ -118,11 +118,14 @@ One-time (or batch) bring-up: canonical home + registry. See `layout.md` (`gitla
 
 ## State: ARCHIVE_CHECK
 
-**Agent must ask:** "Archive Cursor chats for this path into repo memory before remove?"
+**Agent must ask:** "Archive Cursor chats for these leaves before remove?"
 
-- yes → follow repo-memory **Archive session** (per selected checkout); then **EMIT** `wt edit --worktree-root $wt_group`
-- waive → you confirm in writing ("skip archive") → **EMIT**
-- defer → stay until archive done
+- **yes (agent archives)** → repo-memory **Archive session** per leaf; then **EMIT** `wt rm --skip-archive --worktree-root $wt_group`
+- **yes (shell archives)** → **EMIT** `wt rm --archive --worktree-root $wt_group` (plugin calls `~/.cursor/memory/bin/ingest-transcript.sh` per leaf)
+- **waive** → you confirm in writing ("skip archive") → **EMIT** `wt rm --skip-archive --worktree-root $wt_group`
+- **defer** → stay until archive done
+
+Interactive default (no flags): `wt rm --worktree-root …` prompts `[Y/n]` when ingest exists — fine when you run it yourself after **EMIT**.
 
 ## State: EMIT
 

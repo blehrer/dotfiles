@@ -9,7 +9,7 @@ alwaysApply: true
 
 - **Canonical home checkout** (one per repo, never delete): `~/src/<gitlab_path>/` (mirrors GitLab/GitHub project path; see registry `gitlab_path`).
 - **Worktree group** (container): `~/wt/<gitlab_path>/`
-- **Ephemeral task checkouts** (siblings inside the group): `~/wt/<gitlab_path>/<name>/` — remove with `wt edit`, not by deleting `~/src/...`
+- **Ephemeral task checkouts** (siblings inside the group): `~/wt/<gitlab_path>/<name>/` — remove with `wt rm`, not by deleting `~/src/...`
 - **Path policy:** `gitlab_path_mirror` in `registry.yaml`; derive with `layout-from-origin.py`; **wt-workflow** `INIT_HOME` clones + registers.
 
 Plugin defaults: `bsl_repos=$HOME/src`, `bsl_wts=$HOME/wt` (set at load in `wt.plugin.zsh`; override only if needed).
@@ -35,7 +35,7 @@ Report the resolved path once per task (`Implementation checkout: …`).
 
 ### Agents **do not** (still human or explicit ask)
 
-- **`wt edit` / `git worktree remove` / `rm -rf` wt leaves** — archive repo-memory first; you confirm removal.
+- **`wt rm` / `git worktree remove` / `rm -rf` wt leaves** — archive repo-memory first (`wt rm --archive`, interactive prompt, or **repo-memory** ingest); you confirm removal.
 - **Branch cleanup, prune registry, INIT_HOME** unless you asked.
 - **Destructive git** (force push, hard reset) — blocked by other rules.
 
@@ -45,7 +45,19 @@ Interactive **wt-workflow** FSA (you’re planning layouts, not implementing) ma
 
 Cursor indexes agent transcripts under `~/.cursor/projects/<path-slug>/`, keyed by **absolute workspace path**, not by `origin`. Parent-folder workspaces reduce “wrong folder” friction but do not replace **resolve-implementation-checkout** for which branch is checked out.
 
-**Before removing or abandoning a worktree path**, run the **repo-memory** skill step **Archive session** so chats are indexed under **repo id**, not folder slug.
+**Before removing or abandoning a worktree path**, archive chats under **repo id** (not folder slug): **repo-memory** **Archive session**, or `wt rm --archive` / interactive `[Y/n]` when `~/.cursor/memory/bin/ingest-transcript.sh` exists.
+
+## Task close-out (agents must run)
+
+When **you** learn or the user says any of: MR/PR **merged** (into `main` or default), ticket/issue **closed** or **done**, branch/MR **obsolete**, “worktree(s) are done”, epic shipped, or they ask to **clean up** after delivery — treat that as **close-out**, not optional chat:
+
+1. **Ingest first** — for each finished worktree leaf, run `~/.cursor/memory/bin/ingest-transcript.sh` with `--workspace` = repo **home** checkout, `--cursor-slug` = exact `~/.cursor/projects/<slug>` folder name (match casing), sensible `--topic` / `--tags` (ticket id, MR `!nnn`). Report episode ids. Read `~/.cursor/skills/repo-memory/SKILL.md` if unsure.
+2. **Then remove** worktrees (`wt rm --archive` preferred, else ingest then `git worktree remove`), delete merged local branches, `git fetch --prune`, fast-forward **home** `main`.
+3. **Do not** skip ingest because the folder is gone — ingest using `--cursor-slug` while transcript JSONL still exists under `~/.cursor/projects/`.
+
+If the user only announced merge/close and did not ask for cleanup yet, still **ingest** in that turn; ask before `worktree remove` if they did not already approve removal.
+
+**Consolidation** (beliefs queue → `beliefs/*.yaml`) stays weekly / explicit confirm — ingest alone is required on close-out.
 
 ## Opening folders
 

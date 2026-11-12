@@ -29,6 +29,8 @@ Normalize to `repo_id` (e.g. `github-com-acme-widget`). Cross-check `~/.cursor/w
 
 ## Archive session (run before worktree delete)
 
+**Alternate:** human runs `wt rm --archive --worktree-root …` (plugin calls this script per leaf). Use **Archive session** when the agent archives before `wt rm --skip-archive`.
+
 **Inputs to elicit (one turn if missing):** `topic` (short label), optional `tags` (comma-separated).
 
 **Run (human or agent shell, not LLM):**

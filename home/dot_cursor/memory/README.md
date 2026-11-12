@@ -21,7 +21,9 @@ Rules: `~/.cursor/rules/worktree-layout.mdc`, `repo-memory.mdc`.
 ## Quick start
 
 ```bash
-# Before removing a worktree folder
+# Before removing worktree leaves (either path)
+wt rm --archive --worktree-root "$HOME/wt/<gitlab_path>"
+# or from inside a leaf:
 ~/.cursor/memory/bin/ingest-transcript.sh --workspace "$PWD" --topic "short label"
 
 # See what needs consolidation
