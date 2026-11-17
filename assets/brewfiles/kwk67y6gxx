@@ -10,6 +10,7 @@ tap "nikitabobko/tap", trusted: true
 tap "osx-cross/arm"
 tap "osx-cross/avr"
 tap "railwaycat/emacsmacport", trusted: true
+tap "simoarpe/ziggity"
 # Run your GitHub Actions locally
 brew "act"
 # Email client that runs in your terminal
@@ -230,6 +231,8 @@ brew "zsh"
 brew "hashicorp/tap/vault", trusted: true
 # Sqlcmd and Bcp for Microsoft(R) SQL Server(R)
 brew "microsoft/mssql-release/mssql-tools", trusted: true
+# Terminal UI for Git, written in Zig
+brew "simoarpe/ziggity/ziggity", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
