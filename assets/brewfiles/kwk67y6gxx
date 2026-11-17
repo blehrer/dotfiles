@@ -180,6 +180,8 @@ brew "sem-cli"
 brew "semgrep"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
 # Terminal based presentation tool
 brew "slides"
 # Opinionated Lua code formatter
@@ -250,6 +252,8 @@ cask "cursor"
 cask "cursor-cli"
 # Monitoring and security across systems, apps, and services
 cask "datadog-agent"
+# Universal database tool and SQL client
+cask "dbeaver-community"
 cask "font-fira-code-nerd-font"
 cask "font-geist-mono-nerd-font"
 cask "font-hasklug-nerd-font"
@@ -298,3 +302,4 @@ cargo "wordnet-ls"
 uv "graphifyy"
 uv "mempalace"
 uv "specify-cli", source: "git+https://github.com/github/spec-kit.git"
+npm "corepack"
