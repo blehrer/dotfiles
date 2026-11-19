@@ -22,7 +22,6 @@
 #colorMoved = no
 #color-moved-ws = allow-indentation-change
     tool = nvimdiff
-    noprefix = true
     renameLimit = 50000
     algorithm = histogram
     
