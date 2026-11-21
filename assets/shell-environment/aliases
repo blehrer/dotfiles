@@ -96,6 +96,11 @@ if has git ; then
         lazygit --use-config-file="${HOME}/.config/lazygit/config.yml,${HOME}/.config/lazygit/${theme_file}" "$@"
       }
     fi
+    if has ziggity; then
+      function lg {
+        ziggity
+      }
+    fi
 fi
 
 has rg  && alias ag=rg
