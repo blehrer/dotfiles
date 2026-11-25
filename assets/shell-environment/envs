@@ -34,6 +34,13 @@ fi
 
 export VENV_HOME="$HOME/.virtualenvs"
 
+if has _.ip; then
+  EN0=$(_.ip)
+elif has ip && has jq; then
+  EN0=$(ip -j -4 addr show eth0 | jq -r '.[0].addr_info[0].local')
+fi
+export EN0
+
 h=${HOME}
 data=${XDG_DATA_HOME:-$h/.local/share/}
 paths=($h/.local/bin $data/${NVIM_APPNAME}/mason/bin)
@@ -46,7 +53,7 @@ paths+=($h/.bun/bin)
 
 if is_darwin; then
     export PNPM_HOME=$h/Library/pnpm
-    paths+=${PNPM_HOME}
+    paths+=("${PNPM_HOME}")
 fi
 
 for p in ${paths}; do
