@@ -34,3 +34,9 @@ wt rm --archive --worktree-root "$HOME/wt/<gitlab_path>"
 - `skills/repo-memory/` — episodic ingest, beliefs, AGENTS.md promotion
 
 **wt:** `init` / `rm` / `status` / `doctor` — see `skills/wt-workflow/wt-commands.md`. Plugin defaults `~/src` + `~/wt` (`apply-wt-defaults.sh` if needed).
+
+## Testing intuitions
+
+`testing-intuitions.md` in this directory — regression oracle lessons (Storybook, e2e, component tests). Read when adding or reviewing **bug-fix** tests; append a short dated entry after a review catch or postmortem.
+
+**Standing rule:** For fix-branch tests, confirm the same story/test **fails on base without the fix** when the oracle claims to catch that bug. Setup order must match the user failure path, not a convenient shortcut.
