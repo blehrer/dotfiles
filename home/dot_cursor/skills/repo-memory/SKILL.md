@@ -89,6 +89,7 @@ Triggers that still require confirm:
    - Link `sources: [episode-ids]`
 4. Write a short **consolidation note** to `~/.cursor/memory/consolidations/<repo-id>/<date>.md`
 5. Remove queue entry; set episode `consolidated: true`
+6. **Show beliefs in a canvas** (not raw YAML in chat): write `canvases/<repo>-beliefs-keeping-evaluating.canvas.tsx` under the active Cursor project (`~/.cursor/projects/<slug>/canvases/`) with **Keeping** (current) and **Evaluating / retired** (superseded) tables from the updated `beliefs/<repo-id>.yaml`. Link the file in chat so the user can open it beside the thread.
 
 **Do not quiz the human by default.** Optional: if `status: disputed` or two beliefs conflict, ask **one** resolving question.
 

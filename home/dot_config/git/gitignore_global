@@ -31,7 +31,6 @@ _Deparsed_XSubs.pm
 scratch
 .codereview.nvim
 **/src/**/.obsidian*
-.sem
 
 **/.claude/settings.local.json
 graphify-out/

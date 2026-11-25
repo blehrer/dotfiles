@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CURSOR_DATA="${CURSOR_DATA_DIR:-$HOME/.cursor}"
+# Honor explicit global dir; ignore repo-local relative overrides (e.g. monorepo .cursor/).
+if [[ -n "${CURSOR_DATA_DIR:-}" && "${CURSOR_DATA_DIR:0:1}" == "/" ]]; then
+  CURSOR_DATA="$CURSOR_DATA_DIR"
+else
+  CURSOR_DATA="$HOME/.cursor"
+fi
 MEMORY_ROOT="$CURSOR_DATA/memory"
 REGISTRY="$CURSOR_DATA/wt-registry/registry.yaml"
 BIN_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -61,7 +66,8 @@ else
 fi
 
 if [[ -n "$CURSOR_SLUG" ]]; then
-  SLUG="$(echo "$CURSOR_SLUG" | tr '[:upper:]' '[:lower:]')"
+  # Use exact folder name under ~/.cursor/projects/ (Cursor slug casing varies).
+  SLUG="$CURSOR_SLUG"
 else
   SLUG="$(python3 "$BIN_DIR/slugify-path.py" "$WORKSPACE")"
 fi

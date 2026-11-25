@@ -1,9 +1,11 @@
 ---
 description: Cross-worktree chat retention, episodic archive, belief consolidation, and AGENTS.md promotion across your repos
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Repo memory
+
+**Close-out:** On MR merge, ticket close/done, or worktree retirement, run **ingest** per `worktree-layout.mdc` § Task close-out before removing leaves. Read **repo-memory** skill for `ingest-transcript.sh` shape.
 
 When the user asks what happened on a topic, whether an old belief is outdated, or for the current mental model of a codebase, use the **repo-memory** skill.
 
