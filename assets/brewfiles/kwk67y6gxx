@@ -39,6 +39,8 @@ brew "btop"
 brew "freetype"
 # Multi-shell multi-command argument completer
 brew "carapace"
+# Conventional Commits toolbox
+brew "cocogitto"
 # Create and run Linux containers using lightweight virtual machines
 brew "container"
 # GNU File, Shell, and Text utilities
@@ -143,6 +145,8 @@ brew "nginx"
 brew "nmap"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
+# Open source, general-purpose policy engine
+brew "opa"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
 brew "openapi-generator"
 # Search tool like grep and The Silver Searcher
@@ -294,15 +298,17 @@ vscode "esbenp.prettier-vscode"
 vscode "gitlab.gitlab-workflow"
 vscode "ms-playwright.playwright"
 vscode "nrwl.angular-console"
+vscode "studio-tech.ledger-lsp"
 vscode "webhooked.kanso-theme"
 go "cmd/go"
 go "cmd/gofmt"
+cargo "cocogitto"
 cargo "du-dust"
 cargo "eza"
+cargo "ledger-lsp"
 cargo "taplo-cli"
 cargo "typst-cli"
 cargo "wordnet-ls"
 uv "graphifyy"
 uv "mempalace"
 uv "specify-cli", source: "git+https://github.com/github/spec-kit.git"
-npm "corepack"
